@@ -1,6 +1,6 @@
 {
- "run_utc": "2026-10-21 15:43",
- "mode": "backfill",
+ "run_utc": "2026-10-21 16:11",
+ "mode": "update",
  "errors": {},
  "ok": 41
 }
