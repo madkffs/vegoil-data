@@ -14,6 +14,9 @@ MONTHS = "FGHJKMNQUVXZ"
 CYCLES = {"ZL": "FHKNQUVZ", "ZM": "FHKNQUVZ", "ZS": "FHKNQUX", "ZC": "HKNUZ"}
 CONTINUOUS = ["ZL=F", "ZM=F", "ZS=F", "ZC=F", "HO=F", "BZ=F", "CL=F", "RB=F"]
 FX = ["MYR=X", "BRL=X", "ARS=X", "INR=X", "CNY=X", "IDR=X", "EGP=X", "EURUSD=X", "DX-Y.NYB"]
+SINA_HF = {"hf_BO": "CBOT soyoil (front)", "hf_SM": "CBOT soymeal (front)", "hf_S": "CBOT soybeans (front)", "hf_C": "CBOT corn (front)",
+           "hf_HO": "NYMEX heating oil (front)", "hf_OIL": "ICE Brent (front)", "hf_CL": "NYMEX WTI (front)", "hf_FCPO": "Bursa crude palm oil (3rd month benchmark)"}
+SINA_FX = ["fx_susdmyr", "fx_susdbrl", "fx_susdinr", "fx_susdcny", "fx_seurusd", "fx_susdidr"]
 SINA = {"Y0": "DCE soyoil (main)", "P0": "DCE palm olein (main)", "M0": "DCE soymeal (main)", "A0": "DCE soybean No.1 (main)"}
 
 def contract_symbols(today=None, n=6):
@@ -35,16 +38,20 @@ def contract_symbols(today=None, n=6):
     return out
 
 def yahoo_chart(symbol, interval="1d", rng="1mo"):
-    last_err = None
-    for host in ("query1", "query2"):
-        url = f"https://{host}.finance.yahoo.com/v8/finance/chart/{symbol}"
-        try:
-            r = requests.get(url, params={"interval": interval, "range": rng}, headers=UA, timeout=20)
-            r.raise_for_status()
-            return parse_yahoo(r.json())
-        except Exception as e:
-            last_err = e
-    raise RuntimeError(f"{symbol}: {last_err}")
+    """Delayed Yahoo Finance data via the yfinance library (handles the session cookies that plain requests lack)."""
+    import yfinance as yf
+    h = yf.Ticker(symbol).history(period=rng, interval=interval, auto_adjust=False)
+    if h is None or h.empty:
+        raise ValueError("no data")
+    rows = []
+    for idx, r in h.iterrows():
+        t = idx.tz_convert("UTC") if idx.tzinfo else idx
+        rows.append({"time_utc": t.strftime("%Y-%m-%d %H:%M"), "open": round(float(r["Open"]), 4), "high": round(float(r["High"]), 4),
+                     "low": round(float(r["Low"]), 4), "close": round(float(r["Close"]), 4), "volume": int(r["Volume"]) if r["Volume"] == r["Volume"] else None})
+    last = rows[-1]
+    prev = rows[-2]["close"] if len(rows) > 1 else None
+    snap = {"symbol": symbol, "last": last["close"], "prev_close": prev, "time_utc": last["time_utc"], "source": "yahoo (delayed)"}
+    return snap, rows
 
 def parse_yahoo(js):
     res = (js.get("chart") or {}).get("result") or []
@@ -89,6 +96,33 @@ def parse_sina(text):
                      "time": f[1], "raw": body[:300]}
     return out
 
+def sina_raw(codes):
+    r = requests.get("https://hq.sinajs.cn/list=" + ",".join(codes), headers={**UA, "Referer": "https://finance.sina.com.cn"}, timeout=20)
+    r.encoding = "gbk"
+    return r.text
+
+def parse_sina_hf(text):
+    """Global futures: 0 last, 2 bid, 3 ask, 4 high, 5 low, 6 time (Beijing), 7 prev settle, 8 open, 12 date."""
+    out = {}
+    for code, body in re.findall(r'hq_str_(hf_\w+)="([^"]*)"', text):
+        f = body.split(",")
+        if len(f) < 13 or not f[0]:
+            continue
+        fl = lambda i: float(f[i]) if re.fullmatch(r"-?\d+(\.\d+)?", f[i] or "") else None
+        out[code] = {"last": fl(0), "high": fl(4), "low": fl(5), "prev_settle": fl(7), "open": fl(8), "time_beijing": f[6], "date": f[12]}
+    return out
+
+def parse_sina_fx(text):
+    out = {}
+    for code, body in re.findall(r'hq_str_(fx_s\w+)="([^"]*)"', text):
+        f = body.split(",")
+        if len(f) > 8:
+            try:
+                out[code] = {"last": float(f[8]), "time": f[0], "date": f[-1]}
+            except ValueError:
+                pass
+    return out
+
 def palm_fob():
     r = requests.get("https://www.zyotwdhon.com/en/palm-oil-daily-prices", headers=UA, timeout=20)
     return parse_palm(r.text)
@@ -123,8 +157,11 @@ def append_csv(path, rows, key="time_utc"):
 
 def spreads(latest):
     g = lambda s: (latest.get(s) or {}).get("last")
-    zl, zm, zs, ho = g("ZL=F"), g("ZM=F"), g("ZS=F"), g("HO=F")
-    usdmyr = g("MYR=X")
+    hf = latest.get("_sina_futures") or {}
+    h = lambda k: (hf.get(k) or {}).get("last")
+    zl, zm, zs, ho = h("hf_BO") or g("ZL=F"), h("hf_SM") or g("ZM=F"), h("hf_S") or g("ZS=F"), h("hf_HO") or g("HO=F")
+    usdmyr = ((latest.get("_sina_fx") or {}).get("fx_susdmyr") or {}).get("last") or g("MYR=X")
+    fcpo = h("hf_FCPO")
     palm = (latest.get("_palm_fob") or {}).get("Malaysian Crude Palm Oil (CPO)")
     out = {}
     if zl and zm:
@@ -138,6 +175,9 @@ def spreads(latest):
         out["soy_minus_palm_fob_usd_t"] = round(zl * 22.0462 - palm, 1)
     if usdmyr:
         out["usdmyr"] = usdmyr
+    if zl and fcpo and usdmyr:
+        out["soy_minus_fcpo_usd_t"] = round(zl * 22.0462 - fcpo / usdmyr, 1)
+    out["inputs"] = {"zl": zl, "zm": zm, "zs": zs, "ho": ho, "fcpo": fcpo}
     return out
 
 def main(mode):
@@ -155,7 +195,18 @@ def main(mode):
                 append_csv(os.path.join(DATA, "intraday", s.replace("=", "_").replace(".", "_") + ".csv"), intraday)
         except Exception as e:
             status["errors"][s] = str(e)[:200]
-        time.sleep(0.5)
+        time.sleep(1.0)
+    try:
+        hf = parse_sina_hf(sina_raw(list(SINA_HF)))
+        latest["_sina_futures"] = hf
+        append_csv(os.path.join(DATA, "sina_futures.csv"), [{"time_utc": now, **{f"{k}_last": v["last"] for k, v in hf.items()}, **{f"{k}_prev": v["prev_settle"] for k, v in hf.items()}}])
+    except Exception as e:
+        status["errors"]["sina_futures"] = str(e)[:200]
+    try:
+        fx = parse_sina_fx(sina_raw(SINA_FX))
+        latest["_sina_fx"] = fx
+    except Exception as e:
+        status["errors"]["sina_fx"] = str(e)[:200]
     try:
         dce = sina(list(SINA))
         latest["_dalian"] = dce
@@ -171,7 +222,9 @@ def main(mode):
         status["errors"]["palm_fob"] = str(e)[:200]
     sp = spreads(latest)
     latest["_spreads"] = sp
-    append_csv(os.path.join(DATA, "spreads.csv"), [{"time_utc": now, **sp}])
+    flat = {k: v for k, v in sp.items() if k != "inputs"}
+    flat.update({f"in_{k}": v for k, v in (sp.get("inputs") or {}).items()})
+    append_csv(os.path.join(DATA, "spreads.csv"), [{"time_utc": now, **flat}])
     with open(os.path.join(DATA, "latest.json"), "w") as fh:
         json.dump(latest, fh, indent=1, ensure_ascii=False)
     status["ok"] = len([k for k in latest if not k.startswith("_")])
