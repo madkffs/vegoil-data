@@ -123,6 +123,78 @@ def parse_sina_fx(text):
                 pass
     return out
 
+SINA_KLINE = {  # daily history (OHLC) from Sina's public chart endpoints
+    "FCPO": ("global", "FCPO"),          # Bursa Malaysia crude palm oil, MYR/t
+    "DCE_Y0": ("inner", "Y0"),            # Dalian soyoil main
+    "DCE_P0": ("inner", "P0"),            # Dalian palm olein main
+    "DCE_M0": ("inner", "M0"),            # Dalian soymeal main
+}
+
+def sina_kline(kind, sym):
+    if kind == "global":
+        url = f"https://stock2.finance.sina.com.cn/futures/api/jsonp.php/var%20_{sym}=/GlobalFuturesService.getGlobalFuturesDailyKLine?symbol={sym}"
+    else:
+        url = f"https://stock2.finance.sina.com.cn/futures/api/jsonp.php/var%20_{sym}=/InnerFuturesNewService.getDailyKLine?symbol={sym}"
+    r = requests.get(url, headers={**UA, "Referer": "https://finance.sina.com.cn"}, timeout=30)
+    return parse_kline(r.text)
+
+def parse_kline(text):
+    m = re.search(r"\((\[.*\])\)", text, re.S)
+    if not m:
+        raise ValueError("no kline data: " + text[:120])
+    arr = json.loads(m.group(1))
+    rows = []
+    for a in arr:
+        g = lambda *ks: next((a[k] for k in ks if k in a and a[k] not in (None, "")), None)
+        d, c = g("date", "d"), g("close", "c")
+        if d is None or c is None:
+            continue
+        rows.append({"time_utc": str(d)[:10] + " 00:00", "open": float(g("open", "o") or c), "high": float(g("high", "h") or c),
+                     "low": float(g("low", "l") or c), "close": float(c), "volume": g("volume", "v")})
+    return rows
+
+def percentiles():
+    """2-year percentiles of key spreads from daily files."""
+    import pandas as pd
+    def load(name):
+        p = os.path.join(DATA, "daily", name)
+        if not os.path.exists(p):
+            return None
+        d = pd.read_csv(p)
+        d["date"] = pd.to_datetime(d["time_utc"]).dt.normalize()
+        return d.groupby("date")["close"].last()
+    zl, zm, zs, ho, myr = load("ZL_F.csv"), load("ZM_F.csv"), load("ZS_F.csv"), load("HO_F.csv"), load("MYR_X.csv")
+    fcpo, y0, p0 = load("FCPO.csv"), load("DCE_Y0.csv"), load("DCE_P0.csv")
+    zlh, zlz = load("ZLH27_CBT.csv"), load("ZLZ26_CBT.csv")
+    series = {}
+    if zl is not None and ho is not None:
+        series["boho_usd_gal"] = (ho - zl / 100 * 7.37)
+    if zl is not None and zm is not None:
+        series["oilshare_pct"] = zl * 11 / (zl * 11 + zm * 2.2) * 100
+        if zs is not None:
+            series["board_crush_usd_bu"] = zl * 0.11 + zm * 0.022 - zs / 100
+    if zl is not None and fcpo is not None and myr is not None:
+        series["soy_minus_palm_usd_t"] = zl * 22.0462 - fcpo / myr.reindex(fcpo.index, method="ffill")
+    if fcpo is not None:
+        series["fcpo_myr_t"] = fcpo
+    if zl is not None:
+        series["zl_cents_lb"] = zl
+    if y0 is not None and p0 is not None:
+        series["dalian_soyoil_minus_palmolein_cny_t"] = y0 - p0
+    if zlz is not None and zlh is not None:
+        series["zl_dec_minus_mar"] = zlz - zlh
+    out = {}
+    for k, s in series.items():
+        s = s.dropna()
+        s = s[s.index >= s.index.max() - pd.Timedelta(days=730)]
+        if len(s) < 30:
+            continue
+        last = float(s.iloc[-1])
+        out[k] = {"last": round(last, 3), "date": s.index[-1].strftime("%Y-%m-%d"), "pct_2y": round(float((s < last).mean() * 100), 1),
+                  "pct_1y": round(float((s[s.index >= s.index.max() - pd.Timedelta(days=365)] < last).mean() * 100), 1),
+                  "median_2y": round(float(s.median()), 3), "min_2y": round(float(s.min()), 3), "max_2y": round(float(s.max()), 3), "n": int(len(s))}
+    return out
+
 def palm_fob():
     r = requests.get("https://www.zyotwdhon.com/en/palm-oil-daily-prices", headers=UA, timeout=20)
     return parse_palm(r.text)
@@ -218,6 +290,14 @@ def main(mode):
                    [{"time_utc": now, **{f"{c}_last": v.get("last") for c, v in dce.items()}, **{f"{c}_prev_settle": v.get("prev_settle") for c, v in dce.items()}}])
     except Exception as e:
         status["errors"]["dalian"] = str(e)[:200]
+    for name, (kind, sym) in SINA_KLINE.items():
+        try:
+            rows = sina_kline(kind, sym)
+            if mode != "backfill":
+                rows = rows[-15:]
+            append_csv(os.path.join(DATA, "daily", name + ".csv"), rows)
+        except Exception as e:
+            status["errors"]["kline_" + name] = str(e)[:200]
     try:
         p = palm_fob()
         latest["_palm_fob"] = p
@@ -229,6 +309,12 @@ def main(mode):
     flat = {k: v for k, v in sp.items() if k != "inputs"}
     flat.update({f"in_{k}": v for k, v in (sp.get("inputs") or {}).items()})
     append_csv(os.path.join(DATA, "spreads.csv"), [{"time_utc": now, **flat}])
+    try:
+        latest["_percentiles"] = percentiles()
+        with open(os.path.join(DATA, "percentiles.json"), "w") as fh:
+            json.dump(latest["_percentiles"], fh, indent=1)
+    except Exception as e:
+        status["errors"]["percentiles"] = str(e)[:200]
     with open(os.path.join(DATA, "latest.json"), "w") as fh:
         json.dump(latest, fh, indent=1, ensure_ascii=False)
     status["ok"] = len([k for k in latest if not k.startswith("_")])
