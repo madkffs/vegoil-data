@@ -148,9 +148,13 @@ def append_csv(path, rows, key="time_utc"):
         existing[r[key]] = {k: ("" if v is None else v) for k, v in r.items()}
     if not existing:
         return
-    fields = list(next(iter(existing.values())).keys())
+    fields = []
+    for r in existing.values():
+        for k in r:
+            if k not in fields:
+                fields.append(k)
     with open(path, "w", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=fields)
+        w = csv.DictWriter(fh, fieldnames=fields, restval="", extrasaction="ignore")
         w.writeheader()
         for k in sorted(existing):
             w.writerow(existing[k])
