@@ -29,28 +29,28 @@
  },
  "HO=F": {
   "symbol": "HO=F",
-  "last": 4.6008,
+  "last": 4.6073,
   "prev_close": 4.925,
   "time_utc": "2026-10-21 04:00",
   "source": "yahoo (delayed)"
  },
  "BZ=F": {
   "symbol": "BZ=F",
-  "last": 109.67,
+  "last": 109.73,
   "prev_close": 108.79,
   "time_utc": "2026-10-21 04:00",
   "source": "yahoo (delayed)"
  },
  "CL=F": {
   "symbol": "CL=F",
-  "last": 97.72,
+  "last": 97.71,
   "prev_close": 101.79,
   "time_utc": "2026-10-21 04:00",
   "source": "yahoo (delayed)"
  },
  "RB=F": {
   "symbol": "RB=F",
-  "last": 3.0512,
+  "last": 3.0504,
   "prev_close": 3.1172,
   "time_utc": "2026-10-21 04:00",
   "source": "yahoo (delayed)"
@@ -64,7 +64,7 @@
  },
  "BRL=X": {
   "symbol": "BRL=X",
-  "last": 5.0245,
+  "last": 5.0238,
   "prev_close": 5.037,
   "time_utc": "2026-10-20 23:00",
   "source": "yahoo (delayed)"
@@ -85,7 +85,7 @@
  },
  "CNY=X": {
   "symbol": "CNY=X",
-  "last": 6.6753,
+  "last": 6.6653,
   "prev_close": 6.6909,
   "time_utc": "2026-10-20 23:00",
   "source": "yahoo (delayed)"
@@ -106,14 +106,14 @@
  },
  "EURUSD=X": {
   "symbol": "EURUSD=X",
-  "last": 1.1235,
+  "last": 1.1236,
   "prev_close": 1.1216,
   "time_utc": "2026-10-20 23:00",
   "source": "yahoo (delayed)"
  },
  "DX-Y.NYB": {
   "symbol": "DX-Y.NYB",
-  "last": 101.695,
+  "last": 101.701,
   "prev_close": 101.73,
   "time_utc": "2026-10-21 04:00",
   "source": "yahoo (delayed)"
@@ -333,12 +333,12 @@
    "date": "2026-10-22"
   },
   "hf_OIL": {
-   "last": 110.127,
+   "last": 110.074,
    "high": 111.32,
    "low": 107.68,
    "prev_settle": 108.79,
    "open": 109.27,
-   "time_beijing": "05:07:34",
+   "time_beijing": "05:37:03",
    "date": "2026-10-22"
   },
   "hf_CL": {
@@ -367,8 +367,8 @@
    "date": "2026-10-21"
   },
   "fx_susdbrl": {
-   "last": 5.025,
-   "time": "05:07:35",
+   "last": 5.024,
+   "time": "05:30:02",
    "date": "2026-10-22"
   },
   "fx_susdinr": {
@@ -382,8 +382,8 @@
    "date": "2026-10-22"
   },
   "fx_seurusd": {
-   "last": 1.123,
-   "time": "05:07:29",
+   "last": 1.1231,
+   "time": "05:41:12",
    "date": "2026-10-22"
   },
   "fx_susdidr": {
@@ -463,7 +463,7 @@
  },
  "_percentiles": {
   "boho_usd_gal": {
-   "last": -0.26,
+   "last": -0.253,
    "date": "2026-10-21",
    "pct_2y": 95.2,
    "pct_1y": 90.5,
