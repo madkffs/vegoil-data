@@ -1,19 +1,13 @@
 {
- "run_utc": "2026-10-22 14:18",
- "mode": "backfill",
+ "run_utc": "2026-10-22 15:07",
+ "mode": "probe",
  "errors": {
   "MWE=F": "no data",
   "RS=F": "no data"
  },
- "euronext_cot_misses": [
-  "EBM week of 2025-10-15",
-  "ECO week of 2025-10-15",
-  "EMA week of 2025-10-15"
- ],
- "euronext_found": {
-  "EBM": "https://live.euronext.com/sites/default/files/commodities_reporting/2026/10/21/en/cdwpr_EBM_20261021.pdf",
-  "ECO": "https://live.euronext.com/sites/default/files/commodities_reporting/2026/10/21/en/cdwpr_ECO_20261021.pdf",
-  "EMA": "https://live.euronext.com/sites/default/files/commodities_reporting/2026/10/21/en/cdwpr_EMA_20261021.pdf"
+ "nabsa_rows": {
+  "sailed": 3,
+  "lineup": 0
  },
  "ok": 55
 }
