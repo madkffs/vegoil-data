@@ -1,0 +1,92 @@
+[
+{
+"id": "n01",
+"section": "Macro and geopolitics",
+"date": "2026-10-22",
+"headline": "Brent near $112, up about 3% on the day as the Middle East escalates",
+"detail": "Iran says seven ships were hit in the Gulf, Houthis struck Saudi targets, and the US naval blockade on Iran is tightening. Higher heating oil supports BOHO and biodiesel margins, and pushes up war-risk and freight costs.",
+"source": "OilPrice.com",
+"url": "https://oilprice.com/futures/brent/0"
+},
+{
+"id": "n02",
+"section": "Macro and geopolitics",
+"date": "2026-10-13",
+"headline": "Fed signals another small hike this year",
+"detail": "The policy rate is 3.75\u20134.00% after September's hike. Boston Fed's Collins expects one more small rise before year-end, likely in December rather than at the 27\u201328 Oct meeting, as fuel costs keep inflation above target. A firmer dollar and higher rates weigh on fund length.",
+"source": "Kitco / Reuters",
+"url": "https://www.kitco.com/news/off-the-wire/2026-10-13/feds-collins-sees-another-rate-hike-table-end-2026"
+},
+{
+"id": "n03",
+"section": "Biofuels",
+"date": "2026-04-16",
+"headline": "US biomass-based diesel mandate: 9.07bn RIN gallons for 2026",
+"detail": "The final RVO is up about 67% on 2025, rising to 9.20bn in 2027. The half-RIN penalty on imported fuel and feedstock is delayed to 2028 or later, which keeps imported UCO and tallow competitive with soyoil for now.",
+"source": "farmdoc daily",
+"url": "https://farmdocdaily.illinois.edu/2026/04/rewriting-the-rfs-playbook-final-2026-2027-rvos-for-biomass-based-diesel.html"
+},
+{
+"id": "n04",
+"section": "UCO",
+"date": "2026-10-19",
+"headline": "China UCO exports up 55% in January\u2013August, to 2.57 Mt",
+"detail": "Europe took 850 kt (Netherlands 534 kt), Singapore and Malaysia 632 kt, the US 452 kt and Canada 263 kt.",
+"source": "UkrAgroConsult",
+"url": "https://ukragroconsult.com/en/news/chinas-used-cooking-oil-exports-surge-55-with-europe-becoming-the-largest-buyer/"
+},
+{
+"id": "n05",
+"section": "Palm",
+"date": "2026-10-13",
+"headline": "Malaysian exports for 1\u201310 Oct up 34\u201338% on the month",
+"detail": "ITS: 525,071 t (+33.5%). AmSpec: 491,954 t (+37.7%).",
+"source": "Bernama",
+"url": "https://bernama.com/en/news.php/?id=2619877"
+},
+{
+"id": "n06",
+"section": "Palm",
+"date": "2026-10-12",
+"headline": "MPOB September: stocks up 24.5% to 3.51 Mt",
+"detail": "Crude palm oil output rose 16.5% to 2.11 Mt and exports fell 12.1% to 1.22 Mt.",
+"source": "The Edge Malaysia",
+"url": "https://theedgemalaysia.com/node/821487"
+},
+{
+"id": "n07",
+"section": "South America",
+"date": "2026-10-16",
+"headline": "Argentine line-up: 326 kt of soyoil on 24 vessels",
+"detail": "India 141 kt, Peru 52 kt, Morocco 36 kt, Algeria 18 kt; almost all from San Lorenzo. Also meal 1.71 Mt (64 vessels), beans 737 kt and corn 2.26 Mt.",
+"source": "NABSA vessel line-up",
+"url": "https://www.nabsa.com.ar/assets/vessel_prior3.pdf"
+},
+{
+"id": "n08",
+"section": "South America",
+"date": "2026-10-14",
+"headline": "Brazil October shipments seen higher (ANEC)",
+"detail": "Soybeans 6.55 Mt (+2.3% on the year), meal 2.55 Mt (+47.9%), corn 6.41 Mt (+12.6%).",
+"source": "Canal Rural",
+"url": "https://www.canalrural.com.br/economia/anec-eleva-projecoes-de-embarques-de-soja-e-milho-do-brasil-em-outubro/"
+},
+{
+"id": "n09",
+"section": "South America",
+"date": "2026-10-15",
+"headline": "Brazil soyoil exports already above all of 2025",
+"detail": "1.57 Mt shipped in January\u2013August. Abiove sees 1.8 Mt for 2026, against 1.36 Mt in 2025, on record crush capacity.",
+"source": "S&P Global",
+"url": "https://www.spglobal.com/energy/en/news-research/latest-news/agriculture/101526-brazil-soybean-oil-exports-rise-as-conab-forecasts-record-2026-27-soybean-crop"
+},
+{
+"id": "n10",
+"section": "US",
+"date": "2026-10-19",
+"headline": "US export inspections: soybeans 2.0 Mt, China took 1.28 Mt",
+"detail": "Week to 15 Oct. Soybeans 2,001,750 t (prior week 1.11 Mt), corn 672,475 t (1.31 Mt), wheat 240,308 t. Soybeans marketing-year to date are 7.16 Mt against 5.65 Mt a year ago.",
+"source": "USDA AMS",
+"url": "https://www.ams.usda.gov/mnreports/wa_gr101.txt"
+}
+]
