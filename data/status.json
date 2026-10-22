@@ -1,9 +1,10 @@
 {
- "run_utc": "2026-10-22 13:57",
- "mode": "backfill",
+ "run_utc": "2026-10-22 14:13",
+ "mode": "update",
  "errors": {
   "MWE=F": "no data",
-  "RS=F": "no data"
+  "RS=F": "no data",
+  "kline_DCE_P0": "HTTPSConnectionPool(host='stock2.finance.sina.com.cn', port=443): Read timed out. (read timeout=30)"
  },
  "euronext_found": {
   "EBM": "https://live.euronext.com/sites/default/files/commodities_reporting/2026/10/21/en/cdwpr_EBM_20261021.pdf",
