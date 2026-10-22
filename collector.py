@@ -522,7 +522,7 @@ def parse_nabsa_lineup(text, issue):
         if not cargo or not dest:
             bad.append(line[:170])
         eta = re.search(r"(ETA(?: REC| CZONE)?|ETB|ETF) (\d{2})/(\d{2})", head)
-        rows.append({"head": re.sub(r" (ETA|ETB|ETF)( REC| CZONE)? \d{2}/\d{2}.*$", "", head), "tons": _tons_es(tons), "cargo": cargo or "UNPARSED",
+        rows.append({"head": re.sub(r"( (ETA|ETB|ETF|ETS|AT|REC|CZONE|BERTHED|SHIFTING|ANCHORED|\d{2}/\d{2}))+$", "", head), "tons": _tons_es(tons), "cargo": cargo or "UNPARSED",
                      "destination": dest or "UNPARSED", "origin": origin, "charterer": charterer, "eta": f"{eta.group(2)}/{eta.group(3)}" if eta else None,
                      "eta_kind": eta.group(1) if eta else None, "raw": line[:200] if not (cargo and dest) else ""})
     return rows, bad
@@ -535,7 +535,7 @@ def nabsa_reports():
     os.makedirs(raw_dir, exist_ok=True)
     out = {"sailed": [], "lineup": [], "bad": []}
     for kind, base in (("sailed", "vessels_sailed_"), ("lineup", "vessel_")):
-        for suffix in ["update", "prior1", "prior2", "prior3", "prior4"]:
+        for suffix in ["prior4", "prior3", "prior2", "prior1", "update"]:   # oldest first, so the newest issue wins in the archive
             url = NABSA + base + suffix + ".pdf"
             try:
                 r = requests.get(url, headers=UA, timeout=60)

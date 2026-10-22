@@ -217,3 +217,132 @@ summary = {"market": "total", "official_date": f"{last_d:%Y-%m-%d}", "est_date":
            "vs_avg_usd_bn": round((est_now - avg) / 1e9, 2), "pct_2y": int(round((tot < est_now).mean() * 100)), "markets": len(L)}
 dump("agri_funds.json", mk); dump("agri_summary.json", [summary])
 print(json.dumps(summary)); print(pd.DataFrame(mk)[["label", "group", "net", "usd_bn", "avg_2y_usd_bn", "pct_2y"]].to_string())
+
+# ---------- export line-ups and shipments (Argentina: INDEC customs + NABSA; Brazil: Comex Stat customs) ----------
+import collections, re as _re
+LU = os.path.join(D, "lineups")
+names = json.load(open(os.path.join(LU, "indec_countries.json"))) if os.path.exists(os.path.join(LU, "indec_countries.json")) else {}
+names["999"] = "Undisclosed (customs confidentiality)"
+PRODUCTS = {  # product: (INDEC NCM prefixes, NABSA cargo names)
+    "Soybean oil": (("15071000",), ("SOYBEAN OIL",)),
+    "Soybean meal": (("2304",), ("SOYBEANMEAL", "SOYBEAN MEAL")),
+    "Sunflower oil": (("151211",), ("SUN FLOWER OIL", "SUNFLOWER OIL")),
+    "Soybeans": (("1201",), ("SOYA BEAN", "SOYBEANS", "SOYBEAN")),
+    "Corn": (("1005",), ("CORN",)),
+}
+def title(s): return " ".join(w.capitalize() if len(w) > 3 or w in ("USA",) else w.lower() if w in ("AND", "OF", "THE") else w.capitalize() for w in str(s).split())
+ALIAS = {"Korea (republic Of South Korea)": "South Korea", "Korea": "South Korea", "Russian Federation": "Russia", "Holland": "Netherlands",
+         "Not Available": "Not stated", "To Orders": "Not stated", "Optional": "Not stated", "United Arab Emirates": "UAE",
+         "United States": "USA", "United Kingdom": "UK", "Dominican Republic": "Dominican Rep."}
+ALIAS.update({"Venezuela": "Venezuela", "Iran": "Iran", "Syrian Arab Republic": "Syria", "Viet Nam": "Vietnam", "Korea": "South Korea",
+              "United States Of America": "USA", "China - Hong Kong": "Hong Kong", "Türkiye": "Turkey", "Russian Federation": "Russia",
+              "Tanzania, United Republic Of": "Tanzania", "Netherlands (kingdom Of The)": "Netherlands"})
+def norm(n):
+    t = title(_re.sub(r"\s*\((the|Bolivarian Republic of|Islamic Republic of|Republic of|Special Administrative Region|Plurinational State of|Kingdom of the)\)", "", str(n), flags=_re.I))
+    t = _re.sub(r"\s*\(.*\)$", "", t).strip()
+    return ALIAS.get(t, t)
+monthly = []
+# INDEC customs, Argentina
+indec = collections.defaultdict(float)
+for y in (2025, 2026):
+    p = os.path.join(LU, f"indec_exports_{y}.json")
+    if not os.path.exists(p): continue
+    for r in json.load(open(p))["rows"]:
+        if not r["_file"].startswith("exponm") or r["Pnet(kg)"] in ("s", ""): continue
+        for prod, (ncms, _) in PRODUCTS.items():
+            if r["NCM"].startswith(ncms):
+                indec[(prod, f"{r['Año']}-{r['Mes']}", norm(names.get(r["Pdes"], "INDEC code " + r["Pdes"])) if r["Pdes"] != "999" else names["999"])] += float(r["Pnet(kg)"].replace(",", ".")) / 1000
+for (prod, m, dest), t in indec.items():
+    monthly.append({"country": "Argentina", "product": prod, "month": m, "destination": dest, "tons": round(t), "basis": "Customs (INDEC)"})
+indec_months = sorted({m for (_, m, _) in indec})
+# NABSA sailed, Argentina: months not yet in customs data
+sail_p = os.path.join(LU, "nabsa_sailed.csv")
+sailed = pd.read_csv(sail_p) if os.path.exists(sail_p) else pd.DataFrame()
+if len(sailed):
+    sailed = sailed[sailed["origin"] == "ARGENTINA"].copy()   # Paraguayan and Bolivian cargo loaded in Argentina is not an Argentine export
+    sailed["month"] = sailed["date"].str.slice(0, 7)
+    # the sailed report is cumulative for the month: use only the latest issue that covers each month
+    latest = sailed.dropna(subset=["issue"]).groupby("month")["issue"].max()
+    sailed = sailed[sailed.apply(lambda r: r["issue"] == latest.get(r["month"]), axis=1)]
+    for prod, (_, cargos) in PRODUCTS.items():
+        s = sailed[sailed["cargo"].isin(cargos)]
+        for (m, dest), t in s.groupby(["month", "destination"])["tons"].sum().items():
+            if m in indec_months: continue
+            monthly.append({"country": "Argentina", "product": prod, "month": m, "destination": norm(dest), "tons": round(float(t)),
+                            "basis": f"Sailed to {pd.to_datetime(sailed['date']).max():%-d %b} (NABSA)"})
+# Comex Stat customs, Brazil (soybean oil, crude and refined)
+cs_p = os.path.join(LU, "comexstat_soyoil.json")
+if os.path.exists(cs_p):
+    agg = collections.defaultdict(float)
+    for r in json.load(open(cs_p))["data"]["list"]:
+        agg[(f"{r['year']}-{r['monthNumber']}", norm(r["country"]))] += float(r["metricKG"]) / 1000
+    for (m, dest), t in agg.items():
+        monthly.append({"country": "Brazil", "product": "Soybean oil", "month": m, "destination": dest, "tons": round(t), "basis": "Customs (Comex Stat)"})
+# keep the last 7 months per country/product
+mdf = pd.DataFrame(monthly)
+keep = []
+for (c, p), g in mdf.groupby(["country", "product"]):
+    ms = sorted(g["month"].unique())[-7:]
+    keep.append(g[g["month"].isin(ms)])
+mdf = pd.concat(keep) if keep else mdf
+mdf = mdf[mdf["tons"] > 0].sort_values(["country", "product", "month", "tons"], ascending=[True, True, True, False])
+mdf["id"] = [f"m{i:04d}" for i in range(len(mdf))]
+dump("lineup_monthly.json", mdf.to_dict("records"))
+
+# NABSA line-up (latest issue): scheduled loadings, Argentina
+lu_p = os.path.join(LU, "nabsa_lineup.csv")
+sched = []
+if os.path.exists(lu_p):
+    lu = pd.read_csv(lu_p)
+    lu = lu[lu["issue"] == lu["issue"].max()]
+    for prod, (_, cargos) in PRODUCTS.items():
+        g = lu[lu["cargo"].isin(cargos) & (lu["origin"] == "ARGENTINA")]
+        for dest, gg in g.groupby("destination"):
+            sched.append({"country": "Argentina", "product": prod, "destination": norm(dest), "tons": round(float(gg["tons"].sum())),
+                          "vessels": int(gg["head"].nunique()), "issue": str(lu["issue"].max())})
+sched = sorted(sched, key=lambda r: (r["product"], -r["tons"]))
+for i, r in enumerate(sched): r["id"] = f"s{i:03d}"
+dump("lineup_scheduled.json", sched)
+
+# Cross-checks
+checks = []
+refs = json.load(open(os.path.join(ROOT, "dashboard", "lineup_refs.json")))
+for ref in refs:
+    a, b = ref["period"].split("..")
+    ms = [f"{x:%Y-%m}" for x in pd.period_range(a, b, freq="M").to_timestamp()]
+    if ref["country"] == "Argentina":
+        ours = sum(t for (p, m, _), t in indec.items() if p == ref["product"] and m in ms); src = "INDEC customs"
+    else:
+        ours = sum(r["tons"] for r in monthly if r["country"] == "Brazil" and r["month"] in ms); src = "Comex Stat customs"
+    diff = (ours / 1000 - ref["value_kt"]) / ref["value_kt"] * 100
+    checks.append({"id": ref["id"], "check": f"{ref['country']} {ref['product'].lower()}, {ms[0]} to {ms[-1]}", "ours": f"{ours/1000:,.0f} kt ({src})",
+                   "other": f"{ref['approx']} {ref['value_kt']:,} kt ({ref['source']})", "diff_pct": round(diff, 1),
+                   "status": "Agrees" if abs(diff) <= 3 else ("Close" if abs(diff) <= 7 else "Check"), "url": ref["url"]})
+# NABSA vs INDEC once both cover a month
+if len(sailed):
+    for m in sorted(set(sailed["month"]) & set(indec_months)):
+        a = float(sailed[(sailed["month"] == m) & sailed["cargo"].isin(PRODUCTS["Soybean oil"][1])]["tons"].sum())
+        b = sum(t for (p, mm, _), t in indec.items() if p == "Soybean oil" and mm == m)
+        if a and b:
+            diff = (a - b) / b * 100
+            checks.append({"id": f"nabsa-indec-{m}", "check": f"Argentina soybean oil, {m}", "ours": f"{a/1000:,.0f} kt (NABSA sailed)",
+                           "other": f"{b/1000:,.0f} kt (INDEC customs)", "diff_pct": round(diff, 1),
+                           "status": "Agrees" if abs(diff) <= 5 else ("Close" if abs(diff) <= 10 else "Check"), "url": "https://comex.indec.gob.ar/"})
+# NABSA internal: soybean oil vessels that left the line-up should appear as sailed
+if os.path.exists(lu_p) and len(sailed):
+    lu_all = pd.read_csv(lu_p)
+    issues = sorted(lu_all["issue"].dropna().unique())
+    if len(issues) >= 2:
+        first, last = issues[0], issues[-1]
+        clean = lambda h: _re.sub(r"( (ETA|ETB|ETF|ETS|AT|REC|CZONE|BERTHED|SHIFTING|ANCHORED|\d{2}/\d{2}))+$", "", str(h))
+        v = lambda df: set(df[df["cargo"].isin(PRODUCTS["Soybean oil"][1])]["head"].dropna().map(clean).str.split().str[-2:].str.join(" "))
+        gone = v(lu_all[lu_all["issue"] == first]) - v(lu_all[lu_all["issue"] == last])
+        sailed_txt = " | ".join(pd.read_csv(sail_p)["head"].dropna().astype(str))
+        found = [g for g in gone if g in sailed_txt]
+        if gone:
+            pct = len(found) / len(gone) * 100
+            checks.append({"id": "nabsa-internal", "check": f"Soybean oil vessels that left NABSA's line-up between {first} and {last}",
+                           "ours": f"{len(gone)} left the line-up", "other": f"{len(found)} found in NABSA's sailed list", "diff_pct": round(pct - 100, 1),
+                           "status": "Agrees" if pct >= 90 else ("Close" if pct >= 75 else "Check"), "url": "https://www.nabsa.com.ar/info.html"})
+dump("lineup_checks.json", checks)
+print("lineups", len(mdf), len(sched), [ (c["check"], c["diff_pct"], c["status"]) for c in checks])

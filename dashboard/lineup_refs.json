@@ -1,0 +1,4 @@
+[
+ {"id": "ref-ar-h1", "country": "Argentina", "product": "Soybean oil", "period": "2026-01..2026-06", "value_kt": 2800, "approx": "just under", "source": "Bolsa de Comercio de Rosario, from NABSA and SAGyP shipment data (24 Jul 2026)", "url": "https://www.bcr.com.ar/es/print/pdf/node/116774"},
+ {"id": "ref-br-jan-aug", "country": "Brazil", "product": "Soybean oil", "period": "2026-01..2026-08", "value_kt": 1570, "approx": "about", "source": "S&P Global, citing Brazilian government trade data and Abiove (15 Oct 2026)", "url": "https://www.spglobal.com/energy/en/news-research/latest-news/agriculture/101526-brazil-soybean-oil-exports-rise-as-conab-forecasts-record-2026-27-soybean-crop"}
+]
