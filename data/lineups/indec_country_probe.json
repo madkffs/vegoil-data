@@ -1,0 +1,75 @@
+{
+ "js": [
+  "/assets/app~253ae210.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~82b88a00.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~36817c04.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~d939e436.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~46fbf940.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~db300d2f.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~1f20a385.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~1ccf8e8a.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~9c5b28f6.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~3f553db4.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~678f84af.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~3f764be9.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~f734b0c6.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~bacacef5.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~c98f95f3.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~069f6afa.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~e73b60ec.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~bb9f020d.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~f3de7c23.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~970f9218.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~cff61b85.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~7cb3de8d.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~bf613941.bundle.js?383c59424dba9a329a8e",
+  "/assets/app~c714bc7b.bundle.js?383c59424dba9a329a8e"
+ ],
+ "hits": [
+  ".csv",
+  ".json",
+  "/csv",
+  "/json",
+  "anychart.data.csv.parser",
+  "anychart.utils.json2xml",
+  "anychart.utils.xml2json",
+  "api",
+  "csv",
+  "file-csv",
+  "geo-json",
+  "json",
+  "save-config-as-json",
+  "sourceMappingURL=data:application/json;charset=utf-8;base64,",
+  "topo-json"
+ ],
+ "files/amfiles/paises.csv": {
+  "status": 404,
+  "type": "text/html; charset=utf-8",
+  "head": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /files/amfiles/paises.csv</pre>\n</body>\n</html>\n"
+ },
+ "files/paises.csv": {
+  "status": 404,
+  "type": "text/html; charset=utf-8",
+  "head": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /files/paises.csv</pre>\n</body>\n</html>\n"
+ },
+ "files/amfiles/paises.json": {
+  "status": 404,
+  "type": "text/html; charset=utf-8",
+  "head": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /files/amfiles/paises.json</pre>\n</body>\n</html>\n"
+ },
+ "api/paises": {
+  "status": 404,
+  "type": "text/html; charset=utf-8",
+  "head": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/paises</pre>\n</body>\n</html>\n"
+ },
+ "data/paises.json": {
+  "status": 404,
+  "type": "text/html; charset=utf-8",
+  "head": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /data/paises.json</pre>\n</body>\n</html>\n"
+ },
+ "files/zips/paises.zip": {
+  "status": 404,
+  "type": "text/html; charset=utf-8",
+  "head": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /files/zips/paises.zip</pre>\n</body>\n</html>\n"
+ }
+}
