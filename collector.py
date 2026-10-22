@@ -591,25 +591,23 @@ def indec_exports():
             json.dump({"info": info, "rows": rows}, fh)
 
 def indec_country_probe():
-    """Find INDEC's country code table (Pdes) inside the comex web app bundles and save it as code -> name."""
+    """INDEC's destination codes (Pdes) come from the map layer in its comex web app: properties._id -> name.common."""
     base = "https://comex.indec.gob.ar/"
     r = requests.get(base, headers=UA, timeout=60, verify=False)
     js = re.findall(r'src="([^"]+\.js[^"]*)"', r.text)
-    found, ctx = {}, []
+    codes = {}
     for j in js:
         u = j if j.startswith("http") else base + j.lstrip("/")
         try:
             t = requests.get(u, headers=UA, timeout=60, verify=False).text
         except Exception:
             continue
-        for k in ("Argelia", "India", "Marruecos", "Bangladesh"):
-            for m in re.finditer(k, t):
-                ctx.append(u[-40:] + " :: " + t[max(0, m.start() - 220):m.start() + 120])
-                if len(ctx) > 40: break
-        for m in re.finditer(r'["\']?(?:id|codigo|cod|code|value|pais_id)?["\']?\s*[:=]?\s*["\']?(\d{3})["\']?\s*[,:]\s*["\']?(?:name|nombre|label|text|desc|descripcion)?["\']?\s*[:=]?\s*["\']([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ .,()\'-]{2,45})["\']', t):
-            found.setdefault(m.group(1), set()).add(m.group(2))
-    with open(os.path.join(DATA, "lineups", "indec_country_probe.json"), "w") as fh:
-        json.dump({"js": js, "context": ctx[:40], "pairs": {k: sorted(v)[:5] for k, v in sorted(found.items())}}, fh, indent=1, ensure_ascii=False)
+        for m in re.finditer(r'"_id":(\d+),"name":\{"common":"([^"]+)"', t):
+            codes[m.group(1)] = m.group(2)
+    if len(codes) < 50:
+        raise ValueError(f"only {len(codes)} country codes found")
+    with open(os.path.join(DATA, "lineups", "indec_countries.json"), "w") as fh:
+        json.dump(dict(sorted(codes.items())), fh, indent=0, ensure_ascii=False)
 
 def comexstat_exports():
     """Official Brazilian exports by NCM and destination (Comex Stat API), soybean oil crude and refined, monthly."""
