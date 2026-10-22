@@ -428,7 +428,7 @@ def _num_es(x):
 COUNTRIES = ["UNITED ARAB EMIRATES", "KOREA (REPUBLIC OF SOUTH KOREA)", "SOUTH KOREA", "KOREA", "DOMINICAN REPUBLIC", "SAUDI ARABIA", "SOUTH AFRICA",
     "UNITED KINGDOM", "UNITED STATES", "U.S.A.", "USA", "NEW ZEALAND", "SRI LANKA", "COSTA RICA", "EL SALVADOR", "PUERTO RICO", "IVORY COAST",
     "CAPE VERDE", "TRINIDAD AND TOBAGO", "PAPUA NEW GUINEA", "NETHERLANDS ANTILLES", "CZECH REPUBLIC", "HONG KONG", "SIERRA LEONE",
-    "NOT AVAILABLE", "TO ORDERS", "OPTIONAL", "INDIA", "CHINA", "PERU", "MOROCCO", "ALGERIA", "EGYPT", "BANGLADESH", "PAKISTAN", "MOZAMBIQUE",
+    "NOT AVAILABLE", "TO ORDERS", "OPTIONAL", "PERSIAN GULF", "RUSSIAN FEDERATION", "RED SEA", "WEST AFRICA", "EAST AFRICA", "CARIBBEAN", "MEDITERRANEAN", "CONTINENT", "FAR EAST", "INDIA", "CHINA", "PERU", "MOROCCO", "ALGERIA", "EGYPT", "BANGLADESH", "PAKISTAN", "MOZAMBIQUE",
     "MEXICO", "MADAGASCAR", "GUATEMALA", "TOGO", "SPAIN", "VENEZUELA", "COLOMBIA", "ECUADOR", "CHILE", "BOLIVIA", "PARAGUAY", "URUGUAY", "BRAZIL",
     "HONDURAS", "NICARAGUA", "PANAMA", "CUBA", "JAMAICA", "HAITI", "NETHERLANDS", "HOLLAND", "BELGIUM", "GERMANY", "FRANCE", "ITALY", "PORTUGAL",
     "POLAND", "DENMARK", "NORWAY", "SWEDEN", "FINLAND", "IRELAND", "GREECE", "TURKEY", "ISRAEL", "LEBANON", "SYRIA", "JORDAN", "IRAQ", "IRAN",
@@ -439,7 +439,10 @@ COUNTRIES = ["UNITED ARAB EMIRATES", "KOREA (REPUBLIC OF SOUTH KOREA)", "SOUTH K
 ORIGINS = r"(ARGENTINA|PARAGUAY|BOLIVIA|URUGUAY|BRAZIL)"
 CARGOES = ["NEUTRALIZED SOYBEAN OIL", "REFINED SOYBEAN OIL", "SOYBEAN OIL", "SOY ACID OIL", "SOYBEANMEAL", "SOYBEAN MEAL", "SOYBEANS", "SOYBEAN",
            "SUN FLOWER OIL", "SUNFLOWER OIL", "SUN FLOWER MEAL", "SUNFLOWER MEAL", "CORN", "WHEAT", "BARLEY", "SORGHUM", "BIODIESEL", "GLYCERINE",
-           "CORN OIL", "VEGETABLE OIL", "SOYA HULL PELLETS", "SUNFLOWER SEED PELLETS", "MALT", "RICE"]
+           "CORN OIL", "VEGETABLE OIL", "SOYA HULL PELLETS", "SUNFLOWER SEED PELLETS", "MALT", "RICE",
+           "SOYA BEAN OIL (BLEND)", "SOYBEANOIL REFINED", "SOYA BEAN", "NEUTRAL OIL", "OLEIN", "LECITHIN", "SUN FLOWER PELLETS",
+           "SUN FLOWER MEAL PELLETS", "SUNFLOWER PELLETS", "WOOD LOGS", "WOOD PULP", "WOOD CHIPS", "IRON ORE", "CRUDE OIL", "BALANCED FEED",
+           "SULPHURIC ACID", "PEANUTS", "PEANUT OIL", "CHICKPEAS", "BEANS"]
 
 def _country(rest):
     """Split 'DESTINATION COORDINATOR CHARTERER' by the longest known country prefix."""
@@ -472,22 +475,56 @@ def parse_nabsa_sailed(text):
                      "destination": dest or "UNPARSED", "rest": tail})
     return rows, bad
 
+def _interleave(a, b, s):
+    """True if s is an interleaving of a and b (order kept within each)."""
+    if len(a) + len(b) != len(s): return False
+    prev = [True] * (len(b) + 1)
+    for j in range(1, len(b) + 1): prev[j] = prev[j - 1] and b[j - 1] == s[j - 1]
+    for i in range(1, len(a) + 1):
+        cur = [prev[0] and a[i - 1] == s[i - 1]] + [False] * len(b)
+        for j in range(1, len(b) + 1):
+            cur[j] = (prev[j] and a[i - 1] == s[i + j - 1]) or (cur[j - 1] and b[j - 1] == s[i + j - 1])
+        prev = cur
+    return prev[-1]
+
+ORIGIN_LIST = ["ARGENTINA", "PARAGUAY", "BOLIVIA", "URUGUAY", "BRAZIL"]
+
+def split_dest_origin(rest):
+    """rest = 'DEST ORIGIN CHARTERER', where DEST and ORIGIN may be interleaved letter by letter by the PDF text layer."""
+    for c in sorted(COUNTRIES, key=len, reverse=True):
+        for o in ORIGIN_LIST:
+            clean = c + " " + o
+            if rest == clean or rest.startswith(clean + " "):
+                return c, o, rest[len(clean):].strip()
+    toks = rest.split(" ")
+    for c in sorted(COUNTRIES, key=len, reverse=True):
+        cw = c.split(" ")
+        for o in ORIGIN_LIST:
+            # the first len(cw)-1 words match exactly, the last word of the country is interleaved with the origin
+            if len(toks) < len(cw): continue
+            if cw[:-1] != toks[:len(cw) - 1]: continue
+            merged = toks[len(cw) - 1]
+            if _interleave(cw[-1], o, merged):
+                return c, o, " ".join(toks[len(cw):])
+    return None, None, rest
+
 def parse_nabsa_lineup(text, issue):
     rows, bad = [], []
-    port = None
     for line in text.splitlines():
-        m = re.search(r"^(.*?) (?:ETA|ETB|ETF|AT|REC|ETS)[^\n]*? (load|disch|discharge) ([\d.]+(?:,\d+)?) (.+?) " + ORIGINS + r"(?: (.*))?$", line)
+        m = re.search(r"^(.*?) (load|disch|discharge) ([\d][\d .,]*?) ([A-Z(].*)$", line)
         if not m:
-            if " load " in line: bad.append(line[:160])
             continue
-        head, op, tons, mid, origin, charterer = m.groups()
+        head, op, tons, rest = m.groups()
         if op != "load":
             continue
-        cargo, dest = _cargo(mid)
-        eta = re.search(r"(ETA(?: REC| CZONE)?|ETB|ETF) (\d{2})/(\d{2})", line)
-        rows.append({"head": head, "tons": _tons_es(tons), "cargo": cargo or mid, "destination": dest or "UNPARSED", "origin": origin,
-                     "charterer": (charterer or "").strip(), "eta": f"{eta.group(2)}/{eta.group(3)}" if eta else None, "eta_kind": eta.group(1) if eta else None,
-                     "issue": issue})
+        cargo, rest2 = _cargo(rest)
+        dest, origin, charterer = split_dest_origin(rest2) if cargo else (None, None, rest)
+        if not cargo or not dest:
+            bad.append(line[:170])
+        eta = re.search(r"(ETA(?: REC| CZONE)?|ETB|ETF) (\d{2})/(\d{2})", head)
+        rows.append({"head": re.sub(r" (ETA|ETB|ETF)( REC| CZONE)? \d{2}/\d{2}.*$", "", head), "tons": _tons_es(tons), "cargo": cargo or "UNPARSED",
+                     "destination": dest or "UNPARSED", "origin": origin, "charterer": charterer, "eta": f"{eta.group(2)}/{eta.group(3)}" if eta else None,
+                     "eta_kind": eta.group(1) if eta else None, "raw": line[:200] if not (cargo and dest) else ""})
     return rows, bad
 
 def nabsa_reports():
@@ -554,30 +591,25 @@ def indec_exports():
             json.dump({"info": info, "rows": rows}, fh)
 
 def indec_country_probe():
-    """Find INDEC's country code table (Pdes) from the comex web app."""
-    out = {}
+    """Find INDEC's country code table (Pdes) inside the comex web app bundles and save it as code -> name."""
     base = "https://comex.indec.gob.ar/"
-    try:
-        r = requests.get(base, headers=UA, timeout=60, verify=False)
-        js = re.findall(r'src="([^"]+\.js[^"]*)"', r.text)
-        out["js"] = js
-        hits = set()
-        for j in js[:10]:
-            u = j if j.startswith("http") else base + j.lstrip("/")
-            t = requests.get(u, headers=UA, timeout=60, verify=False).text
-            for m in re.findall(r'["\'`]([^"\'`\s]*(?:pais|Pais|country|api|json|csv)[^"\'`\s]*)["\'`]', t):
-                if len(m) < 120: hits.add(m)
-        out["hits"] = sorted(hits)[:300]
-    except Exception as e:
-        out["error"] = str(e)[:200]
-    for u in ["files/amfiles/paises.csv", "files/paises.csv", "files/amfiles/paises.json", "api/paises", "data/paises.json", "files/zips/paises.zip"]:
+    r = requests.get(base, headers=UA, timeout=60, verify=False)
+    js = re.findall(r'src="([^"]+\.js[^"]*)"', r.text)
+    found, ctx = {}, []
+    for j in js:
+        u = j if j.startswith("http") else base + j.lstrip("/")
         try:
-            r = requests.get(base + u, headers=UA, timeout=30, verify=False)
-            out[u] = {"status": r.status_code, "type": r.headers.get("content-type"), "head": r.text[:800]}
-        except Exception as e:
-            out[u] = str(e)[:100]
+            t = requests.get(u, headers=UA, timeout=60, verify=False).text
+        except Exception:
+            continue
+        for k in ("Argelia", "India", "Marruecos", "Bangladesh"):
+            for m in re.finditer(k, t):
+                ctx.append(u[-40:] + " :: " + t[max(0, m.start() - 220):m.start() + 120])
+                if len(ctx) > 40: break
+        for m in re.finditer(r'["\']?(?:id|codigo|cod|code|value|pais_id)?["\']?\s*[:=]?\s*["\']?(\d{3})["\']?\s*[,:]\s*["\']?(?:name|nombre|label|text|desc|descripcion)?["\']?\s*[:=]?\s*["\']([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ .,()\'-]{2,45})["\']', t):
+            found.setdefault(m.group(1), set()).add(m.group(2))
     with open(os.path.join(DATA, "lineups", "indec_country_probe.json"), "w") as fh:
-        json.dump(out, fh, indent=1)
+        json.dump({"js": js, "context": ctx[:40], "pairs": {k: sorted(v)[:5] for k, v in sorted(found.items())}}, fh, indent=1, ensure_ascii=False)
 
 def comexstat_exports():
     """Official Brazilian exports by NCM and destination (Comex Stat API), soybean oil crude and refined, monthly."""
