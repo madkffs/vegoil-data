@@ -13,7 +13,11 @@ MONTHS = "FGHJKMNQUVXZ"
 # CBOT listed months per product
 CYCLES = {"ZL": "FHKNQUVZ", "ZM": "FHKNQUVZ", "ZS": "FHKNQUX", "ZC": "HKNUZ"}
 CONTINUOUS = ["ZL=F", "ZM=F", "ZS=F", "ZC=F", "HO=F", "BZ=F", "CL=F", "RB=F"]
-FX = ["MYR=X", "BRL=X", "ARS=X", "INR=X", "CNY=X", "IDR=X", "EGP=X", "EURUSD=X", "DX-Y.NYB"]
+# Other agricultural futures (continuous), used to value fund positions across all agri markets
+AGRI = ["ZW=F", "KE=F", "MWE=F", "ZO=F", "ZR=F", "RS=F", "CT=F", "SB=F", "KC=F", "CC=F", "OJ=F", "LE=F", "GF=F", "HE=F"]
+# Freight proxy: Breakwave Dry Bulk Shipping ETF (holds Capesize/Panamax/Supramax freight futures)
+FREIGHT = ["BDRY"]
+FX = ["CAD=X", "MYR=X", "BRL=X", "ARS=X", "INR=X", "CNY=X", "IDR=X", "EGP=X", "EURUSD=X", "DX-Y.NYB"]
 SINA_HF = {"hf_BO": "CBOT soyoil (front)", "hf_SM": "CBOT soymeal (front)", "hf_S": "CBOT soybeans (front)", "hf_C": "CBOT corn (front)",
            "hf_HO": "NYMEX heating oil (front)", "hf_OIL": "ICE Brent (front)", "hf_CL": "NYMEX WTI (front)", "hf_FCPO": "Bursa crude palm oil (3rd month benchmark)"}
 SINA_FX = ["fx_susdmyr", "fx_susdbrl", "fx_susdinr", "fx_susdcny", "fx_seurusd", "fx_susdidr"]
@@ -219,6 +223,76 @@ def cot():
         rows.append(row)
     return rows
 
+def cot_agri():
+    """CFTC disaggregated futures-only for every agricultural market (commodity group AGRICULTURE), weekly, from mid-2024."""
+    params = {"$where": "commodity_group_name='AGRICULTURE' AND report_date_as_yyyy_mm_dd > '2024-06-01T00:00:00'",
+              "$select": "report_date_as_yyyy_mm_dd,cftc_contract_market_code,market_and_exchange_names,commodity_subgroup_name,commodity_name,"
+                         "open_interest_all,m_money_positions_long_all,m_money_positions_short_all",
+              "$limit": "50000", "$order": "report_date_as_yyyy_mm_dd"}
+    r = requests.get("https://publicreporting.cftc.gov/resource/72hh-3qpy.json", params=params, headers=UA, timeout=90)
+    r.raise_for_status()
+    rows = []
+    for a in r.json():
+        d, c = a.get("report_date_as_yyyy_mm_dd", "")[:10], a.get("cftc_contract_market_code")
+        rows.append({"key": f"{d}_{c}", "date": d, "code": c, "name": a.get("market_and_exchange_names"),
+                     "subgroup": a.get("commodity_subgroup_name"), "commodity": a.get("commodity_name"),
+                     "open_interest": a.get("open_interest_all"), "mm_long": a.get("m_money_positions_long_all"),
+                     "mm_short": a.get("m_money_positions_short_all")})
+    return rows
+
+EURONEXT_COT = {"EBM": "Milling wheat", "ECO": "Rapeseed", "EMA": "Corn"}
+
+def euronext_probe():
+    """Find the latest Euronext weekly position report (PDF) per MATIF product and save its text,
+    so the parser can be written against the real layout. Also records which quote pages respond."""
+    out_dir = os.path.join(DATA, "euronext")
+    os.makedirs(out_dir, exist_ok=True)
+    found = {}
+    today = dt.date.today()
+    for prod in EURONEXT_COT:
+        for back in range(0, 22):
+            d = today - dt.timedelta(days=back)
+            for lang in ("en",):
+                url = f"https://live.euronext.com/sites/default/files/commodities_reporting/{d:%Y/%m/%d}/{lang}/cdwpr_{prod}_{d:%Y%m%d}.pdf"
+                try:
+                    r = requests.get(url, headers=UA, timeout=30)
+                except Exception as e:
+                    continue
+                if r.status_code == 200 and r.content[:4] == b"%PDF":
+                    import io, pdfplumber
+                    with pdfplumber.open(io.BytesIO(r.content)) as pdf:
+                        text = "\n\n=== PAGE ===\n".join((p.extract_text() or "") for p in pdf.pages)
+                    with open(os.path.join(out_dir, f"raw_{prod}.txt"), "w") as fh:
+                        fh.write(url + "\n" + text)
+                    found[prod] = url
+                    break
+            if prod in found:
+                break
+    probes = {}
+    for u in ["https://live.euronext.com/en/ajax/getDetailedQuote/EBM-DPAR",
+              "https://live.euronext.com/en/product/commodities-futures/EBM-DPAR",
+              "https://live.euronext.com/en/ajax/getPricesFutures/commodities-futures/EBM/DPAR"]:
+        try:
+            r = requests.get(u, headers=UA, timeout=30)
+            probes[u] = {"status": r.status_code, "type": r.headers.get("content-type"), "head": r.text[:4000]}
+        except Exception as e:
+            probes[u] = {"error": str(e)[:200]}
+    for u in ["https://shipandbunker.com/prices",
+              "https://shipandbunker.com/prices/apac/sea/sg-sin-singapore",
+              "https://shipandbunker.com/prices/emea/nwe/nl-rtm-rotterdam",
+              "https://www.balticexchange.com/en/index.html",
+              "https://www.hellenicshippingnews.com/category/shipping-news/dry-bulk-market/"]:
+        try:
+            r = requests.get(u, headers=UA, timeout=30)
+            t = re.sub(r"<script.*?</script>|<style.*?</style>", " ", r.text, flags=re.S)
+            t = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", t))
+            probes[u] = {"status": r.status_code, "type": r.headers.get("content-type"), "text": t[:6000]}
+        except Exception as e:
+            probes[u] = {"error": str(e)[:200]}
+    with open(os.path.join(out_dir, "probe.json"), "w") as fh:
+        json.dump({"found": found, "quotes": probes}, fh, indent=1)
+    return found
+
 def palm_fob():
     r = requests.get("https://www.zyotwdhon.com/en/palm-oil-daily-prices", headers=UA, timeout=20)
     return parse_palm(r.text)
@@ -284,7 +358,7 @@ def main(mode):
     now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M")
     status, latest = {"run_utc": now, "mode": mode, "errors": {}}, {}
     rng = "2y" if mode == "backfill" else "10d"
-    symbols = CONTINUOUS + FX + contract_symbols()
+    symbols = CONTINUOUS + FX + AGRI + FREIGHT + contract_symbols()
     for s in symbols:
         try:
             snap, daily = yahoo_chart(s, "1d", rng)
@@ -327,6 +401,15 @@ def main(mode):
         append_csv(os.path.join(DATA, "cot_disaggregated.csv"), rows, key="key")
     except Exception as e:
         status["errors"]["cot"] = str(e)[:200]
+    try:
+        rows = cot_agri()
+        append_csv(os.path.join(DATA, "cot_agri.csv"), rows, key="key")
+    except Exception as e:
+        status["errors"]["cot_agri"] = str(e)[:200]
+    try:
+        status["euronext_found"] = euronext_probe()
+    except Exception as e:
+        status["errors"]["euronext"] = str(e)[:200]
     try:
         p = palm_fob()
         latest["_palm_fob"] = p
