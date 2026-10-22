@@ -1,6 +1,6 @@
 {
- "run_utc": "2026-10-22 15:07",
- "mode": "probe",
+ "run_utc": "2026-10-22 15:11",
+ "mode": "update",
  "errors": {
   "MWE=F": "no data",
   "RS=F": "no data"
