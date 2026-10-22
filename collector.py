@@ -195,6 +195,30 @@ def percentiles():
                   "median_2y": round(float(s.median()), 3), "min_2y": round(float(s.min()), 3), "max_2y": round(float(s.max()), 3), "n": int(len(s))}
     return out
 
+COT_CODES = {"005602": "soybeans", "007601": "soybean_oil", "026603": "soybean_meal", "002602": "corn"}
+COT_FIELDS = ["report_date_as_yyyy_mm_dd", "cftc_contract_market_code", "open_interest_all",
+              "prod_merc_positions_long", "prod_merc_positions_short",
+              "swap_positions_long_all", "swap__positions_short_all", "swap__positions_spread_all",
+              "m_money_positions_long_all", "m_money_positions_short_all", "m_money_positions_spread",
+              "other_rept_positions_long", "other_rept_positions_short", "other_rept_positions_spread",
+              "nonrept_positions_long_all", "nonrept_positions_short_all"]
+
+def cot():
+    """CFTC disaggregated futures-only (public Socrata API), weekly, from 2023."""
+    codes = ",".join(f"'{c}'" for c in COT_CODES)
+    params = {"$where": f"cftc_contract_market_code in({codes}) AND report_date_as_yyyy_mm_dd > '2023-01-01T00:00:00'",
+              "$limit": "5000", "$order": "report_date_as_yyyy_mm_dd"}
+    r = requests.get("https://publicreporting.cftc.gov/resource/72hh-3qpy.json", params=params, headers=UA, timeout=60)
+    r.raise_for_status()
+    rows = []
+    for a in r.json():
+        row = {"key": a.get("report_date_as_yyyy_mm_dd", "")[:10] + "_" + COT_CODES.get(a.get("cftc_contract_market_code"), a.get("cftc_contract_market_code")),
+               "date": a.get("report_date_as_yyyy_mm_dd", "")[:10], "market": COT_CODES.get(a.get("cftc_contract_market_code"))}
+        for f in COT_FIELDS[2:]:
+            row[f] = a.get(f)
+        rows.append(row)
+    return rows
+
 def palm_fob():
     r = requests.get("https://www.zyotwdhon.com/en/palm-oil-daily-prices", headers=UA, timeout=20)
     return parse_palm(r.text)
@@ -298,6 +322,11 @@ def main(mode):
             append_csv(os.path.join(DATA, "daily", name + ".csv"), rows)
         except Exception as e:
             status["errors"]["kline_" + name] = str(e)[:200]
+    try:
+        rows = cot()
+        append_csv(os.path.join(DATA, "cot_disaggregated.csv"), rows, key="key")
+    except Exception as e:
+        status["errors"]["cot"] = str(e)[:200]
     try:
         p = palm_fob()
         latest["_palm_fob"] = p
