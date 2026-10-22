@@ -553,6 +553,32 @@ def indec_exports():
         with open(os.path.join(DATA, "lineups", f"indec_exports_{year}.json"), "w") as fh:
             json.dump({"info": info, "rows": rows}, fh)
 
+def indec_country_probe():
+    """Find INDEC's country code table (Pdes) from the comex web app."""
+    out = {}
+    base = "https://comex.indec.gob.ar/"
+    try:
+        r = requests.get(base, headers=UA, timeout=60, verify=False)
+        js = re.findall(r'src="([^"]+\.js[^"]*)"', r.text)
+        out["js"] = js
+        hits = set()
+        for j in js[:10]:
+            u = j if j.startswith("http") else base + j.lstrip("/")
+            t = requests.get(u, headers=UA, timeout=60, verify=False).text
+            for m in re.findall(r'["\'`]([^"\'`\s]*(?:pais|Pais|country|api|json|csv)[^"\'`\s]*)["\'`]', t):
+                if len(m) < 120: hits.add(m)
+        out["hits"] = sorted(hits)[:300]
+    except Exception as e:
+        out["error"] = str(e)[:200]
+    for u in ["files/amfiles/paises.csv", "files/paises.csv", "files/amfiles/paises.json", "api/paises", "data/paises.json", "files/zips/paises.zip"]:
+        try:
+            r = requests.get(base + u, headers=UA, timeout=30, verify=False)
+            out[u] = {"status": r.status_code, "type": r.headers.get("content-type"), "head": r.text[:800]}
+        except Exception as e:
+            out[u] = str(e)[:100]
+    with open(os.path.join(DATA, "lineups", "indec_country_probe.json"), "w") as fh:
+        json.dump(out, fh, indent=1)
+
 def comexstat_exports():
     """Official Brazilian exports by NCM and destination (Comex Stat API), soybean oil crude and refined, monthly."""
     body = {"flow": "export", "monthDetail": True, "period": {"from": "2025-01", "to": "2026-12"},
@@ -738,7 +764,7 @@ def main(mode):
     except Exception as e:
         status["errors"]["nabsa"] = str(e)[:200]
     if mode in ("backfill", "probe") or dt.datetime.utcnow().minute < 15 and dt.datetime.utcnow().hour == 6:
-        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports)):
+        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("indec_countries", indec_country_probe)):
             try:
                 fn()
             except Exception as e:
