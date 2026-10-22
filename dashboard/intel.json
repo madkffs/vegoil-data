@@ -65,15 +65,6 @@
 {
 "id": "n08",
 "section": "South America",
-"date": "2026-10-16",
-"headline": "Argentine line-up: 326 kt of soyoil on 24 vessels",
-"detail": "India 141 kt, Peru 52 kt, Morocco 36 kt, Algeria 18 kt; almost all from San Lorenzo. Also meal 1.71 Mt (64 vessels), beans 737 kt and corn 2.26 Mt.",
-"source": "NABSA vessel line-up",
-"url": "https://www.nabsa.com.ar/assets/vessel_prior3.pdf"
-},
-{
-"id": "n09",
-"section": "South America",
 "date": "2026-10-14",
 "headline": "Brazil October shipments seen higher (ANEC)",
 "detail": "Soybeans 6.55 Mt (+2.3% on the year), meal 2.55 Mt (+47.9%), corn 6.41 Mt (+12.6%).",
@@ -81,7 +72,7 @@
 "url": "https://www.canalrural.com.br/economia/anec-eleva-projecoes-de-embarques-de-soja-e-milho-do-brasil-em-outubro/"
 },
 {
-"id": "n10",
+"id": "n09",
 "section": "South America",
 "date": "2026-10-15",
 "headline": "Brazil soyoil exports already above all of 2025",
@@ -90,7 +81,7 @@
 "url": "https://www.spglobal.com/energy/en/news-research/latest-news/agriculture/101526-brazil-soybean-oil-exports-rise-as-conab-forecasts-record-2026-27-soybean-crop"
 },
 {
-"id": "n11",
+"id": "n10",
 "section": "US",
 "date": "2026-10-19",
 "headline": "US export inspections: soybeans 2.0 Mt, China took 1.28 Mt",
@@ -105,7 +96,7 @@
 "detail": "Renewable Products comparable EBITDA was \u20ac859m (Q2 2025: \u20ac174m) on more than 1 Mt sold. Rotterdam is down for about 8 weeks in Q4 and one Singapore line for about 11 weeks from December, which trims European and Asian renewable diesel and SAF supply. Q3 report due 29 Oct.",
 "source": "Neste",
 "url": "https://www.neste.com/news/nestes-half-year-financial-report-for-january-june-2026",
-"id": "n12"
+"id": "n11"
 },
 {
 "section": "Company results",
@@ -114,7 +105,7 @@
 "detail": "Against a $19m loss a year earlier, on stronger margins, higher throughput (including the Martinez Renewables JV with Neste) and better credit values. Q3 results due 3 Nov.",
 "source": "Marathon Petroleum (SEC 8-K)",
 "url": "https://www.sec.gov/Archives/edgar/data/0001510295/000151029526000060/mpcq22026earningsrelease.htm",
-"id": "n13"
+"id": "n12"
 },
 {
 "section": "Company results",
@@ -123,6 +114,6 @@
 "detail": "Up from $7.50\u20138.00, as the Iran war lifted soyoil and North American crush margins hit their widest since 2022, with higher EPA mandates adding to demand. Q3 results due 29 Oct before the open; ADM reports 3 Nov.",
 "source": "The Western Producer / Reuters",
 "url": "https://www.producer.com/daily/bunge-lifts-2026-outlook-on-strong-crush-margins-biofuel-demand/",
-"id": "n14"
+"id": "n13"
 }
 ]

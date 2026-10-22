@@ -328,21 +328,33 @@ if len(sailed):
             checks.append({"id": f"nabsa-indec-{m}", "check": f"Argentina soybean oil, {m}", "ours": f"{a/1000:,.0f} kt (NABSA sailed)",
                            "other": f"{b/1000:,.0f} kt (INDEC customs)", "diff_pct": round(diff, 1),
                            "status": "Agrees" if abs(diff) <= 5 else ("Close" if abs(diff) <= 10 else "Check"), "url": "https://comex.indec.gob.ar/"})
-# NABSA internal: soybean oil vessels that left the line-up should appear as sailed
+# NABSA internal: soybean oil vessels that left the line-up should appear in the sailed list
 if os.path.exists(lu_p) and len(sailed):
     lu_all = pd.read_csv(lu_p)
     issues = sorted(lu_all["issue"].dropna().unique())
     if len(issues) >= 2:
         first, last = issues[0], issues[-1]
         clean = lambda h: _re.sub(r"( (ETA|ETB|ETF|ETS|AT|REC|CZONE|BERTHED|SHIFTING|ANCHORED|\d{2}/\d{2}))+$", "", str(h))
-        v = lambda df: set(df[df["cargo"].isin(PRODUCTS["Soybean oil"][1])]["head"].dropna().map(clean).str.split().str[-2:].str.join(" "))
-        gone = v(lu_all[lu_all["issue"] == first]) - v(lu_all[lu_all["issue"] == last])
-        sailed_txt = " | ".join(pd.read_csv(sail_p)["head"].dropna().astype(str))
-        found = [g for g in gone if g in sailed_txt]
+        GENERIC = {"NORTH", "SOUTH", "BERTH", "TERMINAL", "LORENZO", "ROSARIO", "UNIT", "WHARF", "PIER", "DOCK", "I", "II", "III"}
+        def keys(h):
+            w = clean(h).split()
+            k = {" ".join(w[-2:])}
+            if w and w[-1] not in GENERIC and len(w[-1]) > 3: k.add(w[-1])
+            return k
+        def heads(df): return [h for h in df[df["cargo"].isin(PRODUCTS["Soybean oil"][1])]["head"].dropna()]
+        later = set().union(*[keys(h) for h in heads(lu_all[lu_all["issue"] == last])]) if heads(lu_all[lu_all["issue"] == last]) else set()
+        sailed_keys = set().union(*[keys(h) for h in pd.read_csv(sail_p)["head"].dropna()])
+        gone = {}
+        for h in heads(lu_all[lu_all["issue"] == first]):
+            k = keys(h)
+            if not (k & later):
+                gone[sorted(k, key=len)[-1]] = k
+        found = [n for n, k in gone.items() if k & sailed_keys]
+        missing = [n for n in gone if n not in found]
         if gone:
             pct = len(found) / len(gone) * 100
             checks.append({"id": "nabsa-internal", "check": f"Soybean oil vessels that left NABSA's line-up between {first} and {last}",
-                           "ours": f"{len(gone)} left the line-up", "other": f"{len(found)} found in NABSA's sailed list", "diff_pct": round(pct - 100, 1),
-                           "status": "Agrees" if pct >= 90 else ("Close" if pct >= 75 else "Check"), "url": "https://www.nabsa.com.ar/info.html"})
+                           "ours": f"{len(gone)} vessels left the line-up", "other": f"{len(found)} appear in NABSA's sailed list" + (f" (not found: {', '.join(missing)})" if missing else ""),
+                           "diff_pct": round(pct - 100, 1), "status": "Agrees" if pct >= 90 else ("Close" if pct >= 75 else "Check"), "url": "https://www.nabsa.com.ar/info.html"})
 dump("lineup_checks.json", checks)
 print("lineups", len(mdf), len(sched), [ (c["check"], c["diff_pct"], c["status"]) for c in checks])
