@@ -289,9 +289,132 @@ def euronext_probe():
             probes[u] = {"status": r.status_code, "type": r.headers.get("content-type"), "text": t[:6000]}
         except Exception as e:
             probes[u] = {"error": str(e)[:200]}
+    try:
+        pg = requests.get("https://live.euronext.com/en/product/commodities-futures/EBM-DPAR", headers=UA, timeout=30).text
+        probes["ajax_urls"] = sorted(set(re.findall(r"/(?:en/)?ajax/[A-Za-z0-9_/\-{}.]+", pg)))[:60]
+    except Exception as e:
+        probes["ajax_urls"] = str(e)[:200]
+    tries = {}
+    for sym in ["RSX26.NYB", "RSF27.NYB", "RS=F", "MWEZ26.MGE", "MWE=F"]:
+        try:
+            yahoo_chart(sym, "1d", "5d"); tries[sym] = "ok"
+        except Exception as e:
+            tries[sym] = str(e)[:80]
+    probes["yahoo_tries"] = tries
     with open(os.path.join(out_dir, "probe.json"), "w") as fh:
         json.dump({"found": found, "quotes": probes}, fh, indent=1)
     return found
+
+def _segs(tokens, n):
+    """All ways to group space-separated tokens into n numbers (thousands groups of 3 digits)."""
+    out = []
+    def rec(i, cur):
+        if len(cur) > n: return
+        if i == len(tokens):
+            if len(cur) == n: out.append(list(cur))
+            return
+        if not re.fullmatch(r"-?\d{1,3}(\.\d+)?", tokens[i]) and not re.fullmatch(r"-?\d+(\.\d+)?", tokens[i]): return
+        num = tokens[i]; j = i + 1
+        cur.append(float(num)); rec(j, cur); cur.pop()
+        while j < len(tokens) and re.fullmatch(r"\d{3}(\.\d+)?", tokens[j]) and "." not in num:
+            num = num + tokens[j]; j += 1
+            cur.append(float(num)); rec(j, cur); cur.pop()
+    rec(0, [])
+    return out
+
+def parse_euronext(text):
+    rep = re.search(r"Report date (\d{2})/(\d{2})/(\d{4})", text)
+    date = f"{rep.group(3)}-{rep.group(2)}-{rep.group(1)}" if rep else None
+    tot = re.search(r"\nOther [^\n]*\nTotal ([\d .\-]+)\n", text)
+    pct = re.search(r"\nTotal ((?:[\d.]+% ?){10})", text)
+    if not (tot and pct): raise ValueError("layout not recognised")
+    p = [float(x) / 100 for x in re.findall(r"([\d.]+)%", pct.group(1))]
+    best, err = None, 1e18
+    for s in _segs(tot.group(1).split(), 10):
+        ois = [v / q for v, q in zip(s, p) if q >= 0.05 and v > 0]
+        if not ois: continue
+        m = sum(ois) / len(ois); e = sum((o - m) ** 2 for o in ois) / m ** 2
+        if e < err: best, err, oi = s, e, m
+    if not best: raise ValueError("could not segment totals")
+    return {"date": date, "funds_long": best[2], "funds_short": best[3], "inv_firms_long": best[0], "inv_firms_short": best[1],
+            "commercial_long": best[6], "commercial_short": best[7], "open_interest": round(oi)}
+
+def euronext_pdf_text(url):
+    r = requests.get(url, headers=UA, timeout=30)
+    if r.status_code != 200 or r.content[:4] != b"%PDF":
+        return None
+    import io, pdfplumber
+    with pdfplumber.open(io.BytesIO(r.content)) as pdf:
+        return "\n\n=== PAGE ===\n".join((p.extract_text() or "") for p in pdf.pages)
+
+def euronext_cot(mode):
+    """Euronext weekly position reports (MiFID II) for MATIF wheat, rapeseed and corn. Published Wednesdays."""
+    weeks = 110 if mode == "backfill" else 3
+    today = dt.date.today()
+    last_wed = today - dt.timedelta(days=(today.weekday() - 2) % 7)
+    rows, misses = [], []
+    for w in range(weeks):
+        wed = last_wed - dt.timedelta(weeks=w)
+        for prod, name in EURONEXT_COT.items():
+            got = None
+            for shift in (0, 1, -1, 2):
+                d = wed + dt.timedelta(days=shift)
+                url = f"https://live.euronext.com/sites/default/files/commodities_reporting/{d:%Y/%m/%d}/en/cdwpr_{prod}_{d:%Y%m%d}.pdf"
+                try:
+                    t = euronext_pdf_text(url)
+                except Exception:
+                    t = None
+                if t:
+                    try:
+                        got = parse_euronext(t)
+                    except Exception as e:
+                        misses.append(f"{prod} {d}: {e}")
+                    break
+            if got:
+                rows.append({"key": f"{got['date']}_{prod}", "product": prod, "name": name, "publication": f"{d:%Y-%m-%d}", **got})
+            else:
+                misses.append(f"{prod} week of {wed}")
+    return rows, misses[:20]
+
+def euronext_prices():
+    """Front-month and curve settlements for MATIF wheat, rapeseed and corn from Euronext's public price table."""
+    out = []
+    for prod in EURONEXT_COT:
+        r = requests.get(f"https://live.euronext.com/en/ajax/getPricesFutures/commodities-futures/{prod}/DPAR", headers=UA, timeout=30)
+        r.raise_for_status()
+        day = re.search(r"Prices\s*-\s*(\d{1,2} \w{3} \d{4})", r.text)
+        for tr in re.findall(r"<tr[^>]*>(.*?)</tr>", r.text, flags=re.S):
+            cells = [re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", c)).strip() for c in re.findall(r"<td[^>]*>(.*?)</td>", tr, flags=re.S)]
+            i = next((k for k, c in enumerate(cells) if re.fullmatch(r"[A-Z][a-z]{2} \d{4}", c)), None)
+            if i is not None and len(cells) >= i + 12:
+                f = lambda x: float(x.replace(",", "")) if re.fullmatch(r"-?[\d,]+(\.\d+)?", x or "") else None
+                out.append({"product": prod, "delivery": cells[i], "price_date": day.group(1) if day else None,
+                            "last": f(cells[i + 3]), "settle": f(cells[i + 10]), "open_interest": f(cells[i + 11])})
+    return out
+
+def bunkers():
+    """Ship & Bunker public port prices ($/mt) for VLSFO, MGO and IFO380."""
+    r = requests.get("https://shipandbunker.com/prices", headers=UA, timeout=30)
+    t = re.sub(r"<script.*?</script>|<style.*?</style>", " ", r.text, flags=re.S)
+    t = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", t))
+    blocks = t.split("Port Price $/mt Change High Low Spread")[1:4]
+    out = {}
+    for fuel, b in zip(["VLSFO", "MGO", "IFO380"], blocks):
+        for port in ["Global 20 Ports Average", "Singapore", "Rotterdam", "Houston", "Fujairah", "Santos"]:
+            m = re.search(re.escape(port) + r" ([\d.]+) ([+-]?[\d.]+)", b)
+            if m:
+                out[f"{fuel}_{port.split(' Ports')[0].replace(' ', '')}"] = float(m.group(1))
+    if not out:
+        raise ValueError("no prices parsed")
+    return out
+
+def baltic_headline():
+    """Baltic Dry Index level from public news headlines (the exchange's own indices are licensed)."""
+    r = requests.get("https://www.hellenicshippingnews.com/category/shipping-news/dry-bulk-market/", headers=UA, timeout=30)
+    m = re.search(r"Baltic Dry Index[^<]{0,40}? to ([\d,]+)", r.text)
+    if not m:
+        raise ValueError("no BDI headline")
+    return float(m.group(1).replace(",", ""))
 
 def palm_fob():
     r = requests.get("https://www.zyotwdhon.com/en/palm-oil-daily-prices", headers=UA, timeout=20)
@@ -407,9 +530,33 @@ def main(mode):
     except Exception as e:
         status["errors"]["cot_agri"] = str(e)[:200]
     try:
-        status["euronext_found"] = euronext_probe()
+        rows, misses = euronext_cot(mode)
+        append_csv(os.path.join(DATA, "euronext_cot.csv"), rows, key="key")
+        if misses:
+            status["euronext_cot_misses"] = misses
     except Exception as e:
-        status["errors"]["euronext"] = str(e)[:200]
+        status["errors"]["euronext_cot"] = str(e)[:200]
+    try:
+        ep = euronext_prices()
+        append_csv(os.path.join(DATA, "euronext_prices.csv"), [{"key": f"{r['price_date']}_{r['product']}_{r['delivery']}", **r} for r in ep], key="key")
+    except Exception as e:
+        status["errors"]["euronext_prices"] = str(e)[:200]
+    try:
+        b = bunkers()
+        latest["_bunkers"] = b
+        append_csv(os.path.join(DATA, "bunkers.csv"), [{"time_utc": now, **b}])
+    except Exception as e:
+        status["errors"]["bunkers"] = str(e)[:200]
+    try:
+        bdi = baltic_headline()
+        append_csv(os.path.join(DATA, "freight.csv"), [{"time_utc": now, "bdi_headline": bdi}])
+    except Exception as e:
+        status["errors"]["bdi"] = str(e)[:200]
+    if mode == "backfill":
+        try:
+            status["euronext_found"] = euronext_probe()
+        except Exception as e:
+            status["errors"]["euronext"] = str(e)[:200]
     try:
         p = palm_fob()
         latest["_palm_fob"] = p
