@@ -425,13 +425,78 @@ def _num_es(x):
     except ValueError:
         return None
 
+COUNTRIES = ["UNITED ARAB EMIRATES", "KOREA (REPUBLIC OF SOUTH KOREA)", "SOUTH KOREA", "KOREA", "DOMINICAN REPUBLIC", "SAUDI ARABIA", "SOUTH AFRICA",
+    "UNITED KINGDOM", "UNITED STATES", "U.S.A.", "USA", "NEW ZEALAND", "SRI LANKA", "COSTA RICA", "EL SALVADOR", "PUERTO RICO", "IVORY COAST",
+    "CAPE VERDE", "TRINIDAD AND TOBAGO", "PAPUA NEW GUINEA", "NETHERLANDS ANTILLES", "CZECH REPUBLIC", "HONG KONG", "SIERRA LEONE",
+    "NOT AVAILABLE", "TO ORDERS", "OPTIONAL", "INDIA", "CHINA", "PERU", "MOROCCO", "ALGERIA", "EGYPT", "BANGLADESH", "PAKISTAN", "MOZAMBIQUE",
+    "MEXICO", "MADAGASCAR", "GUATEMALA", "TOGO", "SPAIN", "VENEZUELA", "COLOMBIA", "ECUADOR", "CHILE", "BOLIVIA", "PARAGUAY", "URUGUAY", "BRAZIL",
+    "HONDURAS", "NICARAGUA", "PANAMA", "CUBA", "JAMAICA", "HAITI", "NETHERLANDS", "HOLLAND", "BELGIUM", "GERMANY", "FRANCE", "ITALY", "PORTUGAL",
+    "POLAND", "DENMARK", "NORWAY", "SWEDEN", "FINLAND", "IRELAND", "GREECE", "TURKEY", "ISRAEL", "LEBANON", "SYRIA", "JORDAN", "IRAQ", "IRAN",
+    "KUWAIT", "QATAR", "OMAN", "YEMEN", "BAHRAIN", "LIBYA", "TUNISIA", "SUDAN", "KENYA", "TANZANIA", "ANGOLA", "NIGERIA", "GHANA", "SENEGAL",
+    "CAMEROON", "BENIN", "GUINEA", "LIBERIA", "MAURITANIA", "MAURITIUS", "DJIBOUTI", "ETHIOPIA", "SOMALIA", "VIETNAM", "THAILAND", "MALAYSIA",
+    "INDONESIA", "PHILIPPINES", "JAPAN", "TAIWAN", "SINGAPORE", "MYANMAR", "CAMBODIA", "NEPAL", "AUSTRALIA", "CANADA", "RUSSIA", "UKRAINE",
+    "GEORGIA", "ROMANIA", "BULGARIA", "CROATIA", "SLOVENIA", "ALBANIA", "MALTA", "CYPRUS", "ARMENIA", "AZERBAIJAN", "KAZAKHSTAN", "UZBEKISTAN"]
+ORIGINS = r"(ARGENTINA|PARAGUAY|BOLIVIA|URUGUAY|BRAZIL)"
+CARGOES = ["NEUTRALIZED SOYBEAN OIL", "REFINED SOYBEAN OIL", "SOYBEAN OIL", "SOY ACID OIL", "SOYBEANMEAL", "SOYBEAN MEAL", "SOYBEANS", "SOYBEAN",
+           "SUN FLOWER OIL", "SUNFLOWER OIL", "SUN FLOWER MEAL", "SUNFLOWER MEAL", "CORN", "WHEAT", "BARLEY", "SORGHUM", "BIODIESEL", "GLYCERINE",
+           "CORN OIL", "VEGETABLE OIL", "SOYA HULL PELLETS", "SUNFLOWER SEED PELLETS", "MALT", "RICE"]
+
+def _country(rest):
+    """Split 'DESTINATION COORDINATOR CHARTERER' by the longest known country prefix."""
+    for c in sorted(COUNTRIES, key=len, reverse=True):
+        if rest == c or rest.startswith(c + " "):
+            return c, rest[len(c):].strip()
+    return None, rest
+
+def _cargo(text):
+    for c in sorted(CARGOES, key=len, reverse=True):
+        if text == c or text.startswith(c + " "):
+            return c, text[len(c):].strip()
+    return None, text
+
+def _tons_es(t):
+    return _num_es(t.replace(" ", ""))
+
+def parse_nabsa_sailed(text):
+    rows, bad = [], []
+    for line in text.splitlines():
+        m = re.search(r"^(.*?) (SAILED|SAILING) (\d{2}/\d{2}/\d{4}) ([\d .]*\d,\d{2}) (.+?) " + ORIGINS + r" (.+)$", line)
+        if not m:
+            if " SAILED " in line: bad.append(line[:160])
+            continue
+        head, _, date, tons, cargo, origin, rest = m.groups()
+        dest, tail = _country(rest)
+        if not dest: bad.append(line[:160])
+        d, mth, y = date.split("/")
+        rows.append({"head": head, "date": f"{y}-{mth}-{d}", "tons": _tons_es(tons), "cargo": cargo.strip(), "origin": origin,
+                     "destination": dest or "UNPARSED", "rest": tail})
+    return rows, bad
+
+def parse_nabsa_lineup(text, issue):
+    rows, bad = [], []
+    port = None
+    for line in text.splitlines():
+        m = re.search(r"^(.*?) (?:ETA|ETB|ETF|AT|REC|ETS)[^\n]*? (load|disch|discharge) ([\d.]+(?:,\d+)?) (.+?) " + ORIGINS + r"(?: (.*))?$", line)
+        if not m:
+            if " load " in line: bad.append(line[:160])
+            continue
+        head, op, tons, mid, origin, charterer = m.groups()
+        if op != "load":
+            continue
+        cargo, dest = _cargo(mid)
+        eta = re.search(r"(ETA(?: REC| CZONE)?|ETB|ETF) (\d{2})/(\d{2})", line)
+        rows.append({"head": head, "tons": _tons_es(tons), "cargo": cargo or mid, "destination": dest or "UNPARSED", "origin": origin,
+                     "charterer": (charterer or "").strip(), "eta": f"{eta.group(2)}/{eta.group(3)}" if eta else None, "eta_kind": eta.group(1) if eta else None,
+                     "issue": issue})
+    return rows, bad
+
 def nabsa_reports():
-    """Argentine vessel reports from Agencia Maritima Nabsa: sailed vessels and line-ups (current + 4 prior issues).
+    """Argentine vessel reports from Agencia Maritima Nabsa: sailed vessels (month to date) and line-ups (current + 4 prior issues).
     Rows are archived so monthly totals build up over time. Raw text is kept for checking the parser."""
     import io, pdfplumber
     raw_dir = os.path.join(DATA, "lineups", "raw")
     os.makedirs(raw_dir, exist_ok=True)
-    out = {"sailed": [], "lineup": []}
+    out = {"sailed": [], "lineup": [], "bad": []}
     for kind, base in (("sailed", "vessels_sailed_"), ("lineup", "vessel_")):
         for suffix in ["update", "prior1", "prior2", "prior3", "prior4"]:
             url = NABSA + base + suffix + ".pdf"
@@ -441,39 +506,69 @@ def nabsa_reports():
                     continue
                 with pdfplumber.open(io.BytesIO(r.content)) as pdf:
                     text = "\n".join((p.extract_text() or "") for p in pdf.pages)
-                    tables = [t for p in pdf.pages for t in (p.extract_tables() or [])]
-                m = re.search(r"(\d{2})[-/ ]([A-Za-z]{3}|\d{2})[-/ ](\d{4})", text[:400])
-                issue = None
-                if m:
-                    try:
-                        issue = dt.datetime.strptime(" ".join(m.groups()), "%d %b %Y" if m.group(2).isalpha() else "%d %m %Y").strftime("%Y-%m-%d")
-                    except Exception:
-                        issue = None
                 with open(os.path.join(raw_dir, f"{kind}_{suffix}.txt"), "w") as fh:
-                    fh.write(url + "\nISSUE " + str(issue) + "\n" + text[:200000])
-                header = None
-                for t in tables:
-                    for row in t:
-                        cells = [re.sub(r"\s+", " ", (c or "")).strip() for c in row]
-                        up = [c.upper() for c in cells]
-                        if "VESSEL" in up and ("CARGO" in up or "PRODUCT" in up):
-                            header = up
-                            continue
-                        if not header or len(cells) != len(header):
-                            continue
-                        rec = dict(zip(header, cells))
-                        tons = _num_es(rec.get("TONS") or rec.get("QUANTITY") or rec.get("TONNES"))
-                        if not tons or not rec.get("VESSEL"):
-                            continue
-                        rec_out = {"issue": issue, "report": suffix, "port": rec.get("PORT"), "terminal": rec.get("TERMINAL"),
-                                   "vessel": rec.get("VESSEL"), "status": rec.get("STATUS"), "date": rec.get("DATE") or rec.get("ETA") or rec.get("ETB") or rec.get("ETS"),
-                                   "tons": tons, "cargo": rec.get("CARGO") or rec.get("PRODUCT"), "destination": rec.get("DESTINATION"),
-                                   "shipper": rec.get("COORDINATOR") or rec.get("SHIPPER"), "charterer": rec.get("CHARTERER")}
-                        rec_out["key"] = "|".join(str(rec_out[k]) for k in ("port", "terminal", "vessel", "date", "cargo", "destination", "tons"))
-                        out[kind].append(rec_out)
+                    fh.write(url + "\n" + text[:300000])
+                if suffix == "update":
+                    with open(os.path.join(raw_dir, f"{kind}_{suffix}.pdf"), "wb") as fh:
+                        fh.write(r.content)
+                if kind == "sailed":
+                    m = re.search(r"BUENOS AIRES, (\d{1,2})-([A-Za-z]{3})-(\d{2})", text)
+                    issue = dt.datetime.strptime(" ".join(m.groups()), "%d %b %y").strftime("%Y-%m-%d") if m else None
+                    rows, bad = parse_nabsa_sailed(text)
+                else:
+                    m = re.search(r"Line Up: ([A-Za-z]+ \d{1,2}, \d{4})", text)
+                    issue = dt.datetime.strptime(m.group(1), "%B %d, %Y").strftime("%Y-%m-%d") if m else None
+                    rows, bad = parse_nabsa_lineup(text, issue)
+                for i, r_ in enumerate(rows):
+                    r_["issue"] = issue
+                    r_["key"] = "|".join(str(r_.get(k)) for k in ("head", "date", "eta", "cargo", "destination", "tons", "issue" if kind == "lineup" else "x"))
+                out[kind] += rows
+                out["bad"] += [f"{kind}_{suffix}: {b}" for b in bad[:10]]
             except Exception as e:
-                out.setdefault("errors", []).append(f"{kind}_{suffix}: {str(e)[:120]}")
+                out["bad"].append(f"{kind}_{suffix} error: {str(e)[:120]}")
     return out
+
+def indec_exports():
+    """Official Argentine exports by NCM and destination (INDEC monthly files): keeps soy oil, meal, beans, sunflower oil and corn."""
+    import io, zipfile
+    keep = ("1507", "2304", "1201", "1512", "1005", "1517", "3826")
+    for year in (2025, 2026):
+        r = requests.get(f"https://comex.indec.gob.ar/files/zips/exports_{year}_M.zip", headers=UA, timeout=120, verify=False)
+        r.raise_for_status()
+        z = zipfile.ZipFile(io.BytesIO(r.content))
+        info = {"members": z.namelist()}
+        rows = []
+        for name in z.namelist():
+            raw = z.read(name)
+            txt = raw.decode("latin-1")
+            info.setdefault("heads", {})[name] = txt[:600]
+            lines = txt.splitlines()
+            if not lines: continue
+            sep = ";" if lines[0].count(";") >= lines[0].count(",") else ","
+            hdr = [h.strip().strip('"') for h in lines[0].split(sep)]
+            for ln in lines[1:]:
+                cells = [c.strip().strip('"') for c in ln.split(sep)]
+                if any(c.replace(".", "").startswith(keep) for c in cells[:6]):
+                    rows.append(dict(zip(hdr, cells), _file=name))
+        with open(os.path.join(DATA, "lineups", f"indec_exports_{year}.json"), "w") as fh:
+            json.dump({"info": info, "rows": rows}, fh)
+
+def comexstat_exports():
+    """Official Brazilian exports by NCM and destination (Comex Stat API), soybean oil crude and refined, monthly."""
+    body = {"flow": "export", "monthDetail": True, "period": {"from": "2025-01", "to": "2026-12"},
+            "filters": [{"filter": "ncm", "values": ["15071000", "15079011", "15079019"]}],
+            "details": ["country", "ncm"], "metrics": ["metricKG", "metricFOB"]}
+    last = None
+    for attempt in range(4):
+        r = requests.post("https://api-comexstat.mdic.gov.br/general?language=en", json=body,
+                          headers={**UA, "Content-Type": "application/json"}, timeout=90, verify=False)
+        last = r
+        if r.status_code == 200:
+            with open(os.path.join(DATA, "lineups", "comexstat_soyoil.json"), "w") as fh:
+                fh.write(r.text)
+            return True
+        time.sleep(15)
+    raise ValueError(f"comexstat {last.status_code}: {last.text[:150]}")
 
 def lineup_probes():
     """One-off checks of other sources for cross-checking Argentine and Brazilian shipments."""
@@ -639,16 +734,15 @@ def main(mode):
         append_csv(os.path.join(DATA, "lineups", "nabsa_sailed.csv"), nb["sailed"], key="key")
         lu = [dict(r, key=r["key"] + "|" + str(r["issue"])) for r in nb["lineup"]]
         append_csv(os.path.join(DATA, "lineups", "nabsa_lineup.csv"), lu, key="key")
-        status["nabsa_rows"] = {"sailed": len(nb["sailed"]), "lineup": len(nb["lineup"])}
-        if nb.get("errors"):
-            status["errors"]["nabsa"] = "; ".join(nb["errors"])[:300]
+        status["nabsa_rows"] = {"sailed": len(nb["sailed"]), "lineup": len(nb["lineup"]), "unparsed_examples": nb["bad"][:15]}
     except Exception as e:
         status["errors"]["nabsa"] = str(e)[:200]
-    if mode in ("backfill", "probe"):
-        try:
-            lineup_probes()
-        except Exception as e:
-            status["errors"]["lineup_probes"] = str(e)[:200]
+    if mode in ("backfill", "probe") or dt.datetime.utcnow().minute < 15 and dt.datetime.utcnow().hour == 6:
+        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports)):
+            try:
+                fn()
+            except Exception as e:
+                status["errors"][name] = str(e)[:200]
     try:
         b = bunkers()
         latest["_bunkers"] = b
