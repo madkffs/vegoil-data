@@ -416,6 +416,99 @@ def baltic_headline():
         raise ValueError("no BDI headline")
     return float(m.group(1).replace(",", ""))
 
+NABSA = "https://www.nabsa.com.ar/assets/"
+
+def _num_es(x):
+    x = (x or "").strip().replace(".", "").replace(",", ".")
+    try:
+        return float(x)
+    except ValueError:
+        return None
+
+def nabsa_reports():
+    """Argentine vessel reports from Agencia Maritima Nabsa: sailed vessels and line-ups (current + 4 prior issues).
+    Rows are archived so monthly totals build up over time. Raw text is kept for checking the parser."""
+    import io, pdfplumber
+    raw_dir = os.path.join(DATA, "lineups", "raw")
+    os.makedirs(raw_dir, exist_ok=True)
+    out = {"sailed": [], "lineup": []}
+    for kind, base in (("sailed", "vessels_sailed_"), ("lineup", "vessel_")):
+        for suffix in ["update", "prior1", "prior2", "prior3", "prior4"]:
+            url = NABSA + base + suffix + ".pdf"
+            try:
+                r = requests.get(url, headers=UA, timeout=60)
+                if r.status_code != 200 or r.content[:4] != b"%PDF":
+                    continue
+                with pdfplumber.open(io.BytesIO(r.content)) as pdf:
+                    text = "\n".join((p.extract_text() or "") for p in pdf.pages)
+                    tables = [t for p in pdf.pages for t in (p.extract_tables() or [])]
+                m = re.search(r"(\d{2})[-/ ]([A-Za-z]{3}|\d{2})[-/ ](\d{4})", text[:400])
+                issue = None
+                if m:
+                    try:
+                        issue = dt.datetime.strptime(" ".join(m.groups()), "%d %b %Y" if m.group(2).isalpha() else "%d %m %Y").strftime("%Y-%m-%d")
+                    except Exception:
+                        issue = None
+                with open(os.path.join(raw_dir, f"{kind}_{suffix}.txt"), "w") as fh:
+                    fh.write(url + "\nISSUE " + str(issue) + "\n" + text[:200000])
+                header = None
+                for t in tables:
+                    for row in t:
+                        cells = [re.sub(r"\s+", " ", (c or "")).strip() for c in row]
+                        up = [c.upper() for c in cells]
+                        if "VESSEL" in up and ("CARGO" in up or "PRODUCT" in up):
+                            header = up
+                            continue
+                        if not header or len(cells) != len(header):
+                            continue
+                        rec = dict(zip(header, cells))
+                        tons = _num_es(rec.get("TONS") or rec.get("QUANTITY") or rec.get("TONNES"))
+                        if not tons or not rec.get("VESSEL"):
+                            continue
+                        rec_out = {"issue": issue, "report": suffix, "port": rec.get("PORT"), "terminal": rec.get("TERMINAL"),
+                                   "vessel": rec.get("VESSEL"), "status": rec.get("STATUS"), "date": rec.get("DATE") or rec.get("ETA") or rec.get("ETB") or rec.get("ETS"),
+                                   "tons": tons, "cargo": rec.get("CARGO") or rec.get("PRODUCT"), "destination": rec.get("DESTINATION"),
+                                   "shipper": rec.get("COORDINATOR") or rec.get("SHIPPER"), "charterer": rec.get("CHARTERER")}
+                        rec_out["key"] = "|".join(str(rec_out[k]) for k in ("port", "terminal", "vessel", "date", "cargo", "destination", "tons"))
+                        out[kind].append(rec_out)
+            except Exception as e:
+                out.setdefault("errors", []).append(f"{kind}_{suffix}: {str(e)[:120]}")
+    return out
+
+def lineup_probes():
+    """One-off checks of other sources for cross-checking Argentine and Brazilian shipments."""
+    res = {}
+    try:
+        r = requests.get("https://nabsa.info/", headers=UA, timeout=30)
+        links = sorted(set(re.findall(r'href="([^"]+)"', r.text)))[:120]
+        res["nabsa_info"] = {"status": r.status_code, "links": links, "text": re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", r.text))[:3000]}
+    except Exception as e:
+        res["nabsa_info"] = str(e)[:200]
+    body = {"flow": "export", "monthDetail": True, "period": {"from": "2026-01", "to": "2026-12"},
+            "filters": [{"filter": "ncm", "values": ["15071000", "15079011"]}],
+            "details": ["country", "ncm"], "metrics": ["metricKG", "metricFOB"]}
+    for u in ["https://api-comexstat.mdic.gov.br/general?language=en", "https://api-comexstat.mdic.gov.br/general"]:
+        try:
+            r = requests.post(u, json=body, headers={**UA, "Content-Type": "application/json"}, timeout=60, verify=False)
+            res["comexstat " + u] = {"status": r.status_code, "head": r.text[:3000]}
+            if r.status_code == 200:
+                with open(os.path.join(DATA, "lineups", "comexstat_raw.json"), "w") as fh:
+                    fh.write(r.text)
+                break
+        except Exception as e:
+            res["comexstat " + u] = str(e)[:200]
+    for u in ["https://comex.indec.gob.ar/", "https://comex.indec.gob.ar/files/zips/exports_2026_M.zip",
+              "https://comex.indec.gob.ar/files/zips/exports_2025_M.zip", "https://www.indec.gob.ar/indec/web/Nivel4-Tema-3-2-40"]:
+        try:
+            r = requests.get(u, headers=UA, timeout=60, verify=False)
+            res["indec " + u] = {"status": r.status_code, "type": r.headers.get("content-type"), "len": len(r.content),
+                                 "head": (re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", r.text))[:1500] if "text" in (r.headers.get("content-type") or "") else ""),
+                                 "links": sorted(set(re.findall(r'href="([^"]*(?:zip|csv|xls)[^"]*)"', r.text)))[:80] if "text" in (r.headers.get("content-type") or "") else []}
+        except Exception as e:
+            res["indec " + u] = str(e)[:200]
+    with open(os.path.join(DATA, "lineups", "probes.json"), "w") as fh:
+        json.dump(res, fh, indent=1)
+
 def palm_fob():
     r = requests.get("https://www.zyotwdhon.com/en/palm-oil-daily-prices", headers=UA, timeout=20)
     return parse_palm(r.text)
@@ -541,6 +634,21 @@ def main(mode):
         append_csv(os.path.join(DATA, "euronext_prices.csv"), [{"key": f"{r['price_date']}_{r['product']}_{r['delivery']}", **r} for r in ep], key="key")
     except Exception as e:
         status["errors"]["euronext_prices"] = str(e)[:200]
+    try:
+        nb = nabsa_reports()
+        append_csv(os.path.join(DATA, "lineups", "nabsa_sailed.csv"), nb["sailed"], key="key")
+        lu = [dict(r, key=r["key"] + "|" + str(r["issue"])) for r in nb["lineup"]]
+        append_csv(os.path.join(DATA, "lineups", "nabsa_lineup.csv"), lu, key="key")
+        status["nabsa_rows"] = {"sailed": len(nb["sailed"]), "lineup": len(nb["lineup"])}
+        if nb.get("errors"):
+            status["errors"]["nabsa"] = "; ".join(nb["errors"])[:300]
+    except Exception as e:
+        status["errors"]["nabsa"] = str(e)[:200]
+    if mode in ("backfill", "probe"):
+        try:
+            lineup_probes()
+        except Exception as e:
+            status["errors"]["lineup_probes"] = str(e)[:200]
     try:
         b = bunkers()
         latest["_bunkers"] = b
