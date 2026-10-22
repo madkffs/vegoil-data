@@ -1,6 +1,14 @@
 {
- "run_utc": "2026-10-22 13:23",
- "mode": "update",
- "errors": {},
- "ok": 41
+ "run_utc": "2026-10-22 13:57",
+ "mode": "backfill",
+ "errors": {
+  "MWE=F": "no data",
+  "RS=F": "no data"
+ },
+ "euronext_found": {
+  "EBM": "https://live.euronext.com/sites/default/files/commodities_reporting/2026/10/21/en/cdwpr_EBM_20261021.pdf",
+  "ECO": "https://live.euronext.com/sites/default/files/commodities_reporting/2026/10/21/en/cdwpr_ECO_20261021.pdf",
+  "EMA": "https://live.euronext.com/sites/default/files/commodities_reporting/2026/10/21/en/cdwpr_EMA_20261021.pdf"
+ },
+ "ok": 55
 }

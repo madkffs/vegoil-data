@@ -1,0 +1,103 @@
+https://live.euronext.com/sites/default/files/commodities_reporting/2026/10/21/en/cdwpr_ECO_20261021.pdf
+Derivatives Weekly Position
+Reporting
+Trading venue EURONEXT PARIS Identifier XMAT
+Report date 16/10/2026
+Publication date 21/10/2026
+Contract name Rapeseed / Colza Contract code ECO
+Report status NEWT
+Report type COMB
+Notation of Operators with compliance
+Investment Firms or
+the position Investment Funds Other Financial Institutions Commercial Undertakings obligations under
+Credit Institutions
+quantity Directive 2003/87/EC
+Long Short Long Short Long Short Long Short Long Short
+Risk
+Reducing
+Number of directly
+LOTS 247.37 3 821 66 0 0 0 57 937.85 104 109.35 0 0
+positions related to
+commercial
+activities
+Other 14 392.84 27 027.41 63 653.37 15 877 77 143 25 966.25 11 639.15 0 0
+Total 14 640.21 30 848.41 63 719.37 15 877 77 143 83 904.1 115 748.5 0 0
+Risk
+Changes Reducing
+since the directly
+-188 -1 073 0 0 0 0 5 500 -10 372 0 0
+previous related to
+report (+/-) commercial
+activities
+Other -4 479 -2 200 -11 560 1 169 -62 143 391 54 0 0
+Total -4 667 -3 273 -11 560 1 169 -62 143 5 891 -10 318 0 0
+Risk
+Reducing
+Percentage
+directly
+of the total 0.15% 2.35% 0.04% 0.00% 0.00% 0.00% 35.69% 64.02% 0.00% 0.00%
+related to
+open interest
+commercial
+activities
+Other 8.87% 16.62% 39.21% 9.76% 0.05% 0.09% 15.99% 7.16% 0.00% 0.00%
+Total 9.02% 18.97% 39.25% 9.76% 0.05% 0.09% 51.68% 71.18% 0.00% 0.00%
+Number of
+Combined Combined Combined Combined Combined
+persons
+holding a
+position in
+Total 79 359 . 590 .
+each category
+Euronext can't be held liable for any loss or damages of any nature ensuing from using, trusting or acting on information provided. Please consult additional information here
+
+=== PAGE ===
+Trading venue EURONEXT PARIS Identifier XMAT
+Report date 16/10/2026
+Publication date 21/10/2026
+Contract name Rapeseed / Colza Contract code ECO
+Report status NEWT
+Report type FUTR
+Notation of Operators with compliance
+Investment Firms or
+the position Investment Funds Other Financial Institutions Commercial Undertakings obligations under
+Credit Institutions
+quantity Directive 2003/87/EC
+Long Short Long Short Long Short Long Short Long Short
+Risk
+Reducing
+Number of directly
+LOTS 100 3 821 66 0 0 0 55 487 102 758 0 0
+positions related to
+commercial
+activities
+Other 11 842 22 159 63 649 15 877 77 143 25 256 11 561 0 0
+Total 11 942 25 980 63 715 15 877 77 143 80 743 114 319 0 0
+Risk
+Changes Reducing
+since the directly
+100 -941 0 0 0 0 7 273 -7 033 0 0
+previous related to
+report (+/-) commercial
+activities
+Other -1 857 1 057 -11 519 1 169 -62 143 776 206 0 0
+Total -1 757 116 -11 519 1 169 -62 143 8 049 -6 827 0 0
+Risk
+Reducing
+Percentage
+directly
+of the total 0.06% 2.44% 0.04% 0.00% 0.00% 0.00% 35.46% 65.74% 0.00% 0.00%
+related to
+open interest
+commercial
+activities
+Other 7.57% 14.18% 40.68% 10.16% 0.05% 0.09% 16.14% 7.40% 0.00% 0.00%
+Total 7.63% 16.62% 40.72% 10.16% 0.05% 0.09% 51.60% 73.14% 0.00% 0.00%
+Number of
+Combined Combined Combined Combined Combined
+persons
+holding a
+position in
+Total 79 359 . 519 .
+each category
+Euronext can't be held liable for any loss or damages of any nature ensuing from using, trusting or acting on information provided. Please consult additional information here

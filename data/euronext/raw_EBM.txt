@@ -1,0 +1,103 @@
+https://live.euronext.com/sites/default/files/commodities_reporting/2026/10/21/en/cdwpr_EBM_20261021.pdf
+Derivatives Weekly Position
+Reporting
+Trading venue EURONEXT PARIS Identifier XMAT
+Report date 16/10/2026
+Publication date 21/10/2026
+Contract name Milling Wheat / Ble Contract code EBM
+Report status NEWT
+Report type COMB
+Notation of Operators with compliance
+Investment Firms or
+the position Investment Funds Other Financial Institutions Commercial Undertakings obligations under
+Credit Institutions
+quantity Directive 2003/87/EC
+Long Short Long Short Long Short Long Short Long Short
+Risk
+Reducing
+Number of directly
+LOTS 6 823.42 9 061.65 194 0 0 0 222 663.16 376 864.84 0 0
+positions related to
+commercial
+activities
+Other 161 251.32 148 232.04 237 560.17 99 990.06 4 838 60 69 726.84 77 515.19 0 0
+Total 168 074.74 157 293.69 237 754.17 99 990.06 4 838 60 292 390 454 380.03 0 0
+Risk
+Changes Reducing
+since the directly
+-1 008 -148 43 0 0 0 13 644 -442 0 0
+previous related to
+report (+/-) commercial
+activities
+Other -9 126 8 340 4 411 10 196 -57 7 10 085 881 0 0
+Total -10 134 8 192 4 454 10 196 -57 7 23 729 439 0 0
+Risk
+Reducing
+Percentage
+directly
+of the total 0.97% 1.27% 0.03% 0.00% 0.00% 0.00% 31.67% 52.95% 0.00% 0.00%
+related to
+open interest
+commercial
+activities
+Other 22.94% 20.83% 33.79% 14.05% 0.69% 0.01% 9.92% 10.89% 0.00% 0.00%
+Total 23.91% 22.10% 33.82% 14.05% 0.69% 0.01% 41.59% 63.84% 0.00% 0.00%
+Number of
+Combined Combined Combined Combined Combined
+persons
+holding a
+position in
+Total 109 446 9 1 182 .
+each category
+Euronext can't be held liable for any loss or damages of any nature ensuing from using, trusting or acting on information provided. Please consult additional information here
+
+=== PAGE ===
+Trading venue EURONEXT PARIS Identifier XMAT
+Report date 16/10/2026
+Publication date 21/10/2026
+Contract name Milling Wheat / Ble Contract code EBM
+Report status NEWT
+Report type FUTR
+Notation of Operators with compliance
+Investment Firms or
+the position Investment Funds Other Financial Institutions Commercial Undertakings obligations under
+Credit Institutions
+quantity Directive 2003/87/EC
+Long Short Long Short Long Short Long Short Long Short
+Risk
+Reducing
+Number of directly
+LOTS 3 832 944 194 0 0 0 195 581 353 614 0 0
+positions related to
+commercial
+activities
+Other 122 668 97 313 229 395 98 574 4 838 60 57 181 62 935 0 0
+Total 126 500 98 257 229 589 98 574 4 838 60 252 762 416 549 0 0
+Risk
+Changes Reducing
+since the directly
+-935 9 43 0 0 0 13 793 -498 0 0
+previous related to
+report (+/-) commercial
+activities
+Other -9 450 7 046 4 189 9 389 -41 7 8 640 58 0 0
+Total -10 385 7 055 4 232 9 389 -41 7 22 433 -440 0 0
+Risk
+Reducing
+Percentage
+directly
+of the total 0.62% 0.15% 0.03% 0.00% 0.00% 0.00% 31.87% 57.64% 0.00% 0.00%
+related to
+open interest
+commercial
+activities
+Other 19.99% 15.86% 37.38% 16.07% 0.79% 0.01% 9.32% 10.26% 0.00% 0.00%
+Total 20.61% 16.01% 37.41% 16.07% 0.79% 0.01% 41.19% 67.90% 0.00% 0.00%
+Number of
+Combined Combined Combined Combined Combined
+persons
+holding a
+position in
+Total 108 444 9 1 029 .
+each category
+Euronext can't be held liable for any loss or damages of any nature ensuing from using, trusting or acting on information provided. Please consult additional information here
