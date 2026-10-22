@@ -25,51 +25,1141 @@
   "/assets/app~bf613941.bundle.js?383c59424dba9a329a8e",
   "/assets/app~c714bc7b.bundle.js?383c59424dba9a329a8e"
  ],
- "hits": [
-  ".csv",
-  ".json",
-  "/csv",
-  "/json",
-  "anychart.data.csv.parser",
-  "anychart.utils.json2xml",
-  "anychart.utils.xml2json",
-  "api",
-  "csv",
-  "file-csv",
-  "geo-json",
-  "json",
-  "save-config-as-json",
-  "sourceMappingURL=data:application/json;charset=utf-8;base64,",
-  "topo-json"
+ "context": [
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: {\"official\":\"Argélia\",\"common\":\"Argélia\"},\"rus\":{\"official\":\"Народно-Демократическая Республика Алжир\",\"common\":\"Алжир\"},\"slk\":{\"official\":\"Alžírska demokratická ľudová republika\",\"common\":\"Alžírsko\"},\"spa\":{\"official\":\"Argelia\",\"common\":\"Argelia\"},\"fin\":{\"official\":\"Algerian demokraattinen kansantasavalta\",\"common\":\"Algeria\"},\"est\":{\"off",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: a\",\"common\":\"Argélia\"},\"rus\":{\"official\":\"Народно-Демократическая Республика Алжир\",\"common\":\"Алжир\"},\"slk\":{\"official\":\"Alžírska demokratická ľudová republika\",\"common\":\"Alžírsko\"},\"spa\":{\"official\":\"Argelia\",\"common\":\"Argelia\"},\"fin\":{\"official\":\"Algerian demokraattinen kansantasavalta\",\"common\":\"Algeria\"},\"est\":{\"official\":\"Alžeeria De",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: s\":\"officially-assigned\",\"currencies\":{\"BWP\":{\"name\":\"Botswana pula\",\"symbol\":\"P\"},\"CNY\":{\"name\":\"Chinese yuan\",\"symbol\":\"¥\"},\"EUR\":{\"name\":\"Euro\",\"symbol\":\"€\"},\"GBP\":{\"name\":\"British pound\",\"symbol\":\"£\"},\"INR\":{\"name\":\"Indian rupee\",\"symbol\":\"₹\"},\"JPY\":{\"name\":\"Japanese yen\",\"symbol\":\"¥\"},\"USD\":{\"name\":\"United States dollar\",\"symbol\":\"$\"",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: \"common\":\"འབྲུག་ཡུལ་\"}}},\"tld\":[\".bt\"],\"cca2\":\"BT\",\"ccn3\":\"064\",\"cca3\":\"BTN\",\"cioc\":\"BHU\",\"independent\":true,\"status\":\"officially-assigned\",\"currencies\":{\"BTN\":{\"name\":\"Bhutanese ngultrum\",\"symbol\":\"Nu.\"},\"INR\":{\"name\":\"Indian rupee\",\"symbol\":\"₹\"}},\"idd\":{\"root\":\"+9\",\"suffixes\":[\"75\"]},\"capital\":[\"Thimphu\"],\"altSpellings\":[\"BT\",\"Kingdom o",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: 0000031],[95.28251953125007,5.897753906250017],[95.35917968750007,5.876757812500003],[95.36601562500002,5.84267578124998],[95.362109375,5.812402343750036]]]]}},{\"type\":\"Feature\",\"properties\":{\"_id\":315,\"name\":{\"common\":\"India\",\"official\":\"Republic of India\",\"native\":{\"eng\":{\"official\":\"Republic of India\",\"common\":\"India\"},\"hin\":{\"official",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: 97753906250017],[95.35917968750007,5.876757812500003],[95.36601562500002,5.84267578124998],[95.362109375,5.812402343750036]]]]}},{\"type\":\"Feature\",\"properties\":{\"_id\":315,\"name\":{\"common\":\"India\",\"official\":\"Republic of India\",\"native\":{\"eng\":{\"official\":\"Republic of India\",\"common\":\"India\"},\"hin\":{\"official\":\"भारत गणराज्य\",\"common\":\"भारत",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: 0003],[95.36601562500002,5.84267578124998],[95.362109375,5.812402343750036]]]]}},{\"type\":\"Feature\",\"properties\":{\"_id\":315,\"name\":{\"common\":\"India\",\"official\":\"Republic of India\",\"native\":{\"eng\":{\"official\":\"Republic of India\",\"common\":\"India\"},\"hin\":{\"official\":\"भारत गणराज्य\",\"common\":\"भारत\"},\"tam\":{\"official\":\"இந்தியக் குடியரசு\",\"common",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: 2500002,5.84267578124998],[95.362109375,5.812402343750036]]]]}},{\"type\":\"Feature\",\"properties\":{\"_id\":315,\"name\":{\"common\":\"India\",\"official\":\"Republic of India\",\"native\":{\"eng\":{\"official\":\"Republic of India\",\"common\":\"India\"},\"hin\":{\"official\":\"भारत गणराज्य\",\"common\":\"भारत\"},\"tam\":{\"official\":\"இந்தியக் குடியரசு\",\"common\":\"இந்தியா\"}}},\"t",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: common\":\"भारत\"},\"tam\":{\"official\":\"இந்தியக் குடியரசு\",\"common\":\"இந்தியா\"}}},\"tld\":[\".in\"],\"cca2\":\"IN\",\"ccn3\":\"356\",\"cca3\":\"IND\",\"cioc\":\"IND\",\"independent\":true,\"status\":\"officially-assigned\",\"currencies\":{\"INR\":{\"name\":\"Indian rupee\",\"symbol\":\"₹\"}},\"idd\":{\"root\":\"+9\",\"suffixes\":[\"1\"]},\"capital\":[\"New Delhi\"],\"altSpellings\":[\"IN\",\"Bhārat\",",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: \":\"IND\",\"independent\":true,\"status\":\"officially-assigned\",\"currencies\":{\"INR\":{\"name\":\"Indian rupee\",\"symbol\":\"₹\"}},\"idd\":{\"root\":\"+9\",\"suffixes\":[\"1\"]},\"capital\":[\"New Delhi\"],\"altSpellings\":[\"IN\",\"Bhārat\",\"Republic of India\",\"Bharat Ganrajya\",\"இந்தியா\"],\"region\":\"Asia\",\"subregion\":\"Southern Asia\",\"languages\":{\"eng\":\"English\",\"hin\":\"Hind",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: mon\":\"Indie\"},\"deu\":{\"official\":\"Republik Indien\",\"common\":\"Indien\"},\"fra\":{\"official\":\"République de l\\'Inde\",\"common\":\"Inde\"},\"hrv\":{\"official\":\"Republika Indija\",\"common\":\"Indija\"},\"ita\":{\"official\":\"Repubblica dell\\'India\",\"common\":\"India\"},\"jpn\":{\"official\":\"インド共和国\",\"common\":\"インド\"},\"nld\":{\"official\":\"Republiek India\",\"common\":\"India\"",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: u\":{\"official\":\"Republik Indien\",\"common\":\"Indien\"},\"fra\":{\"official\":\"République de l\\'Inde\",\"common\":\"Inde\"},\"hrv\":{\"official\":\"Republika Indija\",\"common\":\"Indija\"},\"ita\":{\"official\":\"Repubblica dell\\'India\",\"common\":\"India\"},\"jpn\":{\"official\":\"インド共和国\",\"common\":\"インド\"},\"nld\":{\"official\":\"Republiek India\",\"common\":\"India\"},\"por\":{\"officia",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: e de l\\'Inde\",\"common\":\"Inde\"},\"hrv\":{\"official\":\"Republika Indija\",\"common\":\"Indija\"},\"ita\":{\"official\":\"Repubblica dell\\'India\",\"common\":\"India\"},\"jpn\":{\"official\":\"インド共和国\",\"common\":\"インド\"},\"nld\":{\"official\":\"Republiek India\",\"common\":\"India\"},\"por\":{\"official\":\"Índia\",\"common\":\"Índia\"},\"rus\":{\"official\":\"Республика Индия\",\"common\":\"Инди",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: mmon\":\"Inde\"},\"hrv\":{\"official\":\"Republika Indija\",\"common\":\"Indija\"},\"ita\":{\"official\":\"Repubblica dell\\'India\",\"common\":\"India\"},\"jpn\":{\"official\":\"インド共和国\",\"common\":\"インド\"},\"nld\":{\"official\":\"Republiek India\",\"common\":\"India\"},\"por\":{\"official\":\"Índia\",\"common\":\"Índia\"},\"rus\":{\"official\":\"Республика Индия\",\"common\":\"Индия\"},\"slk\":{\"offic",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: 国\",\"common\":\"インド\"},\"nld\":{\"official\":\"Republiek India\",\"common\":\"India\"},\"por\":{\"official\":\"Índia\",\"common\":\"Índia\"},\"rus\":{\"official\":\"Республика Индия\",\"common\":\"Индия\"},\"slk\":{\"official\":\"Indická republika\",\"common\":\"India\"},\"spa\":{\"official\":\"India\",\"common\":\"India\"},\"fin\":{\"official\":\"Intian tasavalta\",\"common\":\"Intia\"},\"est\":{\"offic",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: official\":\"Republiek India\",\"common\":\"India\"},\"por\":{\"official\":\"Índia\",\"common\":\"Índia\"},\"rus\":{\"official\":\"Республика Индия\",\"common\":\"Индия\"},\"slk\":{\"official\":\"Indická republika\",\"common\":\"India\"},\"spa\":{\"official\":\"India\",\"common\":\"India\"},\"fin\":{\"official\":\"Intian tasavalta\",\"common\":\"Intia\"},\"est\":{\"official\":\"India Vabariik\",\"comm",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: iek India\",\"common\":\"India\"},\"por\":{\"official\":\"Índia\",\"common\":\"Índia\"},\"rus\":{\"official\":\"Республика Индия\",\"common\":\"Индия\"},\"slk\":{\"official\":\"Indická republika\",\"common\":\"India\"},\"spa\":{\"official\":\"India\",\"common\":\"India\"},\"fin\":{\"official\":\"Intian tasavalta\",\"common\":\"Intia\"},\"est\":{\"official\":\"India Vabariik\",\"common\":\"India\"},\"zho",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: fficial\":\"Республика Индия\",\"common\":\"Индия\"},\"slk\":{\"official\":\"Indická republika\",\"common\":\"India\"},\"spa\":{\"official\":\"India\",\"common\":\"India\"},\"fin\":{\"official\":\"Intian tasavalta\",\"common\":\"Intia\"},\"est\":{\"official\":\"India Vabariik\",\"common\":\"India\"},\"zho\":{\"official\":\"印度共和国\",\"common\":\"印度\"},\"pol\":{\"official\":\"Republika Indii\",\"common\":",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: \",\"common\":\"Индия\"},\"slk\":{\"official\":\"Indická republika\",\"common\":\"India\"},\"spa\":{\"official\":\"India\",\"common\":\"India\"},\"fin\":{\"official\":\"Intian tasavalta\",\"common\":\"Intia\"},\"est\":{\"official\":\"India Vabariik\",\"common\":\"India\"},\"zho\":{\"official\":\"印度共和国\",\"common\":\"印度\"},\"pol\":{\"official\":\"Republika Indii\",\"common\":\"Indie\"},\"urd\":{\"official\"",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: },\"zho\":{\"official\":\"印度共和国\",\"common\":\"印度\"},\"pol\":{\"official\":\"Republika Indii\",\"common\":\"Indie\"},\"urd\":{\"official\":\"جمہوریہ بھارت\",\"common\":\"بھارت\"},\"kor\":{\"official\":\"인도 공화국\",\"common\":\"인도\"}},\"latlng\":[20,77],\"demonym\":\"Indian\",\"landlocked\":false,\"borders\":[\"BGD\",\"BTN\",\"MMR\",\"CHN\",\"NPL\",\"PAK\"],\"area\":3287590,\"flag\":\"🇮🇳\"},\"geometry\":{\"type",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: 72656250009,31.887646484374983]]]]}},{\"type\":\"Feature\",\"properties\":{\"scalerank\":5,\"featurecla\":\"Admin-0 country\",\"labelrank\":5,\"sovereignt\":\"Australia\",\"sov_a3\":\"AU1\",\"adm0_dif\":1,\"level\":2,\"type\":\"Dependency\",\"admin\":\"Indian Ocean Territories\",\"adm0_a3\":\"IOA\",\"geou_dif\":0,\"geounit\":\"Indian Ocean Territories\",\"gu_a3\":\"IOA\",\"su_dif\":0,\"su",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: \":{\"scalerank\":5,\"featurecla\":\"Admin-0 country\",\"labelrank\":5,\"sovereignt\":\"Australia\",\"sov_a3\":\"AU1\",\"adm0_dif\":1,\"level\":2,\"type\":\"Dependency\",\"admin\":\"Indian Ocean Territories\",\"adm0_a3\":\"IOA\",\"geou_dif\":0,\"geounit\":\"Indian Ocean Territories\",\"gu_a3\":\"IOA\",\"su_dif\":0,\"subunit\":\"Indian Ocean Territories\",\"su_a3\":\"IOA\",\"brk_diff\":0,\"name",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: \"sovereignt\":\"Australia\",\"sov_a3\":\"AU1\",\"adm0_dif\":1,\"level\":2,\"type\":\"Dependency\",\"admin\":\"Indian Ocean Territories\",\"adm0_a3\":\"IOA\",\"geou_dif\":0,\"geounit\":\"Indian Ocean Territories\",\"gu_a3\":\"IOA\",\"su_dif\":0,\"subunit\":\"Indian Ocean Territories\",\"su_a3\":\"IOA\",\"brk_diff\":0,\"name\":\"Indian Ocean Ter.\",\"name_long\":\"Indian Ocean Territories\",\"",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: 2,\"type\":\"Dependency\",\"admin\":\"Indian Ocean Territories\",\"adm0_a3\":\"IOA\",\"geou_dif\":0,\"geounit\":\"Indian Ocean Territories\",\"gu_a3\":\"IOA\",\"su_dif\":0,\"subunit\":\"Indian Ocean Territories\",\"su_a3\":\"IOA\",\"brk_diff\":0,\"name\":\"Indian Ocean Ter.\",\"name_long\":\"Indian Ocean Territories\",\"brk_a3\":\"IOA\",\"brk_name\":\"Indian Ocean Ter.\",\"brk_group\":null",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: ndian Ocean Territories\",\"adm0_a3\":\"IOA\",\"geou_dif\":0,\"geounit\":\"Indian Ocean Territories\",\"gu_a3\":\"IOA\",\"su_dif\":0,\"subunit\":\"Indian Ocean Territories\",\"su_a3\":\"IOA\",\"brk_diff\":0,\"name\":\"Indian Ocean Ter.\",\"name_long\":\"Indian Ocean Territories\",\"brk_a3\":\"IOA\",\"brk_name\":\"Indian Ocean Ter.\",\"brk_group\":null,\"abbrev\":\"Ind. Oc. Ter.\",\"posta",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: ,\"geounit\":\"Indian Ocean Territories\",\"gu_a3\":\"IOA\",\"su_dif\":0,\"subunit\":\"Indian Ocean Territories\",\"su_a3\":\"IOA\",\"brk_diff\":0,\"name\":\"Indian Ocean Ter.\",\"name_long\":\"Indian Ocean Territories\",\"brk_a3\":\"IOA\",\"brk_name\":\"Indian Ocean Ter.\",\"brk_group\":null,\"abbrev\":\"Ind. Oc. Ter.\",\"postal\":\"IOT\",\"formal_en\":null,\"formal_fr\":null,\"note_adm0",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: e_long\":\"Indian Ocean Territories\",\"brk_a3\":\"IOA\",\"brk_name\":\"Indian Ocean Ter.\",\"brk_group\":null,\"abbrev\":\"Ind. Oc. Ter.\",\"postal\":\"IOT\",\"formal_en\":null,\"formal_fr\":null,\"note_adm0\":\"Auz.\",\"note_brk\":null,\"name_sort\":\"Indian Ocean Territories\",\"name_alt\":null,\"mapcolor7\":1,\"mapcolor8\":2,\"mapcolor9\":2,\"mapcolor13\":7,\"pop_est\":2069,\"gdp_m",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: long\":\"Siachen Glacier\",\"brk_a3\":\"B45\",\"brk_name\":\"Siachen Glacier\",\"brk_group\":\"Jammu and Kashmir\",\"abbrev\":\"Siachen\",\"postal\":\"SG\",\"formal_en\":null,\"formal_fr\":null,\"note_adm0\":null,\"note_brk\":\"Claimed by Pakistan and India\",\"name_sort\":\"Kashmir\",\"name_alt\":null,\"mapcolor7\":3,\"mapcolor8\":7,\"mapcolor9\":6,\"mapcolor13\":-99,\"pop_est\":6000,\"",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: jk Marokko\",\"common\":\"Marokko\"},\"por\":{\"official\":\"Marrocos\",\"common\":\"Marrocos\"},\"rus\":{\"official\":\"Королевство Марокко\",\"common\":\"Марокко\"},\"slk\":{\"official\":\"Marocké kniežatstvo\",\"common\":\"Maroko\"},\"spa\":{\"official\":\"Marruecos\",\"common\":\"Marruecos\"},\"fin\":{\"official\":\"Marokon kuningaskunta\",\"common\":\"Marokko\"},\"est\":{\"official\":\"Maroko",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: \"Marokko\"},\"por\":{\"official\":\"Marrocos\",\"common\":\"Marrocos\"},\"rus\":{\"official\":\"Королевство Марокко\",\"common\":\"Марокко\"},\"slk\":{\"official\":\"Marocké kniežatstvo\",\"common\":\"Maroko\"},\"spa\":{\"official\":\"Marruecos\",\"common\":\"Marruecos\"},\"fin\":{\"official\":\"Marokon kuningaskunta\",\"common\":\"Marokko\"},\"est\":{\"official\":\"Maroko Kuningriik\",\"common\"",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: [44.9943359375001,41.085595703124966],[44.96142578125003,41.079248046874994],[44.95888671875005,41.052636718749994],[44.969042968750074,41.02724609374996]]]]}},{\"type\":\"Feature\",\"properties\":{\"_id\":345,\"name\":{\"common\":\"Bangladesh\",\"official\":\"People\\'s Republic of Bangladesh\",\"native\":{\"ben\":{\"official\":\"বাংলাদেশ গণপ্রজাতন্ত্রী\",\"common\"",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: 2578125003,41.079248046874994],[44.95888671875005,41.052636718749994],[44.969042968750074,41.02724609374996]]]]}},{\"type\":\"Feature\",\"properties\":{\"_id\":345,\"name\":{\"common\":\"Bangladesh\",\"official\":\"People\\'s Republic of Bangladesh\",\"native\":{\"ben\":{\"official\":\"বাংলাদেশ গণপ্রজাতন্ত্রী\",\"common\":\"বাংলাদেশ\"}}},\"tld\":[\".bd\"],\"cca2\":\"BD\",\"ccn3",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: native\":{\"ben\":{\"official\":\"বাংলাদেশ গণপ্রজাতন্ত্রী\",\"common\":\"বাংলাদেশ\"}}},\"tld\":[\".bd\"],\"cca2\":\"BD\",\"ccn3\":\"050\",\"cca3\":\"BGD\",\"cioc\":\"BAN\",\"independent\":true,\"status\":\"officially-assigned\",\"currencies\":{\"BDT\":{\"name\":\"Bangladeshi taka\",\"symbol\":\"৳\"}},\"idd\":{\"root\":\"+8\",\"suffixes\":[\"80\"]},\"capital\":[\"Dhaka\"],\"altSpellings\":[\"BD\",\"People\\",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: \"BAN\",\"independent\":true,\"status\":\"officially-assigned\",\"currencies\":{\"BDT\":{\"name\":\"Bangladeshi taka\",\"symbol\":\"৳\"}},\"idd\":{\"root\":\"+8\",\"suffixes\":[\"80\"]},\"capital\":[\"Dhaka\"],\"altSpellings\":[\"BD\",\"People\\'s Republic of Bangladesh\",\"Gônôprôjatôntri Bangladesh\"],\"region\":\"Asia\",\"subregion\":\"Southern Asia\",\"languages\":{\"ben\":\"Bengali\"},\"tra",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: tus\":\"officially-assigned\",\"currencies\":{\"BDT\":{\"name\":\"Bangladeshi taka\",\"symbol\":\"৳\"}},\"idd\":{\"root\":\"+8\",\"suffixes\":[\"80\"]},\"capital\":[\"Dhaka\"],\"altSpellings\":[\"BD\",\"People\\'s Republic of Bangladesh\",\"Gônôprôjatôntri Bangladesh\"],\"region\":\"Asia\",\"subregion\":\"Southern Asia\",\"languages\":{\"ben\":\"Bengali\"},\"translations\":{\"ces\":{\"official\"",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: jatôntri Bangladesh\"],\"region\":\"Asia\",\"subregion\":\"Southern Asia\",\"languages\":{\"ben\":\"Bengali\"},\"translations\":{\"ces\":{\"official\":\"Bangladéšská lidová republika\",\"common\":\"Bangladéš\"},\"cym\":{\"official\":\"Gweriniaeth Pobl Bangladesh\",\"common\":\"Bangladesh\"},\"deu\":{\"official\":\"Volksrepublik Bangladesch\",\"common\":\"Bangladesch\"},\"fra\":{\"officia",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: \"region\":\"Asia\",\"subregion\":\"Southern Asia\",\"languages\":{\"ben\":\"Bengali\"},\"translations\":{\"ces\":{\"official\":\"Bangladéšská lidová republika\",\"common\":\"Bangladéš\"},\"cym\":{\"official\":\"Gweriniaeth Pobl Bangladesh\",\"common\":\"Bangladesh\"},\"deu\":{\"official\":\"Volksrepublik Bangladesch\",\"common\":\"Bangladesch\"},\"fra\":{\"official\":\"La République popu",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: republika\",\"common\":\"Bangladéš\"},\"cym\":{\"official\":\"Gweriniaeth Pobl Bangladesh\",\"common\":\"Bangladesh\"},\"deu\":{\"official\":\"Volksrepublik Bangladesch\",\"common\":\"Bangladesch\"},\"fra\":{\"official\":\"La République populaire du Bangladesh\",\"common\":\"Bangladesh\"},\"hrv\":{\"official\":\"Narodna Republika Bangladeš\",\"common\":\"Bangladeš\"},\"ita\":{\"officia",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: angladéš\"},\"cym\":{\"official\":\"Gweriniaeth Pobl Bangladesh\",\"common\":\"Bangladesh\"},\"deu\":{\"official\":\"Volksrepublik Bangladesch\",\"common\":\"Bangladesch\"},\"fra\":{\"official\":\"La République populaire du Bangladesh\",\"common\":\"Bangladesh\"},\"hrv\":{\"official\":\"Narodna Republika Bangladeš\",\"common\":\"Bangladeš\"},\"ita\":{\"official\":\"Repubblica popolar",
+  "~f3de7c23.bundle.js?383c59424dba9a329a8e :: \",\"common\":\"Bangladesch\"},\"fra\":{\"official\":\"La République populaire du Bangladesh\",\"common\":\"Bangladesh\"},\"hrv\":{\"official\":\"Narodna Republika Bangladeš\",\"common\":\"Bangladeš\"},\"ita\":{\"official\":\"Repubblica popolare del Bangladesh\",\"common\":\"Bangladesh\"},\"jpn\":{\"official\":\"バングラデシュ人民共和国\",\"common\":\"バングラデシュ\"},\"nld\":{\"official\":\"Volksrepublie"
  ],
- "files/amfiles/paises.csv": {
-  "status": 404,
-  "type": "text/html; charset=utf-8",
-  "head": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /files/amfiles/paises.csv</pre>\n</body>\n</html>\n"
- },
- "files/paises.csv": {
-  "status": 404,
-  "type": "text/html; charset=utf-8",
-  "head": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /files/paises.csv</pre>\n</body>\n</html>\n"
- },
- "files/amfiles/paises.json": {
-  "status": 404,
-  "type": "text/html; charset=utf-8",
-  "head": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /files/amfiles/paises.json</pre>\n</body>\n</html>\n"
- },
- "api/paises": {
-  "status": 404,
-  "type": "text/html; charset=utf-8",
-  "head": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/paises</pre>\n</body>\n</html>\n"
- },
- "data/paises.json": {
-  "status": 404,
-  "type": "text/html; charset=utf-8",
-  "head": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /data/paises.json</pre>\n</body>\n</html>\n"
- },
- "files/zips/paises.zip": {
-  "status": 404,
-  "type": "text/html; charset=utf-8",
-  "head": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /files/zips/paises.zip</pre>\n</body>\n</html>\n"
+ "pairs": {
+  "000": [
+   "flag"
+  ],
+  "024": [
+   "flag"
+  ],
+  "028": [
+   "flag"
+  ],
+  "033": [
+   "flag"
+  ],
+  "034": [
+   "flag"
+  ],
+  "035": [
+   "flag"
+  ],
+  "037": [
+   "flag"
+  ],
+  "041": [
+   "flag"
+  ],
+  "051": [
+   "flag"
+  ],
+  "068": [
+   "flag"
+  ],
+  "086": [
+   "flag"
+  ],
+  "087": [
+   "flag"
+  ],
+  "090": [
+   "React JS App",
+   "flag",
+   "reactotron-core-client"
+  ],
+  "094": [
+   "flag"
+  ],
+  "100": [
+   "Save config as...",
+   "flag"
+  ],
+  "101": [
+   "name"
+  ],
+  "102": [
+   "flag",
+   "name"
+  ],
+  "103": [
+   "name"
+  ],
+  "104": [
+   "flag",
+   "name"
+  ],
+  "105": [
+   "name"
+  ],
+  "106": [
+   "num-multiply"
+  ],
+  "107": [
+   "name",
+   "num-plus"
+  ],
+  "108": [
+   "name"
+  ],
+  "109": [
+   "name",
+   "num-minus"
+  ],
+  "110": [
+   "flag",
+   "num-period"
+  ],
+  "111": [
+   "name",
+   "num-division"
+  ],
+  "112": [
+   "name"
+  ],
+  "113": [
+   "name"
+  ],
+  "114": [
+   "flag"
+  ],
+  "115": [
+   "name"
+  ],
+  "116": [
+   "flag",
+   "name"
+  ],
+  "117": [
+   "name"
+  ],
+  "118": [
+   "name"
+  ],
+  "120": [
+   "Version History",
+   "flag",
+   "name"
+  ],
+  "121": [
+   "name"
+  ],
+  "122": [
+   "name"
+  ],
+  "123": [
+   "name"
+  ],
+  "124": [
+   "name"
+  ],
+  "125": [
+   "flag",
+   "name"
+  ],
+  "126": [
+   "name"
+  ],
+  "127": [
+   "name"
+  ],
+  "129": [
+   "name"
+  ],
+  "130": [
+   "flag",
+   "name"
+  ],
+  "131": [
+   "name"
+  ],
+  "132": [
+   "name"
+  ],
+  "133": [
+   "name"
+  ],
+  "134": [
+   "name"
+  ],
+  "135": [
+   "name"
+  ],
+  "136": [
+   "name"
+  ],
+  "138": [
+   "name"
+  ],
+  "139": [
+   "name"
+  ],
+  "140": [
+   "name"
+  ],
+  "141": [
+   "name"
+  ],
+  "142": [
+   "flag",
+   "name"
+  ],
+  "144": [
+   "NumLock",
+   "name"
+  ],
+  "145": [
+   "ScrollLock"
+  ],
+  "149": [
+   "name"
+  ],
+  "150": [
+   "name"
+  ],
+  "151": [
+   "flag",
+   "name"
+  ],
+  "153": [
+   "name"
+  ],
+  "155": [
+   "name"
+  ],
+  "156": [
+   "name"
+  ],
+  "157": [
+   "name"
+  ],
+  "158": [
+   "name"
+  ],
+  "159": [
+   "name"
+  ],
+  "160": [
+   "flag",
+   "name"
+  ],
+  "161": [
+   "name"
+  ],
+  "163": [
+   "name"
+  ],
+  "167": [
+   "flag"
+  ],
+  "173": [
+   "flag"
+  ],
+  "180": [
+   "flag"
+  ],
+  "181": [
+   "flag"
+  ],
+  "186": [
+   "semicolon"
+  ],
+  "187": [
+   "equals"
+  ],
+  "189": [
+   "dash",
+   "flag"
+  ],
+  "192": [
+   "flag"
+  ],
+  "193": [
+   "flag"
+  ],
+  "195": [
+   "flag"
+  ],
+  "199": [
+   "flag"
+  ],
+  "200": [
+   "flag",
+   "homeTitle",
+   "name"
+  ],
+  "201": [
+   "name"
+  ],
+  "202": [
+   "name"
+  ],
+  "203": [
+   "name"
+  ],
+  "204": [
+   "name"
+  ],
+  "205": [
+   "name"
+  ],
+  "206": [
+   "name"
+  ],
+  "207": [
+   "name"
+  ],
+  "208": [
+   "name"
+  ],
+  "209": [
+   "flag",
+   "name"
+  ],
+  "210": [
+   "flag",
+   "name"
+  ],
+  "211": [
+   "name"
+  ],
+  "212": [
+   "flag",
+   "name"
+  ],
+  "213": [
+   "name"
+  ],
+  "214": [
+   "name"
+  ],
+  "215": [
+   "name"
+  ],
+  "216": [
+   "flag",
+   "name"
+  ],
+  "217": [
+   "name"
+  ],
+  "218": [
+   "name"
+  ],
+  "219": [
+   "name",
+   "open-square-bracket"
+  ],
+  "220": [
+   "flag",
+   "name"
+  ],
+  "221": [
+   "close-square-bracket",
+   "name"
+  ],
+  "222": [
+   "name",
+   "single-quote"
+  ],
+  "223": [
+   "name"
+  ],
+  "224": [
+   "Meta",
+   "name",
+   "win"
+  ],
+  "225": [
+   "name"
+  ],
+  "226": [
+   "name"
+  ],
+  "227": [
+   "flag"
+  ],
+  "230": [
+   "flag"
+  ],
+  "232": [
+   "name"
+  ],
+  "233": [
+   "name"
+  ],
+  "234": [
+   "name"
+  ],
+  "235": [
+   "name"
+  ],
+  "236": [
+   "flag",
+   "name"
+  ],
+  "237": [
+   "name"
+  ],
+  "238": [
+   "name"
+  ],
+  "239": [
+   "name"
+  ],
+  "240": [
+   "name"
+  ],
+  "242": [
+   "flag",
+   "name"
+  ],
+  "251": [
+   "flag"
+  ],
+  "254": [
+   "name"
+  ],
+  "256": [
+   "categories"
+  ],
+  "260": [
+   "flag"
+  ],
+  "261": [
+   "flag"
+  ],
+  "264": [
+   "flag"
+  ],
+  "270": [
+   "flip-horizontal"
+  ],
+  "272": [
+   "flag"
+  ],
+  "273": [
+   "flag"
+  ],
+  "284": [
+   "flag"
+  ],
+  "295": [
+   "flag"
+  ],
+  "300": [
+   "flag"
+  ],
+  "301": [
+   "name"
+  ],
+  "302": [
+   "name"
+  ],
+  "304": [
+   "name"
+  ],
+  "306": [
+   "name"
+  ],
+  "307": [
+   "name"
+  ],
+  "308": [
+   "name"
+  ],
+  "309": [
+   "name"
+  ],
+  "310": [
+   "name"
+  ],
+  "312": [
+   "name"
+  ],
+  "313": [
+   "name"
+  ],
+  "315": [
+   "name"
+  ],
+  "316": [
+   "flag",
+   "name"
+  ],
+  "317": [
+   "flag",
+   "name"
+  ],
+  "318": [
+   "name"
+  ],
+  "319": [
+   "name"
+  ],
+  "320": [
+   "name"
+  ],
+  "321": [
+   "name"
+  ],
+  "322": [
+   "name"
+  ],
+  "323": [
+   "name"
+  ],
+  "324": [
+   "name"
+  ],
+  "326": [
+   "name"
+  ],
+  "328": [
+   "name"
+  ],
+  "329": [
+   "name"
+  ],
+  "330": [
+   "name"
+  ],
+  "331": [
+   "name"
+  ],
+  "332": [
+   "name"
+  ],
+  "333": [
+   "name"
+  ],
+  "334": [
+   "name"
+  ],
+  "335": [
+   "name"
+  ],
+  "336": [
+   "flag"
+  ],
+  "337": [
+   "name"
+  ],
+  "338": [
+   "flag"
+  ],
+  "341": [
+   "name"
+  ],
+  "342": [
+   "flag"
+  ],
+  "344": [
+   "flag",
+   "name"
+  ],
+  "345": [
+   "name"
+  ],
+  "346": [
+   "name"
+  ],
+  "347": [
+   "flag"
+  ],
+  "349": [
+   "name"
+  ],
+  "350": [
+   "name"
+  ],
+  "351": [
+   "name"
+  ],
+  "352": [
+   "name"
+  ],
+  "353": [
+   "flag",
+   "name"
+  ],
+  "354": [
+   "name"
+  ],
+  "355": [
+   "flag",
+   "name"
+  ],
+  "356": [
+   "name"
+  ],
+  "357": [
+   "name"
+  ],
+  "358": [
+   "name"
+  ],
+  "361": [
+   "flag"
+  ],
+  "364": [
+   "flag"
+  ],
+  "367": [
+   "flag"
+  ],
+  "369": [
+   "flag"
+  ],
+  "373": [
+   "flag"
+  ],
+  "375": [
+   "flag"
+  ],
+  "389": [
+   "flag"
+  ],
+  "391": [
+   "flag"
+  ],
+  "393": [
+   "flag"
+  ],
+  "394": [
+   "flag"
+  ],
+  "400": [
+   "flag"
+  ],
+  "401": [
+   "name"
+  ],
+  "404": [
+   "name"
+  ],
+  "405": [
+   "name"
+  ],
+  "406": [
+   "name"
+  ],
+  "407": [
+   "name"
+  ],
+  "409": [
+   "name"
+  ],
+  "410": [
+   "name"
+  ],
+  "411": [
+   "name"
+  ],
+  "412": [
+   "name"
+  ],
+  "413": [
+   "name"
+  ],
+  "414": [
+   "name"
+  ],
+  "415": [
+   "name"
+  ],
+  "416": [
+   "name"
+  ],
+  "417": [
+   "flag",
+   "name"
+  ],
+  "418": [
+   "name"
+  ],
+  "419": [
+   "name"
+  ],
+  "420": [
+   "name"
+  ],
+  "421": [
+   "name"
+  ],
+  "422": [
+   "name"
+  ],
+  "423": [
+   "name"
+  ],
+  "424": [
+   "flag",
+   "name"
+  ],
+  "425": [
+   "name"
+  ],
+  "426": [
+   "name"
+  ],
+  "427": [
+   "name"
+  ],
+  "428": [
+   "name"
+  ],
+  "429": [
+   "name"
+  ],
+  "430": [
+   "flag",
+   "name"
+  ],
+  "431": [
+   "name"
+  ],
+  "435": [
+   "name"
+  ],
+  "436": [
+   "name"
+  ],
+  "439": [
+   "name"
+  ],
+  "440": [
+   "name"
+  ],
+  "441": [
+   "name"
+  ],
+  "442": [
+   "flag",
+   "name"
+  ],
+  "443": [
+   "name"
+  ],
+  "444": [
+   "flag",
+   "name"
+  ],
+  "445": [
+   "flag",
+   "name"
+  ],
+  "446": [
+   "name"
+  ],
+  "447": [
+   "name"
+  ],
+  "448": [
+   "name"
+  ],
+  "449": [
+   "name"
+  ],
+  "450": [
+   "flag",
+   "name"
+  ],
+  "452": [
+   "flag"
+  ],
+  "453": [
+   "name"
+  ],
+  "454": [
+   "name"
+  ],
+  "459": [
+   "flag"
+  ],
+  "463": [
+   "flag"
+  ],
+  "464": [
+   "flag"
+  ],
+  "467": [
+   "flag"
+  ],
+  "468": [
+   "flag"
+  ],
+  "484": [
+   "flag"
+  ],
+  "492": [
+   "flag"
+  ],
+  "500": [
+   "AnyChart in not present on the page.",
+   "flag"
+  ],
+  "501": [
+   "name"
+  ],
+  "503": [
+   "name"
+  ],
+  "504": [
+   "name"
+  ],
+  "505": [
+   "name"
+  ],
+  "512": [
+   "name"
+  ],
+  "513": [
+   "name"
+  ],
+  "514": [
+   "name"
+  ],
+  "515": [
+   "name"
+  ],
+  "516": [
+   "name"
+  ],
+  "518": [
+   "name"
+  ],
+  "519": [
+   "name"
+  ],
+  "520": [
+   "name"
+  ],
+  "521": [
+   "name"
+  ],
+  "528": [
+   "flag"
+  ],
+  "533": [
+   "flag"
+  ],
+  "538": [
+   "flag"
+  ],
+  "540": [
+   "flag"
+  ],
+  "549": [
+   "flag"
+  ],
+  "550": [
+   "flag"
+  ],
+  "559": [
+   "flag"
+  ],
+  "562": [
+   "flag"
+  ],
+  "569": [
+   "flag"
+  ],
+  "570": [
+   "flag"
+  ],
+  "572": [
+   "flag"
+  ],
+  "575": [
+   "flag"
+  ],
+  "578": [
+   "flag"
+  ],
+  "580": [
+   "flag"
+  ],
+  "581": [
+   "flag"
+  ],
+  "586": [
+   "flag"
+  ],
+  "590": [
+   "flag"
+  ],
+  "594": [
+   "flag"
+  ],
+  "600": [
+   "flag"
+  ],
+  "610": [
+   "flag"
+  ],
+  "612": [
+   "flag"
+  ],
+  "615": [
+   "flag"
+  ],
+  "616": [
+   "flag"
+  ],
+  "622": [
+   "flag"
+  ],
+  "632": [
+   "commutador"
+  ],
+  "657": [
+   "flag"
+  ],
+  "668": [
+   "flag"
+  ],
+  "670": [
+   "flag"
+  ],
+  "671": [
+   "flag"
+  ],
+  "679": [
+   "flag"
+  ],
+  "689": [
+   "flag"
+  ],
+  "690": [
+   "flag"
+  ],
+  "695": [
+   "flag"
+  ],
+  "700": [
+   "flag"
+  ],
+  "702": [
+   "flag"
+  ],
+  "710": [
+   "flag"
+  ],
+  "713": [
+   "flag"
+  ],
+  "722": [
+   "flag"
+  ],
+  "740": [
+   "flag"
+  ],
+  "741": [
+   "flag"
+  ],
+  "743": [
+   "flag"
+  ],
+  "745": [
+   "flag"
+  ],
+  "747": [
+   "flag"
+  ],
+  "748": [
+   "flag"
+  ],
+  "750": [
+   "flag"
+  ],
+  "751": [
+   "flag"
+  ],
+  "752": [
+   "flag"
+  ],
+  "757": [
+   "flag"
+  ],
+  "765": [
+   "flag"
+  ],
+  "767": [
+   "flag"
+  ],
+  "768": [
+   "flag"
+  ],
+  "770": [
+   "flag"
+  ],
+  "785": [
+   "flag"
+  ],
+  "800": [
+   "flag"
+  ],
+  "802": [
+   "flag"
+  ],
+  "803": [
+   "flag"
+  ],
+  "811": [
+   "flag"
+  ],
+  "812": [
+   "flag"
+  ],
+  "818": [
+   "flag"
+  ],
+  "820": [
+   "flag"
+  ],
+  "834": [
+   "flag"
+  ],
+  "840": [
+   "flag"
+  ],
+  "841": [
+   "flag"
+  ],
+  "842": [
+   "flag"
+  ],
+  "846": [
+   "flag"
+  ],
+  "850": [
+   "flag"
+  ],
+  "857": [
+   "flag"
+  ],
+  "858": [
+   "flag"
+  ],
+  "862": [
+   "flag"
+  ],
+  "865": [
+   "flag"
+  ],
+  "870": [
+   "flag"
+  ],
+  "871": [
+   "flag"
+  ],
+  "874": [
+   "flag"
+  ],
+  "879": [
+   "flag"
+  ],
+  "884": [
+   "flag"
+  ],
+  "889": [
+   "flag"
+  ],
+  "896": [
+   "flag"
+  ],
+  "900": [
+   "flag"
+  ],
+  "912": [
+   "flag"
+  ],
+  "930": [
+   "flag"
+  ],
+  "943": [
+   "flag"
+  ],
+  "948": [
+   "flag"
+  ],
+  "951": [
+   "flag"
+  ],
+  "961": [
+   "flag"
+  ],
+  "964": [
+   "flag"
+  ],
+  "966": [
+   "flag"
+  ],
+  "967": [
+   "flag"
+  ],
+  "968": [
+   "flag"
+  ],
+  "969": [
+   "flag"
+  ],
+  "984": [
+   "flag"
+  ],
+  "990": [
+   "flag"
+  ],
+  "991": [
+   "flag"
+  ],
+  "992": [
+   "flag"
+  ],
+  "999": [
+   "No data."
+  ]
  }
 }

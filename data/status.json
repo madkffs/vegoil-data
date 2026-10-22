@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-10-22 15:23",
+ "run_utc": "2026-10-22 15:27",
  "mode": "probe",
  "errors": {
   "MWE=F": "no data",
@@ -7,7 +7,7 @@
  },
  "nabsa_rows": {
   "sailed": 1591,
-  "lineup": 1176,
+  "lineup": 1201,
   "unparsed_examples": [
    "sailed_update: SAN LORENZO PROFERTIL TERMINAL SAN MARTIN PAIWAN DIAMOND SAILED 08/10/2026 3 .400,00 GRANULAR UREA NIGERIA ARGENTINA NUTRIEN AMEROPA",
    "sailed_update: SAN LORENZO COFCO INTL. PGSM NORTH BERTH (EX NIDERA FERTILIZANTES) PAIWAN DIAMOND SAILED 09/10/2026 1 0.000,00 GRANULAR UREA NIGERIA ARGENTINA COFCO AMEROPA",
