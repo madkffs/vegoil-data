@@ -18,7 +18,16 @@
 "source": "Cargo surveyor release pattern"
 },
 {
-"id": "e03",
+"date": "2026-10-28",
+"event": "Darling Ingredients Q3 results",
+"category": "Companies",
+"status": "Official",
+"note": "After the US close; call 29 Oct 9:00 ET",
+"source": "https://www.sec.gov/Archives/edgar/data/0000916540/000091654026000025/exh991-pressrelease102226.htm",
+"id": "e03"
+},
+{
+"id": "e04",
 "date": "2026-10-28",
 "event": "FOMC rate decision",
 "category": "USDA & US",
@@ -27,35 +36,26 @@
 "source": "https://www.kitco.com/news/off-the-wire/2026-10-13/feds-collins-sees-another-rate-hike-table-end-2026"
 },
 {
-"id": "e04",
-"date": "2026-10-30",
-"event": "CFTC Commitments of Traders",
-"category": "Positioning",
+"date": "2026-10-29",
+"event": "Bunge Q3 results",
+"category": "Companies",
 "status": "Official",
-"note": "Positions as of the Tuesday before",
-"source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
+"note": "Before the US open; call 7:00 CT",
+"source": "https://earningswhispers.com/article/BG/2610011113",
+"id": "e05"
 },
 {
-"id": "e05",
-"date": "2026-10-30",
-"event": "Indonesia November CPO reference price and export levy",
-"category": "Palm",
-"status": "Expected",
-"note": "Set monthly near month-end",
-"source": "Indonesian trade ministry pattern"
-},
-{
-"id": "e06",
-"date": "2026-11-02",
-"event": "Malaysian export estimates (ITS, AmSpec)",
-"category": "Palm",
-"status": "Expected",
-"note": "Full October",
-"source": "Cargo surveyor release pattern"
+"date": "2026-10-29",
+"event": "Neste Q3 interim report",
+"category": "Companies",
+"status": "Official",
+"note": "Renewables margin and turnarounds",
+"source": "https://www.inderes.fi/en/releases/nestes-financial-reporting-in-2026",
+"id": "e06"
 },
 {
 "id": "e07",
-"date": "2026-11-06",
+"date": "2026-10-30",
 "event": "CFTC Commitments of Traders",
 "category": "Positioning",
 "status": "Official",
@@ -64,6 +64,51 @@
 },
 {
 "id": "e08",
+"date": "2026-10-30",
+"event": "Indonesia November CPO reference price and export levy",
+"category": "Palm",
+"status": "Expected",
+"note": "Set monthly near month-end",
+"source": "Indonesian trade ministry pattern"
+},
+{
+"id": "e09",
+"date": "2026-11-02",
+"event": "Malaysian export estimates (ITS, AmSpec)",
+"category": "Palm",
+"status": "Expected",
+"note": "Full October",
+"source": "Cargo surveyor release pattern"
+},
+{
+"date": "2026-11-03",
+"event": "ADM Q3 results",
+"category": "Companies",
+"status": "Official",
+"note": "",
+"source": "https://finviz.com/news/399205/adm-to-release-third-quarter-financial-results-on-november-3-2026",
+"id": "e10"
+},
+{
+"date": "2026-11-03",
+"event": "Marathon Petroleum Q3 results",
+"category": "Companies",
+"status": "Official",
+"note": "Renewable diesel segment and Martinez JV",
+"source": "https://finviz.com/news/393371/marathon-petroleum-corp-to-report-third-quarter-financial-results-on-november-3-2026",
+"id": "e11"
+},
+{
+"id": "e12",
+"date": "2026-11-06",
+"event": "CFTC Commitments of Traders",
+"category": "Positioning",
+"status": "Official",
+"note": "Positions as of the Tuesday before",
+"source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
+},
+{
+"id": "e13",
 "date": "2026-11-10",
 "event": "MPOB October supply and demand",
 "category": "Palm",
@@ -72,7 +117,7 @@
 "source": "MPOB release pattern"
 },
 {
-"id": "e09",
+"id": "e14",
 "date": "2026-11-10",
 "event": "Malaysian export estimates (ITS, AmSpec)",
 "category": "Palm",
@@ -81,7 +126,7 @@
 "source": "Cargo surveyor release pattern"
 },
 {
-"id": "e10",
+"id": "e15",
 "date": "2026-11-10",
 "event": "USDA WASDE",
 "category": "USDA & US",
@@ -90,7 +135,7 @@
 "source": "https://www.usda.gov/oce/commodity/wasde"
 },
 {
-"id": "e11",
+"id": "e16",
 "date": "2026-11-16",
 "event": "CFTC Commitments of Traders",
 "category": "Positioning",
@@ -99,7 +144,7 @@
 "source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
 },
 {
-"id": "e12",
+"id": "e17",
 "date": "2026-11-16",
 "event": "Malaysia December CPO reference price and export duty",
 "category": "Palm",
@@ -108,7 +153,7 @@
 "source": "MPOB circular pattern"
 },
 {
-"id": "e13",
+"id": "e18",
 "date": "2026-11-16",
 "event": "Malaysian export estimates (ITS, AmSpec)",
 "category": "Palm",
@@ -117,7 +162,7 @@
 "source": "Cargo surveyor release pattern"
 },
 {
-"id": "e14",
+"id": "e19",
 "date": "2026-11-16",
 "event": "NOPA crush (October)",
 "category": "USDA & US",
@@ -126,7 +171,7 @@
 "source": "https://www.nopa.org/resources/nopa-monthly-crush-report/"
 },
 {
-"id": "e15",
+"id": "e20",
 "date": "2026-11-20",
 "event": "CFTC Commitments of Traders",
 "category": "Positioning",
@@ -135,7 +180,7 @@
 "source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
 },
 {
-"id": "e16",
+"id": "e21",
 "date": "2026-11-20",
 "event": "Malaysian export estimates (ITS, AmSpec)",
 "category": "Palm",
@@ -144,7 +189,7 @@
 "source": "Cargo surveyor release pattern"
 },
 {
-"id": "e17",
+"id": "e22",
 "date": "2026-11-20",
 "event": "Soyoil Dec options expire",
 "category": "Exchange",
@@ -153,7 +198,7 @@
 "source": "CME Group contract rules"
 },
 {
-"id": "e18",
+"id": "e23",
 "date": "2026-11-25",
 "event": "Malaysian export estimates (ITS, AmSpec)",
 "category": "Palm",
@@ -162,7 +207,7 @@
 "source": "Cargo surveyor release pattern"
 },
 {
-"id": "e19",
+"id": "e24",
 "date": "2026-11-26",
 "event": "US Thanksgiving, CBOT closed",
 "category": "Exchange",
@@ -171,7 +216,7 @@
 "source": "CME Group contract rules"
 },
 {
-"id": "e20",
+"id": "e25",
 "date": "2026-11-30",
 "event": "CFTC Commitments of Traders",
 "category": "Positioning",
@@ -180,7 +225,7 @@
 "source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
 },
 {
-"id": "e21",
+"id": "e26",
 "date": "2026-11-30",
 "event": "Indonesia December CPO reference price and export levy",
 "category": "Palm",
@@ -189,7 +234,7 @@
 "source": "Indonesian trade ministry pattern"
 },
 {
-"id": "e22",
+"id": "e27",
 "date": "2026-11-30",
 "event": "Soyoil Dec first notice day",
 "category": "Exchange",
@@ -198,7 +243,7 @@
 "source": "CME Group contract rules"
 },
 {
-"id": "e23",
+"id": "e28",
 "date": "2026-12-01",
 "event": "Malaysian export estimates (ITS, AmSpec)",
 "category": "Palm",
@@ -207,7 +252,7 @@
 "source": "Cargo surveyor release pattern"
 },
 {
-"id": "e24",
+"id": "e29",
 "date": "2026-12-04",
 "event": "CFTC Commitments of Traders",
 "category": "Positioning",
@@ -216,7 +261,7 @@
 "source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
 },
 {
-"id": "e25",
+"id": "e30",
 "date": "2026-12-10",
 "event": "MPOB November supply and demand",
 "category": "Palm",
@@ -225,7 +270,7 @@
 "source": "MPOB release pattern"
 },
 {
-"id": "e26",
+"id": "e31",
 "date": "2026-12-10",
 "event": "Malaysian export estimates (ITS, AmSpec)",
 "category": "Palm",
@@ -234,7 +279,7 @@
 "source": "Cargo surveyor release pattern"
 },
 {
-"id": "e27",
+"id": "e32",
 "date": "2026-12-10",
 "event": "USDA WASDE",
 "category": "USDA & US",
@@ -243,7 +288,7 @@
 "source": "https://www.usda.gov/oce/commodity/wasde"
 },
 {
-"id": "e28",
+"id": "e33",
 "date": "2026-12-11",
 "event": "CFTC Commitments of Traders",
 "category": "Positioning",
@@ -252,7 +297,7 @@
 "source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
 },
 {
-"id": "e29",
+"id": "e34",
 "date": "2026-12-14",
 "event": "Soyoil Dec last trading day",
 "category": "Exchange",
@@ -261,7 +306,7 @@
 "source": "CME Group contract rules"
 },
 {
-"id": "e30",
+"id": "e35",
 "date": "2026-12-15",
 "event": "Malaysia January CPO reference price and export duty",
 "category": "Palm",
@@ -270,7 +315,7 @@
 "source": "MPOB circular pattern"
 },
 {
-"id": "e31",
+"id": "e36",
 "date": "2026-12-15",
 "event": "Malaysian export estimates (ITS, AmSpec)",
 "category": "Palm",
@@ -279,7 +324,7 @@
 "source": "Cargo surveyor release pattern"
 },
 {
-"id": "e32",
+"id": "e37",
 "date": "2026-12-15",
 "event": "NOPA crush (November)",
 "category": "USDA & US",
@@ -288,7 +333,7 @@
 "source": "https://www.nopa.org/resources/nopa-monthly-crush-report/"
 },
 {
-"id": "e33",
+"id": "e38",
 "date": "2026-12-18",
 "event": "CFTC Commitments of Traders",
 "category": "Positioning",
@@ -297,7 +342,7 @@
 "source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
 },
 {
-"id": "e34",
+"id": "e39",
 "date": "2026-12-21",
 "event": "Malaysian export estimates (ITS, AmSpec)",
 "category": "Palm",
@@ -306,7 +351,7 @@
 "source": "Cargo surveyor release pattern"
 },
 {
-"id": "e35",
+"id": "e40",
 "date": "2026-12-25",
 "event": "Christmas, CBOT closed",
 "category": "Exchange",
@@ -315,7 +360,7 @@
 "source": "CME Group contract rules"
 },
 {
-"id": "e36",
+"id": "e41",
 "date": "2026-12-28",
 "event": "CFTC Commitments of Traders",
 "category": "Positioning",

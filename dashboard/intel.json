@@ -1,6 +1,15 @@
 [
 {
 "id": "n01",
+"section": "Company results",
+"date": "2026-10-22",
+"headline": "Diamond Green Diesel earned $1.30/gal in Q3, up from a loss a year ago",
+"detail": "DGD (Valero/Darling) adjusted EBITDA was $418m on 315m gallons; Darling's share was $204m against \u2212$3m in Q3 2025. Darling keeps 2026 combined EBITDA guidance at $2.2\u20132.3bn and expects a stronger Q4. Healthy renewable diesel margins support demand for fats, UCO and soyoil.",
+"source": "Darling Ingredients (SEC 8-K)",
+"url": "https://www.sec.gov/Archives/edgar/data/0000916540/000091654026000025/exh991-pressrelease102226.htm"
+},
+{
+"id": "n02",
 "section": "Macro and geopolitics",
 "date": "2026-10-22",
 "headline": "Brent near $112, up about 3% on the day as the Middle East escalates",
@@ -9,7 +18,7 @@
 "url": "https://oilprice.com/futures/brent/0"
 },
 {
-"id": "n02",
+"id": "n03",
 "section": "Macro and geopolitics",
 "date": "2026-10-13",
 "headline": "Fed signals another small hike this year",
@@ -18,7 +27,7 @@
 "url": "https://www.kitco.com/news/off-the-wire/2026-10-13/feds-collins-sees-another-rate-hike-table-end-2026"
 },
 {
-"id": "n03",
+"id": "n04",
 "section": "Biofuels",
 "date": "2026-04-16",
 "headline": "US biomass-based diesel mandate: 9.07bn RIN gallons for 2026",
@@ -27,7 +36,7 @@
 "url": "https://farmdocdaily.illinois.edu/2026/04/rewriting-the-rfs-playbook-final-2026-2027-rvos-for-biomass-based-diesel.html"
 },
 {
-"id": "n04",
+"id": "n05",
 "section": "UCO",
 "date": "2026-10-19",
 "headline": "China UCO exports up 55% in January\u2013August, to 2.57 Mt",
@@ -36,7 +45,7 @@
 "url": "https://ukragroconsult.com/en/news/chinas-used-cooking-oil-exports-surge-55-with-europe-becoming-the-largest-buyer/"
 },
 {
-"id": "n05",
+"id": "n06",
 "section": "Palm",
 "date": "2026-10-13",
 "headline": "Malaysian exports for 1\u201310 Oct up 34\u201338% on the month",
@@ -45,7 +54,7 @@
 "url": "https://bernama.com/en/news.php/?id=2619877"
 },
 {
-"id": "n06",
+"id": "n07",
 "section": "Palm",
 "date": "2026-10-12",
 "headline": "MPOB September: stocks up 24.5% to 3.51 Mt",
@@ -54,7 +63,7 @@
 "url": "https://theedgemalaysia.com/node/821487"
 },
 {
-"id": "n07",
+"id": "n08",
 "section": "South America",
 "date": "2026-10-16",
 "headline": "Argentine line-up: 326 kt of soyoil on 24 vessels",
@@ -63,7 +72,7 @@
 "url": "https://www.nabsa.com.ar/assets/vessel_prior3.pdf"
 },
 {
-"id": "n08",
+"id": "n09",
 "section": "South America",
 "date": "2026-10-14",
 "headline": "Brazil October shipments seen higher (ANEC)",
@@ -72,7 +81,7 @@
 "url": "https://www.canalrural.com.br/economia/anec-eleva-projecoes-de-embarques-de-soja-e-milho-do-brasil-em-outubro/"
 },
 {
-"id": "n09",
+"id": "n10",
 "section": "South America",
 "date": "2026-10-15",
 "headline": "Brazil soyoil exports already above all of 2025",
@@ -81,12 +90,39 @@
 "url": "https://www.spglobal.com/energy/en/news-research/latest-news/agriculture/101526-brazil-soybean-oil-exports-rise-as-conab-forecasts-record-2026-27-soybean-crop"
 },
 {
-"id": "n10",
+"id": "n11",
 "section": "US",
 "date": "2026-10-19",
 "headline": "US export inspections: soybeans 2.0 Mt, China took 1.28 Mt",
 "detail": "Week to 15 Oct. Soybeans 2,001,750 t (prior week 1.11 Mt), corn 672,475 t (1.31 Mt), wheat 240,308 t. Soybeans marketing-year to date are 7.16 Mt against 5.65 Mt a year ago.",
 "source": "USDA AMS",
 "url": "https://www.ams.usda.gov/mnreports/wa_gr101.txt"
+},
+{
+"section": "Company results",
+"date": "2026-07-24",
+"headline": "Neste Q2: renewables margin $1,223/t, a record quarter",
+"detail": "Renewable Products comparable EBITDA was \u20ac859m (Q2 2025: \u20ac174m) on more than 1 Mt sold. Rotterdam is down for about 8 weeks in Q4 and one Singapore line for about 11 weeks from December, which trims European and Asian renewable diesel and SAF supply. Q3 report due 29 Oct.",
+"source": "Neste",
+"url": "https://www.neste.com/news/nestes-half-year-financial-report-for-january-june-2026",
+"id": "n12"
+},
+{
+"section": "Company results",
+"date": "2026-08-04",
+"headline": "Marathon renewable diesel back in profit: $258m Q2 EBITDA",
+"detail": "Against a $19m loss a year earlier, on stronger margins, higher throughput (including the Martinez Renewables JV with Neste) and better credit values. Q3 results due 3 Nov.",
+"source": "Marathon Petroleum (SEC 8-K)",
+"url": "https://www.sec.gov/Archives/edgar/data/0001510295/000151029526000060/mpcq22026earningsrelease.htm",
+"id": "n13"
+},
+{
+"section": "Company results",
+"date": "2026-04-29",
+"headline": "Bunge raised 2026 EPS guidance to $9.00\u20139.50 on crush margins",
+"detail": "Up from $7.50\u20138.00, as the Iran war lifted soyoil and North American crush margins hit their widest since 2022, with higher EPA mandates adding to demand. Q3 results due 29 Oct before the open; ADM reports 3 Nov.",
+"source": "The Western Producer / Reuters",
+"url": "https://www.producer.com/daily/bunge-lifts-2026-outlook-on-strong-crush-margins-biofuel-demand/",
+"id": "n14"
 }
 ]
