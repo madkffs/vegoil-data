@@ -1,5 +1,4 @@
 https://www.nabsa.com.ar/assets/vessel_prior2.pdf
-ISSUE None
 Line Up: October 19, 2026 Circ.Nbr.: 194
 Notes: REC (RECALADA PILOT STATION), AT CZONE (AT COMMON ZONE- LA PLATA ROADS), ETA (ESTIMATED TIME OF ARRIVAL), ETF (ESTIMATED TIME TO FINALIZE OPERATIONS).
 Port Terminal Vessel ETA ETB ETF Ops Tons Commodity Destination Origin Charterer
