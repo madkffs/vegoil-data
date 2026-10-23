@@ -721,6 +721,26 @@ def spreads(latest):
     out["inputs"] = {"zl": zl, "zm": zm, "zs": zs, "ho": ho, "fcpo": fcpo}
     return out
 
+BCP_FILES = {
+    "bcp_cuadros.xlsx": "https://www.bcp.gov.py/documents/20117/2735320/Cuadros+de+Comercio+Exterior+-+A%C3%B1os+1994++-++2026.xlsx/31777448-36eb-7220-3175-3d1f3a7d0c59",
+    "bcp_boletin.xlsx": "https://www.bcp.gov.py/documents/20117/1593953/Bolet%C3%ADn+Comercio+Exterior+A%C3%B1o+1961+al+3+Trim+2026.xlsx/b4a1be04-d1f9-35de-7527-4b12262d93c1",
+    "bcp_comex_page.html": "https://www.bcp.gov.py/en/comercio-externo-comex-mensual",
+    "bcp_sicex_page.html": "https://www.bcp.gov.py/en/web/institucional/sicex",
+}
+def bcp_exports():
+    """Paraguay: Central Bank (BCP) foreign-trade workbooks and pages, saved raw for parsing (Paraguayan customs exports)."""
+    d = os.path.join(DATA, "lineups", "paraguay")
+    os.makedirs(d, exist_ok=True)
+    got = {}
+    for name, url in BCP_FILES.items():
+        r = requests.get(url, headers=UA, timeout=90)
+        got[name] = [r.status_code, len(r.content), r.headers.get("content-type", "")]
+        if r.status_code == 200:
+            with open(os.path.join(d, name), "wb") as fh:
+                fh.write(r.content)
+    with open(os.path.join(d, "probe.json"), "w") as fh:
+        json.dump(got, fh)
+
 def main(mode):
     now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M")
     status, latest = {"run_utc": now, "mode": mode, "errors": {}}, {}
@@ -794,7 +814,7 @@ def main(mode):
     except Exception as e:
         status["errors"]["nabsa"] = str(e)[:200]
     if mode in ("backfill", "probe") or dt.datetime.utcnow().minute < 15 and dt.datetime.utcnow().hour == 6:
-        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("indec_countries", indec_country_probe)):
+        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("indec_countries", indec_country_probe), ("bcp", bcp_exports)):
             try:
                 fn()
             except Exception as e:
