@@ -255,21 +255,28 @@ for y in (2025, 2026):
 for (prod, m, dest), t in indec.items():
     monthly.append({"country": "Argentina", "product": prod, "month": m, "destination": dest, "tons": round(t), "basis": "Customs (INDEC)"})
 indec_months = sorted({m for (_, m, _) in indec})
-# NABSA sailed, Argentina: months not yet in customs data
+# NABSA sailed: Argentina for months not yet in customs data; Paraguay (cargo of Paraguayan origin loaded at Argentine and Uruguayan river ports) for every month, as no free monthly Paraguayan customs data by destination exists
 sail_p = os.path.join(LU, "nabsa_sailed.csv")
-sailed = pd.read_csv(sail_p) if os.path.exists(sail_p) else pd.DataFrame()
-if len(sailed):
-    sailed = sailed[sailed["origin"] == "ARGENTINA"].copy()   # Paraguayan and Bolivian cargo loaded in Argentina is not an Argentine export
-    sailed["month"] = sailed["date"].str.slice(0, 7)
+sailed_all = pd.read_csv(sail_p) if os.path.exists(sail_p) else pd.DataFrame()
+sailed = pd.DataFrame()
+if len(sailed_all):
+    sailed_all = sailed_all[sailed_all["date"].astype(str).str.match(r"^\d{4}-\d{2}-\d{2}$")].copy()   # drop rows whose date didn't parse
+    sailed_all["month"] = sailed_all["date"].str.slice(0, 7)
     # the sailed report is cumulative for the month: use only the latest issue that covers each month
-    latest = sailed.dropna(subset=["issue"]).groupby("month")["issue"].max()
-    sailed = sailed[sailed.apply(lambda r: r["issue"] == latest.get(r["month"]), axis=1)]
-    for prod, (_, cargos) in PRODUCTS.items():
-        s = sailed[sailed["cargo"].isin(cargos)]
-        for (m, dest), t in s.groupby(["month", "destination"])["tons"].sum().items():
-            if m in indec_months: continue
-            monthly.append({"country": "Argentina", "product": prod, "month": m, "destination": norm(dest), "tons": round(float(t)),
-                            "basis": f"Sailed to {pd.to_datetime(sailed['date']).max():%-d %b} (NABSA)"})
+    latest = sailed_all.dropna(subset=["issue"]).groupby("month")["issue"].max()
+    sailed_all = sailed_all[sailed_all.apply(lambda r: r["issue"] == latest.get(r["month"]), axis=1)]
+    sailed = sailed_all[sailed_all["origin"] == "ARGENTINA"].copy()   # Paraguayan and Bolivian cargo loaded in Argentina is not an Argentine export
+    for origin, country in (("ARGENTINA", "Argentina"), ("PARAGUAY", "Paraguay")):
+        so = sailed_all[sailed_all["origin"] == origin]
+        if not len(so): continue
+        last_d = pd.to_datetime(so["date"]).max()
+        for prod, (_, cargos) in PRODUCTS.items():
+            s = so[so["cargo"].isin(cargos)]
+            for (m, dest), t in s.groupby(["month", "destination"])["tons"].sum().items():
+                if country == "Argentina" and m in indec_months: continue
+                done = m < f"{last_d:%Y-%m}"
+                monthly.append({"country": country, "product": prod, "month": m, "destination": norm(dest), "tons": round(float(t)),
+                                "basis": ("Sailed, whole month (NABSA)" if done else f"Sailed to {last_d:%-d %b} (NABSA)")})
 # Comex Stat customs, Brazil (soybean oil, crude and refined)
 cs_p = os.path.join(LU, "comexstat_soyoil.json")
 if os.path.exists(cs_p):
@@ -296,11 +303,12 @@ if os.path.exists(lu_p):
     lu = pd.read_csv(lu_p)
     lu = lu[lu["issue"] == lu["issue"].max()]
     for prod, (_, cargos) in PRODUCTS.items():
-        g = lu[lu["cargo"].isin(cargos) & (lu["origin"] == "ARGENTINA")]
-        for dest, gg in g.groupby("destination"):
-            sched.append({"country": "Argentina", "product": prod, "destination": norm(dest), "tons": round(float(gg["tons"].sum())),
-                          "vessels": int(gg["head"].nunique()), "issue": str(lu["issue"].max())})
-sched = sorted(sched, key=lambda r: (r["product"], -r["tons"]))
+        for origin, country in (("ARGENTINA", "Argentina"), ("PARAGUAY", "Paraguay")):
+            g = lu[lu["cargo"].isin(cargos) & (lu["origin"] == origin)]
+            for dest, gg in g.groupby("destination"):
+                sched.append({"country": country, "product": prod, "destination": norm(dest), "tons": round(float(gg["tons"].sum())),
+                              "vessels": int(gg["head"].nunique()), "issue": str(lu["issue"].max())})
+sched = sorted(sched, key=lambda r: (r["country"], r["product"], -r["tons"]))
 for i, r in enumerate(sched): r["id"] = f"s{i:03d}"
 dump("lineup_scheduled.json", sched)
 
@@ -348,7 +356,7 @@ if os.path.exists(lu_p) and len(sailed):
         for h in heads(lu_all[lu_all["issue"] == first]):
             k = keys(h)
             if not (k & later):
-                gone[sorted(k, key=len)[-1]] = k
+                gone[sorted(k, key=lambda s: (")" not in s and "(" not in s, len(s)))[-1]] = k
         found = [n for n, k in gone.items() if k & sailed_keys]
         missing = [n for n in gone if n not in found]
         if gone:
