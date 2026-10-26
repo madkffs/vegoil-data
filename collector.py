@@ -730,21 +730,25 @@ def comtrade_uco():
         for m in range(1, 13):
             if dt.date(y, m, 1) <= now: periods.append(f"{y}{m:02d}")
     rows, log = [], {}
-    for i in range(0, len(periods), 3):
-        chunk = ",".join(periods[i:i + 3])
+    for per in periods:
         url = ("https://comtradeapi.un.org/public/v1/preview/C/M/HS?reporterCode=156&flowCode=X&cmdCode=151800"
-               f"&period={chunk}&includeDesc=true")
-        try:
-            r = requests.get(url, headers=UA, timeout=90)
-            js = r.json() if r.status_code == 200 else {}
-            data = js.get("data") or []
-            log[chunk] = [r.status_code, len(data), js.get("error")]
-            for x in data:
-                rows.append({"period": str(x.get("period")), "partner_code": x.get("partnerCode"), "partner": x.get("partnerDesc"),
-                             "net_kg": x.get("netWgt"), "qty": x.get("qty"), "qty_unit": x.get("qtyUnitAbbr"), "fob_usd": x.get("fobvalue") or x.get("primaryValue")})
-        except Exception as e:
-            log[chunk] = ["error", str(e)[:200]]
-        time.sleep(2)
+               f"&period={per}")
+        for attempt in range(3):
+            try:
+                r = requests.get(url, headers=UA, timeout=90)
+                if r.status_code == 429:
+                    time.sleep(20 * (attempt + 1)); continue
+                js = r.json() if r.status_code == 200 else {}
+                data = js.get("data") or []
+                log[per] = [r.status_code, len(data), (js.get("error") or "") if r.status_code == 200 else r.text[:200]]
+                for x in data:
+                    rows.append({"period": str(x.get("period")), "partner_code": x.get("partnerCode"), "net_kg": x.get("netWgt"),
+                                 "qty": x.get("qty"), "qty_unit_code": x.get("qtyUnitCode"), "fob_usd": x.get("fobvalue") or x.get("primaryValue")})
+                break
+            except Exception as e:
+                log[per] = ["error", str(e)[:200]]
+                break
+        time.sleep(4)
     with open(os.path.join(d, "comtrade_china_151800.json"), "w") as fh:
         json.dump({"fetched": now.isoformat(), "log": log, "rows": rows}, fh)
 
