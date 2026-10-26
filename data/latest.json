@@ -57,7 +57,7 @@
  },
  "CAD=X": {
   "symbol": "CAD=X",
-  "last": 1.4009,
+  "last": 1.4019,
   "prev_close": 1.4003,
   "time_utc": "2026-10-26 00:00",
   "source": "yahoo (delayed)"
@@ -71,7 +71,7 @@
  },
  "BRL=X": {
   "symbol": "BRL=X",
-  "last": 5.3928,
+  "last": 5.3767,
   "prev_close": 5.0499,
   "time_utc": "2026-10-26 00:00",
   "source": "yahoo (delayed)"
@@ -113,14 +113,14 @@
  },
  "EURUSD=X": {
   "symbol": "EURUSD=X",
-  "last": 1.1178,
+  "last": 1.1177,
   "prev_close": 1.1221,
   "time_utc": "2026-10-26 00:00",
   "source": "yahoo (delayed)"
  },
  "DX-Y.NYB": {
   "symbol": "DX-Y.NYB",
-  "last": 102.002,
+  "last": 102.003,
   "prev_close": 101.81,
   "time_utc": "2026-10-26 04:00",
   "source": "yahoo (delayed)"
@@ -423,29 +423,29 @@
   },
   "hf_HO": {
    "last": 4.717,
-   "high": 4.859,
-   "low": 4.71,
-   "prev_settle": 4.787,
-   "open": 4.789,
-   "time_beijing": "04:59:59",
+   "high": 4.723,
+   "low": 4.716,
+   "prev_settle": 4.735,
+   "open": 4.716,
+   "time_beijing": "06:04:54",
    "date": "2026-10-27"
   },
   "hf_OIL": {
-   "last": 110.217,
+   "last": 110.066,
    "high": 112.2,
    "low": 109.22,
    "prev_settle": 111.7,
-   "open": 110.85,
-   "time_beijing": "05:13:32",
+   "open": 0.0,
+   "time_beijing": "05:59:56",
    "date": "2026-10-27"
   },
   "hf_CL": {
-   "last": 101.167,
-   "high": 103.13,
-   "low": 100.33,
-   "prev_settle": 103.27,
-   "open": 102.61,
-   "time_beijing": "04:59:57",
+   "last": 101.348,
+   "high": 101.5,
+   "low": 101.25,
+   "prev_settle": 101.76,
+   "open": 101.29,
+   "time_beijing": "06:09:25",
    "date": "2026-10-27"
   },
   "hf_FCPO": {
@@ -465,8 +465,8 @@
    "date": "2026-10-26"
   },
   "fx_susdbrl": {
-   "last": 5.3928,
-   "time": "05:13:33",
+   "last": 5.376,
+   "time": "05:29:57",
    "date": "2026-10-27"
   },
   "fx_susdinr": {
@@ -480,8 +480,8 @@
    "date": "2026-10-27"
   },
   "fx_seurusd": {
-   "last": 1.1176,
-   "time": "05:13:13",
+   "last": 1.1171,
+   "time": "06:09:27",
    "date": "2026-10-27"
   },
   "fx_susdidr": {
