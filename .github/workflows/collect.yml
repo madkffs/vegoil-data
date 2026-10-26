@@ -21,6 +21,8 @@ jobs:
           python-version: "3.12"
       - run: pip install requests yfinance curl_cffi pandas pdfplumber
       - run: python collector.py "${{ github.event.inputs.mode || 'update' }}"
+        env:
+          CENSUS_KEY: ${{ secrets.CENSUS_KEY }}
       - name: commit data
         run: |
           git config user.name "data-bot"

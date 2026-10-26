@@ -775,9 +775,14 @@ def census_uco():
     """US imports of HTS 1518.00.40 (where UCO is entered) and of all HTS 1518.00, by country of origin and month, from the US Census Bureau trade API (no key)."""
     d = os.path.join(DATA, "uco"); os.makedirs(d, exist_ok=True)
     out = {}
-    variants = [("1518004000", "https://api.census.gov/data/timeseries/intltrade/imports/hs?get=CTY_CODE,CTY_NAME,GEN_VAL_MO,GEN_QY1_MO,UNIT_QY1&I_COMMODITY=1518004000&time=from+2024-01"),
-                ("1518004000_y", "https://api.census.gov/data/timeseries/intltrade/imports/hs?get=CTY_CODE,CTY_NAME,GEN_VAL_MO,GEN_QY1_MO,UNIT_QY1&I_COMMODITY=1518004000&YEAR=2025"),
-                ("151800", "https://api.census.gov/data/timeseries/intltrade/imports/hs?get=CTY_CODE,CTY_NAME,GEN_VAL_MO,CON_QY1_MO,UNIT_QY1&I_COMMODITY=151800&time=from+2024-01")]
+    key = os.environ.get("CENSUS_KEY", "").strip()
+    if not key:
+        with open(os.path.join(d, "census_us_imports_1518.json"), "w") as fh:
+            json.dump({"skipped": "no CENSUS_KEY secret set"}, fh)
+        return
+    variants = [("1518004000", "https://api.census.gov/data/timeseries/intltrade/imports/hs?get=CTY_CODE,CTY_NAME,GEN_VAL_MO,GEN_QY1_MO,UNIT_QY1&I_COMMODITY=1518004000&time=from+2024-01&key=" + key),
+                ("1518004000_y", "https://api.census.gov/data/timeseries/intltrade/imports/hs?get=CTY_CODE,CTY_NAME,GEN_VAL_MO,GEN_QY1_MO,UNIT_QY1&I_COMMODITY=1518004000&YEAR=2025&key=" + key),
+                ("151800", "https://api.census.gov/data/timeseries/intltrade/imports/hs?get=CTY_CODE,CTY_NAME,GEN_VAL_MO,CON_QY1_MO,UNIT_QY1&I_COMMODITY=151800&time=from+2024-01&key=" + key)]
     for code, url in variants:
         try:
             r = requests.get(url, headers=UA, timeout=120)
@@ -785,9 +790,9 @@ def census_uco():
                 body = r.json()
             except Exception:
                 body = r.text[:800]
-            out[code] = {"status": r.status_code, "url": url, "body": body}
+            out[code] = {"status": r.status_code, "body": body}
         except Exception as e:
-            out[code] = {"status": "error", "url": url, "body": str(e)[:300]}
+            out[code] = {"status": "error", "body": str(e)[:300]}
         time.sleep(2)
     with open(os.path.join(d, "census_us_imports_1518.json"), "w") as fh:
         json.dump(out, fh)
