@@ -1,9 +1,10 @@
 {
- "run_utc": "2026-10-26 05:38",
+ "run_utc": "2026-10-26 06:47",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
-  "RS=F": "no data"
+  "RS=F": "no data",
+  "kline_FCPO": "HTTPSConnectionPool(host='stock2.finance.sina.com.cn', port=443): Read timed out. (read timeout=30)"
  },
  "nabsa_rows": {
   "sailed": 1906,
