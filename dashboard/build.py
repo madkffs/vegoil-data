@@ -366,3 +366,77 @@ if os.path.exists(lu_p) and len(sailed):
                            "diff_pct": round(pct - 100, 1), "status": "Agrees" if pct >= 90 else ("Close" if pct >= 75 else "Check"), "url": "https://www.nabsa.com.ar/info.html"})
 dump("lineup_checks.json", checks)
 print("lineups", len(mdf), len(sched), [ (c["check"], c["diff_pct"], c["status"]) for c in checks])
+
+# ---------- this month's vegetable-oil shipments by shipper, charterer and destination (NABSA) ----------
+OIL_CARGO = {"SOYBEAN OIL": "Soybean oil", "NEUTRALIZED SOYBEAN OIL": "Soybean oil", "NEUTRAL OIL": "Soybean oil", "SOYA BEAN OIL (BLEND)": "Soybean oil",
+             "SOYBEANOIL REFINED": "Soybean oil", "SOYBEAN OIL REFINED": "Soybean oil", "REFINED SOYBEAN OIL": "Soybean oil",
+             "SUN FLOWER OIL": "Sunflower oil", "SUNFLOWER OIL": "Sunflower oil", "HIGH OLEIC SUNFLOWER OIL": "Sunflower oil"}
+MARKERS = [r"\)", r"NAVIOS SOUTH", r"NAVIOS NORTH", r"SAN MARTIN", r"SAN LORENZO", r"VICENTIN", r"MINERA ALUMBRERA", r"DEMPA", r"SAN BENITO", r"ARAUCO ARGENTINA", r"RENOVA NORTH",
+           r"RENOVA SOUTH", r"TIMBUES", r"LAGOS", r"GALVEZ", r"GALVÁN", r"VGG", r"WHITE", r"BERTH \d+", r"BERTH", r"PIER \d+/\d+", r"PIER \d+",
+           r"EXTERNAL PIER", r"QUEBRACHO", r"T\.B\.C\.", r"TERMINAL \d+"]
+SHIPPERS = ["UNION AGRICOLA AVELLANEDA COOP.LTDA.", "MOLINOS AGRO S.A.", "GROBOCOPATEL S.A.", "COMMODITIES S.A.", "NOT AVAILABLE", "LDC PARAGUAY", "BUNGE PARAGUAY",
+            "ADM PARAGUAY", "CARGILL PARAGUAY", "BUNGE", "CARGILL", "LDC", "AGD", "ACA", "COFCO", "ADM", "ARCOR", "INAGRO", "SYNGENTA", "YPF", "COPAGRA", "VITERRA",
+            "MOLINOS AGRO", "OLEAGINOSA MORENO", "CHS", "AMAGGI", "NUTRIOIL", "ACABIO", "BUYATTI", "VICENTIN", "TANONI", "GLENCORE", "OLAM", "WILMAR"]
+NICE = {"UNION AGRICOLA AVELLANEDA COOP.LTDA.": "Unión Agrícola Avellaneda", "MOLINOS AGRO S.A.": "Molinos Agro", "MOLINOS AGRO": "Molinos Agro",
+        "GROBOCOPATEL S.A.": "Grobocopatel", "COMMODITIES S.A.": "Commodities S.A.", "NOT AVAILABLE": "Not stated", "LDC PARAGUAY": "LDC Paraguay",
+        "BUNGE PARAGUAY": "Bunge Paraguay", "ADM PARAGUAY": "ADM Paraguay", "CARGILL PARAGUAY": "Cargill Paraguay", "EXXON MOBIL": "ExxonMobil",
+        "BRAYA RENEWABLE FUELS": "Braya Renewable Fuels", "G2O": "G2O"}
+def nice(s):
+    s = str(s).strip()
+    if not s or s == "nan": return "Not stated"
+    if s in NICE: return NICE[s]
+    if s in ("COFCO", "VITERRA_", "AMAGGI_"): return s
+    return s if len(s) <= 4 and s.isupper() else title(s)
+def split_vessel(head):
+    h = _re.sub(r"\s+(ETA|ETB|ETS)\s+.*$", "", str(head)).strip()
+    end = 0
+    for mk in MARKERS:
+        for m in _re.finditer(mk, h):
+            if m.end() < len(h) - 1: end = max(end, m.end())
+    if end:
+        return h[:end].strip(), h[end:].strip(" -")
+    w = h.split()
+    return " ".join(w[:-2]), " ".join(w[-2:])
+def split_rest(rest):
+    r = str(rest).strip()
+    for s in sorted(SHIPPERS, key=len, reverse=True):
+        if r == s or r.startswith(s + " "):
+            return nice(s), nice(r[len(s):].strip())
+    w = r.split()
+    return (nice(w[0]) if w else "Not stated"), nice(" ".join(w[1:]))
+oil_rows = []
+if len(sailed_all):
+    cur = max(sailed_all["month"])
+    so = sailed_all[(sailed_all["month"] == cur) & sailed_all["cargo"].isin(OIL_CARGO)]
+    for r in so.itertuples():
+        berth, vessel = split_vessel(r.head)
+        shp, chart = split_rest(r.rest)
+        oil_rows.append({"month": cur, "status": "Sailed", "date": r.date, "vessel": title(vessel), "berth": title(berth), "product": OIL_CARGO[r.cargo],
+                         "cargo": title(r.cargo), "origin": title(r.origin), "destination": norm(r.destination), "shipper": shp, "charterer": chart,
+                         "tons": round(float(r.tons)), "source": f"NABSA sailed vessels, issue of {r.issue}"})
+    if os.path.exists(lu_p):
+        lu_all = pd.read_csv(lu_p)
+        lu_last = lu_all[(lu_all["issue"] == lu_all["issue"].max()) & lu_all["cargo"].isin(OIL_CARGO)].copy()
+        y, mo = map(int, cur.split("-"))
+        def eta_date(e):
+            try:
+                d_, m_ = map(int, str(e).split("/")[:2]); return dt.date(y if m_ >= mo or mo < 11 else y + 1, m_, d_)
+            except Exception:
+                return None
+        import datetime as dt
+        seen = set()
+        for r in lu_last.itertuples():
+            berth, vessel = split_vessel(r.head)
+            ed = eta_date(r.eta)
+            if ed is not None and f"{ed:%Y-%m}" > cur: continue   # arriving after this month
+            k = (vessel, r.cargo, r.tons, r.destination)
+            if k in seen: continue
+            seen.add(k)
+            oil_rows.append({"month": cur, "status": "Line-up", "date": f"{ed:%Y-%m-%d}" if ed else None, "vessel": title(vessel), "berth": title(berth),
+                             "product": OIL_CARGO[r.cargo], "cargo": title(r.cargo), "origin": title(r.origin), "destination": norm(r.destination),
+                             "shipper": "Not in line-up data", "charterer": nice(r.charterer), "tons": round(float(r.tons)),
+                             "source": f"NABSA line-up of {r.issue}"})
+oil_rows = sorted(oil_rows, key=lambda r: (r["status"] != "Sailed", str(r["date"]), r["vessel"]))
+for i, r in enumerate(oil_rows): r["id"] = f"o{i:03d}"
+dump("oil_month.json", oil_rows)
+print("oil_month", len(oil_rows), sum(r["tons"] for r in oil_rows if r["status"] == "Sailed"), sum(r["tons"] for r in oil_rows if r["status"] == "Line-up"))
