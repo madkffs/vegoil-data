@@ -758,13 +758,16 @@ def eurostat_uco():
     base = "https://ec.europa.eu/eurostat/api/comext/dissemination/statistics/1.0/data/DS-045409"
     out = {}
     for prod in ("151800", "15180095", "15180099", "15180091"):
-        url = f"{base}?format=JSON&lang=en&freq=M&partner=CN&flow=1&indicators=QUANTITY_KG&product={prod}&sinceTimePeriod=2024M01"
-        try:
-            r = requests.get(url, headers=UA, timeout=120)
-            out[prod] = {"status": r.status_code, "body": r.json() if r.headers.get("content-type", "").startswith("application/json") else r.text[:500]}
-        except Exception as e:
-            out[prod] = {"status": "error", "body": str(e)[:300]}
-        time.sleep(2)
+        for since in ("2024-01", "202401", "2024M1"):
+            url = f"{base}?format=JSON&lang=en&freq=M&partner=CN&flow=1&indicators=QUANTITY_KG&product={prod}&sinceTimePeriod={since}"
+            try:
+                r = requests.get(url, headers=UA, timeout=120)
+                body = r.json() if r.headers.get("content-type", "").startswith("application/json") else r.text[:500]
+            except Exception as e:
+                r, body = None, str(e)[:300]
+            out[prod] = {"status": getattr(r, "status_code", "error"), "since": since, "body": body}
+            time.sleep(2)
+            if getattr(r, "status_code", 0) == 200: break
     with open(os.path.join(d, "eurostat_eu_imports_from_china_1518.json"), "w") as fh:
         json.dump(out, fh)
 
