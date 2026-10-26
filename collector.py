@@ -752,6 +752,22 @@ def comtrade_uco():
     with open(os.path.join(d, "comtrade_china_151800.json"), "w") as fh:
         json.dump({"fetched": now.isoformat(), "log": log, "rows": rows}, fh)
 
+def eurostat_uco():
+    """EU imports from China of CN 1518 00 (used cooking oil and other modified fats), by EU member state and month, from Eurostat Comext (mirror of China's exports to the EU)."""
+    d = os.path.join(DATA, "uco"); os.makedirs(d, exist_ok=True)
+    base = "https://ec.europa.eu/eurostat/api/comext/dissemination/statistics/1.0/data/DS-045409"
+    out = {}
+    for prod in ("151800", "15180095", "15180099", "15180091"):
+        url = f"{base}?format=JSON&lang=en&freq=M&partner=CN&flow=1&indicators=QUANTITY_KG&product={prod}&sinceTimePeriod=2024M01"
+        try:
+            r = requests.get(url, headers=UA, timeout=120)
+            out[prod] = {"status": r.status_code, "body": r.json() if r.headers.get("content-type", "").startswith("application/json") else r.text[:500]}
+        except Exception as e:
+            out[prod] = {"status": "error", "body": str(e)[:300]}
+        time.sleep(2)
+    with open(os.path.join(d, "eurostat_eu_imports_from_china_1518.json"), "w") as fh:
+        json.dump(out, fh)
+
 def main(mode):
     now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M")
     status, latest = {"run_utc": now, "mode": mode, "errors": {}}, {}
@@ -825,7 +841,7 @@ def main(mode):
     except Exception as e:
         status["errors"]["nabsa"] = str(e)[:200]
     if mode in ("backfill", "probe") or dt.datetime.utcnow().minute < 15 and dt.datetime.utcnow().hour == 6:
-        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("indec_countries", indec_country_probe), ("comtrade_uco", comtrade_uco)):
+        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("indec_countries", indec_country_probe), ("comtrade_uco", comtrade_uco), ("eurostat_uco", eurostat_uco)):
             try:
                 fn()
             except Exception as e:
