@@ -464,3 +464,34 @@ uco_rows = sorted(uco_rows, key=lambda r: (r["month"], r["country_code"]))
 for i, r in enumerate(uco_rows): r["id"] = f"u{i:04d}"
 dump("uco_eu.json", uco_rows)
 print("uco_eu", len(uco_rows), max((r["month"] for r in uco_rows), default=None))
+
+# ---------- UCO into the US: US imports of HS 1518 00 by origin (UN Comtrade, reported by the US) ----------
+try:
+    import pycountry
+except Exception:
+    pycountry = None
+CT_OVERRIDE = {0: "World", 156: "China", 124: "Canada", 458: "Malaysia", 36: "Australia", 410: "South Korea", 360: "Indonesia", 826: "UK", 554: "New Zealand",
+               704: "Vietnam", 170: "Colombia", 56: "Belgium", 276: "Germany", 251: "France", 699: "India", 490: "Taiwan", 757: "Switzerland", 484: "Mexico",
+               764: "Thailand", 608: "Philippines", 702: "Singapore", 392: "Japan", 528: "Netherlands", 724: "Spain", 76: "Brazil", 32: "Argentina", 152: "Chile",
+               604: "Peru", 344: "Hong Kong", 842: "USA", 380: "Italy", 784: "UAE", 682: "Saudi Arabia", 818: "Egypt", 792: "Turkey", 50: "Bangladesh", 586: "Pakistan"}
+def ct_name(code):
+    if code in CT_OVERRIDE: return CT_OVERRIDE[code]
+    if pycountry:
+        c = pycountry.countries.get(numeric=f"{int(code):03d}")
+        if c: return getattr(c, "common_name", None) or c.name
+    return f"Code {code}"
+us_p = os.path.join(D, "uco", "comtrade_us_imports_151800.json")
+us_rows = []
+if os.path.exists(us_p):
+    agg = collections.defaultdict(float)
+    for r in json.load(open(us_p)).get("rows", []):
+        if r["partner_code"] in (0, None) or not r.get("net_kg"): continue
+        agg[(f"{r['period'][:4]}-{r['period'][4:6]}", ct_name(r["partner_code"]))] += float(r["net_kg"]) / 1000
+    tot = collections.defaultdict(float)
+    for (m, c), t in agg.items():
+        us_rows.append({"month": m, "country": c, "tons": round(t)}); tot[m] += t
+    us_rows += [{"month": m, "country": "Total", "tons": round(t)} for m, t in tot.items()]
+us_rows = sorted(us_rows, key=lambda r: (r["month"], r["country"]))
+for i, r in enumerate(us_rows): r["id"] = f"us{i:04d}"
+dump("uco_us.json", us_rows)
+print("uco_us", len(us_rows), max((r["month"] for r in us_rows), default=None))
