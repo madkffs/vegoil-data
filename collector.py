@@ -721,6 +721,33 @@ def spreads(latest):
     out["inputs"] = {"zl": zl, "zm": zm, "zs": zs, "ho": ho, "fcpo": fcpo}
     return out
 
+def comtrade_uco():
+    """China exports of HS 151800 (used cooking oil is reported under this code) by partner and month, from the UN Comtrade public preview API (no key)."""
+    d = os.path.join(DATA, "uco"); os.makedirs(d, exist_ok=True)
+    now = dt.date.today()
+    periods = []
+    for y in range(now.year - 2, now.year + 1):
+        for m in range(1, 13):
+            if dt.date(y, m, 1) <= now: periods.append(f"{y}{m:02d}")
+    rows, log = [], {}
+    for i in range(0, len(periods), 3):
+        chunk = ",".join(periods[i:i + 3])
+        url = ("https://comtradeapi.un.org/public/v1/preview/C/M/HS?reporterCode=156&flowCode=X&cmdCode=151800"
+               f"&period={chunk}&includeDesc=true")
+        try:
+            r = requests.get(url, headers=UA, timeout=90)
+            js = r.json() if r.status_code == 200 else {}
+            data = js.get("data") or []
+            log[chunk] = [r.status_code, len(data), js.get("error")]
+            for x in data:
+                rows.append({"period": str(x.get("period")), "partner_code": x.get("partnerCode"), "partner": x.get("partnerDesc"),
+                             "net_kg": x.get("netWgt"), "qty": x.get("qty"), "qty_unit": x.get("qtyUnitAbbr"), "fob_usd": x.get("fobvalue") or x.get("primaryValue")})
+        except Exception as e:
+            log[chunk] = ["error", str(e)[:200]]
+        time.sleep(2)
+    with open(os.path.join(d, "comtrade_china_151800.json"), "w") as fh:
+        json.dump({"fetched": now.isoformat(), "log": log, "rows": rows}, fh)
+
 def main(mode):
     now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M")
     status, latest = {"run_utc": now, "mode": mode, "errors": {}}, {}
@@ -794,7 +821,7 @@ def main(mode):
     except Exception as e:
         status["errors"]["nabsa"] = str(e)[:200]
     if mode in ("backfill", "probe") or dt.datetime.utcnow().minute < 15 and dt.datetime.utcnow().hour == 6:
-        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("indec_countries", indec_country_probe)):
+        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("indec_countries", indec_country_probe), ("comtrade_uco", comtrade_uco)):
             try:
                 fn()
             except Exception as e:
