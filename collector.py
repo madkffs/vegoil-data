@@ -797,6 +797,32 @@ def census_uco():
     with open(os.path.join(d, "census_us_imports_1518.json"), "w") as fh:
         json.dump(out, fh)
 
+def comtrade_us_uco():
+    """US imports of HS 151800 (UCO is entered under 1518.00.40) by origin and month, from the UN Comtrade public preview API (no key)."""
+    d = os.path.join(DATA, "uco"); os.makedirs(d, exist_ok=True)
+    now = dt.date.today()
+    periods = [f"{y}{m:02d}" for y in range(now.year - 2, now.year + 1) for m in range(1, 13) if dt.date(y, m, 1) <= now]
+    rows, log = [], {}
+    for per in periods:
+        url = f"https://comtradeapi.un.org/public/v1/preview/C/M/HS?reporterCode=842&flowCode=M&cmdCode=151800&period={per}"
+        for attempt in range(3):
+            try:
+                r = requests.get(url, headers=UA, timeout=90)
+                if r.status_code == 429:
+                    time.sleep(20 * (attempt + 1)); continue
+                js = r.json() if r.status_code == 200 else {}
+                data = js.get("data") or []
+                log[per] = [r.status_code, len(data)]
+                for x in data:
+                    rows.append({"period": str(x.get("period")), "partner_code": x.get("partnerCode"), "net_kg": x.get("netWgt"),
+                                 "qty": x.get("qty"), "qty_unit_code": x.get("qtyUnitCode"), "value_usd": x.get("primaryValue")})
+                break
+            except Exception as e:
+                log[per] = ["error", str(e)[:200]]; break
+        time.sleep(4)
+    with open(os.path.join(d, "comtrade_us_imports_151800.json"), "w") as fh:
+        json.dump({"fetched": now.isoformat(), "log": log, "rows": rows}, fh)
+
 def main(mode):
     now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M")
     status, latest = {"run_utc": now, "mode": mode, "errors": {}}, {}
@@ -870,7 +896,7 @@ def main(mode):
     except Exception as e:
         status["errors"]["nabsa"] = str(e)[:200]
     if mode in ("backfill", "probe") or dt.datetime.utcnow().minute < 15 and dt.datetime.utcnow().hour == 6:
-        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("indec_countries", indec_country_probe), ("comtrade_uco", comtrade_uco), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco)):
+        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("indec_countries", indec_country_probe), ("comtrade_uco", comtrade_uco), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
             try:
                 fn()
             except Exception as e:
