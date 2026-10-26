@@ -759,7 +759,7 @@ def eurostat_uco():
     out = {}
     for prod in ("151800", "15180095", "15180099", "15180091"):
         for since in ("2024-01", "202401", "2024M1"):
-            url = f"{base}?format=JSON&lang=en&freq=M&partner=CN&flow=1&indicators=QUANTITY_KG&product={prod}&sinceTimePeriod={since}"
+            url = f"{base}?format=JSON&lang=en&freq=M&partner=CN&flow=1&indicators=QUANTITY_IN_100KG&product={prod}&sinceTimePeriod={since}"
             try:
                 r = requests.get(url, headers=UA, timeout=120)
                 body = r.json() if r.headers.get("content-type", "").startswith("application/json") else r.text[:500]
