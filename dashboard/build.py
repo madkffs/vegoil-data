@@ -440,3 +440,27 @@ oil_rows = sorted(oil_rows, key=lambda r: (r["status"] != "Sailed", str(r["date"
 for i, r in enumerate(oil_rows): r["id"] = f"o{i:03d}"
 dump("oil_month.json", oil_rows)
 print("oil_month", len(oil_rows), sum(r["tons"] for r in oil_rows if r["status"] == "Sailed"), sum(r["tons"] for r in oil_rows if r["status"] == "Line-up"))
+
+# ---------- China UCO to the EU: EU imports from China of CN 1518 00 (Eurostat Comext mirror data) ----------
+EU_NAMES = {"EU27_2020": "EU-27", "AT": "Austria", "BE": "Belgium", "BG": "Bulgaria", "CY": "Cyprus", "CZ": "Czechia", "DE": "Germany", "DK": "Denmark",
+            "EE": "Estonia", "ES": "Spain", "FI": "Finland", "FR": "France", "GR": "Greece", "HR": "Croatia", "HU": "Hungary", "IE": "Ireland", "IT": "Italy",
+            "LT": "Lithuania", "LU": "Luxembourg", "LV": "Latvia", "MT": "Malta", "NL": "Netherlands", "PL": "Poland", "PT": "Portugal", "RO": "Romania",
+            "SE": "Sweden", "SI": "Slovenia", "SK": "Slovakia"}
+uco_p = os.path.join(D, "uco", "eurostat_eu_imports_from_china_1518.json")
+uco_rows = []
+if os.path.exists(uco_p):
+    body = json.load(open(uco_p)).get("151800", {}).get("body", {})
+    if isinstance(body, dict) and "value" in body:
+        ids, size = body["id"], body["size"]
+        idx = {dn: {i: c for c, i in body["dimension"][dn]["category"]["index"].items()} for dn in ids}
+        for flat, val in body["value"].items():
+            f, coords = int(flat), []
+            for s_ in reversed(size):
+                coords.append(f % s_); f //= s_
+            rec = {dn: idx[dn][c] for dn, c in zip(ids, reversed(coords))}
+            if rec["reporter"] in EU_NAMES and val:
+                uco_rows.append({"month": rec["time"], "country_code": rec["reporter"], "country": EU_NAMES[rec["reporter"]], "tons": round(val / 10)})
+uco_rows = sorted(uco_rows, key=lambda r: (r["month"], r["country_code"]))
+for i, r in enumerate(uco_rows): r["id"] = f"u{i:04d}"
+dump("uco_eu.json", uco_rows)
+print("uco_eu", len(uco_rows), max((r["month"] for r in uco_rows), default=None))
