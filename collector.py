@@ -775,14 +775,19 @@ def census_uco():
     """US imports of HTS 1518.00.40 (where UCO is entered) and of all HTS 1518.00, by country of origin and month, from the US Census Bureau trade API (no key)."""
     d = os.path.join(DATA, "uco"); os.makedirs(d, exist_ok=True)
     out = {}
-    for code, lvl in (("1518004000", "HS10"), ("151800", "HS6")):
-        url = ("https://api.census.gov/data/timeseries/intltrade/imports/hs?get=CTY_CODE,CTY_NAME,GEN_VAL_MO,GEN_QY1_MO,UNIT_QY1"
-               f"&I_COMMODITY={code}&COMM_LVL={lvl}&time=from+2024-01")
+    variants = [("1518004000", "https://api.census.gov/data/timeseries/intltrade/imports/hs?get=CTY_CODE,CTY_NAME,GEN_VAL_MO,GEN_QY1_MO,UNIT_QY1&I_COMMODITY=1518004000&time=from+2024-01"),
+                ("1518004000_y", "https://api.census.gov/data/timeseries/intltrade/imports/hs?get=CTY_CODE,CTY_NAME,GEN_VAL_MO,GEN_QY1_MO,UNIT_QY1&I_COMMODITY=1518004000&YEAR=2025"),
+                ("151800", "https://api.census.gov/data/timeseries/intltrade/imports/hs?get=CTY_CODE,CTY_NAME,GEN_VAL_MO,CON_QY1_MO,UNIT_QY1&I_COMMODITY=151800&time=from+2024-01")]
+    for code, url in variants:
         try:
             r = requests.get(url, headers=UA, timeout=120)
-            out[code] = {"status": r.status_code, "body": r.json() if r.status_code == 200 else r.text[:500]}
+            try:
+                body = r.json()
+            except Exception:
+                body = r.text[:800]
+            out[code] = {"status": r.status_code, "url": url, "body": body}
         except Exception as e:
-            out[code] = {"status": "error", "body": str(e)[:300]}
+            out[code] = {"status": "error", "url": url, "body": str(e)[:300]}
         time.sleep(2)
     with open(os.path.join(d, "census_us_imports_1518.json"), "w") as fh:
         json.dump(out, fh)
