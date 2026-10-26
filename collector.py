@@ -771,6 +771,22 @@ def eurostat_uco():
     with open(os.path.join(d, "eurostat_eu_imports_from_china_1518.json"), "w") as fh:
         json.dump(out, fh)
 
+def census_uco():
+    """US imports of HTS 1518.00.40 (where UCO is entered) and of all HTS 1518.00, by country of origin and month, from the US Census Bureau trade API (no key)."""
+    d = os.path.join(DATA, "uco"); os.makedirs(d, exist_ok=True)
+    out = {}
+    for code, lvl in (("1518004000", "HS10"), ("151800", "HS6")):
+        url = ("https://api.census.gov/data/timeseries/intltrade/imports/hs?get=CTY_CODE,CTY_NAME,GEN_VAL_MO,GEN_QY1_MO,UNIT_QY1"
+               f"&I_COMMODITY={code}&COMM_LVL={lvl}&time=from+2024-01")
+        try:
+            r = requests.get(url, headers=UA, timeout=120)
+            out[code] = {"status": r.status_code, "body": r.json() if r.status_code == 200 else r.text[:500]}
+        except Exception as e:
+            out[code] = {"status": "error", "body": str(e)[:300]}
+        time.sleep(2)
+    with open(os.path.join(d, "census_us_imports_1518.json"), "w") as fh:
+        json.dump(out, fh)
+
 def main(mode):
     now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M")
     status, latest = {"run_utc": now, "mode": mode, "errors": {}}, {}
@@ -844,7 +860,7 @@ def main(mode):
     except Exception as e:
         status["errors"]["nabsa"] = str(e)[:200]
     if mode in ("backfill", "probe") or dt.datetime.utcnow().minute < 15 and dt.datetime.utcnow().hour == 6:
-        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("indec_countries", indec_country_probe), ("comtrade_uco", comtrade_uco), ("eurostat_uco", eurostat_uco)):
+        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("indec_countries", indec_country_probe), ("comtrade_uco", comtrade_uco), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco)):
             try:
                 fn()
             except Exception as e:
