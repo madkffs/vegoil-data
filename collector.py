@@ -861,10 +861,12 @@ def price_probe():
     from curl_cffi import requests as cr
     today = dt.date.today()
     r = cr.get("https://www.investing.com/commodities/rapeseed", impersonate="chrome", timeout=30)
-    ids = sorted(set(re.findall(r'(?<![\d.])(\d{4,8})(?![\d.])', " ".join(re.findall(r'(?:instrument|pair)[^,}]{0,40}', r.text, re.I)))))
+    ids = sorted(set(re.findall(r'(?<![\d.])(\d{4,8})(?![\d.])', " ".join(re.findall(r'(?:instrument|pair|"id")[^,}]{0,40}', r.text, re.I)))), key=lambda x: (len(x), x))
+    prev = json.load(open(os.path.join(d, "rapeseed_ids.json")))["candidates"] if os.path.exists(os.path.join(d, "rapeseed_ids.json")) else {}
+    ids = [i for i in ids if i not in prev]
     last = re.search(r'data-test="instrument-price-last"[^>]*>([^<]*)', r.text)
     out = {"page_last": last.group(1) if last else None, "candidates": {}}
-    for pid in ids[:40]:
+    for pid in ids[:160]:
         u = (f"https://api.investing.com/api/financialdata/historical/{pid}?start-date={today - dt.timedelta(days=10):%Y-%m-%d}"
              f"&end-date={today:%Y-%m-%d}&time-frame=Daily&add-missing-rows=false")
         try:
@@ -874,8 +876,9 @@ def price_probe():
             out["candidates"][pid] = data[0].get("last_close") if data else None
         except Exception as ex:
             out["candidates"][pid] = "error " + str(ex)[:60]
-        time.sleep(0.5)
-    with open(os.path.join(d, "rapeseed_ids.json"), "w") as fh: json.dump(out, fh, indent=1)
+        time.sleep(0.3)
+        if out["candidates"].get(pid) and out["page_last"] and out["candidates"][pid] == out["page_last"]: break
+    with open(os.path.join(d, "rapeseed_ids2.json"), "w") as fh: json.dump(out, fh, indent=1)
 
 def main(mode):
     if mode == "probe_px":
