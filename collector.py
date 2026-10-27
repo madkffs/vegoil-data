@@ -927,13 +927,8 @@ def main(mode):
         status["nabsa_rows"] = {"sailed": len(nb["sailed"]), "lineup": len(nb["lineup"]), "unparsed_examples": nb["bad"][:15]}
     except Exception as e:
         status["errors"]["nabsa"] = str(e)[:200]
-    if mode != "backfill" and (dt.datetime.utcnow().minute < 15):
-        try:
-            magyp_lineups()
-        except Exception as e:
-            status["errors"]["magyp_lineups"] = str(e)[:200]
     if mode in ("backfill", "probe") or dt.datetime.utcnow().minute < 15 and dt.datetime.utcnow().hour == 6:
-        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco), ("magyp_lineups", magyp_lineups)):
+        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
             try:
                 fn()
             except Exception as e:
