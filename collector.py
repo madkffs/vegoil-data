@@ -947,6 +947,35 @@ def paranagua_lineup():
     with open(p, "w") as fh: json.dump(hist, fh, indent=1, ensure_ascii=False)
     return len(rows)
 
+SANTOS = "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/navios-esperados-carga/"
+def santos_lineup():
+    """Santos expected-ship list (public): vegetable-oil export vessels with agency, tonnes and terminal.
+    (The site's certificate chain is incomplete, so verification is skipped for this public page.)"""
+    r = requests.get(SANTOS, headers=UA, timeout=60, verify=False); r.raise_for_status()
+    clean = lambda c: re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", c)).strip()
+    rows = []
+    for tb in re.findall(r"<table.*?</table>", r.text, flags=re.S):
+        heads = [clean(h).split(" ")[0] for h in re.findall(r"<th[^>]*>(.*?)</th>", tb, flags=re.S)]
+        for tr in re.findall(r"<tr[^>]*>(.*?)</tr>", tb, flags=re.S):
+            c = [clean(x) for x in re.findall(r"<td[^>]*>(.*?)</td>", tr, flags=re.S)]
+            if len(c) < 15: continue
+            rec = dict(zip(heads[1:], c))
+            prod = rec.get("Mercadoria", "")
+            if not re.search(r"(?i)[óo]leo (de )?(soja|vegetal|girassol|milho|algod|canola|palm)", prod): continue
+            rows.append({"vessel": rec.get("Navio"), "imo": rec.get("IMO"), "arrival": rec.get("Cheg/Arrival"), "agency": rec.get("Agência"),
+                         "direction": rec.get("Operaç"), "product": prod, "tons": float(rec["Peso"]) if re.fullmatch(r"[\d.]+", rec.get("Peso", "")) else None,
+                         "terminal": rec.get("Terminal"), "duv": rec.get("DUV")})
+    now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M")
+    d = os.path.join(DATA, "lineups", "santos"); os.makedirs(d, exist_ok=True)
+    with open(os.path.join(d, "latest.json"), "w") as fh: json.dump({"fetched_utc": now, "rows": rows}, fh, indent=1, ensure_ascii=False)
+    p = os.path.join(d, "vessels.json")
+    hist = json.load(open(p)) if os.path.exists(p) else {}
+    for x in rows:
+        k = f"{x['duv']}_{x['vessel']}_{x['product']}"
+        hist[k] = {**hist.get(k, {"first_seen": now}), **x, "last_seen": now}
+    with open(p, "w") as fh: json.dump(hist, fh, indent=1, ensure_ascii=False)
+    return len(rows)
+
 def comexstat_ports():
     """Brazilian soybean oil exports by port (URF) and destination, monthly (Comex Stat)."""
     body = {"flow": "export", "monthDetail": True, "period": {"from": "2025-01", "to": "2026-12"},
@@ -996,9 +1025,11 @@ def main(mode):
         probe_second_month(); return
     if mode == "probe_br":
         probe_brazil()
-        for f in (paranagua_lineup, comexstat_ports):
+        errs = {}
+        for f in (paranagua_lineup, santos_lineup, comexstat_ports):
             try: f()
-            except Exception as ex: print(f.__name__, ex)
+            except Exception as ex: errs[f.__name__] = str(ex)[:300]
+        with open(os.path.join(DATA, "probe_br", "errors.json"), "w") as fh: json.dump(errs, fh, indent=1)
         return
     now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M")
     status, latest = {"run_utc": now, "mode": mode, "errors": {}}, {}
@@ -1076,10 +1107,11 @@ def main(mode):
             investing_history()
         except Exception as e:
             status["errors"]["investing_history"] = str(e)[:200]
-        try:
-            paranagua_lineup()
-        except Exception as e:
-            status["errors"]["paranagua_lineup"] = str(e)[:200]
+        for name, fn in (("paranagua_lineup", paranagua_lineup), ("santos_lineup", santos_lineup)):
+            try:
+                fn()
+            except Exception as e:
+                status["errors"][name] = str(e)[:200]
     if mode in ("backfill", "probe") or dt.datetime.utcnow().minute < 15 and dt.datetime.utcnow().hour == 6:
         for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("comexstat_ports", comexstat_ports), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
             try:
