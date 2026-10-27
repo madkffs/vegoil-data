@@ -907,11 +907,44 @@ def probe_second_month():
         time.sleep(1)
     with open(os.path.join(d, "contracts.json"), "w") as fh: json.dump(out, fh, indent=1)
 
+def probe_brazil():
+    """Find public Brazilian port line-ups that list soyoil cargoes vessel by vessel."""
+    d = os.path.join(DATA, "probe_br"); os.makedirs(d, exist_ok=True)
+    from curl_cffi import requests as cr
+    urls = {
+        "appa_lineup": "https://www.appaweb.appa.pr.gov.br/appaweb/pesquisa.aspx?WCI=relLineUpRetroativo",
+        "appa_lineup2": "https://www.appaweb.appa.pr.gov.br/appaweb/pesquisa.aspx?WCI=relEmitirLineUp",
+        "appa_home": "https://www.appaweb.appa.pr.gov.br/appaweb/",
+        "pr_lineup_page": "https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Line",
+        "pr_site": "https://www.portosdoparana.pr.gov.br/",
+        "santos_esperados": "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/navios-esperados-carga/",
+        "santos_atracados": "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/atracacoes-programadas/",
+        "santos_nav": "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/",
+        "portosrs_home": "https://www.portosrs.com.br/site/",
+        "portosrs_lineup": "https://www.portosrs.com.br/site/line_up",
+    }
+    out = {}
+    for k, u in urls.items():
+        try:
+            r = cr.get(u, impersonate="chrome", timeout=40)
+            t = r.text
+            with open(os.path.join(d, k + ".html"), "w") as fh: fh.write(t)
+            txt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", re.sub(r"<script.*?</script>|<style.*?</style>", " ", t, flags=re.S)))
+            hits = [txt[max(0, m.start() - 200): m.start() + 200] for m in re.finditer(r"(?i)[óo]leo", txt)][:8]
+            links = sorted(set(re.findall(r'href="([^"]*(?i:line|navio|esperad|programa|atraca)[^"]*)"', t)))[:40]
+            out[k] = {"status": r.status_code, "len": len(t), "oleo_hits": hits, "links": links}
+        except Exception as ex:
+            out[k] = {"error": str(ex)[:200]}
+        time.sleep(1)
+    with open(os.path.join(d, "probe.json"), "w") as fh: json.dump(out, fh, indent=1, ensure_ascii=False)
+
 def main(mode):
     if mode == "investing":
         investing_history(); return
     if mode == "probe2":
         probe_second_month(); return
+    if mode == "probe_br":
+        probe_brazil(); return
     now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M")
     status, latest = {"run_utc": now, "mode": mode, "errors": {}}, {}
     rng = "2y" if mode == "backfill" else "10d"
