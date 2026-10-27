@@ -1,77 +1,252 @@
 {
- "london-gas-oil-contracts": {
-  "status": 200,
-  "len": 371455,
-  "pairs": [
-   [
-    "322906",
-    "Fab120"
+ "hist": {
+  "LGOc2": {
+   "status": 200,
+   "n": 35,
+   "last": [
+    [
+     "2026-10-27",
+     "1,416.25"
+    ],
+    [
+     "2026-10-26",
+     "1,424.25"
+    ],
+    [
+     "2026-10-25",
+     "1,427.25"
+    ],
+    [
+     "2026-10-23",
+     "1,435.75"
+    ],
+    [
+     "2026-10-22",
+     "1,393.75"
+    ]
    ]
-  ],
-  "names": [
-   "London Gas Oil Futures Contracts - Investing.com",
-   "Brent Oil",
-   "London Gas Oil (LGOX6)\t",
-   "London Gas Oil",
-   "London Gas Oil Futures Contracts",
-   "London Gas Oil Futures Discussions",
-   "Brent Oil",
-   "London Gas Oil"
-  ]
+  },
+  "LCOc2": {
+   "status": 200,
+   "n": 35,
+   "last": [
+    [
+     "2026-10-27",
+     "110.42"
+    ],
+    [
+     "2026-10-26",
+     "110.30"
+    ],
+    [
+     "2026-10-25",
+     "110.63"
+    ],
+    [
+     "2026-10-23",
+     "111.70"
+    ],
+    [
+     "2026-10-22",
+     "108.66"
+    ]
+   ]
+  },
+  "HOc2": {
+   "status": 200,
+   "n": 29,
+   "last": [
+    [
+     "2026-10-27",
+     "4.6890"
+    ],
+    [
+     "2026-10-26",
+     "4.7351"
+    ],
+    [
+     "2026-10-23",
+     "4.7870"
+    ],
+    [
+     "2026-10-22",
+     "4.7366"
+    ],
+    [
+     "2026-10-21",
+     "4.5772"
+    ]
+   ]
+  },
+  "LGOc1": {
+   "status": 200,
+   "n": 35,
+   "last": [
+    [
+     "2026-10-27",
+     "1,478.25"
+    ],
+    [
+     "2026-10-26",
+     "1,487.00"
+    ],
+    [
+     "2026-10-25",
+     "1,484.00"
+    ],
+    [
+     "2026-10-23",
+     "1,492.00"
+    ],
+    [
+     "2026-10-22",
+     "1,444.75"
+    ]
+   ]
+  }
  },
- "rapeseed-contracts": {
-  "status": 404,
-  "len": 200457,
-  "pairs": [
-   [
-    "322906",
-    "Fab120"
+ "pages": {
+  "us-soybean-oil-contracts": {
+   "status": 200,
+   "ids": [
+    [
+     "1239551",
+     "BO1!"
+    ],
+    [
+     "1178328",
+     "BOc1"
+    ],
+    [
+     "1178329",
+     "BOc2"
+    ],
+    [
+     "1178330",
+     "BOc3"
+    ],
+    [
+     "1204597",
+     "BOc4"
+    ],
+    [
+     "1204598",
+     "BOc5"
+    ],
+    [
+     "1213649",
+     "BOc6"
+    ],
+    [
+     "1213650",
+     "BOc7"
+    ],
+    [
+     "1175152",
+     "US 30"
+    ],
+    [
+     "1175153",
+     "US 500"
+    ]
    ]
-  ],
-  "names": [
-   "Brent Oil",
-   "Brent Oil"
-  ]
- },
- "brent-oil-contracts": {
-  "status": 200,
-  "len": 412857,
-  "pairs": [
-   [
-    "322906",
-    "Fab120"
+  },
+  "us-soybean-meal-contracts": {
+   "status": 200,
+   "ids": [
+    [
+     "1240094",
+     "SM1!"
+    ],
+    [
+     "1178331",
+     "SMc1"
+    ],
+    [
+     "1178332",
+     "SMc2"
+    ],
+    [
+     "1178333",
+     "SMc3"
+    ],
+    [
+     "1203690",
+     "SMc4"
+    ],
+    [
+     "1203691",
+     "SMc5"
+    ],
+    [
+     "1205331",
+     "SMc6"
+    ],
+    [
+     "1213651",
+     "SMc7"
+    ],
+    [
+     "1175152",
+     "US 30"
+    ],
+    [
+     "1175153",
+     "US 500"
+    ]
    ]
-  ],
-  "names": [
-   "Brent Oil Futures Contracts - Investing.com",
-   "Brent Oil",
-   "Brent Oil (LCOF7)\t",
-   "Brent Oil",
-   "Brent Oil Futures Contracts",
-   "Brent Oil Futures Discussions",
-   "Brent Oil",
-   "Brent Oil"
-  ]
- },
- "heating-oil-contracts": {
-  "status": 200,
-  "len": 366130,
-  "pairs": [
-   [
-    "322906",
-    "Fab120"
+  },
+  "rapeseed-futures-contracts": {
+   "status": 404,
+   "ids": [
+    [
+     "1175152",
+     "US 30"
+    ],
+    [
+     "1175153",
+     "US 500"
+    ]
    ]
-  ],
-  "names": [
-   "Heating Oil Futures Contracts - Investing.com",
-   "Brent Oil",
-   "Heating Oil (NYFZ6)\t",
-   "Heating Oil",
-   "Heating Oil Futures Contracts",
-   "Heating Oil Contracts",
-   "Heating Oil Futures Discussions",
-   "Brent Oil",
-   "Heating Oil"
-  ]
+  },
+  "rapeseed-contracts": {
+   "status": 404,
+   "ids": [
+    [
+     "1175152",
+     "US 30"
+    ],
+    [
+     "1175153",
+     "US 500"
+    ]
+   ]
+  },
+  "crude-palm-oil-contracts": {
+   "status": 200,
+   "ids": [
+    [
+     "1175152",
+     "US 30"
+    ],
+    [
+     "1175153",
+     "US 500"
+    ]
+   ]
+  },
+  "palm-oil-contracts": {
+   "status": 404,
+   "ids": [
+    [
+     "1175152",
+     "US 30"
+    ],
+    [
+     "1175153",
+     "US 500"
+    ]
+   ]
+  }
  }
 }
