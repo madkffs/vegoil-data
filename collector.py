@@ -856,21 +856,26 @@ def magyp_lineups():
     with open(os.path.join(d, "log.json"), "w") as fh: json.dump(log, fh)
 
 def price_probe():
-    """Find Investing.com instrument ids for ICE gasoil and MATIF rapeseed from their public pages."""
+    """Match Investing.com ids on the rapeseed page to its quoted price."""
     d = os.path.join(DATA, "probe_px"); os.makedirs(d, exist_ok=True)
     from curl_cffi import requests as cr
-    out = {}
-    for slug in ["rapeseed-futures", "london-gas-oil", "euronext-rapeseed-futures", "rapeseed"]:
-        u = "https://www.investing.com/commodities/" + slug
+    today = dt.date.today()
+    r = cr.get("https://www.investing.com/commodities/rapeseed", impersonate="chrome", timeout=30)
+    ids = sorted(set(re.findall(r'(?<![\d.])(\d{4,8})(?![\d.])', " ".join(re.findall(r'(?:instrument|pair)[^,}]{0,40}', r.text, re.I)))))
+    last = re.search(r'data-test="instrument-price-last"[^>]*>([^<]*)', r.text)
+    out = {"page_last": last.group(1) if last else None, "candidates": {}}
+    for pid in ids[:40]:
+        u = (f"https://api.investing.com/api/financialdata/historical/{pid}?start-date={today - dt.timedelta(days=10):%Y-%m-%d}"
+             f"&end-date={today:%Y-%m-%d}&time-frame=Daily&add-missing-rows=false")
         try:
-            r = cr.get(u, impersonate="chrome", timeout=30)
-            ids = sorted(set(re.findall(r'(?:"instrument_id"|"pairId"|data-pair-id=|"pair_id"|instrumentId)["\s:=]*"?(\d{3,8})', r.text)))[:10]
-            title = re.search(r"<title>([^<]*)", r.text)
-            last = re.search(r'data-test="instrument-price-last"[^>]*>([^<]*)', r.text)
-            out[slug] = {"status": r.status_code, "ids": ids, "title": title.group(1) if title else None, "last": last.group(1) if last else None}
-        except Exception as e:
-            out[slug] = {"error": str(e)[:150]}
-    with open(os.path.join(d, "pages.json"), "w") as fh: json.dump(out, fh, indent=1)
+            h = cr.get(u, impersonate="chrome", headers={"domain-id": "www"}, timeout=30)
+            js = h.json() if h.status_code == 200 else {}
+            data = js.get("data") or []
+            out["candidates"][pid] = data[0].get("last_close") if data else None
+        except Exception as ex:
+            out["candidates"][pid] = "error " + str(ex)[:60]
+        time.sleep(0.5)
+    with open(os.path.join(d, "rapeseed_ids.json"), "w") as fh: json.dump(out, fh, indent=1)
 
 def main(mode):
     if mode == "probe_px":
