@@ -837,6 +837,11 @@ def magyp_lineups():
         "flete_maritimo.xlsx": base + fl + "flete-maritimo.xlsx",
         "flete_semanal.html": base + fl + "000010_Informe%20Semanal%20Actual.php",
         "flete_diario.html": base + fl + "000010_Informe%20Diario%20Maritimo.php",
+        "emb_destino.html": "https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/exportaciones/_archivos/000030_Embarques%20-%20Exportaciones%20de%20Granos,%20Aceites%20y%20Subproductos/000030_Por%20Destino.php?accion=imp",
+        "emb_puerto.html": "https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/exportaciones/_archivos/000030_Embarques%20-%20Exportaciones%20de%20Granos,%20Aceites%20y%20Subproductos/000030_Por%20Puerto.php?accion=imp",
+        "emb_ranking.html": "https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/exportaciones/_archivos/000020_Ranking%20Exportaciones%20por%20Exportador%20de%20Granos%20y%20Subproductos/000001_Ranking_Exportaciones_Actual.php",
+        "emb_base.html": "https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/exportaciones/_archivos/000033_Base%20de%20Datos%20de%20Transporte%20y%20Embarque%20de%20Granos/",
+        "djve.html": "https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/areas/granos/_archivos/000058_Estad%C3%ADsticas/000020_Compras%20y%20DJVE%20de%20Granos.php?accion=imp",
     }
     log = {}
     for name, url in urls.items():
