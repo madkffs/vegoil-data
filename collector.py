@@ -907,6 +907,56 @@ def probe_second_month():
         time.sleep(1)
     with open(os.path.join(d, "contracts.json"), "w") as fh: json.dump(out, fh, indent=1)
 
+PARANAGUA = "https://www.appaweb.appa.pr.gov.br/appaweb/pesquisa.aspx?WCI=relLineUpRetroativo"
+def paranagua_lineup():
+    """Paranaguá port line-up (public): every vegetable-oil export vessel, with agency, terminal, tonnes, dates and status.
+    The page shows only ~3 days of departures, so each run merges into a running vessel file."""
+    from curl_cffi import requests as cr
+    r = cr.get(PARANAGUA, impersonate="chrome", timeout=60)
+    r.raise_for_status()
+    t = r.text
+    clean = lambda c: re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", c)).strip()
+    rows = []
+    parts = re.split(r"<th colspan='\d+'[^>]*>\s*([^<]+?)\s*</th>", t)
+    for i in range(1, len(parts) - 1, 2):
+        sec, body = parts[i].strip(), parts[i + 1]
+        if sec == "LEGENDA": break
+        heads = [clean(h) for h in re.findall(r"<th[^>]*>(.*?)</th>", body, flags=re.S)]
+        for tr in re.findall(r"<tr[^>]*>(.*?)</tr>", body, flags=re.S):
+            cells = [clean(c) for c in re.findall(r"<td[^>]*>(.*?)</td>", tr, flags=re.S)]
+            if len(cells) != len(heads) or not cells[0].isdigit(): continue
+            rec = dict(zip(heads, cells))
+            prod = rec.get("Mercadoria", "")
+            if not re.search(r"(?i)[óo]leo (de )?(soja|vegetal|girassol|milho|algod|canola|palm)", prod): continue
+            q = re.search(r"([\d.]+),(\d+) Tons", rec.get("Previsto", "") or rec.get("Saldo Total", ""))
+            rows.append({"section": sec, "prog": rec.get("Programação"), "vessel": rec.get("Embarcação"), "imo": rec.get("IMO"),
+                         "berth": rec.get("Berço"), "direction": rec.get("Sentido"), "agency": rec.get("Agência"), "terminal": rec.get("Operador"),
+                         "product": prod, "arrival": rec.get("Chegada"), "berthed": rec.get("Atracação"), "etb": rec.get("ETB"),
+                         "sailed": rec.get("Desatracacao"), "tons": float(q.group(1).replace(".", "") + "." + q.group(2)) if q else None})
+    if not rows: raise ValueError("no vegetable-oil rows parsed")
+    now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M")
+    d = os.path.join(DATA, "lineups", "paranagua"); os.makedirs(d, exist_ok=True)
+    with open(os.path.join(d, "latest.json"), "w") as fh: json.dump({"fetched_utc": now, "rows": rows}, fh, indent=1, ensure_ascii=False)
+    p = os.path.join(d, "vessels.json")
+    hist = json.load(open(p)) if os.path.exists(p) else {}
+    for x in rows:
+        k = f"{x['prog']}_{x['vessel']}_{x['product']}"
+        old = hist.get(k, {"first_seen": now})
+        # a vessel can appear twice (two terminals); keep the larger section tonnage and the latest status
+        hist[k] = {**old, **{kk: v for kk, v in x.items() if v not in (None, "")}, "last_seen": now}
+    with open(p, "w") as fh: json.dump(hist, fh, indent=1, ensure_ascii=False)
+    return len(rows)
+
+def comexstat_ports():
+    """Brazilian soybean oil exports by port (URF) and destination, monthly (Comex Stat)."""
+    body = {"flow": "export", "monthDetail": True, "period": {"from": "2025-01", "to": "2026-12"},
+            "filters": [{"filter": "ncm", "values": ["15071000", "15079011", "15079019"]}],
+            "details": ["country", "urf"], "metrics": ["metricKG"]}
+    r = requests.post("https://api-comexstat.mdic.gov.br/general?language=en", json=body,
+                      headers={**UA, "Content-Type": "application/json"}, timeout=90, verify=False)
+    if r.status_code != 200: raise ValueError(f"comexstat urf {r.status_code}: {r.text[:150]}")
+    with open(os.path.join(DATA, "lineups", "comexstat_soyoil_ports.json"), "w") as fh: fh.write(r.text)
+
 def probe_brazil():
     """Find public Brazilian port line-ups that list soyoil cargoes vessel by vessel."""
     d = os.path.join(DATA, "probe_br"); os.makedirs(d, exist_ok=True)
@@ -921,12 +971,13 @@ def probe_brazil():
         "santos_atracados": "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/atracacoes-programadas/",
         "santos_nav": "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/",
         "portosrs_home": "https://www.portosrs.com.br/site/",
+        "portosrs_alt": "https://portosrs.com.br/site/public/index.php/line_up",
         "portosrs_lineup": "https://www.portosrs.com.br/site/line_up",
     }
     out = {}
     for k, u in urls.items():
         try:
-            r = cr.get(u, impersonate="chrome", timeout=40)
+            r = requests.get(u, headers=UA, timeout=40, verify=False) if k.startswith("santos") else cr.get(u, impersonate="chrome", timeout=40)
             t = r.text
             with open(os.path.join(d, k + ".html"), "w") as fh: fh.write(t)
             txt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", re.sub(r"<script.*?</script>|<style.*?</style>", " ", t, flags=re.S)))
@@ -944,7 +995,11 @@ def main(mode):
     if mode == "probe2":
         probe_second_month(); return
     if mode == "probe_br":
-        probe_brazil(); return
+        probe_brazil()
+        for f in (paranagua_lineup, comexstat_ports):
+            try: f()
+            except Exception as ex: print(f.__name__, ex)
+        return
     now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M")
     status, latest = {"run_utc": now, "mode": mode, "errors": {}}, {}
     rng = "2y" if mode == "backfill" else "10d"
@@ -1021,8 +1076,12 @@ def main(mode):
             investing_history()
         except Exception as e:
             status["errors"]["investing_history"] = str(e)[:200]
+        try:
+            paranagua_lineup()
+        except Exception as e:
+            status["errors"]["paranagua_lineup"] = str(e)[:200]
     if mode in ("backfill", "probe") or dt.datetime.utcnow().minute < 15 and dt.datetime.utcnow().hour == 6:
-        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
+        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("comexstat_ports", comexstat_ports), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
             try:
                 fn()
             except Exception as e:
