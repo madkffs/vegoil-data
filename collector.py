@@ -860,12 +860,12 @@ def price_probe():
     d = os.path.join(DATA, "probe_px"); os.makedirs(d, exist_ok=True)
     from curl_cffi import requests as cr
     out = {}
-    for q in ["london gas oil", "gasoil", "rapeseed", "rapeseed futures", "colza"]:
+    for q in ["london gas oil", "rapeseed", "rapeseed euronext"]:
         u = "https://api.investing.com/api/search/v2/search?q=" + requests.utils.quote(q)
         try:
             r = cr.get(u, impersonate="chrome", headers={"domain-id": "www"}, timeout=30)
             js = r.json() if r.status_code == 200 else {}
-            out[q] = [{k: x.get(k) for k in ("id", "name", "symbol", "exchange", "flag", "type", "url")} for x in (js.get("quotes") or [])[:12]] or [r.status_code, r.text[:300]]
+            out[q] = {k: v for k, v in js.items() if k not in ("articles", "news")}
         except Exception as e:
             out[q] = ["error", str(e)[:150]]
     with open(os.path.join(d, "search.json"), "w") as fh: json.dump(out, fh, indent=1)
