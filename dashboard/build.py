@@ -510,11 +510,11 @@ def usd(series, fx, divide=True):
     return (series / f if divide else series * f).dropna()
 SER = {
     "gasoil": ("ICE gasoil (front)", "USD/t", daily_close("ICE_GO")),
-    "palm": ("Bursa palm, 3rd month", "USD/t", usd(daily_close("FCPO"), daily_close("MYR_X"))),
+    "palm": ("Bursa palm, 3rd month", "MYR/t", daily_close("FCPO")),
     "brent": ("Brent (front)", "USD/bbl", daily_close("BZ_F")),
     "meal": ("CBOT soymeal (front)", "USD/st", daily_close("ZM_F")),
     "soyoil": ("CBOT soyoil (front)", "c/lb", daily_close("ZL_F")),
-    "rapeseed": ("MATIF rapeseed (front)", "USD/t", usd(daily_close("MATIF_RS"), daily_close("EURUSD_X"), divide=False)),
+    "rapeseed": ("MATIF rapeseed (front)", "EUR/t", daily_close("MATIF_RS")),
     "heatoil": ("NYMEX heating oil (front)", "USD/gal", daily_close("HO_F")),
 }
 PAIRS = [("gasoil", "palm"), ("gasoil", "brent"), ("meal", "soyoil"), ("rapeseed", "gasoil"), ("soyoil", "heatoil"), ("heatoil", "brent")]
@@ -532,11 +532,21 @@ for a, b in PAIRS:
     r = np.log(df).diff().dropna()
     # front-month series jump when the contract rolls: drop days with a move over 4 standard deviations in either series
     jumps = (r["a"].abs() > 4 * r["a"].std()) | (r["b"].abs() > 4 * r["b"].std())
+    # gasoil: a roll shows up as a gasoil move that heating oil (same product, New York) doesn't share
+    for side, key in (("a", a), ("b", b)):
+        if key == "gasoil" and SER["heatoil"][2] is not None:
+            ho = np.log(SER["heatoil"][2]).diff().reindex(r.index)
+            gap = (r[side] - ho).dropna()
+            jumps = jumps | ((r[side] - ho).abs() > 2.5 * gap.std()).reindex(r.index, fill_value=False)
     r = r[~jumps]
     roll = r["a"].rolling(30, min_periods=25).corr(r["b"])
+    # rebase raw prices to the median of the first 5 sessions, so a one-day squeeze at the start (e.g. MATIF expiry) doesn't set the base
+    start = end - pd.Timedelta(days=183)
+    base = pd.Series({"a": float(sa[sa.index >= start].head(5).median()), "b": float(sb[sb.index >= start].head(5).median())})
+    idx = df / base * 100
     for d_, row in df.iterrows():
         corr_rows.append({"pair": pid, "date": f"{d_:%Y-%m-%d}", "a": round(float(row.a), 4), "b": round(float(row.b), 4),
-                          "a_idx": round(float(row.a / df.a.iloc[0] * 100), 2), "b_idx": round(float(row.b / df.b.iloc[0] * 100), 2),
+                          "a_idx": round(float(idx.loc[d_, "a"]), 2), "b_idx": round(float(idx.loc[d_, "b"]), 2),
                           "corr30": None if pd.isna(roll.get(d_)) else round(float(roll.get(d_)), 3)})
     beta = float(np.cov(r["b"], r["a"])[0, 1] / np.var(r["a"])) if np.var(r["a"]) else None
     last21 = r.tail(21)
@@ -547,7 +557,9 @@ for a, b in PAIRS:
                        "corr30_min": round(float(roll.min()), 3), "corr30_max": round(float(roll.max()), 3),
                        "beta_b_on_a": None if beta is None else round(beta, 3),
                        "roll_days_dropped": int(jumps.sum()),
-                       "a_change_pct": round(float((df.a.iloc[-1] / df.a.iloc[0] - 1) * 100), 1), "b_change_pct": round(float((df.b.iloc[-1] / df.b.iloc[0] - 1) * 100), 1),
+                       "a_change_pct": round(float((sa.iloc[-1] / base["a"] - 1) * 100), 1), "b_change_pct": round(float((sb.iloc[-1] / base["b"] - 1) * 100), 1),
+                       "a_start": round(float(base["a"]), 2), "b_start": round(float(base["b"]), 2), "a_last": round(float(sa.iloc[-1]), 2), "b_last": round(float(sb.iloc[-1]), 2),
+                       "a_last_date": f"{sa.index[-1]:%Y-%m-%d}", "b_last_date": f"{sb.index[-1]:%Y-%m-%d}",
                        "note": ""})
 for i, r_ in enumerate(corr_rows): r_["id"] = f"c{i:05d}"
 dump("corr_series.json", corr_rows)
