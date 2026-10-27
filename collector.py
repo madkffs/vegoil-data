@@ -855,7 +855,11 @@ def magyp_lineups():
     log["_fetched"] = dt.datetime.utcnow().isoformat()
     with open(os.path.join(d, "log.json"), "w") as fh: json.dump(log, fh)
 
-INVESTING = {"ICE_GO": (8861, "ICE low sulphur gasoil, front month, USD/t"), "MATIF_RS": (964534, "Euronext (MATIF) rapeseed, front month, EUR/t")}
+INVESTING = {"ICE_GO": (8861, "ICE low sulphur gasoil, front month, USD/t"), "MATIF_RS": (964534, "Euronext (MATIF) rapeseed, front month, EUR/t"),
+             # second-month continuations (c2), used for the correlation charts to keep expiry noise out
+             "ICE_GO_2": (1184929, "ICE gasoil, 2nd month, USD/t"), "BZ_2": (1184865, "ICE Brent, 2nd month, USD/bbl"),
+             "HO_2": (1178044, "NYMEX heating oil, 2nd month, USD/gal"), "ZL_2": (1178329, "CBOT soyoil, 2nd month, c/lb"),
+             "ZM_2": (1178332, "CBOT soymeal, 2nd month, USD/st")}
 def investing_history(days=420):
     """Daily history for ICE gasoil and MATIF rapeseed (front month) from Investing.com, which Yahoo does not carry."""
     from curl_cffi import requests as cr
