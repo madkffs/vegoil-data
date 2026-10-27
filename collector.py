@@ -855,34 +855,27 @@ def magyp_lineups():
     log["_fetched"] = dt.datetime.utcnow().isoformat()
     with open(os.path.join(d, "log.json"), "w") as fh: json.dump(log, fh)
 
-def price_probe():
-    """Match Investing.com ids on the rapeseed page to its quoted price."""
-    d = os.path.join(DATA, "probe_px"); os.makedirs(d, exist_ok=True)
+INVESTING = {"ICE_GO": (8861, "ICE low sulphur gasoil, front month, USD/t"), "MATIF_RS": (964534, "Euronext (MATIF) rapeseed, front month, EUR/t")}
+def investing_history(days=420):
+    """Daily history for ICE gasoil and MATIF rapeseed (front month) from Investing.com, which Yahoo does not carry."""
     from curl_cffi import requests as cr
     today = dt.date.today()
-    r = cr.get("https://www.investing.com/commodities/rapeseed", impersonate="chrome", timeout=30)
-    ids = sorted(set(re.findall(r'(?<![\d.])(\d{4,8})(?![\d.])', " ".join(re.findall(r'(?:instrument|pair|"id")[^,}]{0,40}', r.text, re.I)))), key=lambda x: (len(x), x))
-    prev = json.load(open(os.path.join(d, "rapeseed_ids.json")))["candidates"] if os.path.exists(os.path.join(d, "rapeseed_ids.json")) else {}
-    ids = [i for i in ids if i not in prev]
-    last = re.search(r'data-test="instrument-price-last"[^>]*>([^<]*)', r.text)
-    out = {"page_last": last.group(1) if last else None, "candidates": {}}
-    for pid in ids[:160]:
-        u = (f"https://api.investing.com/api/financialdata/historical/{pid}?start-date={today - dt.timedelta(days=10):%Y-%m-%d}"
+    for name, (pid, _) in INVESTING.items():
+        u = (f"https://api.investing.com/api/financialdata/historical/{pid}?start-date={today - dt.timedelta(days=days):%Y-%m-%d}"
              f"&end-date={today:%Y-%m-%d}&time-frame=Daily&add-missing-rows=false")
-        try:
-            h = cr.get(u, impersonate="chrome", headers={"domain-id": "www"}, timeout=30)
-            js = h.json() if h.status_code == 200 else {}
-            data = js.get("data") or []
-            out["candidates"][pid] = data[0].get("last_close") if data else None
-        except Exception as ex:
-            out["candidates"][pid] = "error " + str(ex)[:60]
-        time.sleep(0.3)
-        if out["candidates"].get(pid) and out["page_last"] and out["candidates"][pid] == out["page_last"]: break
-    with open(os.path.join(d, "rapeseed_ids2.json"), "w") as fh: json.dump(out, fh, indent=1)
+        r = cr.get(u, impersonate="chrome", headers={"domain-id": "www"}, timeout=40)
+        data = (r.json() or {}).get("data") or [] if r.status_code == 200 else []
+        num = lambda x: float(str(x).replace(",", "")) if x not in (None, "", "-") else None
+        rows = [{"time_utc": x["rowDateTimestamp"][:10] + " 00:00", "open": num(x.get("last_open")), "high": num(x.get("last_max")),
+                 "low": num(x.get("last_min")), "close": num(x.get("last_close")), "volume": x.get("volumeRaw") or 0} for x in data if x.get("rowDateTimestamp")]
+        if not rows:
+            raise ValueError(f"{name}: no rows (HTTP {r.status_code})")
+        append_csv(os.path.join(DATA, "daily", name + ".csv"), sorted(rows, key=lambda x: x["time_utc"]), key="time_utc")
+        time.sleep(1)
 
 def main(mode):
-    if mode == "probe_px":
-        price_probe(); return
+    if mode == "investing":
+        investing_history(); return
     now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M")
     status, latest = {"run_utc": now, "mode": mode, "errors": {}}, {}
     rng = "2y" if mode == "backfill" else "10d"
@@ -954,6 +947,11 @@ def main(mode):
         status["nabsa_rows"] = {"sailed": len(nb["sailed"]), "lineup": len(nb["lineup"]), "unparsed_examples": nb["bad"][:15]}
     except Exception as e:
         status["errors"]["nabsa"] = str(e)[:200]
+    if mode in ("backfill", "probe") or dt.datetime.utcnow().minute < 15:
+        try:
+            investing_history()
+        except Exception as e:
+            status["errors"]["investing_history"] = str(e)[:200]
     if mode in ("backfill", "probe") or dt.datetime.utcnow().minute < 15 and dt.datetime.utcnow().hour == 6:
         for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
             try:
