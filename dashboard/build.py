@@ -508,14 +508,54 @@ def usd(series, fx, divide=True):
     if series is None or fx is None: return None
     f = fx.reindex(series.index, method="ffill")
     return (series / f if divide else series * f).dropna()
+def first(*names):
+    for n in names:
+        s_ = daily_close(n)
+        if s_ is not None and len(s_) > 30: return s_[s_.index.dayofweek < 5]
+    return None
+def matif_mask(idx):
+    """MATIF rapeseed expires on the last business day of Jan, Apr, Jul and Oct. Flag the last 10 sessions before
+    each expiry and the 2 after it, so delivery squeezes and the roll don't enter the numbers."""
+    out = pd.Series(False, index=idx)
+    for y in sorted(set(idx.year) | {idx.year.max() + 1}):
+        for m in (1, 4, 7, 10):
+            exp = pd.offsets.BMonthEnd().rollforward(pd.Timestamp(y, m, 1))
+            before, after = idx[idx <= exp][-10:], idx[idx > exp][:2]
+            out[before] = True; out[after] = True
+    return out
+RS_FRONT = first("MATIF_RS")
+RS_MASK = matif_mask(RS_FRONT.index) if RS_FRONT is not None else None
+def rs_chain():
+    """Front-month rapeseed outside the expiry weeks; inside them, carry the series forward with the daily % change of the
+    second listed contract from Euronext's settlement table (collected daily since 22 Oct 2026)."""
+    if RS_FRONT is None: return None
+    s_ = RS_FRONT[~RS_MASK]
+    p = os.path.join(D, "euronext_prices.csv")
+    if not os.path.exists(p) or not len(s_): return s_
+    e = pd.read_csv(p); e = e[e["product"] == "ECO"].copy()
+    e["d"] = pd.to_datetime(e["price_date"], format="%d %b %Y", errors="coerce"); e["m"] = pd.to_datetime(e["delivery"], format="%b %Y", errors="coerce")
+    e = e.dropna(subset=["d", "m", "settle"])
+    e = e[e["m"] >= e["d"].dt.to_period("M").dt.to_timestamp()]
+    f2 = e.sort_values("m").groupby("d").nth(1).set_index("d")
+    f2 = f2[["settle", "delivery"]].sort_index()
+    ext = {}
+    last_d, last_v = s_.index[-1], float(s_.iloc[-1])
+    prev = None
+    for d_, row in f2[f2.index > last_d].iterrows():
+        if d_ in RS_MASK.index and not RS_MASK[d_] and d_ in RS_FRONT.index: break
+        if prev is not None and prev[1] == row["delivery"]:
+            last_v = last_v * row["settle"] / prev[0]; ext[d_] = last_v
+        prev = (row["settle"], row["delivery"])
+    return pd.concat([s_, pd.Series(ext, dtype=float)]).sort_index() if ext else s_
+RS_SER = rs_chain()
 SER = {
-    "gasoil": ("ICE gasoil (front)", "USD/t", daily_close("ICE_GO")),
-    "palm": ("Bursa palm, 3rd month", "MYR/t", daily_close("FCPO")),
-    "brent": ("Brent (front)", "USD/bbl", daily_close("BZ_F")),
-    "meal": ("CBOT soymeal (front)", "USD/st", daily_close("ZM_F")),
-    "soyoil": ("CBOT soyoil (front)", "c/lb", daily_close("ZL_F")),
-    "rapeseed": ("MATIF rapeseed (front)", "EUR/t", daily_close("MATIF_RS")),
-    "heatoil": ("NYMEX heating oil (front)", "USD/gal", daily_close("HO_F")),
+    "gasoil": ("ICE gasoil (2nd month)", "USD/t", first("ICE_GO_2", "ICE_GO")),
+    "palm": ("Bursa palm, 3rd month", "MYR/t", first("FCPO")),
+    "brent": ("Brent (2nd month)", "USD/bbl", first("BZ_2", "BZ_F")),
+    "meal": ("CBOT soymeal (2nd month)", "USD/st", first("ZM_2", "ZM_F")),
+    "soyoil": ("CBOT soyoil (2nd month)", "c/lb", first("ZL_2", "ZL_F")),
+    "rapeseed": ("MATIF rapeseed (nearest, expiry weeks left out)", "EUR/t", RS_SER),
+    "heatoil": ("NYMEX heating oil (2nd month)", "USD/gal", first("HO_2", "HO_F")),
 }
 PAIRS = [("gasoil", "palm"), ("gasoil", "brent"), ("meal", "soyoil"), ("rapeseed", "gasoil"), ("soyoil", "heatoil"), ("heatoil", "brent")]
 corr_rows, corr_stats = [], []
@@ -530,6 +570,9 @@ for a, b in PAIRS:
     if len(df) < 30:
         corr_stats.append({"pair": pid, "a": SER[a][0], "b": SER[b][0], "note": "too little data"}); continue
     r = np.log(df).diff().dropna()
+    if "rapeseed" in (a, b):
+        gap = df.index.to_series().diff() > pd.Timedelta(days=5)
+        r = r[~gap.reindex(r.index, fill_value=False)]
     # front-month series jump when the contract rolls: drop days with a move over 4 standard deviations in either series
     jumps = (r["a"].abs() > 4 * r["a"].std()) | (r["b"].abs() > 4 * r["b"].std())
     # gasoil: a roll shows up as a gasoil move that heating oil (same product, New York) doesn't share
