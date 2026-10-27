@@ -1,0 +1,700 @@
+
+
+
+
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]> <html lang="es"class="iem7"> <![endif]-->
+<!--[if lt IE 7 ]> <html lang="es" class="ie6 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="es" class="ie7 lt-ie8"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="es" class="ie8"> <![endif]-->
+<!--[if (gte IE 9)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!-->
+<html lang="es">
+<!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mercados Agropecuarios y Negociaciones Internacionales</title>
+<meta name="description" content="Mercados Agropecuarios y Negociaciones Internacionales">
+<meta name="author" content="Secretaría de Bioeconomía">
+<link rel="shortcut icon" href="img/favicon.ico">
+
+<!-- Nav and address bar color -->
+<meta name="theme-color" content="#0072b8">
+<meta name="msapplication-navbutton-color" content="#0072b8">
+<meta name="apple-mobile-web-app-status-bar-style" content="#0072b8">
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://www.magyp.gob.ar/mercadosagropecuarios/dist/css/poncho.min.css">
+<link rel="stylesheet" href="https://www.magyp.gob.ar/mercadosagropecuarios/dist/icono-arg.css">
+<link rel="stylesheet" href="https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/_estilos/estructura.css">
+
+
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<body>
+<header>
+  <nav class="navbar navbar-top navbar-default" role="navigation">
+    <div class="container">
+      <div>
+        <div class="navbar-header"> <a class="navbar-brand" href="https://www.magyp.gob.ar" aria-label="Secretaría de Bioeconomía"> <img alt="magyp.gob.ar" src="https://www.magyp.gob.ar/sitio/_img/logo_magyp.svg" height="50"> </a> </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<style>
+.jumbotron .jumbotron_bar{background:rgba(0,0,0,.6)!important;}
+a:link {
+  text-decoration: none;	
+}
+a:visited {
+  text-decoration: none;	
+}
+
+/*a:hover {
+  text-decoration: underline;
+	color: #6A1B99;
+}*/
+
+a:active {
+  text-decoration: none;
+	/*color: #6A1B99;*/
+}
+a {
+  color: #0695d6;
+  text-decoration: none;
+}
+.times a {
+  font-family: "Times New Roman", Times, serif!important;
+  color: #0695d6;
+  text-decoration: none;
+}
+a.times {
+  font-family: "Times New Roman", Times, serif!important;
+  color: #0695d6;
+  text-decoration: none;
+}
+
+a:hover,a:focus {
+  color: #005580;
+  text-decoration: none;
+}
+
+
+/*TABLA TH CON BORDE INFERIOR 5PX*/
+.tabla {
+	font-family: Montserrat!important;/*Arial, Helvetica, sans-serif;*/
+	/*font-size: 14px;*/
+	text-align: center;
+	width:  100%/*100%; /*	width: 80%;*/
+}
+
+.tabla td {
+	font-family: Montserrat!important;
+	font-size: 12px;
+	text-align: center;
+	padding: 4px;
+	margin: 0px;
+	border: 1px solid #999999;
+}
+.tabla h1 {
+	font-family: Montserrat!important;
+	font-size: 13px!important;
+	text-align: left!important;
+	background-color: #FFF!important;
+	font-weight: normal!important;
+	margin: -10px;
+	padding: 8px;
+}
+
+.tabla th {
+	font-family: Montserrat!important;/*Arial, Helvetica, sans-serif;*/
+	font-size: 12px;!important;/*15px;*/
+	font-weight: bold;/*normal*/
+	color: #FFFFFF!important;
+	/*background-color: #3E9DC1;*/
+	background-color:#242c4f!important;/*#3E9DC1*/
+	text-align: center;
+	padding: 10px;/*4?*/
+/*border: 1px solid #33829F;*/
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 5px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	/*border-top-color: #32809C;
+	border-right-color: #32809C;
+	border-bottom-color: #32809C;
+	border-left-color: #32809C;*/
+	border-top-color: #6171B7!important;
+	border-right-color: #6171B7!important;
+	border-bottom-color: #6171B7!important;/*4B5CA3;*/
+	border-left-color: #6171B7!important;
+}
+.tabla h1 {
+	padding-left: 5px!important;
+}
+.tabla td a {
+	font-family: Montserrat!important;font-size: 12px!important;
+}
+/*TABLA TH CON BORDE INFERIOR 1PX*/
+.tabla1 {
+	font-family: Montserrat!important;/*Arial, Helvetica, sans-serif;*/
+	/*font-size: 14px;*/
+	text-align: center;
+	width:  100%/*100%; /*	width: 80%;*/
+}
+
+.tabla1 td {
+	font-family: Montserrat!important;
+	font-size: 12px;
+	text-align: center;
+	padding: 4px;
+	margin: 0px;
+	border: 1px solid #999999;
+	
+}
+.tabla1 h1 {
+	font-family: Montserrat!important;
+	font-size: 13px;
+	text-align: left;
+	background-color: #FFF;
+	font-weight: normal;
+	margin: -10px;
+	padding: 8px;
+}
+
+.tabla1 th {
+	font-family: Montserrat!important;/*Arial, Helvetica, sans-serif;*/
+	font-size: 12px;!important;/*15px;*/
+	font-weight: bold;/*normal*/
+	color: #FFFFFF!important;
+	/*background-color: #3E9DC1;*/
+	background-color:#242c4f!important;/*#3E9DC1*/
+	text-align: center;
+	padding: 10px;/*4?*/
+/*border: 1px solid #33829F;*/
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	/*border-top-color: #32809C;
+	border-right-color: #32809C;
+	border-bottom-color: #32809C;
+	border-left-color: #32809C;*/
+	border-top-color: #6171B7!important;
+	border-right-color: #6171B7!important;
+	border-bottom-color: #6171B7!important;/*4B5CA3;*/
+	border-left-color: #6171B7!important;
+}
+.tabla1 h1 {
+	padding-left: 5px!important;
+}
+.tabla1 td a {
+	font-family: Montserrat!important;font-size: 12px!important;
+}
+/***/
+a:link {
+	color: #242c4f;
+	text-decoration: none!important;
+
+	/*font-size: medium!important;*/
+}
+a:visited {
+	text-decoration: none!important;
+	color: #242c4f;
+	/*font-size: medium!important;*/
+}
+a:hover {
+	text-decoration: none!important;
+	color: #6171B7;
+	/*font-size: medium!important;*/
+}
+a:active {
+	text-decoration: none!important;
+	color: #242c4f;
+	/*font-size: medium!important;*/
+}
+/*a{*/
+/*color: #13077E;*/
+a:hover,
+
+a:focus {
+
+/*  color: #005580;*/
+	color:#6171B7;
+  text-decoration: none!important;
+
+
+}
+#atras {
+	text-align: right;
+	font-size: 20px;
+}
+a.times:link {
+	color: #242c4f!important;
+	text-decoration: none!important;
+
+	/*font-size: medium!important;*/
+}
+a.times:visited {
+	text-decoration: none!important;
+	color: #242c4f!important;
+	/*font-size: medium!important;*/
+}
+a.times:hover {
+	text-decoration: none!important;
+	color: #6171B7!important;
+	/*font-size: medium!important;*/
+}
+a.times:active {
+	text-decoration: none!important;
+	color: #242c4f!important;
+	/*font-size: medium!important;*/
+}
+/*a{*/
+/*color: #13077E;*/
+a.times:hover,#atras a:focus {
+
+/*  color: #005580;*/
+	color:#6171B7!important;
+  text-decoration: none!important;
+
+
+}
+h3.titulo {text-transform:lowercase!important;}
+h3.titulo:first-letter{text-transform:uppercase!important;}
+h3.tituloFormato {
+
+	font-family: Montserrat!important;/*Arial, Helvetica, sans-serif;*/
+	font-size: 18px;/*15px;*/
+	font-weight: bold;/*normal*/
+	text-align: left;
+
+}
+
+</style>
+<main role="main">
+
+<!--- jumbotron-->
+<section class="jumbotron" style="background-color: black;">
+  <div class="jumbotron_bar">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <ol class="breadcrumb pull-left" id="menusubse">
+            <li><a href="https://www.argentina.gob.ar/economia" class="times">Ministerio de Economía</a></li>
+            <li><a href="https://www.argentina.gob.ar/economia/agricultura" class="times">Agricultura, Ganadería y Pesca</a></li>
+            <li><a href="https://www.magyp.gob.ar/mercadosagropecuarios/" class="times">Mercados Agroalimentarios</a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--- jumbotron--> 
+<!--- cuerpo -->
+<section>
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+<!-- AGRANDAR FOTOS --> 
+
+<script type="text/javascript" src="/sitio/_js/highslide-with-html.js" ></script>
+<link href="/sitio/_css/jquery-ui.css" rel="stylesheet" type="text/css" />
+<link href="/sitio/_css/highslide.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">hs.graphicsDir = '/sitio/_css/graphics/';</script> 
+
+<!-- ./AGRANDAR FOTOS --> 
+<!-- --> 
+<script type="text/javascript">
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+</script> 
+<script type="text/javascript">
+function MM_jumpMenuGo(objId,targ,restore){ //v9.0
+  var selObj = null;  with (document) { 
+  if (getElementById) selObj = getElementById(objId);
+  if (selObj) eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+  if (restore) selObj.selectedIndex=0; }
+}
+</script> 
+<script type="text/javascript">
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+  if (restore) selObj.selectedIndex=0;
+}
+</script> 
+<!-- -->
+<!-- nuevo -->
+<div id="atras"><a href="javascript:history.back()" class="times" id="cambioLinkHistorico">◄ Volver</a></div><br /><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Subsecretaría de Mercados Agropecuarios</title>
+<style type="text/css">
+.tabla {
+	font-family: Roboto, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	text-align: center;
+	width: 100%;
+}
+.tabla th {
+	font-family: Roboto, Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight: normal;
+	color: #FFFFFF;
+	background-color: #3E9DC1;
+	text-align: center;
+	padding: 10px;
+	border: 1px solid #006666;
+}
+.tabla td {
+	font-size: 15px;
+	background-color: #eeeeee;
+	color: #333333;
+	font-family: Roboto, Arial, Helvetica, sans-serif;
+	text-align: center;
+	padding: 5px;
+	margin: 5px;
+	border-top-width: 0px;
+	border-right-width: 0px;
+	border-bottom-width: 1px;
+	border-left-width: 0px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #FFFFFF;
+	border-bottom-color: #006699;
+	border-left-color: #FFFFFF;
+}
+.tabla h1 {
+	font-size: 15px;
+	font-family: Roboto, Arial, Helvetica, sans-serif;
+	text-align: left;
+	background-color: #FFF;
+	font-weight: normal;
+	margin: -5px;
+	padding: 5px;
+	border: 0px none #FFF;
+}
+body,td,th {
+font-family: Roboto, Arial;
+font-size: 14px;
+}
+.thumbnail {
+	background: #d2d2d2;
+	padding: 1em;
+	border-radius: 0.5em;}
+</style>
+</head>
+<body>
+<h3>&nbsp;</h3>
+<h3>Informe Diario al 27/10/2026 de Fletes de Productos Agroalimentarios <strong> </strong><strong> </strong>- MARITIMO - </h3>
+<!--<p><a href="https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/logistica/">Volver</a><br />
+</p>-->
+<p class='descargable'>Para descargar el archivo hacer clic <a href=flete-maritimo.xlsx target='_blank'><strong>aqui</strong> <img src='https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/_img/excel.p
+ng' /></a></p>
+<table cellpadding="0" cellspacing="0" class="tabla">
+       
+		<tr>
+          <th colspan="2" rowspan="2">DESTINO</th>
+          <th colspan="6">ORIGEN</th>
+        </tr>
+        <tr>
+          <th>ARGENTINA</th>
+          <th>BRASIL</th>
+          <th>USA</th>
+          <th>CANADA</th>
+          <th>UCRANIA</th>
+          <th>RUSIA</th>
+        </tr>
+        <tr>
+          <th width="411" rowspan="2">ÁFRICA</th>
+          <th height="22" width="141">EGIPTO</th>
+          <td height="22" width="105">29,65</td>
+          <td width="80">38,16</td>
+          <td width="80">23,71</td>
+          <td width="80">16,81</td>
+          <td width="80">32,29</td>
+          <td width="80">35,90</td>
+        </tr>
+        <tr>
+          <th height="23">NIGERIA</th>
+          <td height="23">38,44</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+  </tr>
+        <tr>
+          <th rowspan="3">AMÉRICA</th>
+          <th height="22">BRASIL</th>
+          <td height="22">8,58</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <th height="22">COLOMBIA </th>
+          <td height="22">23,07</td>
+          <td>13,75</td>
+          <td>15,74</td>
+          <td>26,11</td>
+          <td>-</td>
+          <td>-</td>
+  </tr>
+        <tr>
+          <th height="23">MEXICO</th>
+          <td height="23">25,06</td>
+          <td>18,06</td>
+          <td>15,36</td>
+          <td>20,04</td>
+          <td>25,18</td>
+          <td>24,10</td>
+  </tr>
+        <tr>
+          <th rowspan="12">ASIA</th>
+          <th height="22">ARABIA SAUDI</th>
+          <td height="22">46,30</td>
+          <td>42,13</td>
+          <td>56,68</td>
+          <td>50,97</td>
+          <td>25,81</td>
+          <td>22,00</td>
+        </tr>
+        <tr>
+          <th height="22">CHINA</th>
+          <td height="22">52,90</td>
+          <td>51,01</td>
+          <td>51,47</td>
+          <td>33,43</td>
+          <td>71,58</td>
+          <td>71,57</td>
+  </tr>
+        <tr>
+          <th height="22">COREA DEL SUR</th>
+          <td height="22">60,94</td>
+          <td>54,21</td>
+          <td>33,39</td>
+          <td>35,70</td>
+          <td>66,97</td>
+          <td>60,13</td>
+  </tr>
+        <tr>
+          <th height="22">FILIPINAS</th>
+          <td height="22">43,19</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+  </tr>
+        <tr>
+          <th height="22">INDONESIA</th>
+          <td height="22">47,81</td>
+          <td>43,84</td>
+          <td>44,49</td>
+          <td>24,18</td>
+          <td>57,13</td>
+          <td>42,93</td>
+  </tr>
+        <tr>
+          <th height="22">IRAN</th>
+          <td height="22">39,63</td>
+          <td>37,57</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>26,53</td>
+  </tr>
+        <tr>
+          <th height="22">JAPON</th>
+          <td height="22">59,77</td>
+          <td>58,98</td>
+          <td>37,19</td>
+          <td>35,94</td>
+          <td>78,34</td>
+          <td>30,37</td>
+  </tr>
+        <tr>
+          <th height="22">MALASIA</th>
+          <td height="22">40,97</td>
+          <td>36,45</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+  </tr>
+        <tr>
+          <th height="22">TAILANDIA</th>
+          <td height="22">46,01</td>
+          <td>46,09</td>
+          <td>52,03</td>
+          <td>71,97</td>
+          <td>-</td>
+          <td>-</td>
+  </tr>
+        <tr>
+          <th height="22">TAIWAN</th>
+          <td height="22">60,65</td>
+          <td>52,06</td>
+          <td>36,52</td>
+          <td>21,40</td>
+          <td>60,74</td>
+          <td>-</td>
+  </tr>
+        <tr>
+          <th height="22">TURQUIA</th>
+          <td height="22">34,19</td>
+          <td>23,79</td>
+          <td>24,56</td>
+          <td>-</td>
+          <td>11,81</td>
+          <td>6,46</td>
+  </tr>
+        <tr>
+          <th height="23">VIETNAM</th>
+          <td height="23">44,25</td>
+          <td>39,77</td>
+          <td>35,36</td>
+          <td>-</td>
+          <td>52,63</td>
+          <td>-</td>
+  </tr>
+        <tr>
+          <th rowspan="8">EUROPA</th>
+          <th height="22">ALEMANIA</th>
+          <td height="22">27,40</td>
+          <td>20,67</td>
+          <td>24,95</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <th height="22">BELGICA</th>
+          <td height="22">41,79</td>
+          <td>27,72</td>
+          <td>27,33</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+  </tr>
+        <tr>
+          <th height="22">ESLOVENIA</th>
+          <td height="22">25,48</td>
+          <td>19,83</td>
+          <td>26,24</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+  </tr>
+        <tr>
+          <th height="22">ESPAÑA</th>
+          <td height="22">25,04</td>
+          <td>28,54</td>
+          <td>35,61</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+  </tr>
+        <tr>
+          <th height="22">FRANCIA</th>
+          <td height="22">24,50</td>
+          <td>21,95</td>
+          <td>23,71</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+  </tr>
+        <tr>
+          <th height="22">ITALIA</th>
+          <td height="22">26,98</td>
+          <td>23,73</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+  </tr>
+        <tr>
+          <th height="22">PAISES BAJOS</th>
+          <td height="22">27,13</td>
+          <td>23,37</td>
+          <td>24,69</td>
+          <td>25,23</td>
+          <td>29,79</td>
+          <td>9,53</td>
+  </tr>
+        <tr>
+          <th height="23">POLONIA</th>
+          <td height="23">31,69</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+  </tr>
+        <tr>
+          <th>OCEANÍA</th>
+          <th height="23">AUSTRALIA    Sudeste </th>
+          <td height="23">47,95</td>
+          <td>60,35</td>
+          <td>54,55</td>
+          <td>35,04</td>
+          <td>25,37</td>
+          <td>16,92</td>
+        </tr>
+        <tr>
+          <td colspan="8"><h1>Cereales pesados, sorgo y soja. Todos los valores se expresan en dólares estadounidenses por tonelada métrica.</h1></td>
+        </tr>
+</table>
+<h5>&nbsp;</h5>
+</body>
+</html>
+
+
+                  </div>
+              </div>
+            </div>
+          </section>
+          <!--- cuerpo --> 
+
+
+
+</main>
+
+<footer class="main-footer border-top-amarillo" style="background-color: #242c4f;">
+  <div class="container">
+    <div class="row">
+
+    </div>
+  </div>
+</footer>
+
+<!-- style -->
+<!-- /style -->
+
+
+  </body>
+</html>
