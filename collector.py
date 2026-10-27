@@ -823,6 +823,28 @@ def comtrade_us_uco():
     with open(os.path.join(d, "comtrade_us_imports_151800.json"), "w") as fh:
         json.dump({"fetched": now.isoformat(), "log": log, "rows": rows}, fh)
 
+def lineup_sources_probe():
+    """Probe free Argentine line-up sources independent of NABSA (saved raw for inspection)."""
+    d = os.path.join(DATA, "lineups", "probe2"); os.makedirs(d, exist_ok=True)
+    urls = {
+        "magyp_logistica.html": "https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/logistica/",
+        "magyp_lineup_index.html": "https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/logistica/index.php?accion=lineup",
+        "magyp_infsema_2023-11-02.pdf": "https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/logistica/_archivos/000022_Posici%C3%B3n%20de%20Buques%20en%20Puertos%20y%20Anunciados%20(Line%20up)/000056_Hist%C3%B3ricos%20de%20Movimientos%20Portuarios/899987_2023/000108_Noviembre/infsema_2023-11-02.pdf",
+        "magyp_embarques.html": "https://www.magyp.gob.ar/mercadosagropecuarios/compras.php",
+        "quequen.html": "https://www.puertoquequen.com/",
+        "bcr_lineup.html": "https://www.bcr.com.ar/es/mercados/gea/estadisticas/line-up",
+    }
+    log = {}
+    for name, url in urls.items():
+        try:
+            r = requests.get(url, headers=UA, timeout=60)
+            log[name] = [r.status_code, len(r.content), r.headers.get("content-type", "")]
+            if r.status_code == 200:
+                with open(os.path.join(d, name), "wb") as fh: fh.write(r.content)
+        except Exception as e:
+            log[name] = ["error", str(e)[:200]]
+    with open(os.path.join(d, "log.json"), "w") as fh: json.dump(log, fh)
+
 def main(mode):
     now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M")
     status, latest = {"run_utc": now, "mode": mode, "errors": {}}, {}
@@ -896,7 +918,7 @@ def main(mode):
     except Exception as e:
         status["errors"]["nabsa"] = str(e)[:200]
     if mode in ("backfill", "probe") or dt.datetime.utcnow().minute < 15 and dt.datetime.utcnow().hour == 6:
-        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
+        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco), ("lineup_probe", lineup_sources_probe)):
             try:
                 fn()
             except Exception as e:
