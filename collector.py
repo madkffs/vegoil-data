@@ -874,20 +874,33 @@ def investing_history(days=420):
         time.sleep(1)
 
 def probe_second_month():
-    """Find Investing.com instrument ids for individual ICE gasoil and MATIF rapeseed contract months."""
+    """Test Investing.com second-month continuation ids and look for soy/rapeseed ones."""
     d = os.path.join(DATA, "probe2"); os.makedirs(d, exist_ok=True)
     from curl_cffi import requests as cr
-    out = {}
-    for slug in ["london-gas-oil-contracts", "rapeseed-contracts", "brent-oil-contracts", "heating-oil-contracts"]:
+    out = {"hist": {}, "pages": {}}
+    today = dt.date.today()
+    for name, pid in {"LGOc2": 1184929, "LCOc2": 1184865, "HOc2": 1178044, "LGOc1": 1184928}.items():
+        u = (f"https://api.investing.com/api/financialdata/historical/{pid}?start-date={today - dt.timedelta(days=40):%Y-%m-%d}"
+             f"&end-date={today:%Y-%m-%d}&time-frame=Daily&add-missing-rows=false")
+        try:
+            r = cr.get(u, impersonate="chrome", headers={"domain-id": "www"}, timeout=40)
+            data = (r.json() or {}).get("data") or [] if r.status_code == 200 else []
+            out["hist"][name] = {"status": r.status_code, "n": len(data), "last": [(x.get("rowDateTimestamp","")[:10], x.get("last_close")) for x in data[:5]]}
+        except Exception as ex:
+            out["hist"][name] = {"error": str(ex)[:150]}
+        time.sleep(1)
+    for slug in ["us-soybean-oil-contracts", "us-soybean-meal-contracts", "rapeseed-futures-contracts", "rapeseed-contracts",
+                 "crude-palm-oil-contracts", "palm-oil-contracts"]:
         try:
             r = cr.get("https://www.investing.com/commodities/" + slug, impersonate="chrome", timeout=30)
-            # rows look like: link text with the contract month and a data id
-            pairs = re.findall(r'(?:pair_id|pairId|data-id|"id")["\s:=]*"?(\d{4,8})"?[^<>{}]{0,300}?([A-Z][a-z]{2}\s?\d{2,4})', r.text)
-            names = re.findall(r'>((?:London Gas Oil|Rapeseed|Brent Oil|Heating Oil)[^<]{0,40})<', r.text)
-            out[slug] = {"status": r.status_code, "len": len(r.text), "pairs": pairs[:40], "names": names[:40]}
-            with open(os.path.join(d, slug + ".html"), "w") as fh: fh.write(r.text)
+            ids = []
+            for m in re.finditer(r'cid=(\d+)"[^>]*>([^<]*)', r.text):
+                t = re.sub(r'\s+|&nbsp;', ' ', m.group(2)).strip()
+                if t: ids.append((m.group(1), t))
+            out["pages"][slug] = {"status": r.status_code, "ids": ids[:30]}
         except Exception as ex:
-            out[slug] = {"error": str(ex)[:150]}
+            out["pages"][slug] = {"error": str(ex)[:150]}
+        time.sleep(1)
     with open(os.path.join(d, "contracts.json"), "w") as fh: json.dump(out, fh, indent=1)
 
 def main(mode):
