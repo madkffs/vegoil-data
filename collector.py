@@ -856,50 +856,19 @@ def magyp_lineups():
     with open(os.path.join(d, "log.json"), "w") as fh: json.dump(log, fh)
 
 def price_probe():
-    """Probe free daily-history sources for ICE gasoil and MATIF rapeseed (raw saved for inspection)."""
+    """Look up Investing.com instrument ids for ICE gasoil and MATIF rapeseed (search results saved for inspection)."""
     d = os.path.join(DATA, "probe_px"); os.makedirs(d, exist_ok=True)
-    log = {}
-    for sym in ["GO", "LGO", "IGO", "G", "ICE_GO", "GASOIL", "QS", "RS", "ECO", "XR"]:
-        url = f"https://stock2.finance.sina.com.cn/futures/api/jsonp.php/var%20_{sym}=/GlobalFuturesService.getGlobalFuturesDailyKLine?symbol={sym}"
+    from curl_cffi import requests as cr
+    out = {}
+    for q in ["london gas oil", "gasoil", "rapeseed", "rapeseed futures", "colza"]:
+        u = "https://api.investing.com/api/search/v2/search?q=" + requests.utils.quote(q)
         try:
-            r = requests.get(url, headers={**UA, "Referer": "https://finance.sina.com.cn"}, timeout=30)
-            log["sina_" + sym] = [r.status_code, len(r.text), r.text[:160]]
+            r = cr.get(u, impersonate="chrome", headers={"domain-id": "www"}, timeout=30)
+            js = r.json() if r.status_code == 200 else {}
+            out[q] = [{k: x.get(k) for k in ("id", "name", "symbol", "exchange", "flag", "type", "url")} for x in (js.get("quotes") or [])[:12]] or [r.status_code, r.text[:300]]
         except Exception as e:
-            log["sina_" + sym] = ["error", str(e)[:120]]
-    try:
-        t = sina_raw(["hf_GO", "hf_LGO", "hf_G", "hf_QS", "hf_RS"]); log["sina_hq"] = t[:600]
-    except Exception as e:
-        log["sina_hq"] = str(e)[:200]
-    try:
-        from curl_cffi import requests as cr
-        today = dt.date.today()
-        for pid in (8861, 1062, 49768, 1001009, 961741):
-            u = (f"https://api.investing.com/api/financialdata/historical/{pid}?start-date={today - dt.timedelta(days=200):%Y-%m-%d}"
-                 f"&end-date={today:%Y-%m-%d}&time-frame=Daily&add-missing-rows=false")
-            try:
-                r = cr.get(u, impersonate="chrome", headers={"domain-id": "www"}, timeout=30)
-                log[f"investing_{pid}"] = [r.status_code, len(r.text), r.text[:300]]
-                if r.status_code == 200:
-                    with open(os.path.join(d, f"investing_{pid}.json"), "w") as fh: fh.write(r.text)
-            except Exception as e:
-                log[f"investing_{pid}"] = ["error", str(e)[:150]]
-    except Exception as e:
-        log["investing"] = str(e)[:200]
-    for u in ["https://live.euronext.com/en/ajax/getPricesFutures/commodities-futures/ECO/DPAR",
-              "https://live.euronext.com/en/ajax/getHistoricalPriceDcatalog/ECO-DPAR",
-              "https://live.euronext.com/en/product/commodities-futures/ECO-DPAR/settlement-prices"]:
-        try:
-            r = requests.get(u, headers=UA, timeout=30)
-            log[u] = [r.status_code, len(r.text), r.text[:300]]
-        except Exception as e:
-            log[u] = ["error", str(e)[:150]]
-    for s in ["LGO=F", "G=F", "GO=F", "QS=F", "ECO=F", "XR=F", "RS=F", "IGO=F"]:
-        try:
-            snap, daily = yahoo_chart(s, "1d", "6mo")
-            log["yahoo_" + s] = [len(daily), str(daily[-1]) if daily else None]
-        except Exception as e:
-            log["yahoo_" + s] = ["error", str(e)[:120]]
-    with open(os.path.join(d, "log.json"), "w") as fh: json.dump(log, fh, indent=1)
+            out[q] = ["error", str(e)[:150]]
+    with open(os.path.join(d, "search.json"), "w") as fh: json.dump(out, fh, indent=1)
 
 def main(mode):
     if mode == "probe_px":
