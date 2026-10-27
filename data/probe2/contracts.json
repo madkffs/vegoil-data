@@ -1,0 +1,77 @@
+{
+ "london-gas-oil-contracts": {
+  "status": 200,
+  "len": 371455,
+  "pairs": [
+   [
+    "322906",
+    "Fab120"
+   ]
+  ],
+  "names": [
+   "London Gas Oil Futures Contracts - Investing.com",
+   "Brent Oil",
+   "London Gas Oil (LGOX6)\t",
+   "London Gas Oil",
+   "London Gas Oil Futures Contracts",
+   "London Gas Oil Futures Discussions",
+   "Brent Oil",
+   "London Gas Oil"
+  ]
+ },
+ "rapeseed-contracts": {
+  "status": 404,
+  "len": 200457,
+  "pairs": [
+   [
+    "322906",
+    "Fab120"
+   ]
+  ],
+  "names": [
+   "Brent Oil",
+   "Brent Oil"
+  ]
+ },
+ "brent-oil-contracts": {
+  "status": 200,
+  "len": 412857,
+  "pairs": [
+   [
+    "322906",
+    "Fab120"
+   ]
+  ],
+  "names": [
+   "Brent Oil Futures Contracts - Investing.com",
+   "Brent Oil",
+   "Brent Oil (LCOF7)\t",
+   "Brent Oil",
+   "Brent Oil Futures Contracts",
+   "Brent Oil Futures Discussions",
+   "Brent Oil",
+   "Brent Oil"
+  ]
+ },
+ "heating-oil-contracts": {
+  "status": 200,
+  "len": 366130,
+  "pairs": [
+   [
+    "322906",
+    "Fab120"
+   ]
+  ],
+  "names": [
+   "Heating Oil Futures Contracts - Investing.com",
+   "Brent Oil",
+   "Heating Oil (NYFZ6)\t",
+   "Heating Oil",
+   "Heating Oil Futures Contracts",
+   "Heating Oil Contracts",
+   "Heating Oil Futures Discussions",
+   "Brent Oil",
+   "Heating Oil"
+  ]
+ }
+}
