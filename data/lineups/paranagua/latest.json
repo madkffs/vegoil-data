@@ -1,5 +1,5 @@
 {
- "fetched_utc": "2026-10-27 14:54",
+ "fetched_utc": "2026-10-27 14:57",
  "rows": [
   {
    "section": "AO LARGO",
@@ -14,6 +14,7 @@
    "arrival": "22/10/2026 19:00",
    "berthed": null,
    "etb": null,
+   "eta": "23/10/2026 22:00",
    "sailed": null,
    "tons": 14000.0
   },
@@ -30,6 +31,7 @@
    "arrival": "21/10/2026 13:30",
    "berthed": null,
    "etb": null,
+   "eta": "21/10/2026 18:00",
    "sailed": null,
    "tons": 14000.0
   },
@@ -46,6 +48,7 @@
    "arrival": null,
    "berthed": null,
    "etb": null,
+   "eta": "07/11/2026 07:00",
    "sailed": null,
    "tons": 3400.0
   },
@@ -62,6 +65,7 @@
    "arrival": null,
    "berthed": null,
    "etb": null,
+   "eta": "06/11/2026 08:00",
    "sailed": null,
    "tons": 15000.0
   },
@@ -78,6 +82,7 @@
    "arrival": null,
    "berthed": null,
    "etb": null,
+   "eta": "04/11/2026 09:00",
    "sailed": null,
    "tons": 13182.0
   },
@@ -94,6 +99,7 @@
    "arrival": "12/10/2026 23:12",
    "berthed": null,
    "etb": null,
+   "eta": null,
    "sailed": "25/10/2026 13:05",
    "tons": 12000.0
   }

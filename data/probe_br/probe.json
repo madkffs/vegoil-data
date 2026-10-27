@@ -1,17 +1,8 @@
 {
  "appa_lineup": {
   "status": 200,
-  "len": 202422,
-  "oleo_hits": [
-   "26 19:08 6.000,000 8.270,000 Tons. 40.954,000 Tons. 8.270,000 Tons. 32.684,000 Tons. 32.684,000 Tons. 2 81018 0503782026 208 CS CARE 9517903 162,50 13.300,00 BB Imp ORION AMART SHIPPING BETUME DE PETROLEO 26/10/2026 19:22 26/10/2026 06:42 26/10/2026 19:22 - 30/10/2026 07:40 1.500,000 0,000 Tons. 5.102,000 Tons. 0,000 Tons. 5.102,000 Tons. 5.102,000 Tons. 3 80945 0494402026 218 ZIM WILMINGTON 96991",
-   ". 2.846,000 Tons. 109,000 Tons. 2.737,000 Tons. 2.737,000 Tons. 9 80927 0489182026 142 IONIAN NAVIGATOR 9422237 183,31 46.625,00 BE Imp GAC LOGISTICA DO BRASIL CBL - COMPANHIA BRASILEIRA DE LOGÍSTICA OLEO DIESEL 25/10/2026 17:10 20/10/2026 00:42 25/10/2026 17:10 - 28/10/2026 13:20 10.295,580 18.632,000 Tons. 27.141,000 Tons. 24.803,000 Tons. 2.338,000 Tons. 2.698,500 Tons. BE Imp GAC LOGISTICA DO ",
-   "/2026 17:10 20/10/2026 00:42 25/10/2026 17:10 - 28/10/2026 13:20 10.295,580 18.632,000 Tons. 27.141,000 Tons. 24.803,000 Tons. 2.338,000 Tons. 2.698,500 Tons. BE Imp GAC LOGISTICA DO BRASIL CATTALINI OLEO DIESEL 25/10/2026 17:10 20/10/2026 00:42 25/10/2026 17:10 - 28/10/2026 10:16 4.704,405 9.084,000 Tons. 12.402,000 Tons. 12.042,000 Tons. 360,500 Tons. 10 80881 - REA 0482612026 144 LAGERI 1021934",
-   "25/10/2026 17:10 - 28/10/2026 10:16 4.704,405 9.084,000 Tons. 12.402,000 Tons. 12.042,000 Tons. 360,500 Tons. 10 80881 - REA 0482612026 144 LAGERI 1021934 182,70 49.996,00 BB Imp NORTH STAR CATTALINI OLEO DIESEL 26/10/2026 15:45 20/10/2026 06:54 26/10/2026 15:45 - 28/10/2026 08:34 15.000,000 9.099,000 Tons. 42.876,000 Tons. 39.777,000 Tons. 3.098,600 Tons. 3.098,600 Tons. 11 80928 0492682026 141 S",
-   "0 Tons. 42.876,000 Tons. 39.777,000 Tons. 3.098,600 Tons. 3.098,600 Tons. 11 80928 0492682026 141 ST. MARY 9439797 183,00 50.215,03 BB Imp/Exp LACHMANN PETROBRAS TRANSPORTE S.A - TRANSPETRO FUEL-OIL (OLEO COMBUSTIVEL) 27/10/2026 05:30 19/10/2026 10:12 0,000 Tons. 47.000,000 Tons. 0,000 Tons. 47.000,000 Tons. 47.000,000 Tons. 12 80738 0447802026 201 ALPHA HERO 9671826 229,00 82.052,00 BE Exp FERTIM",
-   " 229,00 8,90 13,30 82.050,00 BE Exp FERTIMPORT TIBAGI SOJA 21/10/2026 20:12 72.100,000 Tons. 5 80860 0473692026 144 HOUYOSHI PARK 9725847 145,00 9,74 13,30 19.998,28 QB Imp CARGONAVE CATTALINI OUTROS OLEOS DE DENDE 21/10/2026 18:30 21/10/2026 22:00 17.699,000 Tons. QB Imp CARGONAVE CATTALINI OUTROS OLEOS DE PALMISTE 21/10/2026 18:30 21/10/2026 22:00 17.699,000 Tons. 6 80746 0468142026 214 KAYLA OL",
-   " 0473692026 144 HOUYOSHI PARK 9725847 145,00 9,74 13,30 19.998,28 QB Imp CARGONAVE CATTALINI OUTROS OLEOS DE DENDE 21/10/2026 18:30 21/10/2026 22:00 17.699,000 Tons. QB Imp CARGONAVE CATTALINI OUTROS OLEOS DE PALMISTE 21/10/2026 18:30 21/10/2026 22:00 17.699,000 Tons. 6 80746 0468142026 214 KAYLA OLDENDORFF 9969819 228,96 7,50 13,10 82.128,00 BB Exp ALPHAMAR ALPHAMAR PORT SERVICES FARELO DE SOJA 0",
-   "xp CARGILL AGRICOLA EMPORT OPERACOES PORTUARIAS LTDA SOJA 24/10/2026 07:00 23/10/2026 06:00 66.500,000 Tons. 6,90 13,10 14 80968 0501452026 143 SPATHI 9321940 183,00 51.228,00 Exp CARGONAVE CATTALINI OLEO DE SOJA 23/10/2026 22:00 22/10/2026 19:00 14.000,000 Tons. 9,00 13,17 15 81020 0504162026 299 INTEGRADOR 9079212 119,90 3.933,00 Exp MARCON PETROBRAS TRANSPORTE S.A - TRANSPETRO OUTROS OLEOS COMB"
-  ],
+  "len": 20086,
+  "oleo_hits": [],
   "links": []
  },
  "appa_lineup2": {
@@ -104,12 +95,26 @@
   ]
  },
  "portosrs_home": {
-  "error": "Failed to perform, curl: (28) Connection timed out after 40000 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
+  "status": 200,
+  "len": 110141,
+  "oleo_hits": [],
+  "links": [
+   "http://www.portosrs.com.br/portoweb/zf/login/logar/_module/atracacao/_controller/cais-virtual/_action/index/cd_usuario/publico",
+   "http://www.portosrs.com.br/portoweb/zf/login/logar/_module/atracacao/_controller/rel-lineup/_action/index/cd_usuario/publico/",
+   "http://www.portosrs.com.br/portoweb/zf/login/logar/_module/porto-gerencial/_controller/navios-situacao/_action/relatorio/cd_usuario/publico/param_situacao/0/param__rel_metodo/pdf",
+   "http://www.portosrs.com.br/portoweb/zf/login/logar/_module/porto-gerencial/_controller/navios-situacao/_action/relatorio/cd_usuario/publico/param_situacao/2/param__rel_metodo/pdf",
+   "http://www.portosrs.com.br/portoweb/zf/login/logar/_module/porto-gerencial/_controller/navios-situacao/_action/relatorio/cd_usuario/publico/param_situacao/3/param__rel_metodo/pdf",
+   "http://www.portosrs.com.br/portoweb/zf/login/logar/_module/porto-gerencial/_controller/navios-situacao/_action/relatorio/cd_usuario/publico/param_situacao/4/param__rel_metodo/pdf",
+   "https://www.portosrs.com.br/site/transparencia/atas_programacao_navio"
+  ]
  },
  "portosrs_alt": {
-  "error": "Failed to perform, curl: (28) Connection timed out after 40000 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
+  "error": "Failed to perform, curl: (60) SSL: no alternative certificate subject name matches target hostname 'portosrs.com.br'. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
  },
  "portosrs_lineup": {
-  "error": "Failed to perform, curl: (28) Connection timed out after 40000 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
+  "status": 404,
+  "len": 1190,
+  "oleo_hits": [],
+  "links": []
  }
 }
