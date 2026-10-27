@@ -874,17 +874,21 @@ def investing_history(days=420):
         time.sleep(1)
 
 def probe_second_month():
-    """Can Yahoo return history for specific (including expired) contract months? Needed to build second-month series."""
+    """Find Investing.com instrument ids for individual ICE gasoil and MATIF rapeseed contract months."""
     d = os.path.join(DATA, "probe2"); os.makedirs(d, exist_ok=True)
+    from curl_cffi import requests as cr
     out = {}
-    for s in ["ZLN26.CBT", "ZLQ26.CBT", "ZLU26.CBT", "ZMN26.CBT", "ZMQ26.CBT", "HON26.NYM", "HOQ26.NYM", "HOZ26.NYM", "HOF27.NYM",
-              "BZN26.NYM", "BZZ26.NYM", "BZF27.NYM", "CLZ26.NYM"]:
+    for slug in ["london-gas-oil-contracts", "rapeseed-contracts", "brent-oil-contracts", "heating-oil-contracts"]:
         try:
-            snap, daily = yahoo_chart(s, "1d", "1y")
-            out[s] = [len(daily), daily[0]["time_utc"] if daily else None, daily[-1]["time_utc"] if daily else None, daily[-1].get("close") if daily else None]
-        except Exception as e:
-            out[s] = ["error", str(e)[:120]]
-    with open(os.path.join(d, "yahoo_months.json"), "w") as fh: json.dump(out, fh, indent=1)
+            r = cr.get("https://www.investing.com/commodities/" + slug, impersonate="chrome", timeout=30)
+            # rows look like: link text with the contract month and a data id
+            pairs = re.findall(r'(?:pair_id|pairId|data-id|"id")["\s:=]*"?(\d{4,8})"?[^<>{}]{0,300}?([A-Z][a-z]{2}\s?\d{2,4})', r.text)
+            names = re.findall(r'>((?:London Gas Oil|Rapeseed|Brent Oil|Heating Oil)[^<]{0,40})<', r.text)
+            out[slug] = {"status": r.status_code, "len": len(r.text), "pairs": pairs[:40], "names": names[:40]}
+            with open(os.path.join(d, slug + ".html"), "w") as fh: fh.write(r.text)
+        except Exception as ex:
+            out[slug] = {"error": str(ex)[:150]}
+    with open(os.path.join(d, "contracts.json"), "w") as fh: json.dump(out, fh, indent=1)
 
 def main(mode):
     if mode == "investing":
