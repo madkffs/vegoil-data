@@ -856,19 +856,21 @@ def magyp_lineups():
     with open(os.path.join(d, "log.json"), "w") as fh: json.dump(log, fh)
 
 def price_probe():
-    """Look up Investing.com instrument ids for ICE gasoil and MATIF rapeseed (search results saved for inspection)."""
+    """Find Investing.com instrument ids for ICE gasoil and MATIF rapeseed from their public pages."""
     d = os.path.join(DATA, "probe_px"); os.makedirs(d, exist_ok=True)
     from curl_cffi import requests as cr
     out = {}
-    for q in ["london gas oil", "rapeseed", "rapeseed euronext"]:
-        u = "https://api.investing.com/api/search/v2/search?q=" + requests.utils.quote(q)
+    for slug in ["rapeseed-futures", "london-gas-oil", "euronext-rapeseed-futures", "rapeseed"]:
+        u = "https://www.investing.com/commodities/" + slug
         try:
-            r = cr.get(u, impersonate="chrome", headers={"domain-id": "www"}, timeout=30)
-            js = r.json() if r.status_code == 200 else {}
-            out[q] = {k: v for k, v in js.items() if k not in ("articles", "news")}
+            r = cr.get(u, impersonate="chrome", timeout=30)
+            ids = sorted(set(re.findall(r'(?:"instrument_id"|"pairId"|data-pair-id=|"pair_id"|instrumentId)["\s:=]*"?(\d{3,8})', r.text)))[:10]
+            title = re.search(r"<title>([^<]*)", r.text)
+            last = re.search(r'data-test="instrument-price-last"[^>]*>([^<]*)', r.text)
+            out[slug] = {"status": r.status_code, "ids": ids, "title": title.group(1) if title else None, "last": last.group(1) if last else None}
         except Exception as e:
-            out[q] = ["error", str(e)[:150]]
-    with open(os.path.join(d, "search.json"), "w") as fh: json.dump(out, fh, indent=1)
+            out[slug] = {"error": str(e)[:150]}
+    with open(os.path.join(d, "pages.json"), "w") as fh: json.dump(out, fh, indent=1)
 
 def main(mode):
     if mode == "probe_px":
