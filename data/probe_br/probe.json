@@ -21,8 +21,8 @@
   "links": []
  },
  "appa_home": {
-  "status": 404,
-  "len": 4665,
+  "status": 200,
+  "len": 19991,
   "oleo_hits": [],
   "links": []
  },
@@ -52,18 +52,64 @@
   ]
  },
  "santos_esperados": {
-  "error": "Failed to perform, curl: (60) SSL certificate OpenSSL verify result: unable to get local issuer certificate (20). See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
+  "status": 200,
+  "len": 255180,
+  "oleo_hits": [
+   "ce Agência Office Operaç Operat Mercadoria Goods Peso Weight Viagem Voyage DUV P Terminal IMO DALMA ILHAS MARSHALL 183 10.6 Cabo 11/09/2026 06:36:00 4020-7 CONE SUL AGENCIA DE NAVEGAÇÃO S/C LTDA. EMB OLEO COMBUSTIVEL 40000 4267-5 2026 436142026 B ALAMOA 09439773 MAERSK KATARINA SINGAPURENSE 183 9 Cabo 04/10/2026 13:00:00 4364-8 CONE SUL AGENCIA DE NAVEGAÇÃO S/C LTDA. EMB OLEO DIESEL 38000 4613-- 2",
+   "E NAVEGAÇÃO S/C LTDA. EMB OLEO COMBUSTIVEL 40000 4267-5 2026 436142026 B ALAMOA 09439773 MAERSK KATARINA SINGAPURENSE 183 9 Cabo 04/10/2026 13:00:00 4364-8 CONE SUL AGENCIA DE NAVEGAÇÃO S/C LTDA. EMB OLEO DIESEL 38000 4613-- 2026 469092026 B ALAMOA 09431290 AKTEA MALTESA 183 7 Cabo 12/10/2026 22:31:00 4482-2 CONE SUL AGENCIA DE NAVEGAÇÃO S/C LTDA. EMB GASOLINA COMUM 37000 4730-7 2026 483582026 B A",
+   "ENCIA DE NAVEGAÇÃO S/C LTDA. EMB GASOLINA COMUM 37000 4730-7 2026 483582026 B ALAMOA 09326512 CHARLINE ILHAS MARSHALL 183 7 Cabo 20/10/2026 23:04:00 4591-8 CONE SUL AGENCIA DE NAVEGAÇÃO S/C LTDA. EMB OLEO COMBUSTIVEL 50000 4915-7 2026 499882026 B ALAMOA 09476812 C. PROGRESS PANAMENHA 333 10 Long 21/10/2026 08:30:00 4596-9 LBH BRASIL AG MARITIMO LTDA EMB GASOLINA COMUM 100 4894-0 2026 499742026 B A",
+   "NCIA MARITIMA GRANEL LTDA. EMB GRAN.LIQUIDO NAO ESPECIF 11420 4802-8 2026 486682026 B ALAMOA 09319480 MAGIC CHEMIST PANAMENHA 183 8.5 Long 25/10/2026 17:12:00 4672-8 GAC LOGISTICA DO BRASIL LTDA DESC OLEO DIESEL 32782 4937-- 2026 502922026 B ALAMOA 09707261 ANITA GARIBALDI BRASILEIRA 228 10 Cabo 27/10/2026 CONE SUL AGENCIA DE NAVEGAÇÃO S/C LTDA. EMB OLEO COMBUSTIVEL 62000 4889-6 2026 498322026 B A",
+   ":12:00 4672-8 GAC LOGISTICA DO BRASIL LTDA DESC OLEO DIESEL 32782 4937-- 2026 502922026 B ALAMOA 09707261 ANITA GARIBALDI BRASILEIRA 228 10 Cabo 27/10/2026 CONE SUL AGENCIA DE NAVEGAÇÃO S/C LTDA. EMB OLEO COMBUSTIVEL 62000 4889-6 2026 498322026 B ALAMOA 09492270 AUGENSTERN LIBERIANA 183 9 Long 27/10/2026 NORTH STAR SUDESTE SERVICOS MARITIMOS LTDA-EPP DESC OLEO DIESEL 41018 5015-0 2026 496022026 B ",
+   "NE SUL AGENCIA DE NAVEGAÇÃO S/C LTDA. EMB OLEO COMBUSTIVEL 62000 4889-6 2026 498322026 B ALAMOA 09492270 AUGENSTERN LIBERIANA 183 9 Long 27/10/2026 NORTH STAR SUDESTE SERVICOS MARITIMOS LTDA-EPP DESC OLEO DIESEL 41018 5015-0 2026 496022026 B ILHA 09939577 BANIYAS ILHAS MARSHALL 250 10 Long 27/10/2026 CONE SUL AGENCIA DE NAVEGAÇÃO S/C LTDA. EMB OLEO COMBUSTIVEL 65000 4206-6 2026 426132026 B ALAMOA ",
+   "6 NORTH STAR SUDESTE SERVICOS MARITIMOS LTDA-EPP DESC OLEO DIESEL 41018 5015-0 2026 496022026 B ILHA 09939577 BANIYAS ILHAS MARSHALL 250 10 Long 27/10/2026 CONE SUL AGENCIA DE NAVEGAÇÃO S/C LTDA. EMB OLEO COMBUSTIVEL 65000 4206-6 2026 426132026 B ALAMOA 09838228 CLARITY LIBERIANA 183 10.6 Cabo 27/10/2026 CONE SUL AGENCIA DE NAVEGAÇÃO S/C LTDA. EMB OLEO DIESEL 25000 5011-4 2026 509562026 B ALAMOA 0",
+   "/2026 CONE SUL AGENCIA DE NAVEGAÇÃO S/C LTDA. EMB OLEO COMBUSTIVEL 65000 4206-6 2026 426132026 B ALAMOA 09838228 CLARITY LIBERIANA 183 10.6 Cabo 27/10/2026 CONE SUL AGENCIA DE NAVEGAÇÃO S/C LTDA. EMB OLEO DIESEL 25000 5011-4 2026 509562026 B ALAMOA 09416381 DART ILHAS MARSHALL 183 10 Cabo 27/10/2026 CONE SUL AGENCIA DE NAVEGAÇÃO S/C LTDA. EMB OLEO COMBUSTIVEL 30000 4518-8 2026 459792026 B ALAMOA 0"
+  ],
+  "links": [
+   "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/",
+   "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/navios-esperados-carga/",
+   "https://www.portodesantos.com.br/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.portodesantos.com.br%2Finformacoes-operacionais%2Foperacoes-portuarias%2Fnavegacao-e-movimento-de-navios%2Fnavios-esperados-carga%2F",
+   "https://www.portodesantos.com.br/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.portodesantos.com.br%2Finformacoes-operacionais%2Foperacoes-portuarias%2Fnavegacao-e-movimento-de-navios%2Fnavios-esperados-carga%2F&#038;format=xml"
+  ]
  },
  "santos_atracados": {
-  "error": "Failed to perform, curl: (60) SSL certificate OpenSSL verify result: unable to get local issuer certificate (20). See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
+  "status": 200,
+  "len": 122827,
+  "oleo_hits": [
+   "RACACAO 4696/2026 479502026 27/10/2026 13:00/19:00 23/10/2026 09:00:00 BTP MSC INSA 1016666 CONTEINERES CHEIOS ATRACACAO 4820/2026 489112026 27/10/2026 13:00/19:00 27/10/2026 AL 1 PRESIDENT I 9312444 OLEO COMBUSTIVEL ATRACACAO 4983/2026 507352026 27/10/2026 13:00/19:00 09/10/2026 20/21 WHISTLER 9358371 ACUCAR A GRANEL ATRACACAO 4617/2026 470302026 27/10/2026 - 19:00/01:00 Data Date Fecha Hora Hour",
+   "272026 28/10/2026 01:00/07:00 28/10/2026 05:00:00 EMBRAPORT MAERSK MONTE ALEGRE 9348065 CONTEINERES CHEIOS ATRACACAO 4924/2026 501682026 28/10/2026 01:00/07:00 26/10/2026 AL 3/4 MAGIC CHEMIST 9707261 OLEO DIESEL ATRACACAO 4937/2026 502922026 28/10/2026 01:00/07:00 27/10/2026 23:59:00 BTP/TECON/EMBRAPORT MSC CATERINA 9705005 CONTEINERES CHEIOS ATRACACAO 4849/2026 492102026 28/10/2026 01:00/07:00 25",
+   " FERTILIZANTES REATRACACAO 4667/2026 476712026 28/10/2026 07:00/13:00 27/10/2026 25 BUENAVISTA 9050137 PASSAGEIRO ATRACACAO 4744/2026 484432026 28/10/2026 07:00/13:00 24/10/2026 AL 1 CHARLINE 9476812 OLEO COMBUSTIVEL ATRACACAO 4915/2026 499882026 28/10/2026 07:00/13:00 27/10/2026 19/16 ECO WILDFIRE 9652492 ACUCAR A GRANEL ATRACACAO 4980/2026 500952026 28/10/2026 07:00/13:00 28/10/2026 08:00:00 37 ",
+   "CACAO 5043/2026 506832026 28/10/2026 07:00/13:00 25/09/2026 38 FORTUNE SUNSHINE 1061477 SORGO A GRANEL ATRACACAO 4431/2026 452762026 28/10/2026 07:00/13:00 23/10/2026 OE/AL 3/4 GRAND WINNER 8 1064560 OLEO DIESEL MUDANCA 4957/2026 503762026 28/10/2026 07:00/13:00 28/10/2026 09:00:00 35 2 GREEN SUAPE 9976501 PAPEL E CELULOSE ATRACACAO 5018/2026 509712026 28/10/2026 07:00/13:00 26/10/2026 TIPLAN JADE"
+  ],
+  "links": [
+   "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/",
+   "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/atracacoes-programadas/",
+   "https://www.portodesantos.com.br/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.portodesantos.com.br%2Finformacoes-operacionais%2Foperacoes-portuarias%2Fnavegacao-e-movimento-de-navios%2Fatracacoes-programadas%2F",
+   "https://www.portodesantos.com.br/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.portodesantos.com.br%2Finformacoes-operacionais%2Foperacoes-portuarias%2Fnavegacao-e-movimento-de-navios%2Fatracacoes-programadas%2F&#038;format=xml"
+  ]
  },
  "santos_nav": {
-  "error": "Failed to perform, curl: (60) SSL certificate OpenSSL verify result: unable to get local issuer certificate (20). See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
+  "status": 200,
+  "len": 81590,
+  "oleo_hits": [],
+  "links": [
+   "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/",
+   "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/atracacoes-programadas/",
+   "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/atracados-porto-terminais/",
+   "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/meteorologia-e-mares/",
+   "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/navios-esperados-carga/",
+   "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/navios-esperados-passageiros/",
+   "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/navios-fundeados/",
+   "https://www.portodesantos.com.br/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.portodesantos.com.br%2Finformacoes-operacionais%2Foperacoes-portuarias%2Fnavegacao-e-movimento-de-navios%2F",
+   "https://www.portodesantos.com.br/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.portodesantos.com.br%2Finformacoes-operacionais%2Foperacoes-portuarias%2Fnavegacao-e-movimento-de-navios%2F&#038;format=xml"
+  ]
  },
  "portosrs_home": {
   "error": "Failed to perform, curl: (28) Connection timed out after 40001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
  },
+ "portosrs_alt": {
+  "error": "Failed to perform, curl: (28) Connection timed out after 40000 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
+ },
  "portosrs_lineup": {
-  "error": "Failed to perform, curl: (28) Connection timed out after 40001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
+  "error": "Failed to perform, curl: (28) Connection timed out after 40000 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
  }
 }
