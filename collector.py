@@ -873,9 +873,24 @@ def investing_history(days=420):
         append_csv(os.path.join(DATA, "daily", name + ".csv"), sorted(rows, key=lambda x: x["time_utc"]), key="time_utc")
         time.sleep(1)
 
+def probe_second_month():
+    """Can Yahoo return history for specific (including expired) contract months? Needed to build second-month series."""
+    d = os.path.join(DATA, "probe2"); os.makedirs(d, exist_ok=True)
+    out = {}
+    for s in ["ZLN26.CBT", "ZLQ26.CBT", "ZLU26.CBT", "ZMN26.CBT", "ZMQ26.CBT", "HON26.NYM", "HOQ26.NYM", "HOZ26.NYM", "HOF27.NYM",
+              "BZN26.NYM", "BZZ26.NYM", "BZF27.NYM", "CLZ26.NYM"]:
+        try:
+            snap, daily = yahoo_chart(s, "1d", "1y")
+            out[s] = [len(daily), daily[0]["time_utc"] if daily else None, daily[-1]["time_utc"] if daily else None, daily[-1].get("close") if daily else None]
+        except Exception as e:
+            out[s] = ["error", str(e)[:120]]
+    with open(os.path.join(d, "yahoo_months.json"), "w") as fh: json.dump(out, fh, indent=1)
+
 def main(mode):
     if mode == "investing":
         investing_history(); return
+    if mode == "probe2":
+        probe_second_month(); return
     now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M")
     status, latest = {"run_utc": now, "mode": mode, "errors": {}}, {}
     rng = "2y" if mode == "backfill" else "10d"
