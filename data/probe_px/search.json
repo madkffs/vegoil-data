@@ -1,0 +1,22 @@
+{
+ "london gas oil": [
+  200,
+  "{\"articles\":[{\"id\":200476069,\"url\":\"/analysis/the-energy-report-crude-whisperers-200476069\",\"description\":\"The Energy Report: Crude Whisperers\",\"image\":\"https://d1-invdn-com.akamaized.net/company_logo/200161831_1435734456.jpg\"},{\"id\":200403939,\"url\":\"/analysis/opec-supply-cuts-to-boost-oil--gas-inte"
+ ],
+ "gasoil": [
+  200,
+  "{\"articles\":[{\"id\":201390,\"url\":\"/analysis/gasoil:-oversold-short-term-201390\",\"description\":\"Gasoil: Oversold Short Term\",\"image\":\"https://d1-invdn-com.akamaized.net/company_logo/70121_1401738347.png\"},{\"id\":206593,\"url\":\"/analysis/gasoil:-managed-a-recovery-206593\",\"description\":\"Gasoil: Managed A"
+ ],
+ "rapeseed": [
+  200,
+  "{\"articles\":[{\"id\":119886,\"url\":\"/analysis/ncdex-rm-seed-declines-tracking-soy-complex:-april-12,-2012-119886\",\"description\":\"NCDEX RM Seed Declines Tracking Soy Complex: April 12, 2012\",\"image\":\"https://i-invdn-com.akamaized.net/companies_logos/commodityonline_logo.jpg\"},{\"id\":104516,\"url\":\"/analys"
+ ],
+ "rapeseed futures": [
+  200,
+  "{\"articles\":[{\"id\":108333,\"url\":\"/analysis/mixed-sentiment-on-commodities-108333\",\"description\":\"Mixed Sentiment on Commodities\",\"image\":\"https://i-invdn-com.akamaized.net/companies_logos/commodityonline_logo.jpg\"},{\"id\":108786,\"url\":\"/analysis/commodities-report:-december-14,-2011-108786\",\"descript"
+ ],
+ "colza": [
+  200,
+  "{\"articles\":[],\"news\":[{\"id\":3999192,\"url\":\"/news/transcripts/earnings-call-transcript-packaging-corp-beats-q1-2025-eps-forecast-3999192\",\"description\":\"Earnings call transcript: Packaging Corp beats Q1 2025 EPS forecast\",\"image\":\"https://i-invdn-com.investing.com/news/world_news_2_69x52._150x108_S_"
+ ]
+}
