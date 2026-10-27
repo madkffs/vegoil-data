@@ -1,0 +1,565 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+   <HEAD>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <script type="text/javascript" src="jscript/jquery.1.11.1.min.js"></script>
+        <script type="text/javascript" src="jscript/jquery-ui.1.11.2.min.js"></script>
+        <script type="text/javascript" src="jscript/bootstrap.js"></script>
+        <script type="text/javascript" src="jscript/menu.js"></script>
+		<script type="text/javascript" src="jscript/jwt-decode.js"></script>
+		<script type="text/javascript" src="jscript/central.js?20230808"></script>
+        <link href="css/jquery-ui.css" rel="stylesheet">
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/bootstrap-theme.css" rel="stylesheet">
+        <link href="css/bootstrapAdd.css" rel="stylesheet">
+		
+        <style type='text/css'>
+            html, body {
+                height: 100%; margin:0;
+            }
+            .all{height:100%; width:100%; background-image:url(images/bgporto.jpg); background-repeat: no-repeat; background-position: top left; background-size: cover; }
+            .porto-header{height:150px; padding:10px; margin: 0 auto; width: 100%; text-align: center;}
+            @media (max-width: 480px){
+                .openport{ margin: 5px auto; bottom: 2px; text-align:center;}
+            }
+            @media (min-width: 481px){
+                .openport{ position: absolute; right: 3px; bottom: 2px;}
+            }
+            .borda-form{width:260px; display:block; margin:0 auto; padding:10px 20px; background-color:#1A4063; opacity: 0.85; color:#FFF;}
+            img{ max-width: 100%;}
+            a, a:hover, a:link, a:visited{ color:#FFF;}
+			
+			
+			div.opcoes {
+			    display: flex;
+				background-color: white;
+				padding: 5px 8px;
+				color: #1A4063;
+				font-weight: bold;
+				font-size: 13px;
+				align-items: center;
+				margin-bottom: 10px;
+				opacity: 1;
+				cursor: pointer;
+				border-radius: 3px;
+			}
+			
+			div.opcoes .botao {
+				padding-left: 10px;
+			}
+			
+			div.opcoes .icone {
+			    width: 25px;
+				height: 25px;
+			}
+			
+			#camposLogin {
+				min-width: 220px;
+				min-height: 146px;
+			}
+			
+			.loading, .loading h5 {
+				display: grid;
+				justify-content: center;
+				margin-top: 0;
+			}
+			
+			/* Import Google font - Poppins & Noto */
+			@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital@1&family=Poppins:wght@400;500;600&display=swap');
+			*{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			font-family: "Poppins", sans-serif;
+			}
+			::selection{
+			color: #fff;
+			background: #4db2ec;
+			}
+			/* body{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			min-height: 100vh;
+			background: #4db2ec;
+			} */
+			.wrapper{
+			max-width: 485px;
+			width: 100%;
+			background: #fff;
+			padding: 22px 30px 40px;
+			border-radius: 10px;
+			box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.05);
+			}
+
+			.wrapper header{
+			color: #4db2ec;
+			font-size: 33px;
+			font-weight: 500;
+			text-align: center;
+			}
+			.wrapper .captcha-area{
+			display: flex;
+			height: 65px;
+			margin: 30px 0 20px;
+			align-items: center;
+			justify-content: space-between;
+			}
+			.captcha-area .captcha-img{
+			height: 100%;
+			width: 200px;
+			user-select: none;
+			background: #000;
+			border-radius: 5px;
+			margin-bottom: 4px;
+			position: relative;
+			}
+			.captcha-img img{
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			border-radius: 5px;
+			opacity: 0.95;
+			}
+			.captcha-img .captcha{
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			width: 100%;
+			color: rgb(34, 156, 210);
+			font-size: 25px;
+			text-align: center;
+			letter-spacing: 3px;
+			transform: translate(-50%, -50%);
+			text-shadow: 0px 0px 2px #b1b1b1;
+			font-family: 'Noto Serif', serif;
+			}
+			.wrapper button{
+			outline: none;
+			border: none;
+			color: #fff;
+			cursor: pointer;
+			background: #4db2ec;
+			border-radius: 5px;
+			transition: all 0.3s ease;
+			}
+			.wrapper button:hover{
+			background: #2fa5e9;
+			}
+			.captcha-area .reload-btn{
+			width: 75px;
+			height: 100%;
+			font-size: 25px;
+			}
+			.captcha-area .reload-btn i{
+			transition: transform 0.3s ease;
+			}
+			.captcha-area .reload-btn:hover i{
+			transform: rotate(15deg);
+			}
+			.wrapper .input-area{
+			height: 60px;
+			width: 100%;
+			position: relative;
+			}
+			.input-area input{
+			width: 100%;
+			height: 100%;
+			outline: none;
+			padding-left: 20px;
+			font-size: 20px;
+			border-radius: 5px;
+			border: 1px solid #bfbfbf;
+			}
+			.input-area input:is(:focus, :valid){
+			padding-left: 19px;
+			border: 2px solid #4db2ec;
+			}
+			.input-area input::placeholder{
+			color: #bfbfbf;
+			}
+			.input-area .check-btn{
+			position: absolute;
+			right: 7px;
+			top: 50%;
+			font-size: 17px;
+			height: 45px;
+			padding: 0 20px;
+			opacity: 0;
+			pointer-events: none;
+			transform: translateY(-50%);
+			}
+			.input-area input:valid + .check-btn{
+			opacity: 1;
+			pointer-events: auto;
+			}
+			.wrapper .status-text{
+			display: none;
+			font-size: 18px;
+			text-align: center;
+			margin: 20px 0 -5px;
+			}
+
+			@media (max-width: 506px){
+			body{
+				padding: 0 10px;
+			}
+			.wrapper{
+				padding: 22px 25px 35px;
+			}
+			.wrapper header{
+				font-size: 25px;
+			}
+			.wrapper .captcha-area{
+				height: 60px;
+			}
+			.captcha-area .captcha{
+				font-size: 20px;
+				letter-spacing: 0px;
+			}
+			.captcha-area .reload-btn{
+				width: 60px;
+				margin-left: 5px;
+				font-size: 20px;
+			}
+			.wrapper .input-area{
+				height: 55px;
+			}
+			.input-area .check-btn{
+				height: 40px;
+			}
+			.wrapper .status-text{
+				font-size: 15px;
+			}
+			.captcha-area .captcha-img{
+				width: 250px;
+			}
+			}
+
+        </style>
+
+        <title>APPA Web</title>
+        <script type='text/javascript' src="jscript/md5.js"></script>
+
+        <script type='text/javascript'>
+
+            var Mensagem = "Sua Sessão Expirou e você foi Desconectado do Sistema. É Necessário Validar sua Senha Novamente";
+			if(Mensagem != ""){ alert(Mensagem);}
+            var MensagemLogin = "";
+			if(MensagemLogin != ""){ alert("                                 *AVISO DE MANUTENÇÃO* \n \n" + MensagemLogin);}
+            
+			
+			const hostname = window.location.hostname;	
+            
+            var vlrC = "1"
+			var blnC = '0';
+			if ((hostname.includes('homologacao.appaweb.appa.pr.gov.br') || hostname.includes('appaweb.appa.pr.gov.br')) && (vlrC == '1')) {
+				blnC = '1';
+			}
+			
+            function recuperarsenha(){
+                $('#recuperasenha').dialog({
+                    title: 'Recuperar Senha',
+                    width: '450',
+                    modal: true
+                });
+            }
+            
+            function EnviaNovaSenha(){
+                if($('#EMAIL').val()==''){alert('Preencha um e-mail.');$('#EMAIL').focus();}
+                else if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#EMAIL').val()))) {
+		alert('E-mail Invalido!');$('#EMAIL').focus();}
+                else{
+                    $.ajax({
+                        url:'pesquisa.aspx?WCI=recuperasenha',
+                        type : 'GET',
+                        dataType: 'html',
+						cache: false,
+                        data: { email : $('#EMAIL').val()}
+                    }).done(function(data){
+                        alert(data)
+                        $('#recuperasenha').dialog('close');
+                    });
+                }
+            }
+            
+            function Enter() {
+               if (event.keyCode == 13) {
+                  frmPrincipal.submit();
+               }
+            }
+
+            var Tipo = "Logon";
+          
+
+              function OnWindowLoad() {
+                if (top.location != self.location)
+                  top.location = self.location;
+                ResizeWindow(window);
+                frmPrincipal.User.focus();
+              }
+
+            function ResizeWindow(parWindow) {
+               parWindow.moveTo(0, 0);
+               parWindow.resizeTo(screen.availWidth, screen.availHeight);
+            }
+
+
+            function OnSubmit() {
+
+              if (!validateCaptcha())
+				return false;
+
+                if($("#User").val()===''){
+                    alert("Nome do usuário não pode ficar vazio");
+                    return false;
+                }else if($("#Pass").val()===''){
+                    alert("Senha não pode ficar vazia");
+                    return false;
+                }else{
+                    SetCookie("cUserName", frmPrincipal.User.value);
+                    frmPrincipal.action = "default.aspx?WCI=Default&Mv=Ok";
+                    frmPrincipal.submit();
+                    return true;
+                }
+            }
+
+			function loginCentral() {
+				var url = 'https://auth-cs.identidadedigital.pr.gov.br/centralautenticacao/api/v1/authorize/jwt?response_type=token&client_id=ebd9629fc3ae5e9f6611e2ee05a31cef&redirect_uri=' + window.location.protocol + '//' +  window.location.host
+				if (!url.includes('54291')) url += '/appaweb'
+				window.location = url;
+			}
+			
+			$(document).ready(function () {
+					if ('0' === '1') {
+						$('#login_central').show();
+						verificarToken('ebd9629fc3ae5e9f6611e2ee05a31cef');
+					}
+					if (blnC == '1') {
+						$('#dvCaptcha').show();
+						createCaptcha();
+					}
+				});
+
+		var code;
+		function createCaptcha() {
+			//clear the contents of captcha div first 
+			document.getElementById('captcha').innerHTML = "";
+			var charsArray =
+				"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@!#$%^&*";
+			var lengthOtp = 6;
+			var captcha = [];
+			for (var i = 0; i < lengthOtp; i++) {
+				//below code will not allow Repetition of Characters
+				var index = Math.floor(Math.random() * charsArray.length + 1); //get the next character from the array
+				if (captcha.indexOf(charsArray[index]) == -1)
+					captcha.push(charsArray[index]);
+				else i--;
+			}
+			var arrFont = ['Arial', 'Comic Sans MS', 'Courier New', 'Georgia', 'Impact', 'Lucida Console', 'Lucida Sans Unicode', 'Palatino Linotype', 'Tahoma', 'Times New Roman', 'Trebuchet MS', 'Verdana'];
+			var canv = document.createElement("canvas");
+			canv.id = "captcha";
+			canv.width = 200;
+			canv.height = 50;
+			var ctx = canv.getContext("2d");
+			ctx.shadowOffsetX = 2;
+			ctx.shadowOffsetY = 2;
+			ctx.shadowBlur = 2;
+			ctx.shadowColor = "rgb(0 0 0 / 50%)";
+			var indexFont = Math.floor(Math.random() * arrFont.length + 1);
+			ctx.font = "25px " + arrFont[indexFont];
+			// ctx.font = "25px Times New Roman";						
+			ctx.fillStyle = "rgb(56,80,91)";
+			var x = Math.random() * (60 - 0) + 0;
+			var y = Math.random() * (50 - 15) + 15;
+			// 0,15
+			ctx.fillText(captcha.join("").split("").join(' '), x, y);
+			//storing captcha so that can validate you can save it somewhere else according to your specific requirements
+			code = captcha.join("");
+			document.getElementById("captcha").appendChild(canv); // adds the canvas to the body element
+		}
+
+        function validateCaptcha() {
+          if (blnC == '1') {     
+            event.preventDefault();
+            debugger
+            if (document.getElementById("valuecaptcha").value != code) {
+              alert("Captcha inválido. Tente novamente");
+              createCaptcha();
+			  return false;
+			} else {
+			  return true;
+            }
+          }else{
+return true;
+}
+        }      
+        </script>
+
+
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </HEAD>
+    <body>
+        <div id="all" class='all'>
+            <div id="header" class='porto-header'>
+                           <a href="http://www.portosdoparana.pr.gov.br">
+				<img src="images/logoporto.png" alt="APPA Web" >
+                            </a>
+            </div>
+            <div class='borda-form'>
+                <form name="frmPrincipal" id="frmPrincipal" method="POST" onsubmit="OnSubmit();" action="" class="form-horizontal" style="opacity: 0.99;">
+                    <h2 class="text-center">APPA Web</h2>
+                    <h5>Sistema de Operações Portuárias</h5>
+                    
+					<!-- -->
+					<div id="camposLogin">
+					<!-- -->
+						<div class="form-group">
+							<div class="col-xs-12">
+								<label for="User">Usuário:</label>
+								<input class="form-control" type="text" name="User" id="User" maxlength="255" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-xs-12">
+								<label for="Pass">Senha:</label>
+								<input type="password" name="Pass" id="Pass" value="" class="form-control">
+							</div>
+						</div>
+						<div id="dvCaptcha" class="form-group" style="display: none;">
+							<div class="col-xs-12">
+								<div class="captcha-area">
+									<div class="captcha-img">
+										<img src="images/captcha-bg.png" alt="Captch Background">
+										<span class="captcha">
+											<div id="captcha"></div>
+										</span>										
+									</div>									
+								</div>
+								<input class="form-control" type="text" name="valuecaptcha" id="valuecaptcha" maxlength="255" value="">
+							</div>
+						</div>
+
+						<div class="form-group" style="margin-bottom:0">
+							<div class="col-xs-6">
+								<a onclick="recuperarsenha()" class="btn" style="color:#FFF" >Esqueci a senha</a>
+							</div>
+							<div class="col-xs-6">
+								<div class="text-right">
+									<button type="submit" id="Entrar"  class="btn btn-default" onclick="" title="Entrar no Sistema">
+										Entrar
+									</button>
+								</div>
+							</div>
+						</div>
+						
+					<!-- -->
+					</div>
+					<!-- -->
+						
+					<div class="form-group">
+                        <div class="col-xs-12 margin10 text-center">
+                            <hr><div style="font-size:10px" class="text-center">Para suporte técnico,<br> estamos disponíveis nos canais:<br>Telefone: (41) 3420-1234<br>E-mail: <a href="mailto:deinfo@appa.pr.gov.br">deinfo@appa.pr.gov.br</a><br>
+                            <hr>Para informações, sugestões ou denúncias, acesse a Ouvidoria APPA nos canais:<br>Telefone: 0800 41 1133<br>Internet: Site <a href="http://www.portosdoparana.pr.gov.br" target="_blank">www.portosdoparana.pr.gov.br</a>, menu Transparência - Ouvidoria</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+			</br>
+			<div class='borda-form' id="login_central" style="display:none;">
+				<h5>Opções de login </h5>
+					<div class="opcoes" onclick="javascript:loginCentral()">
+						<svg version="1.1" viewBox="0 0 32 32" class="icone">
+						  <style type="text/css">
+							.st0-centralseg {
+							  fill: url(#SVGID_1_);
+							}
+							.st1-centralseg {
+							  fill: url(#SVGID_2_);
+							}
+							.st2-centralseg {
+							  fill: url(#SVGID_3_);
+							}
+							.st3-centralseg {
+							  fill: url(#SVGID_4_);
+							}
+							.st4-centralseg {
+							  fill: url(#SVGID_5_);
+							}
+						  </style>
+						  <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="1.9901" y1="28.8234" x2="28.4901" y2="2.49">
+							<stop offset="0" style="stop-color: #70be44"></stop>
+							<stop offset="0.9965" style="stop-color: #9acb3b"></stop>
+						  </linearGradient>
+						  <path class="st0-centralseg" d="M13.8,25.4H5.5v-8.3c0-0.7-0.6-1.3-1.3-1.3H1.9c-0.7,0-1.3,0.6-1.3,1.3v8.3V29c0,0.7,0.6,1.3,1.3,1.3h3.5l0,0
+							h8.3c0.7,0,1.3-0.6,1.3-1.3v-2.3C15,25.9,14.5,25.4,13.8,25.4z M15.9,6.6h8.3v8.3c0,0.7,0.6,1.3,1.3,1.3h2.3c0.7,0,1.3-0.6,1.3-1.3
+							V6.6V3.1c0-0.7-0.6-1.3-1.3-1.3H16c-0.7,0-1.3,0.6-1.3,1.3v2.3C14.6,6.1,15.2,6.6,15.9,6.6z"></path>
+						  <g>
+							<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="8.6248" y1="12.8752" x2="26.9297" y2="31.1801">
+							  <stop offset="0" style="stop-color: #0b84a9"></stop>
+							  <stop offset="0.9965" style="stop-color: #20abc5"></stop>
+							</linearGradient>
+							<polygon class="st1-centralseg" points="23.1,28.7 24.5,27.3 25.9,28.7 24.5,30.2 	"></polygon>
+							<linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="11.4768" y1="10.0232" x2="29.7817" y2="28.3281">
+							  <stop offset="0" style="stop-color: #0b84a9"></stop>
+							  <stop offset="0.9965" style="stop-color: #20abc5"></stop>
+							</linearGradient>
+							<polygon class="st2-centralseg" points="28.8,28.7 30.2,27.3 31.6,28.7 30.2,30.2 	"></polygon>
+							<linearGradient id="SVGID_4_" gradientUnits="userSpaceOnUse" x1="10.0858" y1="11.4142" x2="28.3907" y2="29.7191">
+							  <stop offset="0" style="stop-color: #0b84a9"></stop>
+							  <stop offset="0.9965" style="stop-color: #20abc5"></stop>
+							</linearGradient>
+							<polygon class="st3-centralseg" points="26,28.7 27.4,27.3 28.8,28.7 27.4,30.1 	"></polygon>
+							<linearGradient id="SVGID_5_" gradientUnits="userSpaceOnUse" x1="10.175" y1="11.325" x2="28.4799" y2="29.6299">
+							  <stop offset="0" style="stop-color: #0b84a9"></stop>
+							  <stop offset="0.9965" style="stop-color: #20abc5"></stop>
+							</linearGradient>
+							<path class="st4-centralseg" d="M27.4,27.3l1.4-1.4l-7.5-7.5c0.3-0.7,0.4-1.5,0.4-2.4c0-3.8-3.1-6.9-6.9-6.9S8,12.2,8,16s3.1,6.9,6.9,6.9
+							  c0.7,0,1.4-0.1,2.1-0.3l1.9,1.9l1.4-1.4l1.4,1.4l1.4-1.4l1.4,1.4l-1.4,1.4l1.4,1.4l1.4-1.4L27.4,27.3z M14.8,19.3
+							  c-1.9,0-3.4-1.5-3.4-3.4s1.5-3.4,3.4-3.4s3.4,1.5,3.4,3.4C18.2,17.8,16.7,19.3,14.8,19.3z"></path>
+						  </g>
+						</svg>
+						<div class="botao">
+							Central de Segurança
+						</div>
+					</div>
+				
+			</div>
+        </div>
+        
+        
+        
+        <!-- recuperasenha -->
+        <div id="recuperasenha" style="display:none;">
+                <form name="frmRecupera" id="frmRecupera" ACTION="" METHOD="POST" class="form-horizontal" data-command="MainForm" lgsdk="printable:true" role="form" style="overflow: hidden;">
+                    <fieldset>
+                         <div class="row form-group form-group-sm"> 
+                             <div class="col-xs-12">                                
+                                 <p>Prencha o campo abaixo com seu endereço de e-mail.</p>
+                            </div>
+                             <div class="col-xs-12">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-addon">E-mail: </span>
+                                    <input type="text" name="EMAIL" id="EMAIL" class="form-control" title="Preencha seu e-mail">
+                                    <span class="input-group-btn"><button type="button" class="btn btn-default" onclick="EnviaNovaSenha()">Enviar nova Senha</button></span>
+                                </div>
+                            </div>
+                         </div>
+                        <div class="row form-group form-group-sm"> 
+                             <div class="col-xs-12">
+                                <p>Ao clicar em "Enviar nova Senha", você receberá uma senha provisória.</p>
+                                <p>Após a autenticação com esta nova senha, você deverá alterá-la.</p>
+                             </div>
+                         </div>
+                    </fieldset>
+                </form>
+        </div>
+
+    </body>
+</html>
