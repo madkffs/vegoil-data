@@ -981,8 +981,11 @@ def comexstat_ports():
     body = {"flow": "export", "monthDetail": True, "period": {"from": "2025-01", "to": "2026-12"},
             "filters": [{"filter": "ncm", "values": ["15071000", "15079011", "15079019"]}],
             "details": ["country", "urf"], "metrics": ["metricKG"]}
-    r = requests.post("https://api-comexstat.mdic.gov.br/general?language=en", json=body,
-                      headers={**UA, "Content-Type": "application/json"}, timeout=90, verify=False)
+    for attempt in range(4):
+        r = requests.post("https://api-comexstat.mdic.gov.br/general?language=en", json=body,
+                          headers={**UA, "Content-Type": "application/json"}, timeout=90, verify=False)
+        if r.status_code == 200: break
+        time.sleep(20)
     if r.status_code != 200: raise ValueError(f"comexstat urf {r.status_code}: {r.text[:150]}")
     with open(os.path.join(DATA, "lineups", "comexstat_soyoil_ports.json"), "w") as fh: fh.write(r.text)
 
