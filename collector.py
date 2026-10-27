@@ -931,7 +931,7 @@ def paranagua_lineup():
             q = re.search(r"([\d.]+),(\d+) Tons", rec.get("Previsto", "") or rec.get("Saldo Total", ""))
             rows.append({"section": sec, "prog": rec.get("Programação"), "vessel": rec.get("Embarcação"), "imo": rec.get("IMO"),
                          "berth": rec.get("Berço"), "direction": rec.get("Sentido"), "agency": rec.get("Agência"), "terminal": rec.get("Operador"),
-                         "product": prod, "arrival": rec.get("Chegada"), "berthed": rec.get("Atracação"), "etb": rec.get("ETB"),
+                         "product": prod, "arrival": rec.get("Chegada"), "berthed": rec.get("Atracação"), "etb": rec.get("ETB"), "eta": rec.get("ETA"),
                          "sailed": rec.get("Desatracacao"), "tons": float(q.group(1).replace(".", "") + "." + q.group(2)) if q else None})
     if not rows: raise ValueError("no vegetable-oil rows parsed")
     now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M")

@@ -436,6 +436,42 @@ if len(sailed_all):
                              "product": OIL_CARGO[r.cargo], "cargo": title(r.cargo), "origin": title(r.origin), "destination": norm(r.destination),
                              "shipper": "Not in line-up data", "charterer": nice(r.charterer), "tons": round(float(r.tons)),
                              "source": f"NABSA line-up of {r.issue}"})
+# Brazil: Paranaguá and Santos port line-ups (vessel, agent, terminal, tonnes; no shipper or destination in port data)
+BR_OIL = {"OLEO DE SOJA": "Soybean oil", "OLEO VEGETAL": "Soybean oil", "OLEO DE GIRASSOL": "Sunflower oil"}
+def br_date(x):
+    m_ = _re.match(r"(\d{2})/(\d{2})/(\d{4})", str(x or ""))
+    return f"{m_.group(3)}-{m_.group(2)}-{m_.group(1)}" if m_ else None
+br_sched = collections.defaultdict(lambda: [0.0, set()])
+br_cur = max(sailed_all["month"]) if len(sailed_all) else f"{pd.Timestamp.utcnow():%Y-%m}"
+br_ports = []
+for port in ("paranagua", "santos"):
+    pdir = os.path.join(LU, port)
+    if not os.path.exists(os.path.join(pdir, "vessels.json")): continue
+    hist = json.load(open(os.path.join(pdir, "vessels.json")))
+    latest_fetch = json.load(open(os.path.join(pdir, "latest.json")))["fetched_utc"]
+    pname = {"paranagua": "Paranaguá", "santos": "Santos"}[port]
+    br_ports.append(f"{pname} port line-up, {latest_fetch[:16]} UTC")
+    for k, v in hist.items():
+        prod = next((p for c, p in BR_OIL.items() if c in str(v.get("product", "")).upper()), None)
+        if not prod or str(v.get("direction", "Exp")).upper() not in ("EXP", "EMB", "IMP/EXP"): continue
+        agent = title(v.get("agency") or "Not stated")
+        base = {"month": br_cur, "vessel": title(v.get("vessel")), "berth": pname + " – " + title(v.get("terminal") or ""), "product": prod,
+                "cargo": title(v.get("product")), "origin": "Brazil", "destination": "Not in port data", "shipper": "Not in port data",
+                "charterer": "Agent: " + agent, "tons": round(float(v.get("tons") or 0))}
+        sailed_d = br_date(v.get("sailed")) if v.get("section", "").startswith("DESPACHADO") else None
+        if sailed_d:
+            if sailed_d[:7] == br_cur:
+                oil_rows.append({**base, "status": "Sailed", "date": sailed_d, "source": f"{pname} port line-up (departures)"})
+        elif v.get("last_seen") == latest_fetch:
+            eta = None if v.get("section") in ("ATRACADOS", "AO LARGO", "AO LARGO PARA REATRACAÇÃO") else (br_date(v.get("etb")) or br_date(v.get("eta")) or br_date(v.get("arrival")))
+            br_sched[prod][0] += base["tons"]; br_sched[prod][1].add(base["vessel"])
+            if eta is None or eta[:7] <= br_cur:
+                oil_rows.append({**base, "status": "Line-up", "date": eta, "source": f"{pname} port line-up"})
+for prod, (t, vs) in br_sched.items():
+    sched.append({"country": "Brazil", "product": prod, "destination": "Not in port data", "tons": round(t), "vessels": len(vs),
+                  "issue": max(br_ports)[-20:-4] if br_ports else ""})
+for i, r in enumerate(sched): r["id"] = f"s{i:03d}"
+dump("lineup_scheduled.json", sched)
 oil_rows = sorted(oil_rows, key=lambda r: (r["status"] != "Sailed", str(r["date"]), r["vessel"]))
 for i, r in enumerate(oil_rows): r["id"] = f"o{i:03d}"
 dump("oil_month.json", oil_rows)
