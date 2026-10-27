@@ -1,9 +1,10 @@
 {
- "run_utc": "2026-10-27 12:12",
- "mode": "update",
+ "run_utc": "2026-10-27 13:00",
+ "mode": "probe",
  "errors": {
   "MWE=F": "no data",
   "RS=F": "no data",
+  "comexstat": "comexstat 503: <html>\r\n<head><title>503 Service Temporarily Unavailable</title></head>\r\n<body>\r\n<center><h1>503 Service Temporarily Unavailable</h1></center>\r\n<hr><c",
   "bunkers": "no prices parsed"
  },
  "nabsa_rows": {
