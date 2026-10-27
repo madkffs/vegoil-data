@@ -495,3 +495,61 @@ us_rows = sorted(us_rows, key=lambda r: (r["month"], r["country"]))
 for i, r in enumerate(us_rows): r["id"] = f"us{i:04d}"
 dump("uco_us.json", us_rows)
 print("uco_us", len(us_rows), max((r["month"] for r in us_rows), default=None))
+
+# ---------- correlations: six cross-market pairs, last 6 months of daily closes ----------
+def daily_close(name):
+    p = os.path.join(D, "daily", name + ".csv")
+    if not os.path.exists(p): return None
+    d = pd.read_csv(p)
+    s = pd.Series(pd.to_numeric(d["close"], errors="coerce").values, index=pd.to_datetime(d["time_utc"].str.slice(0, 10))).dropna()
+    s = s[~s.index.duplicated(keep="last")].sort_index()
+    return s[s > 0]
+def usd(series, fx, divide=True):
+    if series is None or fx is None: return None
+    f = fx.reindex(series.index, method="ffill")
+    return (series / f if divide else series * f).dropna()
+SER = {
+    "gasoil": ("ICE gasoil (front)", "USD/t", daily_close("ICE_GO")),
+    "palm": ("Bursa palm, 3rd month", "USD/t", usd(daily_close("FCPO"), daily_close("MYR_X"))),
+    "brent": ("Brent (front)", "USD/bbl", daily_close("BZ_F")),
+    "meal": ("CBOT soymeal (front)", "USD/st", daily_close("ZM_F")),
+    "soyoil": ("CBOT soyoil (front)", "c/lb", daily_close("ZL_F")),
+    "rapeseed": ("MATIF rapeseed (front)", "USD/t", usd(daily_close("MATIF_RS"), daily_close("EURUSD_X"), divide=False)),
+    "heatoil": ("NYMEX heating oil (front)", "USD/gal", daily_close("HO_F")),
+}
+PAIRS = [("gasoil", "palm"), ("gasoil", "brent"), ("meal", "soyoil"), ("rapeseed", "gasoil"), ("soyoil", "heatoil"), ("heatoil", "brent")]
+corr_rows, corr_stats = [], []
+end = max((v[2].index.max() for v in SER.values() if v[2] is not None and len(v[2])), default=None)
+for a, b in PAIRS:
+    sa, sb = SER[a][2], SER[b][2]
+    pid = f"{a}-{b}"
+    if sa is None or sb is None or not len(sa) or not len(sb):
+        corr_stats.append({"pair": pid, "a": SER[a][0], "b": SER[b][0], "note": "data missing"}); continue
+    df = pd.concat([sa.rename("a"), sb.rename("b")], axis=1).dropna()
+    df = df[df.index >= end - pd.Timedelta(days=183)]
+    if len(df) < 30:
+        corr_stats.append({"pair": pid, "a": SER[a][0], "b": SER[b][0], "note": "too little data"}); continue
+    r = np.log(df).diff().dropna()
+    # front-month series jump when the contract rolls: drop days with a move over 4 standard deviations in either series
+    jumps = (r["a"].abs() > 4 * r["a"].std()) | (r["b"].abs() > 4 * r["b"].std())
+    r = r[~jumps]
+    roll = r["a"].rolling(30, min_periods=25).corr(r["b"])
+    for d_, row in df.iterrows():
+        corr_rows.append({"pair": pid, "date": f"{d_:%Y-%m-%d}", "a": round(float(row.a), 4), "b": round(float(row.b), 4),
+                          "a_idx": round(float(row.a / df.a.iloc[0] * 100), 2), "b_idx": round(float(row.b / df.b.iloc[0] * 100), 2),
+                          "corr30": None if pd.isna(roll.get(d_)) else round(float(roll.get(d_)), 3)})
+    beta = float(np.cov(r["b"], r["a"])[0, 1] / np.var(r["a"])) if np.var(r["a"]) else None
+    last21 = r.tail(21)
+    corr_stats.append({"pair": pid, "a": SER[a][0], "a_unit": SER[a][1], "b": SER[b][0], "b_unit": SER[b][1],
+                       "start": f"{df.index[0]:%Y-%m-%d}", "end": f"{df.index[-1]:%Y-%m-%d}", "days": int(len(df)),
+                       "corr_returns_6m": round(float(r["a"].corr(r["b"])), 3), "corr_returns_1m": round(float(last21["a"].corr(last21["b"])), 3),
+                       "corr_levels_6m": round(float(df["a"].corr(df["b"])), 3), "corr30_now": None if pd.isna(roll.iloc[-1]) else round(float(roll.iloc[-1]), 3),
+                       "corr30_min": round(float(roll.min()), 3), "corr30_max": round(float(roll.max()), 3),
+                       "beta_b_on_a": None if beta is None else round(beta, 3),
+                       "roll_days_dropped": int(jumps.sum()),
+                       "a_change_pct": round(float((df.a.iloc[-1] / df.a.iloc[0] - 1) * 100), 1), "b_change_pct": round(float((df.b.iloc[-1] / df.b.iloc[0] - 1) * 100), 1),
+                       "note": ""})
+for i, r_ in enumerate(corr_rows): r_["id"] = f"c{i:05d}"
+dump("corr_series.json", corr_rows)
+dump("corr_stats.json", corr_stats)
+print("correlations", [(s_["pair"], s_.get("corr_returns_6m"), s_.get("corr30_now"), s_.get("note")) for s_ in corr_stats])
