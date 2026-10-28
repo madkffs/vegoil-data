@@ -1,9 +1,10 @@
 {
- "run_utc": "2026-10-28 12:55",
+ "run_utc": "2026-10-28 14:00",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
   "RS=F": "no data",
+  "paranagua_lineup": "Failed to perform, curl: (28) Operation timed out after 60001 milliseconds with 0 bytes received. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
   "bunkers": "no prices parsed"
  },
  "euronext_cot_misses": [
