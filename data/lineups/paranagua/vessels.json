@@ -12,7 +12,7 @@
   "product": "OLEO DE SOJA",
   "arrival": "22/10/2026 19:00",
   "tons": 14000.0,
-  "last_seen": "2026-10-27 22:13",
+  "last_seen": "2026-10-28 08:01",
   "eta": "23/10/2026 22:00"
  },
  "80958_RIGEL_OLEO DE SOJA": {
@@ -28,7 +28,7 @@
   "product": "OLEO DE SOJA",
   "arrival": "21/10/2026 13:30",
   "tons": 14000.0,
-  "last_seen": "2026-10-27 22:13",
+  "last_seen": "2026-10-28 08:01",
   "eta": "21/10/2026 18:00"
  },
  "80957_BENTLEY I_OLEO DE SOJA": {
@@ -43,7 +43,7 @@
   "terminal": "CATTALINI",
   "product": "OLEO DE SOJA",
   "tons": 3400.0,
-  "last_seen": "2026-10-27 22:13",
+  "last_seen": "2026-10-28 08:01",
   "eta": "07/11/2026 07:00"
  },
  "81044_MURMURE_OLEO DE SOJA": {
@@ -58,7 +58,7 @@
   "terminal": "CATTALINI",
   "product": "OLEO DE SOJA",
   "tons": 15000.0,
-  "last_seen": "2026-10-27 22:13",
+  "last_seen": "2026-10-28 08:01",
   "eta": "06/11/2026 08:00"
  },
  "81047_HAFNIA AVENTURINE_OLEO DE MILHO": {
@@ -73,7 +73,7 @@
   "terminal": "CATTALINI",
   "product": "OLEO DE MILHO",
   "tons": 13182.0,
-  "last_seen": "2026-10-27 22:13",
+  "last_seen": "2026-10-28 08:01",
   "eta": "04/11/2026 09:00"
  },
  "80822_INSPIRE_OLEO DE SOJA": {
@@ -90,6 +90,6 @@
   "arrival": "12/10/2026 23:12",
   "sailed": "25/10/2026 13:05",
   "tons": 12000.0,
-  "last_seen": "2026-10-27 22:13"
+  "last_seen": "2026-10-28 08:01"
  }
 }
