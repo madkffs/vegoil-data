@@ -1,6 +1,23 @@
 {
- "fetched_utc": "2026-10-28 08:01",
+ "fetched_utc": "2026-10-29 08:04",
  "rows": [
+  {
+   "section": "ATRACADOS",
+   "prog": "80958",
+   "vessel": "RIGEL",
+   "imo": "9994163",
+   "berth": "143",
+   "direction": "Exp",
+   "agency": "BPA",
+   "terminal": "CATTALINI",
+   "product": "OLEO DE SOJA",
+   "arrival": "21/10/2026 13:30",
+   "berthed": "28/10/2026 16:30",
+   "etb": null,
+   "eta": null,
+   "sailed": null,
+   "tons": 14000.0
+  },
   {
    "section": "AO LARGO",
    "prog": "80968",
@@ -15,23 +32,6 @@
    "berthed": null,
    "etb": null,
    "eta": "23/10/2026 22:00",
-   "sailed": null,
-   "tons": 14000.0
-  },
-  {
-   "section": "AO LARGO",
-   "prog": "80958",
-   "vessel": "RIGEL",
-   "imo": "9994163",
-   "berth": "143",
-   "direction": "Exp",
-   "agency": "BPA",
-   "terminal": "CATTALINI",
-   "product": "OLEO DE SOJA",
-   "arrival": "21/10/2026 13:30",
-   "berthed": null,
-   "etb": null,
-   "eta": "21/10/2026 18:00",
    "sailed": null,
    "tons": 14000.0
   },
@@ -87,21 +87,21 @@
    "tons": 13182.0
   },
   {
-   "section": "DESPACHADOS",
-   "prog": "80822",
-   "vessel": "INSPIRE",
-   "imo": "9315056",
+   "section": "ESPERADOS",
+   "prog": "81090",
+   "vessel": "CHEMROUTE SKY",
+   "imo": "9508160",
    "berth": "143",
    "direction": "Exp",
-   "agency": "CARGILL AGRICOLA",
+   "agency": "LBH BRASIL",
    "terminal": "CATTALINI",
    "product": "OLEO DE SOJA",
-   "arrival": "12/10/2026 23:12",
+   "arrival": null,
    "berthed": null,
    "etb": null,
-   "eta": null,
-   "sailed": "25/10/2026 13:05",
-   "tons": 12000.0
+   "eta": "03/11/2026 13:00",
+   "sailed": null,
+   "tons": 8000.0
   }
  ]
 }
