@@ -1,10 +1,11 @@
 {
- "run_utc": "2026-10-30 18:47",
+ "run_utc": "2026-10-30 19:49",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
   "RS=F": "no data",
-  "bunkers": "no prices parsed"
+  "bunkers": "no prices parsed",
+  "bdi": "no BDI headline"
  },
  "nabsa_rows": {
   "sailed": 2538,
