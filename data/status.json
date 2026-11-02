@@ -1,10 +1,13 @@
 {
- "run_utc": "2026-11-02 10:06",
+ "run_utc": "2026-11-02 11:04",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
   "RS=F": "no data",
-  "bunkers": "no prices parsed"
+  "kline_FCPO": "HTTPSConnectionPool(host='stock2.finance.sina.com.cn', port=443): Read timed out. (read timeout=30)",
+  "kline_DCE_Y0": "HTTPSConnectionPool(host='stock2.finance.sina.com.cn', port=443): Read timed out. (read timeout=30)",
+  "bunkers": "no prices parsed",
+  "bdi": "no BDI headline"
  },
  "nabsa_rows": {
   "sailed": 2538,
