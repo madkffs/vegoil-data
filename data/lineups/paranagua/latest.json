@@ -1,5 +1,5 @@
 {
- "fetched_utc": "2026-11-02 06:05",
+ "fetched_utc": "2026-11-02 10:08",
  "rows": [
   {
    "section": "AO LARGO",
@@ -102,23 +102,6 @@
    "eta": null,
    "sailed": "02/11/2026 01:20",
    "tons": 14125.0
-  },
-  {
-   "section": "DESPACHADOS",
-   "prog": "80958",
-   "vessel": "RIGEL",
-   "imo": "9994163",
-   "berth": "143",
-   "direction": "Exp",
-   "agency": "BPA",
-   "terminal": "CATTALINI",
-   "product": "OLEO DE SOJA",
-   "arrival": "21/10/2026 13:30",
-   "berthed": null,
-   "etb": null,
-   "eta": null,
-   "sailed": "30/10/2026 05:15",
-   "tons": 14000.0
   }
  ]
 }
