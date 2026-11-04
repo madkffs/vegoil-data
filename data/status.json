@@ -1,11 +1,9 @@
 {
- "run_utc": "2026-11-04 05:59",
+ "run_utc": "2026-11-04 07:13",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
   "RS=F": "no data",
-  "comexstat": "comexstat 429: {\"error\":{\"code\":429,\"message\":\"Voc\\u00ea excedeu o limite de solicita\\u00e7\\u00f5es. Por favor, tente novamente em 10 segundos.\"}}",
-  "comexstat_ports": "comexstat urf 429: {\"error\":{\"code\":429,\"message\":\"Voc\\u00ea excedeu o limite de solicita\\u00e7\\u00f5es. Por favor, tente novamente em 10 segundos.\"}}",
   "bunkers": "no prices parsed"
  },
  "euronext_cot_misses": [
