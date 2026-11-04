@@ -1,10 +1,9 @@
 {
- "run_utc": "2026-11-04 01:02",
+ "run_utc": "2026-11-04 01:59",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
   "RS=F": "no data",
-  "paranagua_lineup": "no vegetable-oil rows parsed",
   "bunkers": "no prices parsed"
  },
  "euronext_cot_misses": [
