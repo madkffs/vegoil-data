@@ -1,5 +1,5 @@
 {
- "fetched_utc": "2026-11-05 01:05",
+ "fetched_utc": "2026-11-05 13:12",
  "rows": [
   {
    "section": "ESPERADOS",
@@ -31,7 +31,7 @@
    "arrival": null,
    "berthed": null,
    "etb": null,
-   "eta": "08/11/2026 23:00",
+   "eta": "09/11/2026 15:00",
    "sailed": null,
    "tons": 13182.0
   },
@@ -85,23 +85,6 @@
    "eta": null,
    "sailed": "04/11/2026 19:08",
    "tons": 8000.0
-  },
-  {
-   "section": "DESPACHADOS",
-   "prog": "80968",
-   "vessel": "SPATHI",
-   "imo": "9321940",
-   "berth": "143",
-   "direction": "Exp",
-   "agency": "CARGONAVE",
-   "terminal": "CATTALINI",
-   "product": "OLEO DE SOJA",
-   "arrival": "22/10/2026 19:00",
-   "berthed": null,
-   "etb": null,
-   "eta": null,
-   "sailed": "02/11/2026 01:20",
-   "tons": 14125.0
   }
  ]
 }
