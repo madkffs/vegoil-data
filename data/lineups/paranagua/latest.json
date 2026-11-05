@@ -1,23 +1,6 @@
 {
- "fetched_utc": "2026-11-04 13:06",
+ "fetched_utc": "2026-11-05 01:05",
  "rows": [
-  {
-   "section": "ATRACADOS",
-   "prog": "81090",
-   "vessel": "CHEMROUTE SKY",
-   "imo": "9508160",
-   "berth": "143",
-   "direction": "Exp",
-   "agency": "LBH BRASIL",
-   "terminal": "CATTALINI",
-   "product": "OLEO DE SOJA",
-   "arrival": "01/11/2026 14:00",
-   "berthed": "03/11/2026 17:45",
-   "etb": null,
-   "eta": null,
-   "sailed": null,
-   "tons": 8000.0
-  },
   {
    "section": "ESPERADOS",
    "prog": "81044",
@@ -37,23 +20,6 @@
   },
   {
    "section": "ESPERADOS",
-   "prog": "81096",
-   "vessel": "BRISTOL TRADER",
-   "imo": "9737101",
-   "berth": "143",
-   "direction": "Exp",
-   "agency": "CARGILL AGRICOLA",
-   "terminal": "CATTALINI",
-   "product": "OLEO DE SOJA",
-   "arrival": null,
-   "berthed": null,
-   "etb": null,
-   "eta": "08/11/2026 10:00",
-   "sailed": null,
-   "tons": 11000.0
-  },
-  {
-   "section": "ESPERADOS",
    "prog": "81047",
    "vessel": "HAFNIA AVENTURINE",
    "imo": "9711547",
@@ -65,9 +31,26 @@
    "arrival": null,
    "berthed": null,
    "etb": null,
-   "eta": "08/11/2026 06:00",
+   "eta": "08/11/2026 23:00",
    "sailed": null,
    "tons": 13182.0
+  },
+  {
+   "section": "ESPERADOS",
+   "prog": "81096",
+   "vessel": "BRISTOL TRADER",
+   "imo": "9737101",
+   "berth": "143",
+   "direction": "Exp",
+   "agency": "CARGILL AGRICOLA",
+   "terminal": "CATTALINI",
+   "product": "OLEO DE SOJA",
+   "arrival": null,
+   "berthed": null,
+   "etb": null,
+   "eta": "07/11/2026 22:00",
+   "sailed": null,
+   "tons": 11000.0
   },
   {
    "section": "ESPERADOS",
@@ -85,6 +68,23 @@
    "eta": "07/11/2026 07:00",
    "sailed": null,
    "tons": 3400.0
+  },
+  {
+   "section": "DESPACHADOS",
+   "prog": "81090",
+   "vessel": "CHEMROUTE SKY",
+   "imo": "9508160",
+   "berth": "143",
+   "direction": "Exp",
+   "agency": "LBH BRASIL",
+   "terminal": "CATTALINI",
+   "product": "OLEO DE SOJA",
+   "arrival": "01/11/2026 14:00",
+   "berthed": null,
+   "etb": null,
+   "eta": null,
+   "sailed": "04/11/2026 19:08",
+   "tons": 8000.0
   },
   {
    "section": "DESPACHADOS",
