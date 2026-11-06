@@ -1,10 +1,12 @@
 {
- "run_utc": "2026-11-06 10:03",
+ "run_utc": "2026-11-06 11:04",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
   "RS=F": "no data",
-  "bunkers": "no prices parsed"
+  "santos_lineup": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+  "bunkers": "no prices parsed",
+  "bdi": "no BDI headline"
  },
  "nabsa_rows": {
   "sailed": 1305,
