@@ -1,5 +1,5 @@
 {
- "fetched_utc": "2026-11-06 11:06",
+ "fetched_utc": "2026-11-06 13:04",
  "rows": [
   {
    "section": "ESPERADOS",
@@ -31,7 +31,7 @@
    "arrival": null,
    "berthed": null,
    "etb": null,
-   "eta": "09/11/2026 15:00",
+   "eta": "10/11/2026 17:00",
    "sailed": null,
    "tons": 13182.0
   },
