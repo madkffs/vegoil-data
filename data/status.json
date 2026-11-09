@@ -1,9 +1,10 @@
 {
- "run_utc": "2026-11-06 22:18",
+ "run_utc": "2026-11-09 01:06",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
   "RS=F": "no data",
+  "santos_lineup": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
   "bunkers": "no prices parsed"
  },
  "nabsa_rows": {
