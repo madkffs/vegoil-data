@@ -1,7 +1,7 @@
 {
  "ZL=F": {
   "symbol": "ZL=F",
-  "last": 62.39,
+  "last": 62.54,
   "prev_close": 62.26,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
@@ -15,49 +15,49 @@
  },
  "ZS=F": {
   "symbol": "ZS=F",
-  "last": 1193.25,
+  "last": 1195.5,
   "prev_close": 1189.0,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "ZC=F": {
   "symbol": "ZC=F",
-  "last": 442.5,
+  "last": 442.75,
   "prev_close": 441.5,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "HO=F": {
   "symbol": "HO=F",
-  "last": 4.2474,
+  "last": 4.2714,
   "prev_close": 4.3317,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "BZ=F": {
   "symbol": "BZ=F",
-  "last": 94.62,
+  "last": 94.78,
   "prev_close": 98.32,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "CL=F": {
   "symbol": "CL=F",
-  "last": 87.72,
+  "last": 88.14,
   "prev_close": 90.83,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "RB=F": {
   "symbol": "RB=F",
-  "last": 2.7015,
+  "last": 2.7147,
   "prev_close": 2.7767,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "CAD=X": {
   "symbol": "CAD=X",
-  "last": 1.4089,
+  "last": 1.4101,
   "prev_close": 1.4017,
   "time_utc": "2026-11-09 00:00",
   "source": "yahoo (delayed)"
@@ -71,7 +71,7 @@
  },
  "BRL=X": {
   "symbol": "BRL=X",
-  "last": 5.4959,
+  "last": 5.5063,
   "prev_close": 5.5035,
   "time_utc": "2026-11-09 00:00",
   "source": "yahoo (delayed)"
@@ -106,35 +106,35 @@
  },
  "EGP=X": {
   "symbol": "EGP=X",
-  "last": 53.95,
+  "last": 53.88,
   "prev_close": 53.8739,
   "time_utc": "2026-11-09 00:00",
   "source": "yahoo (delayed)"
  },
  "EURUSD=X": {
   "symbol": "EURUSD=X",
-  "last": 1.1194,
+  "last": 1.1192,
   "prev_close": 1.1228,
   "time_utc": "2026-11-09 00:00",
   "source": "yahoo (delayed)"
  },
  "DX-Y.NYB": {
   "symbol": "DX-Y.NYB",
-  "last": 101.813,
+  "last": 101.872,
   "prev_close": 102.3,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "ZW=F": {
   "symbol": "ZW=F",
-  "last": 586.75,
+  "last": 588.25,
   "prev_close": 591.25,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "KE=F": {
   "symbol": "KE=F",
-  "last": 627.0,
+  "last": 628.75,
   "prev_close": 632.5,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
@@ -162,21 +162,21 @@
  },
  "SB=F": {
   "symbol": "SB=F",
-  "last": 18.3,
+  "last": 18.24,
   "prev_close": 18.24,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "KC=F": {
   "symbol": "KC=F",
-  "last": 277.1,
+  "last": 279.5,
   "prev_close": 280.0,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "CC=F": {
   "symbol": "CC=F",
-  "last": 5235.0,
+  "last": 5215.0,
   "prev_close": 5155.0,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
@@ -218,77 +218,77 @@
  },
  "ZLZ26.CBT": {
   "symbol": "ZLZ26.CBT",
-  "last": 62.38,
+  "last": 62.54,
   "prev_close": 62.26,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "ZLF27.CBT": {
   "symbol": "ZLF27.CBT",
-  "last": 62.54,
+  "last": 62.69,
   "prev_close": 62.41,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "ZLH27.CBT": {
   "symbol": "ZLH27.CBT",
-  "last": 63.0,
+  "last": 63.18,
   "prev_close": 62.91,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "ZLK27.CBT": {
   "symbol": "ZLK27.CBT",
-  "last": 63.51,
+  "last": 63.64,
   "prev_close": 63.4,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "ZLN27.CBT": {
   "symbol": "ZLN27.CBT",
-  "last": 63.87,
+  "last": 63.91,
   "prev_close": 63.67,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "ZLQ27.CBT": {
   "symbol": "ZLQ27.CBT",
-  "last": 63.78,
+  "last": 63.76,
   "prev_close": 63.54,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "ZMZ26.CBT": {
   "symbol": "ZMZ26.CBT",
-  "last": 317.5,
+  "last": 317.4,
   "prev_close": 319.2,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "ZMF27.CBT": {
   "symbol": "ZMF27.CBT",
-  "last": 318.3,
+  "last": 318.2,
   "prev_close": 319.7,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "ZMH27.CBT": {
   "symbol": "ZMH27.CBT",
-  "last": 320.0,
+  "last": 319.8,
   "prev_close": 321.2,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "ZMK27.CBT": {
   "symbol": "ZMK27.CBT",
-  "last": 323.6,
+  "last": 323.3,
   "prev_close": 324.6,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "ZMN27.CBT": {
   "symbol": "ZMN27.CBT",
-  "last": 327.9,
+  "last": 328.0,
   "prev_close": 328.8,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
@@ -309,35 +309,35 @@
  },
  "ZSF27.CBT": {
   "symbol": "ZSF27.CBT",
-  "last": 1193.5,
+  "last": 1195.25,
   "prev_close": 1193.75,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "ZSH27.CBT": {
   "symbol": "ZSH27.CBT",
-  "last": 1198.0,
+  "last": 1200.25,
   "prev_close": 1199.25,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "ZSK27.CBT": {
   "symbol": "ZSK27.CBT",
-  "last": 1207.0,
+  "last": 1208.5,
   "prev_close": 1208.25,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "ZSN27.CBT": {
   "symbol": "ZSN27.CBT",
-  "last": 1214.0,
+  "last": 1215.75,
   "prev_close": 1215.5,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "ZSQ27.CBT": {
   "symbol": "ZSQ27.CBT",
-  "last": 1203.0,
+  "last": 1204.75,
   "prev_close": 1204.75,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
@@ -351,7 +351,7 @@
  },
  "ZCH27.CBT": {
   "symbol": "ZCH27.CBT",
-  "last": 455.75,
+  "last": 456.0,
   "prev_close": 455.25,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
@@ -365,87 +365,87 @@
  },
  "ZCN27.CBT": {
   "symbol": "ZCN27.CBT",
-  "last": 471.5,
+  "last": 471.75,
   "prev_close": 471.25,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "ZCU27.CBT": {
   "symbol": "ZCU27.CBT",
-  "last": 469.5,
+  "last": 469.25,
   "prev_close": 469.75,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "ZCZ27.CBT": {
   "symbol": "ZCZ27.CBT",
-  "last": 485.0,
+  "last": 484.75,
   "prev_close": 485.25,
   "time_utc": "2026-11-09 05:00",
   "source": "yahoo (delayed)"
  },
  "_sina_futures": {
   "hf_BO": {
-   "last": 62.412,
+   "last": 62.697,
    "high": 63.0,
    "low": 62.19,
    "prev_settle": 62.26,
    "open": 62.31,
-   "time_beijing": "19:30:18",
+   "time_beijing": "20:32:44",
    "date": "2026-11-09"
   },
   "hf_SM": {
-   "last": 317.4,
+   "last": 317.644,
    "high": 321.6,
-   "low": 317.4,
+   "low": 317.0,
    "prev_settle": 319.2,
    "open": 319.3,
-   "time_beijing": "19:30:21",
+   "time_beijing": "20:33:55",
    "date": "2026-11-09"
   },
   "hf_S": {
-   "last": 1194.15,
+   "last": 1195.893,
    "high": 1202.5,
    "low": 1193.0,
    "prev_settle": 1193.75,
    "open": 1193.75,
-   "time_beijing": "19:30:05",
+   "time_beijing": "20:33:33",
    "date": "2026-11-09"
   },
   "hf_C": {
-   "last": 442.638,
+   "last": 443.295,
    "high": 443.75,
    "low": 440.5,
    "prev_settle": 441.5,
    "open": 441.5,
-   "time_beijing": "19:30:21",
+   "time_beijing": "20:34:04",
    "date": "2026-11-09"
   },
   "hf_HO": {
-   "last": 4.275,
+   "last": 4.273,
    "high": 4.382,
    "low": 4.24,
    "prev_settle": 4.332,
    "open": 4.382,
-   "time_beijing": "19:30:21",
+   "time_beijing": "20:34:01",
    "date": "2026-11-09"
   },
   "hf_OIL": {
-   "last": 95.026,
+   "last": 94.882,
    "high": 98.43,
    "low": 94.41,
    "prev_settle": 98.32,
    "open": 98.2,
-   "time_beijing": "19:30:22",
+   "time_beijing": "20:34:01",
    "date": "2026-11-09"
   },
   "hf_CL": {
-   "last": 88.23,
+   "last": 88.195,
    "high": 91.42,
    "low": 87.54,
    "prev_settle": 90.83,
    "open": 90.83,
-   "time_beijing": "19:30:22",
+   "time_beijing": "20:34:04",
    "date": "2026-11-09"
   },
   "hf_FCPO": {
@@ -465,8 +465,8 @@
    "date": "2026-11-06"
   },
   "fx_susdbrl": {
-   "last": 5.5034,
-   "time": "18:00:15",
+   "last": 5.506,
+   "time": "20:34:01",
    "date": "2026-11-09"
   },
   "fx_susdinr": {
@@ -475,13 +475,13 @@
    "date": "2026-11-09"
   },
   "fx_susdcny": {
-   "last": 6.672,
-   "time": "19:29:00",
+   "last": 6.6722,
+   "time": "20:33:00",
    "date": "2026-11-09"
   },
   "fx_seurusd": {
-   "last": 1.119,
-   "time": "19:30:17",
+   "last": 1.1187,
+   "time": "20:34:01",
    "date": "2026-11-09"
   },
   "fx_susdidr": {
@@ -545,43 +545,43 @@
   "RBD Palm Olein": 1055.0
  },
  "_spreads": {
-  "oilshare_pct": 49.58,
-  "board_crush_usd_bu": 1.907,
-  "boho_usd_gal": -0.325,
-  "soy_minus_palm_fob_usd_t": 369.9,
+  "oilshare_pct": 49.67,
+  "board_crush_usd_bu": 1.926,
+  "boho_usd_gal": -0.348,
+  "soy_minus_palm_fob_usd_t": 376.2,
   "usdmyr": 4.056,
-  "soy_minus_fcpo_usd_t": 326.2,
+  "soy_minus_fcpo_usd_t": 332.5,
   "inputs": {
-   "zl": 62.412,
-   "zm": 317.4,
-   "zs": 1194.15,
-   "ho": 4.275,
+   "zl": 62.697,
+   "zm": 317.644,
+   "zs": 1195.893,
+   "ho": 4.273,
    "fcpo": 4257.8
   }
  },
  "_percentiles": {
   "boho_usd_gal": {
-   "last": -0.351,
+   "last": -0.338,
    "date": "2026-11-09",
-   "pct_2y": 91.7,
-   "pct_1y": 83.5,
+   "pct_2y": 91.9,
+   "pct_1y": 83.9,
    "median_2y": -1.348,
    "min_2y": -2.215,
    "max_2y": 0.147,
    "n": 504
   },
   "oilshare_pct": {
-   "last": 49.567,
+   "last": 49.627,
    "date": "2026-11-09",
-   "pct_2y": 65.5,
-   "pct_1y": 41.7,
+   "pct_2y": 66.3,
+   "pct_1y": 42.9,
    "median_2y": 47.869,
    "min_2y": 38.979,
    "max_2y": 55.508,
    "n": 504
   },
   "board_crush_usd_bu": {
-   "last": 1.913,
+   "last": 1.907,
    "date": "2026-11-09",
    "pct_2y": 59.1,
    "pct_1y": 27.2,
@@ -591,10 +591,10 @@
    "n": 504
   },
   "soy_minus_palm_usd_t": {
-   "last": 326.968,
+   "last": 330.275,
    "date": "2026-11-09",
-   "pct_2y": 73.4,
-   "pct_1y": 47.1,
+   "pct_2y": 73.8,
+   "pct_1y": 47.9,
    "median_2y": 164.862,
    "min_2y": -225.571,
    "max_2y": 566.521,
@@ -611,7 +611,7 @@
    "n": 489
   },
   "zl_cents_lb": {
-   "last": 62.39,
+   "last": 62.54,
    "date": "2026-11-09",
    "pct_2y": 65.3,
    "pct_1y": 31.1,
@@ -631,7 +631,7 @@
    "n": 484
   },
   "zl_dec_minus_mar": {
-   "last": -0.62,
+   "last": -0.64,
    "date": "2026-11-09",
    "pct_2y": 1.5,
    "pct_1y": 2.8,
