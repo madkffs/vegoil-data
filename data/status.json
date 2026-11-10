@@ -1,10 +1,10 @@
 {
- "run_utc": "2026-11-10 01:01",
+ "run_utc": "2026-11-10 02:05",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
   "RS=F": "no data",
-  "santos_lineup": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+  "santos_lineup": "500 Server Error: Internal Server Error for url: https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/navios-esperados-carga/",
   "bunkers": "no prices parsed"
  },
  "nabsa_rows": {
