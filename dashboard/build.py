@@ -110,7 +110,7 @@ EST = {"7601": ("soybean_oil", "Soybean oil", "ZL_F.csv", "ZLZ26_CBT.csv"), "560
        "26603": ("soybean_meal", "Soybean meal", "ZM_F.csv", "ZMZ26_CBT.csv"), "2602": ("corn", "Corn", "ZC_F.csv", "ZCZ26_CBT.csv")}
 rows, fstats, est_delta = [], [], {}
 for code, (k, lab, f, fe) in EST.items():
-    px = load(f); pe = load(fe)
+    px = load(f); pe = load(fe); pe = pe[pe.index.dayofweek < 5]   # drop Sunday-evening partial sessions
     x = c[c.code.astype(str) == code].sort_values("date").set_index("date")
     net = x["net"]; net = net[net.index >= net.index.max() - pd.Timedelta(days=730)]
     p = px.reindex(px.index.union(net.index)).ffill().reindex(net.index)
