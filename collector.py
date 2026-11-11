@@ -1091,7 +1091,83 @@ def probe_brazil():
         time.sleep(1)
     with open(os.path.join(d, "probe.json"), "w") as fh: json.dump(out, fh, indent=1, ensure_ascii=False)
 
+EPA_QLIK_APP = "73b2b6a5-70c6-4820-b3fa-186ac094f10d"
+
+class Qlik:
+    """Minimal Qlik Sense engine (JSON-RPC over websocket) client for EPA's public EMTS dashboard."""
+    def __init__(self, app=EPA_QLIK_APP, host="edap.epa.gov", prefix="public"):
+        import websocket
+        s = requests.Session(); s.headers.update(UA)
+        r0 = s.get(f"https://{host}/{prefix}/single/?appid={app}&sheet=724a8750-42eb-4cdf-8018-c3f1c3c53779&opt=ctxmenu", timeout=60)
+        self.landing = {"status": r0.status_code, "url": r0.url, "cookies": list(s.cookies.get_dict().keys())}
+        cookie = "; ".join(f"{k}={v}" for k, v in s.cookies.get_dict().items())
+        self.ws = websocket.create_connection(f"wss://{host}/{prefix}/app/{app}", timeout=120,
+                                              header=[f"Origin: https://{host}", f"User-Agent: {UA['User-Agent']}"] + ([f"Cookie: {cookie}"] if cookie else []))
+        self.i = 0
+        self.first = None
+        try:
+            self.ws.settimeout(5); self.first = json.loads(self.ws.recv())
+        except Exception:
+            pass
+        self.ws.settimeout(120)
+    def call(self, handle, method, params=None):
+        self.i += 1; mid = self.i
+        self.ws.send(json.dumps({"jsonrpc": "2.0", "id": mid, "method": method, "handle": handle, "params": params if params is not None else {}}))
+        while True:
+            m = json.loads(self.ws.recv())
+            if m.get("id") == mid:
+                if "error" in m: raise RuntimeError(f"{method}: {m['error']}")
+                return m["result"]
+    def open(self, app=EPA_QLIK_APP):
+        r = self.call(-1, "OpenDoc", [app]); self.doc = r["qReturn"]["qHandle"]; return self.doc
+
+def probe_epa_qlik():
+    d = os.path.join(DATA, "probe_epa"); os.makedirs(d, exist_ok=True)
+    out = {}
+    try:
+        q = Qlik(); out["landing"] = q.landing; out["first"] = q.first
+        doc = q.open()
+        fl = q.call(doc, "CreateSessionObject", [{"qInfo": {"qType": "FieldList"}, "qFieldListDef": {"qShowSystem": False}}])
+        lay = q.call(fl["qReturn"]["qHandle"], "GetLayout")
+        out["fields"] = [f["qName"] for f in lay["qLayout"]["qFieldList"]["qItems"]]
+        infos = q.call(doc, "GetAllInfos")["qInfos"]
+        out["infos"] = infos
+        objs = {}
+        for inf in infos:
+            if inf["qType"] in ("sheet", "masterobject", "table", "pivot-table", "barchart", "linechart", "combochart", "straighttable", "kpi"):
+                try:
+                    h = q.call(doc, "GetObject", {"qId": inf["qId"]})["qReturn"]["qHandle"]
+                    L = q.call(h, "GetLayout")["qLayout"]
+                    hc = L.get("qHyperCube") or {}
+                    objs[inf["qId"]] = {"type": inf["qType"], "title": L.get("title") or (L.get("qMeta") or {}).get("title"),
+                                        "dims": [x.get("qFallbackTitle") for x in hc.get("qDimensionInfo", [])],
+                                        "meas": [x.get("qFallbackTitle") for x in hc.get("qMeasureInfo", [])],
+                                        "size": hc.get("qSize"), "cells": [c.get("name") for c in (L.get("cells") or [])][:40] if L.get("cells") else None}
+                    if inf["qType"] in ("table", "straighttable", "pivot-table", "barchart", "combochart", "linechart"):
+                        try:
+                            P = q.call(h, "GetProperties")["qProp"]
+                            hd = P.get("qHyperCubeDef", {})
+                            objs[inf["qId"]]["dim_defs"] = [x.get("qDef", {}).get("qFieldDefs") or x.get("qLibraryId") for x in hd.get("qDimensions", [])]
+                            objs[inf["qId"]]["meas_defs"] = [x.get("qDef", {}).get("qDef") or x.get("qLibraryId") for x in hd.get("qMeasures", [])]
+                        except Exception as ex:
+                            objs[inf["qId"]]["prop_err"] = str(ex)[:200]
+                except Exception as ex:
+                    objs[inf["qId"]] = {"type": inf["qType"], "err": str(ex)[:200]}
+        out["objects"] = objs
+        try:
+            ms = q.call(doc, "CreateSessionObject", [{"qInfo": {"qType": "MeasureList"}, "qMeasureListDef": {"qType": "measure", "qData": {"title": "/qMetaDef/title", "expr": "/qMeasure/qDef"}}}])
+            out["measures"] = q.call(ms["qReturn"]["qHandle"], "GetLayout")["qLayout"]["qMeasureList"]["qItems"]
+            ds = q.call(doc, "CreateSessionObject", [{"qInfo": {"qType": "DimensionList"}, "qDimensionListDef": {"qType": "dimension", "qData": {"title": "/qMetaDef/title", "f": "/qDim/qFieldDefs"}}}])
+            out["dimensions"] = q.call(ds["qReturn"]["qHandle"], "GetLayout")["qLayout"]["qDimensionList"]["qItems"]
+        except Exception as ex:
+            out["lists_err"] = str(ex)[:300]
+    except Exception as ex:
+        import traceback; out["error"] = traceback.format_exc()[-1500:]
+    with open(os.path.join(d, "qlik.json"), "w") as fh: json.dump(out, fh, indent=1, default=str)
+
 def main(mode):
+    if mode == "probe_epa":
+        probe_epa_qlik(); return
     if mode == "investing":
         investing_history(); return
     if mode == "probe2":
