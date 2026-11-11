@@ -1,11 +1,9 @@
 {
- "run_utc": "2026-11-11 02:04",
+ "run_utc": "2026-11-11 02:54",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
   "RS=F": "no data",
-  "paranagua_lineup": "Failed to perform, curl: (28) Operation timed out after 60000 milliseconds with 0 bytes received. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
-  "santos_lineup": "500 Server Error: Internal Server Error for url: https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/navios-esperados-carga/",
   "bunkers": "no prices parsed"
  },
  "euronext_cot_misses": [
