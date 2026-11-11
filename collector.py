@@ -1121,6 +1121,46 @@ class Qlik:
     def open(self, app=EPA_QLIK_APP):
         r = self.call(-1, "OpenDoc", [app]); self.doc = r["qReturn"]["qHandle"]; return self.doc
 
+def epa_generation_detail():
+    """RIN generation by RIN year, production month, producer type, D code and fuel category, from EPA's public
+    EMTS dashboard (the 'RINs Generated Transactions' Generation Summary), via the Qlik engine API.
+    Writes data/rins/epa_generation_detail.csv (replaced only when the pull looks complete)."""
+    import pandas as pd
+    q = Qlik(); doc = q.open()
+    dims = ["Generation_RIN_YEAR", "Generation_PRODUCTION_MONTH", "Generation_PRODUCER_TYPE", "Generation_FUEL_CODE", "Generation_FUEL_CATEGORY"]
+    hc = {"qInfo": {"qType": "rf-cube"}, "qHyperCubeDef": {
+        "qDimensions": [{"qDef": {"qFieldDefs": [f]}, "qNullSuppression": True} for f in dims],
+        "qMeasures": [{"qDef": {"qDef": "Sum([Generation_TOTAL_RINS])"}}, {"qDef": {"qDef": "Sum([Generation_TOTAL_VOLUME])"}}],
+        "qSuppressZero": False, "qSuppressMissing": True, "qInitialDataFetch": []}}
+    h = q.call(doc, "CreateSessionObject", [hc])["qReturn"]["qHandle"]
+    L = q.call(h, "GetLayout")["qLayout"]["qHyperCube"]; n = L["qSize"]["qcy"]; w = L["qSize"]["qcx"]
+    rows, top, page = [], 0, 1400
+    while top < n:
+        pg = q.call(h, "GetHyperCubeData", ["/qHyperCubeDef", [{"qTop": top, "qLeft": 0, "qWidth": w, "qHeight": min(page, n - top)}]])
+        for r in pg["qDataPages"][0]["qMatrix"]:
+            rows.append([c.get("qText") for c in r[:5]] + [r[5].get("qNum"), r[6].get("qNum")])
+        top += page
+    df = pd.DataFrame(rows, columns=["rin_year", "month", "producer_type", "d_code", "fuel_category", "rins", "gallons"])
+    df["rin_year"] = pd.to_numeric(df["rin_year"], errors="coerce"); df["month"] = pd.to_numeric(df["month"], errors="coerce")
+    df = df.dropna(subset=["rin_year", "month"])
+    df["rin_year"] = df["rin_year"].astype(int); df["month"] = df["month"].astype(int)
+    df["d_code"] = "D" + df["d_code"].astype(str).str.extract(r"(\d)")[0]
+    df = df[pd.to_numeric(df["rins"], errors="coerce").fillna(0) != 0]
+    df = df.sort_values(["rin_year", "month", "d_code", "producer_type", "fuel_category"])
+    df["source"] = "EPA EMTS dashboard (Qlik), " + dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d")
+    d = os.path.join(DATA, "rins"); os.makedirs(d, exist_ok=True)
+    p = os.path.join(d, "epa_generation_detail.csv")
+    old = pd.read_csv(p) if os.path.exists(p) else None
+    ok = len(df) >= (0.95 * len(old) if old is not None else 1000)
+    if ok: df.to_csv(p, index=False)
+    lm = df[["rin_year", "month"]].max(axis=0).tolist() if len(df) else None
+    last = df.sort_values(["rin_year", "month"]).iloc[-1] if len(df) else None
+    meta = {"fetched_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M"), "rows": len(df), "saved": ok,
+            "latest": f"{int(last.rin_year)}-{int(last.month):02d}" if last is not None else None,
+            "old_rows": None if old is None else len(old)}
+    with open(os.path.join(d, "epa_generation_meta.json"), "w") as fh: json.dump(meta, fh, indent=1)
+    return meta
+
 def probe_epa_qlik():
     d = os.path.join(DATA, "probe_epa"); os.makedirs(d, exist_ok=True)
     out = {}
@@ -1168,6 +1208,12 @@ def probe_epa_qlik():
 def main(mode):
     if mode == "probe_epa":
         probe_epa_qlik(); return
+    if mode == "epa_gen":
+        try: epa_generation_detail()
+        except Exception as ex:
+            import traceback; os.makedirs(os.path.join(DATA, "rins"), exist_ok=True)
+            with open(os.path.join(DATA, "rins", "epa_generation_error.txt"), "w") as fh: fh.write(traceback.format_exc()[-3000:])
+        return
     if mode == "investing":
         investing_history(); return
     if mode == "probe2":
@@ -1284,7 +1330,7 @@ def main(mode):
             except Exception as e:
                 status["errors"][name] = str(e)[:200]
     if mode in ("backfill", "probe") or dt.datetime.utcnow().minute < 15 and dt.datetime.utcnow().hour == 6:
-        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("comexstat_ports", comexstat_ports), ("emts_generation", emts_generation), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
+        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("comexstat_ports", comexstat_ports), ("emts_generation", emts_generation), ("epa_generation_detail", epa_generation_detail), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
             try:
                 fn()
             except Exception as e:

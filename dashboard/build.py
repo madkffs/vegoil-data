@@ -739,6 +739,14 @@ if os.path.exists(emts_p):
     gap_ok = (tot.index.to_series().diff().dt.days.fillna(31) < 40) | (tot.index.month == 1)
     mon = ((tot - prev_t) / 1e6).where(gap_ok)
     imon = ((imp - prev_i) / 1e6).where(gap_ok)
+    det_p = os.path.join(D, "rins", "epa_generation_detail.csv")
+    if os.path.exists(det_p):  # RINs by the month they were generated (EPA dashboard); better than year-to-date differences
+        dt_ = pd.read_csv(det_p); dt_ = dt_[dt_["d_code"] == "D4"]
+        dt_["fm"] = pd.to_datetime(dict(year=dt_["rin_year"], month=dt_["month"], day=1))
+        gm = dt_.groupby("fm")["rins"].sum() / 1e6
+        gi = dt_[dt_["producer_type"] != "Domestic"].groupby("fm")["rins"].sum().reindex(gm.index, fill_value=0) / 1e6
+        for k_, v_ in gm.items():
+            if k_ in mon.index: mon[k_] = v_; imon[k_] = gi[k_]
     need = {y: {k: a - c - D5_BN for k, (a, c) in v.items()} for y, v in RFS.items()}
     rows_d4 = []
     for fm_, v in mon.items():
@@ -769,3 +777,24 @@ if os.path.exists(emts_p):
                             "last_month": f"{last_m:%Y-%m}", "status": "Final" if left == 0 else ("Projected" if done_m == 0 else "Partial")})
     dump("d4_pace.json", rows_d4)
     print("d4", last_m, round(pace3, 1), [(r_["id"], r_.get("surplus_bn")) for r_ in rows_d4 if r_["kind"] == "year"])
+
+
+# ---------- RIN generation by D code, fuel and producer type (EPA EMTS dashboard) ----------
+det_p = os.path.join(D, "rins", "epa_generation_detail.csv")
+if os.path.exists(det_p):
+    g = pd.read_csv(det_p)
+    g["fuel"] = g["fuel_category"].str.replace(r"\s*\(EV [0-9.]+\)", "", regex=True).str.replace("Non-ester Renewable Diesel", "Renewable diesel") \
+        .str.replace("Renewable Jet Fuel", "Renewable jet fuel (SAF)").str.replace("Non-cellulosic Ethanol", "Ethanol").str.replace("Cellulosic Ethanol", "Cellulosic ethanol") \
+        .str.replace("Renewable Natural Gas - RNG", "Renewable natural gas").str.replace("Renewable Compressed Natural Gas - CNG", "Renewable CNG") \
+        .str.replace("Renewable Liquefied Natural Gas - LNG", "Renewable LNG").str.replace("Renewable Heating Oil", "Renewable heating oil").str.replace("Renewable Naphtha", "Renewable naphtha")
+    g["fuel"] = g["fuel"].replace({"Renewable Compressed Natural Gas": "Renewable CNG", "Renewable Liquefied Natural Gas": "Renewable LNG",
+        "Cellulosic Heating Oil (EV application required)": "Cellulosic heating oil", "Cellulosic Diesel (EV application required)": "Cellulosic diesel",
+        "Renewable Gasoline": "Renewable gasoline"})
+    g["origin"] = g["producer_type"].map({"Domestic": "Domestic"}).fillna("Imported")
+    g["m"] = g["rin_year"].astype(int).astype(str) + "-" + g["month"].astype(int).map("{:02d}".format)
+    a = g.groupby(["m", "d_code", "fuel", "origin"], as_index=False)[["rins", "gallons"]].sum()
+    a = a[a["m"] >= "2016-01"]
+    rows_rf = [{"id": f"{r.m}|{r.d_code}|{r.fuel}|{r.origin}", "month": r.m, "d_code": r.d_code, "fuel": r.fuel, "origin": r.origin,
+                "rins_mn": round(r.rins / 1e6, 2), "gal_mn": round(r.gallons / 1e6, 2)} for r in a.itertuples()]
+    dump("rin_fuel.json", rows_rf)
+    lm = a["m"].max(); print("rin_fuel", len(rows_rf), lm)
