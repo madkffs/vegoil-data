@@ -948,6 +948,8 @@ def paranagua_lineup():
     r = cr.get(PARANAGUA, impersonate="chrome", timeout=60)
     r.raise_for_status()
     t = r.text
+    os.makedirs(os.path.join(DATA, "lineups", "paranagua"), exist_ok=True)
+    with open(os.path.join(DATA, "lineups", "paranagua", "raw_latest.html"), "w") as fh: fh.write(t)
     clean = lambda c: re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", c)).strip()
     rows = []
     parts = re.split(r"<th colspan='\d+'[^>]*>\s*([^<]+?)\s*</th>", t)
