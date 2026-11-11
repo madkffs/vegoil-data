@@ -1,11 +1,17 @@
 {
- "run_utc": "2026-11-10 21:43",
+ "run_utc": "2026-11-11 01:03",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
   "RS=F": "no data",
+  "santos_lineup": "500 Server Error: Internal Server Error for url: https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/navios-esperados-carga/",
   "bunkers": "no prices parsed"
  },
+ "euronext_cot_misses": [
+  "EBM week of 2026-11-11",
+  "ECO week of 2026-11-11",
+  "EMA week of 2026-11-11"
+ ],
  "nabsa_rows": {
   "sailed": 368,
   "lineup": 1306,

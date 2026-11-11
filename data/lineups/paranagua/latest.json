@@ -1,23 +1,6 @@
 {
- "fetched_utc": "2026-11-10 07:10",
+ "fetched_utc": "2026-11-11 01:06",
  "rows": [
-  {
-   "section": "ATRACADOS",
-   "prog": "81096",
-   "vessel": "BRISTOL TRADER",
-   "imo": "9737101",
-   "berth": "143",
-   "direction": "Exp",
-   "agency": "CARGILL AGRICOLA",
-   "terminal": "CATTALINI",
-   "product": "OLEO DE SOJA",
-   "arrival": "08/11/2026 12:30",
-   "berthed": "08/11/2026 16:10",
-   "etb": null,
-   "eta": null,
-   "sailed": null,
-   "tons": 11000.0
-  },
   {
    "section": "ESPERADOS",
    "prog": "81044",
@@ -51,6 +34,23 @@
    "eta": "11/11/2026 23:30",
    "sailed": null,
    "tons": 13182.0
+  },
+  {
+   "section": "DESPACHADOS",
+   "prog": "81096",
+   "vessel": "BRISTOL TRADER",
+   "imo": "9737101",
+   "berth": "143",
+   "direction": "Exp",
+   "agency": "CARGILL AGRICOLA",
+   "terminal": "CATTALINI",
+   "product": "OLEO DE SOJA",
+   "arrival": "08/11/2026 12:30",
+   "berthed": null,
+   "etb": null,
+   "eta": null,
+   "sailed": "10/11/2026 08:15",
+   "tons": 11000.0
   }
  ]
 }
