@@ -1131,10 +1131,11 @@ def main(mode):
         append_csv(os.path.join(DATA, "cot_agri_fo.csv"), rows, key="key")
     except Exception as e:
         status["errors"]["cot_agri_fo"] = str(e)[:200]
-    try:
-        cme_volume_oi()
-    except Exception as e:
-        status["errors"]["cme_volume_oi"] = str(e)[:200]
+    if dt.datetime.utcnow().minute < 15:
+        try:
+            cme_volume_oi()
+        except Exception as e:
+            status["errors"]["cme_volume_oi"] = str(e)[:200]
     try:
         rows, misses = euronext_cot(mode)
         append_csv(os.path.join(DATA, "euronext_cot.csv"), rows, key="key")

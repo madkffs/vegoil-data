@@ -104,30 +104,42 @@ dump("freight.json", frt)
 dump("bdry_daily.json", [{"date": f"{d:%Y-%m-%d}", "close": float(v)} for d, v in bd[bd.index >= bd.index.max() - pd.Timedelta(days=730)].items()])
 
 # ---------- fund positions: CBOT soy complex and corn, with estimate ----------
-c = pd.read_csv(os.path.join(D, "cot_agri.csv")); c["date"] = pd.to_datetime(c["date"])
-c["net"] = c["mm_long"] - c["mm_short"]
-EST = {"7601": ("soybean_oil", "Soybean oil", "ZL_F.csv", "ZLZ26_CBT.csv"), "5602": ("soybeans", "Soybeans", "ZS_F.csv", "ZSX26_CBT.csv"),
-       "26603": ("soybean_meal", "Soybean meal", "ZM_F.csv", "ZMZ26_CBT.csv"), "2602": ("corn", "Corn", "ZC_F.csv", "ZCZ26_CBT.csv")}
+# Headline = CFTC disaggregated managed money, FUTURES AND OPTIONS COMBINED (the figure most market commentary quotes);
+# futures-only kept alongside. Daily estimate since the report: fitted contracts per 1% move of the 2nd-month contract
+# (2 years of weekly changes), applied to the 2nd-month price change since the report Tuesday; +/- one weekly residual s.d.
+c_fo = pd.read_csv(os.path.join(D, "cot_agri_fo.csv"), dtype={"code": str}); c_fo["date"] = pd.to_datetime(c_fo["date"])
+c_fu = pd.read_csv(os.path.join(D, "cot_agri.csv"), dtype={"code": str}); c_fu["date"] = pd.to_datetime(c_fu["date"])
+c = c_fo.copy(); c["code"] = c["code"].str.lstrip("0"); c["net"] = c["mm_long"] - c["mm_short"]   # all-ag section uses the same combined report
+EST = {"007601": ("soybean_oil", "Soybean oil", "ZL_2.csv", "ZL_F.csv"), "005602": ("soybeans", "Soybeans", None, "ZS_F.csv"),
+       "026603": ("soybean_meal", "Soybean meal", "ZM_2.csv", "ZM_F.csv"), "002602": ("corn", "Corn", None, "ZC_F.csv")}
 rows, fstats, est_delta = [], [], {}
-for code, (k, lab, f, fe) in EST.items():
-    px = load(f); pe = load(fe); pe = pe[pe.index.dayofweek < 5]   # drop Sunday-evening partial sessions
-    x = c[c.code.astype(str) == code].sort_values("date").set_index("date")
-    net = x["net"]; net = net[net.index >= net.index.max() - pd.Timedelta(days=730)]
+for code, (k, lab, f2, f1) in EST.items():
+    px = None
+    for f in (f2, f1):
+        if f and os.path.exists(os.path.join(D, "daily", f)):
+            px = load(f); px = px[px.index.dayofweek < 5]; break
+    x = c_fo[c_fo.code.str.lstrip("0") == code.lstrip("0")].sort_values("date").set_index("date")
+    xf = c_fu[c_fu.code.str.lstrip("0") == code.lstrip("0")].sort_values("date").set_index("date")
+    net = (x["mm_long"] - x["mm_short"]); net = net[net.index >= net.index.max() - pd.Timedelta(days=730)]
     p = px.reindex(px.index.union(net.index)).ffill().reindex(net.index)
-    dn, dp = net.diff(), np.log(p).diff(); ok = dn.notna() & dp.notna() & (dp.abs() < 0.15)
-    beta = float(np.polyfit(dp[ok], dn[ok], 1)[0]); r2 = float(np.corrcoef(dp[ok], dn[ok])[0, 1] ** 2)
-    ld, ln = net.index[-1], int(net.iloc[-1]); p0e = float(pe[pe.index <= ld].iloc[-1])
+    dn, dp = net.diff(), np.log(p).diff() * 100; ok = dn.notna() & dp.notna() & (dp.abs() < 15)
+    beta = float(np.linalg.lstsq(np.c_[dp[ok]], dn[ok], rcond=None)[0][0])
+    resid = dn[ok] - beta * dp[ok]; sd = float(resid.std()); r2 = float(1 - resid.var() / dn[ok].var())
+    ld, ln = net.index[-1], int(net.iloc[-1]); p0 = float(p.iloc[-1])
     for d, v in net.items(): rows.append({"id": f"{k}-{d:%Y%m%d}-o", "market": k, "date": f"{d:%Y-%m-%d}", "net": int(v), "kind": "official"})
     rows.append({"id": f"{k}-{ld:%Y%m%d}-e", "market": k, "date": f"{ld:%Y-%m-%d}", "net": ln, "kind": "estimate"})
     est = ln; series = {}
-    for d, v in pe[pe.index > ld].items():
-        est = int(round(ln + beta * np.log(v / p0e))); series[d] = est - ln
+    for d, v in px[px.index > ld].items():
+        est = int(round(ln + beta * np.log(v / p0) * 100)); series[d] = est - ln
         rows.append({"id": f"{k}-{d:%Y%m%d}-e", "market": k, "date": f"{d:%Y-%m-%d}", "net": est, "kind": "estimate"})
-    est_delta[code] = (series, pe)
-    oi = float(x["open_interest"].iloc[-1])
+    est_delta[code.lstrip("0")] = (series, px)
+    oi = float(x["open_interest"].iloc[-1]); fut_net = int((xf["mm_long"] - xf["mm_short"]).iloc[-1]) if len(xf) else None
     fstats.append({"market": k, "label": lab, "official_date": f"{ld:%Y-%m-%d}", "official_net": ln, "week_change": int(net.iloc[-1] - net.iloc[-2]),
-                   "est_date": f"{(pe.index[-1] if len(series) else ld):%Y-%m-%d}", "est_net": est, "est_change": est - ln,
-                   "pct_oi": round(ln / oi * 100, 1), "r2": round(r2, 2), "est_contract": fe.split("_")[0], "pct_2y": int(round((net < ln).mean() * 100))})
+                   "futures_only_net": fut_net, "report": "Futures and options combined",
+                   "est_date": f"{(px.index[-1] if len(series) else ld):%Y-%m-%d}", "est_net": est, "est_change": est - ln,
+                   "est_low": int(round(est - sd)), "est_high": int(round(est + sd)), "per_1pct": int(round(beta)),
+                   "pct_oi": round(ln / oi * 100, 1), "r2": round(r2, 2), "est_contract": (f2 or f1).split(".")[0].replace("_2", " 2nd month").replace("_F", " front"),
+                   "pct_2y": int(round((net < ln).mean() * 100))})
 dump("funds.json", rows); dump("fund_stats.json", fstats)
 
 # ---------- every agricultural market in dollars ----------
