@@ -1,0 +1,2578 @@
+{
+ "landing": {
+  "status": 200,
+  "url": "https://edap.epa.gov/public/single/?appid=73b2b6a5-70c6-4820-b3fa-186ac094f10d&sheet=724a8750-42eb-4cdf-8018-c3f1c3c53779&opt=ctxmenu",
+  "cookies": [
+   "X-Qlik-Session-public"
+  ]
+ },
+ "first": {
+  "jsonrpc": "2.0",
+  "method": "OnAuthenticationInformation",
+  "params": {
+   "userId": "anonymous555ab94a-cdf4-4145-bcce-0005182326b7",
+   "userDirectory": "NONE",
+   "loginUri": "https://edap.epa.gov/public/internal_forms_authentication/?targetId=9a448489-6858-4e64-a10a-c144ded2b560",
+   "serverNodeId": "fc7f386c-4b3b-4c97-bd3b-28d5446e4397",
+   "mustAuthenticate": false
+  }
+ },
+ "fields": [
+  "RVO_T1_year",
+  "RVO_T1_projected_gasoline_diesel_use",
+  "RVO_T1_projected_exempted",
+  "RVO_T1_obligated_volume",
+  "RVO_T1_exempted_volume",
+  "RVO_T1_all_reported_volume",
+  "RVO_T2_parameter",
+  "RVO_T2_year",
+  "RVO_T2_AB",
+  "RVO_T2_BD",
+  "RVO_T2_CB",
+  "RVO_T2_RF",
+  "RVO_T3_year",
+  "RVO_T3_rvo_name",
+  "RVO_T3_numeric_standard",
+  "RVO_T3_display_exporter_volume",
+  "RVO_T3_display_exporter_total_rvo",
+  "RVO_T4_year",
+  "RVO_T4_compliance_lvl",
+  "RVO_T4_rin_year",
+  "RVO_T4_3_cb",
+  "RVO_T4_4_bd",
+  "RVO_T4_5_ab",
+  "RVO_T4_6_rf",
+  "RVO_T4_7_cb",
+  "RVO_T5_year",
+  "RVO_T5_cellulosic_biofuel",
+  "RVO_T5_biomass_based_diesel",
+  "RVO_T5_advanced_biofuel",
+  "RVO_T5_renewable_fuel",
+  "RVO_T6_year",
+  "RVO_T6_AB",
+  "RVO_T6_BD",
+  "RVO_T6_CB",
+  "RVO_T6_RF",
+  "RVO_T7_year",
+  "RVO_T7_cwc_price",
+  "RVO_T7_display_cwc_total",
+  "Feedstock_FUEL_CD",
+  "Feedstock_FUEL_CATEGORY",
+  "Feedstock_RIN_YEAR",
+  "Feedstock_PRODUCTION_MONTH",
+  "Feedstock_FEEDSTOCK_TXT",
+  "Feedstock_TOTAL_RINS",
+  "Generation_PRODUCER_TYPE",
+  "Generation_RIN_YEAR",
+  "Generation_PRODUCTION_MONTH",
+  "Generation_FUEL_CODE",
+  "Generation_FUEL_CATEGORY",
+  "Generation_TOTAL_RINS",
+  "Generation_TOTAL_VOLUME",
+  "Retire_RIN Year",
+  "Retire_Fuel Code",
+  "Retire_Fuel Code Description",
+  "Retire_Ret Reason Cd",
+  "Retire_Ret Description",
+  "RETIRE_COMPLIANCE_LEVEL",
+  "Retire_RIN Quantity",
+  "Holding_Reg Group",
+  "Holding_BALANCE_Date",
+  "Holding_RIN_YEAR",
+  "Holding_FUEL_CD",
+  "Holding_Sum of TOTAL_RINS",
+  "Holding_ASSIGNMENT_CD",
+  "Price_RIN_YEAR",
+  "Price_FUEL_CD",
+  "Price_QAP_SERVICE_TYPE_CD",
+  "Price_YEAR_TRANSFER",
+  "Price_WEEK_TRANSFER",
+  "Price_VWA_PRICE",
+  "Price_TOTAL_RINS",
+  "Price_INTERMEDIATE_PRICE",
+  "Price_Transfer Date by week",
+  "Price_Transfer_date",
+  "Sales_Reg_Group",
+  "Sales_RIN_YEAR",
+  "Sales_COMPLIANCE_YEAR",
+  "Sales_FUEL_CD",
+  "Sales_Sum of Total_RINs",
+  "Sales_ASSIGNMENT_CD",
+  "Separate_RIN Year",
+  "Separate_Fuel Code",
+  "Separate_Fuel Code Description",
+  "Separate_Sep Reason Cd",
+  "Separate_Sep Cd Description",
+  "Separate_RIN Quantity",
+  "Available_RIN Year",
+  "Available_Fuel (D Code)",
+  "Available_Assignment",
+  "Available_Total Generated",
+  "Available_Total Retired",
+  "Available_Total Locked",
+  "Available_Total Unlocked",
+  "VolumeTrade_RIN_YEAR",
+  "VolumeTrade_FUEL_CD",
+  "VolumeTrade_QAP_TYPE_CD",
+  "VolumeTrade_ASSIGNMENT_CD",
+  "VolumeTrade_YEAR_TRANSFER",
+  "VolumeTrade_WEEK_TRANSFER",
+  "VolumeTrade_TOTAL_RINS",
+  "VolumeTrade_Transfer_Date",
+  "VolT_Transfer_date",
+  "Feedstock_FUEL_CD_TXT",
+  "Feedstock Summary.Primary ID-Primary ID",
+  "Generation_FUEL_CODE_TXT",
+  "Retire_Fuel Code_TXT",
+  "Holding_FUEL_CD_TXT",
+  "Holding_ASSIGNMENT_CD_TXT",
+  "Price_YEAR_TRANSFER-Price_FUEL_CD-Price_QAP_SERVICE_TYPE_CD-VolumeTrade_YEAR_TRANSFER-VolumeTrade_FUEL_CD-VolumeTrade_QAP_SERVICE_TYPE_CD-RIN Volume.Price_YEAR_TRANSFER-Price_FUEL_CD-Price_QAP_SERVICE_TYPE_CD-VolumeTrade_YEAR_TRANSFER-VolumeTrade_FUEL_CD-V",
+  "Price_FUEL_CD_TXT",
+  "Price_QAP_Service_Type_TXT",
+  "Sales_FUEL_CD_TXT",
+  "Sales_ASSIGNMENT_CD_TXT",
+  "Separate_Fuel Code_TXT",
+  "Available_Fuel_Code_TXT",
+  "Total Available.Available Primary ID",
+  "VolumeTrade_FUEL_CD_TXT",
+  "VolumeTrade_ASSIGNMENT_CD_TXT",
+  "VolumeTrade_QAP_SERVICE_TYPE_CD_TXT",
+  "RVO_Parameter_ID",
+  "RVO_Parameter",
+  "RVO_RVO",
+  "RVO_Compliance Year",
+  "RVO_Value",
+  "Fuel (D Code)",
+  "RVO_Value_Adjusted",
+  "Compliance Year",
+  "Category",
+  "RIN Year",
+  "D3",
+  "D4",
+  "D5",
+  "D6",
+  "D7",
+  "CWC_RIN Year",
+  "CWC_Credit Price",
+  "CWC_CWCs Purchased",
+  "Sheet1-4.Compliance Year",
+  "Estimated Volumes of Gasoline and Diesel Exempted (million gallons)",
+  "Estimated Renewable Volume Obligations (RVO) Exempted (million RINs)",
+  "SRE_Alternative_Compliance Year",
+  "SRE_Alternative_Number of Refineries Opted-in",
+  "SRE_Alternative_Total RVO (Including Prior-Year Deficits) (million RINs)",
+  "SRE_Alternative_Total RINs Retired (million RINs)",
+  "SRE_Alternative_Total RVO Outstanding (million RINs)",
+  "SRE-3_Date of Submission",
+  "SRE-3_Submitter",
+  "SRE-3_Facility Location",
+  "SRE-3_Compliance Year",
+  "SRE-3_Petition Decision",
+  "ARRS-2_Compliance Year",
+  "ARRS-2_Submitter",
+  "ARRS-2_Facility Location",
+  "ERVO_Compliance Year",
+  "ERVO_Fuel Type of the Exported Renewable Fuel",
+  "ERVO_Equivalence Value",
+  "ERVO_Volume of Exported Renewable Fuel (in gallons)",
+  "ERVO_Exporter RVO \u2013 Volume multiplied by Equivalence Value",
+  "SRE_V2_Compliance Year",
+  "SRE_V2_Petitions",
+  "SRE_V2_Full (100%) Grant",
+  "SRE_V2_Partial (50%) Grant",
+  "SRE_V2_Denial",
+  "SRE_V2_Ineligible",
+  "SRE_V2_Withdrawn",
+  "SRE_V2_Pending"
+ ],
+ "infos": [
+  {
+   "qId": "878fc204-0435-49ee-86d1-3fe5953f8a91",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "ab0e8d58-5c03-4f06-b632-196451478f19",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "e1c1345d-2501-4f15-81d7-58ccdbde9937",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "28da346c-b60a-46bb-b1b7-2b6f95a48351",
+   "qType": "listbox"
+  },
+  {
+   "qId": "169c6e9a-706a-432e-8fa3-5458e7d9e008",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "4379119c-1a1b-4c15-a17f-aa179e82e8f4",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "4b05c5cd-e4a2-4851-986b-778f0b3260c1",
+   "qType": "listbox"
+  },
+  {
+   "qId": "69a20f58-25c2-4aba-b160-de4cdc5e2ebc",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "8318c272-382e-4a30-a3b8-31a98fa5d633",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "e455a79b-2007-4b5e-8adf-172a602c389e",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "f0193c85-cd8f-4836-b75b-bbc93b841d08",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "f2a8a141-9806-48eb-8abe-b88ba8871608",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "03d8522f-8f9a-43b7-8ef0-052d3297e52b",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "04f4399f-9c70-4a1c-bc29-b6719fadf01b",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "0532efe4-0800-4d16-b7db-a45d3a09ffe3",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "0da7fa7e-a159-45f4-9400-306a744227c0",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "0efe2100-8519-48c1-9285-4e520d7d2882",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "1fd2aa10-5179-4c30-800d-765adcaee2a4",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "5b05df20-c41b-4498-b6e6-8133b702a738",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "679e0428-fa34-49ea-8e34-0d1457ca9f77",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "726ca7f0-23a3-4956-97ad-081cdf0b4d26",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "8dcc8955-572f-461a-9d1f-354c9ec4a25d",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "bd820eee-9edf-4ae2-85c9-45eeebee8199",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "c55a9cdf-b09a-44b9-bac7-58589834ddda",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "03688a94-e91f-4655-a5d4-11c83ef97eed",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "056c8f10-62c1-41d8-8a49-558eb2344637",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "26aefc3c-291e-41f3-a3ff-52e763904233",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "2a9414fb-42a6-4b47-a4cd-b2c47d559d1c",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "2f8d34d1-ea34-4e22-af57-d7afd0e65cc2",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "302609e3-8b43-4ff5-ad9b-ebd53778889b",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "37fa6863-0b54-47dc-a4dc-84619594da93",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "503bcc3f-1784-4059-b087-f9e490d8c0b2",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "6402c932-fbe0-429e-84ae-da5e15c71bd1",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "79499818-2686-4f81-baa8-b3adf4fc870f",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "7a80b7fa-ab5b-4ef9-bb5b-e3fe5ced25bd",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "80568b32-18f6-41b2-a863-c2364fb25bd5",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "93e1215a-6458-4ea0-82a0-03ba1e827874",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "9fbebfcd-d0f9-45f1-a98c-feccad6de2d9",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "a486b23d-94d5-45ce-a89c-c8f3d27172d4",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "ae145da3-43f6-4d89-aa06-678156c971b6",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "aff7235a-eba0-43d8-88e9-6ed0831320c6",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "c02db825-3f1c-40cc-b595-ca71aabc0f11",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "c4581169-11f9-467d-b55a-26de48a0b67e",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "cfe13c68-dc19-46e6-91a7-df57de5f17bd",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "d1de7eac-ab50-47b3-8e93-0f5beac8f27c",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "e41e8d94-9fff-4185-baac-245d3f226cc3",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "ff026188-b387-4313-80f5-137a027d56e2",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "01f866ed-3c2f-4ee5-bfc0-77f6371cacbe",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "26a3f17c-0e84-47ce-b8fa-b3f1cd7ee90e",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "7b1f566c-53dd-427f-b6c6-79a5fd15b42f",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "8a978263-72bf-4698-95af-0e0899736d61",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "9bb1a255-f5cc-4fe4-a6c5-bbadd475dec4",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "a858eeea-dd21-4cd6-a4e0-1431c8185d33",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "bd9bee60-f175-42fa-a83b-b2aaa67bb17f",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "d3a4c8f1-bcf7-4cab-b030-ab8a02abc43d",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "d59f042a-ff09-4b04-8a06-e81d36aa1290",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "3a2f3657-b94b-4350-8724-ce356a9d3993",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "c7e7da40-e641-47ec-837f-86a735ba0f5e",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "f093e9f5-6b5d-4050-b7bb-227e01149395",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "c61a6ee4-6685-48eb-93fa-999960e77aff",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "12095542-b09a-4d6f-a48e-ef1487826ba8",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "1a2ad3e5-d242-4c8a-afd9-3bb89e813ee2",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "279474cc-69d5-413b-ac66-8c4f39963e8d",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "2f71a043-f570-4852-9853-7129b8035d1a",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "33c9bc7c-18d9-4100-a19a-f4d69420bfb7",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "38e9318a-84f0-4a7c-9eeb-243edb4b8a4f",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "3f1323dc-c77a-44b6-b76e-7f1ce84b05c5",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "43e88f9a-45b2-42e1-b519-9d3287ab4ce6",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "4f05465b-56d5-44f1-b756-9336f6b89e61",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "5a694f63-4147-4d7a-b201-18b79a12064d",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "5d8798a6-e774-42f6-893a-293cf647ff6d",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "6d849c3c-a992-4d48-8d57-52b3924219cc",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "771af377-7003-42d2-b45e-ce741713e32b",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "77761258-41ea-4915-a540-2b42fe3954ca",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "8564b453-c6e1-410c-b019-e3ed4b73ba56",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "88d5d0b1-240d-4885-bb6c-9bf712fb732b",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "9c732626-87b5-4341-8922-e5e89b6db323",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "9d73432c-ff40-4172-a1d4-d925ab5e1f25",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "b79cec99-632b-4aa3-8820-bf2e2d3fed9a",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "b9a16f27-dac6-4067-8a59-6414a8fe0144",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "bf2ebe2e-ae6c-4ff3-af25-25a81ec143ed",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "c1d483c5-68fa-4b24-a2fb-64be145ce092",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "ccd67f30-e3a3-4d84-810b-0342791cf00e",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "d5f66cd4-48b6-447a-ad9f-5d661616cb47",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "dfe6fb95-311d-4889-acbe-9045152ea42a",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "e69ea73c-85d3-4c16-9e74-7507235176c0",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "11e0c542-04e6-4706-b63a-b38dd290b402",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "33f31155-6f38-48cb-9955-de3e5352e244",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "66e705fa-fddf-4872-ad3d-e7cdb47e9e1a",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "677d8dd1-0129-4b32-ac60-136e16de8f9d",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "b5bf280c-3488-4e46-84f6-58e2a0c34108",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "08910604-9e96-4e81-9e2c-1ceeca6f7fab",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "6c34cb9f-c95e-4c38-87c1-e5de077e4937",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "a6a6f92b-844f-4ad1-b647-08cf341085c2",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "9407bc22-1456-43eb-99c1-2e93c0f74d2e",
+   "qType": "listbox"
+  },
+  {
+   "qId": "c1e7bcd5-9a2f-4ef0-8b9c-1613db4abf39",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "ffa1a87f-374e-4457-81e4-5ec280c27e35",
+   "qType": "masterobject"
+  },
+  {
+   "qId": "22f1f3c5-5728-4d74-a738-c57d7ec87cde",
+   "qType": "sheet"
+  },
+  {
+   "qId": "e79780e7-65c6-4aa7-974f-b531ca543afe",
+   "qType": "text-image"
+  },
+  {
+   "qId": "ec9621e6-d179-4cb6-a7af-7650bd08a92d",
+   "qType": "filterpane"
+  },
+  {
+   "qId": "d740b9f3-ceef-49d9-b145-ebeef6ef0e8d",
+   "qType": "listbox"
+  },
+  {
+   "qId": "vXkYRP",
+   "qType": "sn-tabbed-container"
+  },
+  {
+   "qId": "e0942545-bbf1-4be5-8c8d-83f1d5fe28d2",
+   "qType": "childObject"
+  },
+  {
+   "qId": "7d28d1b0-51dc-440f-bdc3-9d2f8803e923",
+   "qType": "childObject"
+  },
+  {
+   "qId": "sNCNnpF",
+   "qType": "sn-text"
+  },
+  {
+   "qId": "cf371a09-8987-4eff-ae89-48a0d6a434ba",
+   "qType": "sheet"
+  },
+  {
+   "qId": "c6ccbac6-6e00-4e91-b74f-0e9d0cb7d683",
+   "qType": "text-image"
+  },
+  {
+   "qId": "7c8498d9-0ecb-4580-9d5c-9ede039ea654",
+   "qType": "linechart"
+  },
+  {
+   "qId": "9a166218-34f6-4f9b-90c5-5fdae2b1338b",
+   "qType": "filterpane"
+  },
+  {
+   "qId": "b69168be-6d7a-4701-8266-07412876b7a7",
+   "qType": "listbox"
+  },
+  {
+   "qId": "d723b8f3-22dd-41b3-80cf-c59a74d85cd4",
+   "qType": "filterpane"
+  },
+  {
+   "qId": "f49bf6b9-6f17-4612-b369-e6a960ac22ea",
+   "qType": "listbox"
+  },
+  {
+   "qId": "d4a9c8df-034a-4f51-9b60-1ac485d46573",
+   "qType": "filterpane"
+  },
+  {
+   "qId": "a4e70249-1d3c-4602-b089-8a176feb010e",
+   "qType": "listbox"
+  },
+  {
+   "qId": "7f64db2b-616a-493e-b9ea-8c3d8fc2ab6e",
+   "qType": "sheet"
+  },
+  {
+   "qId": "DnmgfMs",
+   "qType": "export_data"
+  },
+  {
+   "qId": "ebLRxA",
+   "qType": "text-image"
+  },
+  {
+   "qId": "mBPBY",
+   "qType": "table"
+  },
+  {
+   "qId": "Aprgu",
+   "qType": "text-image"
+  },
+  {
+   "qId": "jRJbTNL",
+   "qType": "table"
+  },
+  {
+   "qId": "xJdUcC",
+   "qType": "table"
+  },
+  {
+   "qId": "pQJQEM",
+   "qType": "VizlibTable"
+  },
+  {
+   "qId": "tQxyUw",
+   "qType": "table"
+  },
+  {
+   "qId": "PxyEckz",
+   "qType": "export_data"
+  },
+  {
+   "qId": "TCE",
+   "qType": "export_data"
+  },
+  {
+   "qId": "wwcATGU",
+   "qType": "filterpane"
+  },
+  {
+   "qId": "d97743db-bf89-4e53-9c05-5a55f6586dcd",
+   "qType": "listbox"
+  },
+  {
+   "qId": "724a8750-42eb-4cdf-8018-c3f1c3c53779",
+   "qType": "sheet"
+  },
+  {
+   "qId": "58bb9c4f-bc2b-44e2-8ada-f785a726d366",
+   "qType": "text-image"
+  },
+  {
+   "qId": "d0595912-3754-483e-8c46-2ffc0b788d13",
+   "qType": "filterpane"
+  },
+  {
+   "qId": "2a66d032-b149-4d48-8eab-289ed924d541",
+   "qType": "listbox"
+  },
+  {
+   "qId": "YUPYxpa",
+   "qType": "sn-tabbed-container"
+  },
+  {
+   "qId": "54028e71-d23d-4c99-a8fb-2448de7e1e01",
+   "qType": "childObject"
+  },
+  {
+   "qId": "4b23a4d0-89a6-4ef9-9965-acf1c3fb4e87",
+   "qType": "childObject"
+  },
+  {
+   "qId": "4d8f7dee-793c-4b7f-bc85-50c72c77b766",
+   "qType": "childObject"
+  },
+  {
+   "qId": "QJSHx",
+   "qType": "sn-text"
+  },
+  {
+   "qId": "807da6b7-4d65-48bc-8615-013e01dd61c4",
+   "qType": "sheet"
+  },
+  {
+   "qId": "ZCxHm",
+   "qType": "filterpane"
+  },
+  {
+   "qId": "a9e0f1fd-5386-4393-bdda-7761d564f8d6",
+   "qType": "listbox"
+  },
+  {
+   "qId": "KbPG",
+   "qType": "sn-tabbed-container"
+  },
+  {
+   "qId": "40e849ae-f713-4374-a965-bf135e9c6138",
+   "qType": "childObject"
+  },
+  {
+   "qId": "cf1f1f0a-ce5a-4dc5-83d3-5c984f640139",
+   "qType": "childObject"
+  },
+  {
+   "qId": "d7f1a42c-7e58-4680-aaa8-a4ec93b3ecb5",
+   "qType": "childObject"
+  },
+  {
+   "qId": "PzZau",
+   "qType": "sn-text"
+  },
+  {
+   "qId": "bf925808-916f-42df-915c-36f77a74a36f",
+   "qType": "sheet"
+  },
+  {
+   "qId": "c4fc256b-d8fa-4fa2-a14d-a42cd31d0b16",
+   "qType": "filterpane"
+  },
+  {
+   "qId": "c87296c8-18fe-4aa0-b86f-9bad707b1844",
+   "qType": "listbox"
+  },
+  {
+   "qId": "ec415994-62bc-4372-b3ee-8e867489c25f",
+   "qType": "text-image"
+  },
+  {
+   "qId": "bJyFgx",
+   "qType": "sn-text"
+  },
+  {
+   "qId": "xtnuC",
+   "qType": "sn-tabbed-container"
+  },
+  {
+   "qId": "925b0ddb-c708-4131-9886-9ae932032326",
+   "qType": "childObject"
+  },
+  {
+   "qId": "5ce7c05c-7cac-40c3-8647-a4bf50f4e817",
+   "qType": "childObject"
+  },
+  {
+   "qId": "9fea8284-c3bc-45cb-8d99-8d91cff608e6",
+   "qType": "sheet"
+  },
+  {
+   "qId": "TySbma",
+   "qType": "VizlibContainer"
+  },
+  {
+   "qId": "06a43dce-10d8-4b8c-8708-4f8c87c2d7da",
+   "qType": "appprops"
+  },
+  {
+   "qId": "singlepublic-pinnedItems",
+   "qType": "singlepublic"
+  },
+  {
+   "qId": "singlepublic-bookmarkgroup",
+   "qType": "singlepublic"
+  },
+  {
+   "qId": "32c7b025-3ce5-48f4-800d-1285c51bf249",
+   "qType": "snapshot"
+  }
+ ],
+ "objects": {
+  "878fc204-0435-49ee-86d1-3fe5953f8a91": {
+   "type": "masterobject",
+   "title": "ANEW RVO Table 5",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [
+    "Cellulosic Biofuel (D3 + D7)*",
+    "Biomass Based Diesel (D4+D7)*",
+    "Advanced Biofuel (D3+D4+D5+D7)",
+    "Renewable Fuel (D3+D4+D5+D6+D7)"
+   ],
+   "size": {
+    "qcx": 5,
+    "qcy": 15
+   },
+   "cells": null
+  },
+  "ab0e8d58-5c03-4f06-b632-196451478f19": {
+   "type": "masterobject",
+   "title": "ANEW RVO Table 7",
+   "dims": [
+    "Compliance Year",
+    "CWC Price"
+   ],
+   "meas": [
+    "CWCs Purchased"
+   ],
+   "size": {
+    "qcx": 3,
+    "qcy": 15
+   },
+   "cells": null
+  },
+  "e1c1345d-2501-4f15-81d7-58ccdbde9937": {
+   "type": "masterobject",
+   "title": "ANEW RVO Table 3 Filter",
+   "dims": [],
+   "meas": [],
+   "size": null,
+   "cells": null
+  },
+  "169c6e9a-706a-432e-8fa3-5458e7d9e008": {
+   "type": "masterobject",
+   "title": "ANEW RVO Table 6",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [
+    "Cellulosic Biofuel",
+    "Biomass-Based Diesel",
+    "Advanced Biofuel",
+    "Renewable Fuel"
+   ],
+   "size": {
+    "qcx": 5,
+    "qcy": 15
+   },
+   "cells": null
+  },
+  "4379119c-1a1b-4c15-a17f-aa179e82e8f4": {
+   "type": "masterobject",
+   "title": "ANEW RVO Table 4 Filter",
+   "dims": [],
+   "meas": [],
+   "size": null,
+   "cells": null
+  },
+  "69a20f58-25c2-4aba-b160-de4cdc5e2ebc": {
+   "type": "masterobject",
+   "title": "ANEW RVO Table 3",
+   "dims": [
+    "Compliance Year",
+    "Exported Renewable Fuel Type",
+    "Equivalence Value"
+   ],
+   "meas": [
+    "Volume of Exported Renewable Fuel",
+    "Exporter RVO"
+   ],
+   "size": {
+    "qcx": 5,
+    "qcy": 58
+   },
+   "cells": null
+  },
+  "8318c272-382e-4a30-a3b8-31a98fa5d633": {
+   "type": "masterobject",
+   "title": "ANEW RVO Table 4",
+   "dims": [
+    "Category",
+    "Compliance Year",
+    "RIN Year"
+   ],
+   "meas": [
+    "D3",
+    "D4",
+    "D5",
+    "D6",
+    "D7"
+   ],
+   "size": {
+    "qcx": 8,
+    "qcy": 87
+   },
+   "cells": null
+  },
+  "e455a79b-2007-4b5e-8adf-172a602c389e": {
+   "type": "masterobject",
+   "title": "Table 3: Gasoline and Diesel Importers",
+   "dims": [
+    "Compliance Year",
+    "RIN Year"
+   ],
+   "meas": [
+    "D3",
+    "D4",
+    "D5",
+    "D6",
+    "D7"
+   ],
+   "size": {
+    "qcx": 7,
+    "qcy": 1
+   },
+   "cells": null
+  },
+  "f0193c85-cd8f-4836-b75b-bbc93b841d08": {
+   "type": "masterobject",
+   "title": "RVO Table 7Chart",
+   "dims": [
+    "RIN Year"
+   ],
+   "meas": [
+    "CWC Credit Price"
+   ],
+   "size": {
+    "qcx": 2,
+    "qcy": 14
+   },
+   "cells": null
+  },
+  "f2a8a141-9806-48eb-8abe-b88ba8871608": {
+   "type": "masterobject",
+   "title": "RVO Table 6 Master",
+   "dims": [],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "03d8522f-8f9a-43b7-8ef0-052d3297e52b": {
+   "type": "masterobject",
+   "title": "RVO Table 4 Master",
+   "dims": [],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "04f4399f-9c70-4a1c-bc29-b6719fadf01b": {
+   "type": "masterobject",
+   "title": "RVO Table 2 Filter v2",
+   "dims": [],
+   "meas": [],
+   "size": null,
+   "cells": null
+  },
+  "0532efe4-0800-4d16-b7db-a45d3a09ffe3": {
+   "type": "masterobject",
+   "title": "Table 4: Gasoline/Diesel Refiners",
+   "dims": [
+    "Compliance Year",
+    "RIN Year"
+   ],
+   "meas": [
+    "D3",
+    "D4",
+    "D5",
+    "D6",
+    "D7"
+   ],
+   "size": {
+    "qcx": 7,
+    "qcy": 1
+   },
+   "cells": null
+  },
+  "0da7fa7e-a159-45f4-9400-306a744227c0": {
+   "type": "masterobject",
+   "title": "Annual RIN Sales",
+   "dims": [
+    "Compliance Year",
+    "RIN Year",
+    "Categories",
+    "Fuel (D Code)",
+    "Assignment"
+   ],
+   "meas": [
+    "Total RINs"
+   ],
+   "size": {
+    "qcx": 6,
+    "qcy": 1366
+   },
+   "cells": null
+  },
+  "0efe2100-8519-48c1-9285-4e520d7d2882": {
+   "type": "masterobject",
+   "title": "Generation Summary Export",
+   "dims": [
+    "RIN Year",
+    "Month",
+    "Producer Type",
+    "Fuel (D Code)",
+    "Fuel Category"
+   ],
+   "meas": [
+    "RINs",
+    "Volume (Gal.)"
+   ],
+   "size": {
+    "qcx": 7,
+    "qcy": 3585
+   },
+   "cells": null
+  },
+  "1fd2aa10-5179-4c30-800d-765adcaee2a4": {
+   "type": "masterobject",
+   "title": "Total Separations by Fuel Export",
+   "dims": [
+    "RIN Year",
+    "Fuel (D Code)",
+    "Separation Reason"
+   ],
+   "meas": [
+    "RINs"
+   ],
+   "size": {
+    "qcx": 4,
+    "qcy": 427
+   },
+   "cells": null
+  },
+  "5b05df20-c41b-4498-b6e6-8133b702a738": {
+   "type": "masterobject",
+   "title": "RVO Table 2 Exporter",
+   "dims": [
+    "Compliance Year",
+    "Parameter"
+   ],
+   "meas": [
+    "Cellulosic Biofuel",
+    "Biomass-Based Diesel",
+    "Advanced Biofuel",
+    "Renewable Fuel"
+   ],
+   "size": {
+    "qcx": 6,
+    "qcy": 56
+   },
+   "cells": null
+  },
+  "679e0428-fa34-49ea-8e34-0d1457ca9f77": {
+   "type": "masterobject",
+   "title": "RIN Transaction Volumes Export",
+   "dims": [
+    "Transfer Date by Week",
+    "Transfer Year",
+    "RIN Year",
+    "Fuel (D Code)",
+    "Assignment",
+    "QAP Type"
+   ],
+   "meas": [
+    "Total RINs Traded"
+   ],
+   "size": {
+    "qcx": 7,
+    "qcy": 16003
+   },
+   "cells": null
+  },
+  "726ca7f0-23a3-4956-97ad-081cdf0b4d26": {
+   "type": "masterobject",
+   "title": "RVO Table 2 Master",
+   "dims": [],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "8dcc8955-572f-461a-9d1f-354c9ec4a25d": {
+   "type": "masterobject",
+   "title": "Annual RIN Sales Export",
+   "dims": [
+    "Compliance Year",
+    "RIN Year",
+    "Categories",
+    "Fuel (D Code)",
+    "Assignment"
+   ],
+   "meas": [
+    "Total RINs"
+   ],
+   "size": {
+    "qcx": 6,
+    "qcy": 1366
+   },
+   "cells": null
+  },
+  "bd820eee-9edf-4ae2-85c9-45eeebee8199": {
+   "type": "masterobject",
+   "title": "RVO Table 2 Text",
+   "dims": [],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "c55a9cdf-b09a-44b9-bac7-58589834ddda": {
+   "type": "masterobject",
+   "title": "RVO Table 1 Master",
+   "dims": [],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "03688a94-e91f-4655-a5d4-11c83ef97eed": {
+   "type": "masterobject",
+   "title": "RVO Table 5",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [
+    "Cellulosic Biofuel (D3+D7)*",
+    "Biomass Based Diesel (D4+D7)*",
+    "Advanced Biofuel (D3+D4+D5+D7)",
+    "Renewable Fuel (D3+D4+D5+D6+D7)"
+   ],
+   "size": {
+    "qcx": 5,
+    "qcy": 14
+   },
+   "cells": null
+  },
+  "056c8f10-62c1-41d8-8a49-558eb2344637": {
+   "type": "masterobject",
+   "title": "RVO Table 4 Filter b",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "26aefc3c-291e-41f3-a3ff-52e763904233": {
+   "type": "masterobject",
+   "title": "CHART 1: Projected Gasoline & Diesel Use vs Actual Gasoline & Diesel Reported by Obligated Parties (in Gallons)",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [
+    "Projected Gasoline & Diesel Use",
+    "Actual Gasoline & Diesel Reported by Obligated Parties"
+   ],
+   "size": {
+    "qcx": 3,
+    "qcy": 14
+   },
+   "cells": null
+  },
+  "2a9414fb-42a6-4b47-a4cd-b2c47d559d1c": {
+   "type": "masterobject",
+   "title": "RVO Table 1 Exporter",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [
+    "Projected Gasoline & Diesel Use (gallons)",
+    "Actual Gasoline & Diesel Reported by Obligated Parties (gallons)"
+   ],
+   "size": {
+    "qcx": 3,
+    "qcy": 14
+   },
+   "cells": null
+  },
+  "2f8d34d1-ea34-4e22-af57-d7afd0e65cc2": {
+   "type": "masterobject",
+   "title": "Table 5: Renewable Fuel Exporters",
+   "dims": [
+    "Compliance Year",
+    "RIN Year"
+   ],
+   "meas": [
+    "D3",
+    "D4",
+    "D5",
+    "D6",
+    "D7"
+   ],
+   "size": {
+    "qcx": 7,
+    "qcy": 1
+   },
+   "cells": null
+  },
+  "302609e3-8b43-4ff5-ad9b-ebd53778889b": {
+   "type": "masterobject",
+   "title": "RIN Price Table",
+   "dims": [
+    "Transfer Date by Week",
+    "Transfer Year",
+    "RIN Year",
+    "Fuel (D Code)",
+    "QAP Service Type"
+   ],
+   "meas": [
+    "RIN Price"
+   ],
+   "size": {
+    "qcx": 6,
+    "qcy": 8643
+   },
+   "cells": null
+  },
+  "37fa6863-0b54-47dc-a4dc-84619594da93": {
+   "type": "masterobject",
+   "title": "Total Retirements by Fuel Export",
+   "dims": [
+    "RIN Year",
+    "Fuel (D Code)",
+    "Retire Reason",
+    "Compliance Level"
+   ],
+   "meas": [
+    "RINs"
+   ],
+   "size": {
+    "qcx": 5,
+    "qcy": 663
+   },
+   "cells": null
+  },
+  "503bcc3f-1784-4059-b087-f9e490d8c0b2": {
+   "type": "masterobject",
+   "title": "Total Available RINs to Date",
+   "dims": [
+    "RIN Year",
+    "Fuel (D Code)",
+    "Assignments"
+   ],
+   "meas": [
+    "Total Generated",
+    "Total Retired",
+    "Total Available-Locked",
+    "Total Available-Unlocked"
+   ],
+   "size": {
+    "qcx": 7,
+    "qcy": 170
+   },
+   "cells": null
+  },
+  "6402c932-fbe0-429e-84ae-da5e15c71bd1": {
+   "type": "masterobject",
+   "title": "RVO Table 2 Filter",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "79499818-2686-4f81-baa8-b3adf4fc870f": {
+   "type": "masterobject",
+   "title": "RVO Table 6 Exporter",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [
+    "Cellulosic Biofuel",
+    "Biomass-Based Diesel",
+    "Advanced Biofuel",
+    "Renewable Fuel"
+   ],
+   "size": {
+    "qcx": 5,
+    "qcy": 14
+   },
+   "cells": null
+  },
+  "7a80b7fa-ab5b-4ef9-bb5b-e3fe5ced25bd": {
+   "type": "masterobject",
+   "title": "RVO Table 4",
+   "dims": [
+    "Category",
+    "Compliance Year",
+    "RIN Year"
+   ],
+   "meas": [
+    "D3",
+    "D4",
+    "D5",
+    "D6",
+    "D7"
+   ],
+   "size": {
+    "qcx": 8,
+    "qcy": 81
+   },
+   "cells": null
+  },
+  "80568b32-18f6-41b2-a863-c2364fb25bd5": {
+   "type": "masterobject",
+   "title": "RVO Table 3",
+   "dims": [
+    "Compliance Year",
+    "Exported Renewable Fuel Type",
+    "Equivalence Value"
+   ],
+   "meas": [
+    "Volume of Exported Renewable Fuel",
+    "Exporter RVO"
+   ],
+   "size": {
+    "qcx": 5,
+    "qcy": 46
+   },
+   "cells": null
+  },
+  "93e1215a-6458-4ea0-82a0-03ba1e827874": {
+   "type": "masterobject",
+   "title": "Feedstock Summary Export",
+   "dims": [
+    "RIN Year",
+    "Fuel (D Code)",
+    "Fuel Category",
+    "Feedstocks"
+   ],
+   "meas": [
+    "RINs"
+   ],
+   "size": {
+    "qcx": 5,
+    "qcy": 527
+   },
+   "cells": null
+  },
+  "9fbebfcd-d0f9-45f1-a98c-feccad6de2d9": {
+   "type": "masterobject",
+   "title": "RVO Table 4 Exporter",
+   "dims": [
+    "Category",
+    "Compliance Year",
+    "RIN Year"
+   ],
+   "meas": [
+    "D3",
+    "D4",
+    "D5",
+    "D6",
+    "D7"
+   ],
+   "size": {
+    "qcx": 8,
+    "qcy": 81
+   },
+   "cells": null
+  },
+  "a486b23d-94d5-45ce-a89c-c8f3d27172d4": {
+   "type": "masterobject",
+   "title": "RIN Holdings",
+   "dims": [
+    "Balance Date",
+    "RIN Year",
+    "Categories",
+    "Fuel (D Code)",
+    "Assignment"
+   ],
+   "meas": [
+    "Total RINs"
+   ],
+   "size": {
+    "qcx": 6,
+    "qcy": 1032248
+   },
+   "cells": null
+  },
+  "ae145da3-43f6-4d89-aa06-678156c971b6": {
+   "type": "masterobject",
+   "title": "RIN Holdings Export",
+   "dims": [
+    "Balance Date",
+    "RIN Year",
+    "Categories",
+    "Fuel (D Code)",
+    "Assignment"
+   ],
+   "meas": [
+    "Total RINs"
+   ],
+   "size": {
+    "qcx": 6,
+    "qcy": 1032248
+   },
+   "cells": null
+  },
+  "aff7235a-eba0-43d8-88e9-6ed0831320c6": {
+   "type": "masterobject",
+   "title": "Total RIN Retirements for Annual Compliance",
+   "dims": [
+    "Category",
+    "Compliance Year",
+    "RIN Year"
+   ],
+   "meas": [
+    "D3",
+    "D4",
+    "D5",
+    "D6",
+    "D7"
+   ],
+   "size": {
+    "qcx": 7,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "c02db825-3f1c-40cc-b595-ca71aabc0f11": {
+   "type": "masterobject",
+   "title": "Total Net Generation Export",
+   "dims": [
+    "RIN Year",
+    "Fuel (D Code)"
+   ],
+   "meas": [
+    "Total RINs Generated",
+    "RIN Generation Error Corrections",
+    "Net RINs Generated"
+   ],
+   "size": {
+    "qcx": 5,
+    "qcy": 81
+   },
+   "cells": null
+  },
+  "c4581169-11f9-467d-b55a-26de48a0b67e": {
+   "type": "masterobject",
+   "title": "Total Separations by Fuel (D Code)",
+   "dims": [
+    "RIN Year",
+    "Fuel (D Code)",
+    "Separation Reason"
+   ],
+   "meas": [
+    "RINs"
+   ],
+   "size": {
+    "qcx": 4,
+    "qcy": 427
+   },
+   "cells": null
+  },
+  "cfe13c68-dc19-46e6-91a7-df57de5f17bd": {
+   "type": "masterobject",
+   "title": "RVO Table 3 Filter",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "d1de7eac-ab50-47b3-8e93-0f5beac8f27c": {
+   "type": "masterobject",
+   "title": "RVO Table 7",
+   "dims": [
+    "Compliance Year",
+    "CWC Price",
+    "CWCs Purchased"
+   ],
+   "meas": [],
+   "size": {
+    "qcx": 3,
+    "qcy": 14
+   },
+   "cells": null
+  },
+  "e41e8d94-9fff-4185-baac-245d3f226cc3": {
+   "type": "masterobject",
+   "title": "RVO Table 5 Exporter",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [
+    "Cellulosic Biofuel (D3+D7)",
+    "Biomass Based Diesel (D4+D7)",
+    "Advanced Biofuel (D3+D4+D5+D7)",
+    "Renewable Fuel (D3+D4+D5+D6+D7)"
+   ],
+   "size": {
+    "qcx": 5,
+    "qcy": 14
+   },
+   "cells": null
+  },
+  "ff026188-b387-4313-80f5-137a027d56e2": {
+   "type": "masterobject",
+   "title": "RVO Table 6",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [
+    "Cellulosic Biofuel",
+    "Biomass-Based Diesel",
+    "Advanced Biofuel",
+    "Renewable Fuel"
+   ],
+   "size": {
+    "qcx": 5,
+    "qcy": 14
+   },
+   "cells": null
+  },
+  "01f866ed-3c2f-4ee5-bfc0-77f6371cacbe": {
+   "type": "masterobject",
+   "title": "RVO Table 7 Master",
+   "dims": [],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "26a3f17c-0e84-47ce-b8fa-b3f1cd7ee90e": {
+   "type": "masterobject",
+   "title": "RVO Table 5 Master",
+   "dims": [],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "7b1f566c-53dd-427f-b6c6-79a5fd15b42f": {
+   "type": "masterobject",
+   "title": "RVO Table 5 Text",
+   "dims": [],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "8a978263-72bf-4698-95af-0e0899736d61": {
+   "type": "masterobject",
+   "title": "RVO Table 1 Text",
+   "dims": [],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "9bb1a255-f5cc-4fe4-a6c5-bbadd475dec4": {
+   "type": "masterobject",
+   "title": "RVO Table 7 Text",
+   "dims": [],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "a858eeea-dd21-4cd6-a4e0-1431c8185d33": {
+   "type": "masterobject",
+   "title": "RVO Table 7 Exporter",
+   "dims": [
+    "Compliance Year",
+    "CWC Price"
+   ],
+   "meas": [
+    "CWCs Purchased"
+   ],
+   "size": {
+    "qcx": 3,
+    "qcy": 14
+   },
+   "cells": null
+  },
+  "bd9bee60-f175-42fa-a83b-b2aaa67bb17f": {
+   "type": "masterobject",
+   "title": "RVO Table 6 Text",
+   "dims": [],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "d3a4c8f1-bcf7-4cab-b030-ab8a02abc43d": {
+   "type": "masterobject",
+   "title": "RVO Table 1",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [
+    "Projected Gasoline & Diesel Use (gallons)",
+    "Actual Gasoline & Diesel Reported by Obligated Parties (gallons)"
+   ],
+   "size": {
+    "qcx": 3,
+    "qcy": 14
+   },
+   "cells": null
+  },
+  "d59f042a-ff09-4b04-8a06-e81d36aa1290": {
+   "type": "masterobject",
+   "title": "RVO Table 2",
+   "dims": [
+    "Compliance Year",
+    "Parameter"
+   ],
+   "meas": [
+    "Cellulosic Biofuel",
+    "Biomass-Based Diesel",
+    "Advanced Biofuel",
+    "Renewable Fuel"
+   ],
+   "size": {
+    "qcx": 6,
+    "qcy": 56
+   },
+   "cells": null
+  },
+  "3a2f3657-b94b-4350-8724-ce356a9d3993": {
+   "type": "masterobject",
+   "title": "RVO Table 3 Master",
+   "dims": [],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "c7e7da40-e641-47ec-837f-86a735ba0f5e": {
+   "type": "masterobject",
+   "title": "RVO Table 3 Exporter",
+   "dims": [
+    "Compliance Year",
+    "Exported Renewable Fuel Type",
+    "Equivalence Value"
+   ],
+   "meas": [
+    "Volume of Exported Renewable Fuel",
+    "Exporter RVO"
+   ],
+   "size": {
+    "qcx": 5,
+    "qcy": 46
+   },
+   "cells": null
+  },
+  "f093e9f5-6b5d-4050-b7bb-227e01149395": {
+   "type": "masterobject",
+   "title": "RVO Table 3 Text",
+   "dims": [],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "c61a6ee4-6685-48eb-93fa-999960e77aff": {
+   "type": "masterobject",
+   "title": "RVO Table 4 Text",
+   "dims": [],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "12095542-b09a-4d6f-a48e-ef1487826ba8": {
+   "type": "masterobject",
+   "title": "New RVO Table 2 Filter",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "1a2ad3e5-d242-4c8a-afd9-3bb89e813ee2": {
+   "type": "masterobject",
+   "title": "New RVO Table 7",
+   "dims": [
+    "Compliance Year",
+    "CWC Price"
+   ],
+   "meas": [
+    "CWCs Purchased"
+   ],
+   "size": {
+    "qcx": 3,
+    "qcy": 15
+   },
+   "cells": null
+  },
+  "279474cc-69d5-413b-ac66-8c4f39963e8d": {
+   "type": "masterobject",
+   "title": "New RVO Table 1 Text",
+   "dims": [],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "2f71a043-f570-4852-9853-7129b8035d1a": {
+   "type": "masterobject",
+   "title": "New RVO Table 2",
+   "dims": [
+    "Compliance Year",
+    "Parameter"
+   ],
+   "meas": [
+    "Cellulosic Biofuel",
+    "Biomass-Baesd Diesel",
+    "Advanced Biofuel",
+    "Renewable Fuel"
+   ],
+   "size": {
+    "qcx": 6,
+    "qcy": 72
+   },
+   "cells": null
+  },
+  "33c9bc7c-18d9-4100-a19a-f4d69420bfb7": {
+   "type": "masterobject",
+   "title": "New RVO Table 4 Filter",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "38e9318a-84f0-4a7c-9eeb-243edb4b8a4f": {
+   "type": "masterobject",
+   "title": "New RVO Table 6 Master",
+   "dims": [],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "3f1323dc-c77a-44b6-b76e-7f1ce84b05c5": {
+   "type": "masterobject",
+   "title": "New RVO Table 5",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [
+    "Cellulosic Biofuel (D3 + D7)*",
+    "Biomass Based Diesel (D4+D7)*",
+    "Advanced Biofuel (D3+D4+D5+D7)",
+    "Renewable Fuel (D3+D4+D5+D6+D7)"
+   ],
+   "size": {
+    "qcx": 5,
+    "qcy": 15
+   },
+   "cells": null
+  },
+  "43e88f9a-45b2-42e1-b519-9d3287ab4ce6": {
+   "type": "masterobject",
+   "title": "New RVO Table 7 Export",
+   "dims": [
+    "Compliance Year",
+    "CWC Price"
+   ],
+   "meas": [
+    "CWCs Purchased"
+   ],
+   "size": {
+    "qcx": 3,
+    "qcy": 15
+   },
+   "cells": null
+  },
+  "4f05465b-56d5-44f1-b756-9336f6b89e61": {
+   "type": "masterobject",
+   "title": "New RVO Table 3 Export",
+   "dims": [
+    "Compliance Year",
+    "Exported Renewable Fuel Type",
+    "Equivalence Value"
+   ],
+   "meas": [
+    "Volume of Exported Renewable Fuel",
+    "Exporter RVO"
+   ],
+   "size": {
+    "qcx": 5,
+    "qcy": 58
+   },
+   "cells": null
+  },
+  "5a694f63-4147-4d7a-b201-18b79a12064d": {
+   "type": "masterobject",
+   "title": "New RVO Table 6 Export",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [
+    "Cellulosic Biofuel",
+    "Biomass-Based Diesel",
+    "Advanced Biofuel",
+    "Renewable Fuel"
+   ],
+   "size": {
+    "qcx": 5,
+    "qcy": 15
+   },
+   "cells": null
+  },
+  "5d8798a6-e774-42f6-893a-293cf647ff6d": {
+   "type": "masterobject",
+   "title": "New RVO Table 5 Master",
+   "dims": [],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "6d849c3c-a992-4d48-8d57-52b3924219cc": {
+   "type": "masterobject",
+   "title": "New RVO Table 1 Master",
+   "dims": [],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "771af377-7003-42d2-b45e-ce741713e32b": {
+   "type": "masterobject",
+   "title": "New RVO Table 3",
+   "dims": [
+    "Compliance Year",
+    "Exported Renewable Fuel Type",
+    "Equivalence Value"
+   ],
+   "meas": [
+    "Volume of Exported Renewable Fuel",
+    "Exporter RVO"
+   ],
+   "size": {
+    "qcx": 5,
+    "qcy": 58
+   },
+   "cells": null
+  },
+  "77761258-41ea-4915-a540-2b42fe3954ca": {
+   "type": "masterobject",
+   "title": "New RVO Table 6",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [
+    "Cellulosic Biofuel",
+    "Biomass-Based Diesel",
+    "Advanced Biofuel",
+    "Renewable Fuel"
+   ],
+   "size": {
+    "qcx": 5,
+    "qcy": 15
+   },
+   "cells": null
+  },
+  "8564b453-c6e1-410c-b019-e3ed4b73ba56": {
+   "type": "masterobject",
+   "title": "New RVO Table 3 Master",
+   "dims": [],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "88d5d0b1-240d-4885-bb6c-9bf712fb732b": {
+   "type": "masterobject",
+   "title": "New RVO Table 4 Export",
+   "dims": [
+    "Category",
+    "Compliance Year",
+    "RIN Year"
+   ],
+   "meas": [
+    "D3",
+    "D4",
+    "D5",
+    "D6",
+    "D7"
+   ],
+   "size": {
+    "qcx": 8,
+    "qcy": 87
+   },
+   "cells": null
+  },
+  "9c732626-87b5-4341-8922-e5e89b6db323": {
+   "type": "masterobject",
+   "title": "CHART 1: Projected Gasoline & Diesel Use vs Total Reported Volume (in Gallons)",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [
+    "Projected Gasoline and Diesel Use",
+    "Total Reported Volume of Gasoline and Diesel"
+   ],
+   "size": {
+    "qcx": 3,
+    "qcy": 18
+   },
+   "cells": null
+  },
+  "9d73432c-ff40-4172-a1d4-d925ab5e1f25": {
+   "type": "masterobject",
+   "title": "New RVO Table 2 Export",
+   "dims": [
+    "Compliance Year",
+    "Parameter"
+   ],
+   "meas": [
+    "Cellulosic Biofuel",
+    "Biomass-Baesd Diesel",
+    "Advanced Biofuel",
+    "Renewable Fuel"
+   ],
+   "size": {
+    "qcx": 6,
+    "qcy": 72
+   },
+   "cells": null
+  },
+  "b79cec99-632b-4aa3-8820-bf2e2d3fed9a": {
+   "type": "masterobject",
+   "title": "New RVO Table 2 Master",
+   "dims": [],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "b9a16f27-dac6-4067-8a59-6414a8fe0144": {
+   "type": "masterobject",
+   "title": "New RVO Table 7 Master",
+   "dims": [],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "bf2ebe2e-ae6c-4ff3-af25-25a81ec143ed": {
+   "type": "masterobject",
+   "title": "New RVO Table 4 Master",
+   "dims": [],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "c1d483c5-68fa-4b24-a2fb-64be145ce092": {
+   "type": "masterobject",
+   "title": "New RVO Table 1 Export",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [
+    "Projected Gasoline and Diesel Use (gallons)",
+    "EPA Projected Exempted Volume",
+    "Reported Obligated Volume of Gasoline and Diesel",
+    "Reported Exempted Volume of Gasoline and Diesel",
+    "Total Reported Volume of Gasoline and Diesel"
+   ],
+   "size": {
+    "qcx": 6,
+    "qcy": 18
+   },
+   "cells": null
+  },
+  "ccd67f30-e3a3-4d84-810b-0342791cf00e": {
+   "type": "masterobject",
+   "title": "New RVO Table 1",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [
+    "Projected Gasoline and Diesel Use (gallons)",
+    "EPA Projected Exempted Volume",
+    "Reported Obligated Volume of Gasoline and Diesel\u200b",
+    "Reported Exempted Volume of Gasoline and Diesel\u200b",
+    "Total Reported Volume of Gasoline and Diesel"
+   ],
+   "size": {
+    "qcx": 6,
+    "qcy": 18
+   },
+   "cells": null
+  },
+  "d5f66cd4-48b6-447a-ad9f-5d661616cb47": {
+   "type": "masterobject",
+   "title": "New RVO Table 4",
+   "dims": [
+    "Category",
+    "Compliance Year",
+    "RIN Year"
+   ],
+   "meas": [
+    "D3",
+    "D4",
+    "D5",
+    "D6",
+    "D7"
+   ],
+   "size": {
+    "qcx": 8,
+    "qcy": 87
+   },
+   "cells": null
+  },
+  "dfe6fb95-311d-4889-acbe-9045152ea42a": {
+   "type": "masterobject",
+   "title": "New RVO Table 5 Export",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [
+    "Cellulosic Biofuel (D3 + D7)*",
+    "Biomass Based Diesel (D4+D7)*",
+    "Advanced Biofuel (D3+D4+D5+D7)",
+    "Renewable Fuel (D3+D4+D5+D6+D7)"
+   ],
+   "size": {
+    "qcx": 5,
+    "qcy": 15
+   },
+   "cells": null
+  },
+  "e69ea73c-85d3-4c16-9e74-7507235176c0": {
+   "type": "masterobject",
+   "title": "New RVO Table 3 Filter",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [],
+   "size": {
+    "qcx": 0,
+    "qcy": 0
+   },
+   "cells": null
+  },
+  "11e0c542-04e6-4706-b63a-b38dd290b402": {
+   "type": "masterobject",
+   "title": "Feedstock Summary",
+   "dims": [
+    "RIN Year",
+    "Fuel (D Code)",
+    "Fuel Category",
+    "Feedstocks"
+   ],
+   "meas": [
+    "RINs"
+   ],
+   "size": {
+    "qcx": 5,
+    "qcy": 527
+   },
+   "cells": null
+  },
+  "33f31155-6f38-48cb-9955-de3e5352e244": {
+   "type": "masterobject",
+   "title": "Total Available RINs to Date",
+   "dims": [
+    "RIN Year",
+    "Fuel (D Code)",
+    "Assignments"
+   ],
+   "meas": [
+    "Total Generated",
+    "Total Retired",
+    "Total Available-Locked",
+    "Total Available-Unlocked"
+   ],
+   "size": {
+    "qcx": 7,
+    "qcy": 170
+   },
+   "cells": null
+  },
+  "66e705fa-fddf-4872-ad3d-e7cdb47e9e1a": {
+   "type": "masterobject",
+   "title": "RIN Price Table",
+   "dims": [
+    "Transfer Date by Week",
+    "Transfer Year",
+    "RIN Year",
+    "Fuel (D Code)",
+    "QAP Service Type"
+   ],
+   "meas": [
+    "RIN Price"
+   ],
+   "size": {
+    "qcx": 6,
+    "qcy": 8643
+   },
+   "cells": null
+  },
+  "677d8dd1-0129-4b32-ac60-136e16de8f9d": {
+   "type": "masterobject",
+   "title": "Total Net Generation",
+   "dims": [
+    "RIN Year",
+    "Fuel (D Code)"
+   ],
+   "meas": [
+    "Total RINs Generated",
+    "RIN Generation Error Corrections",
+    "Net RINs Generated"
+   ],
+   "size": {
+    "qcx": 5,
+    "qcy": 81
+   },
+   "cells": null
+  },
+  "b5bf280c-3488-4e46-84f6-58e2a0c34108": {
+   "type": "masterobject",
+   "title": "Generation Summary",
+   "dims": [
+    "RIN Year",
+    "Month",
+    "Producer Type",
+    "Fuel (D Code)",
+    "Fuel Category"
+   ],
+   "meas": [
+    "RINs",
+    "Volume (Gal.)"
+   ],
+   "size": {
+    "qcx": 7,
+    "qcy": 3585
+   },
+   "cells": null
+  },
+  "08910604-9e96-4e81-9e2c-1ceeca6f7fab": {
+   "type": "masterobject",
+   "title": "ANEW RVO Table 2",
+   "dims": [
+    "Compliance Year",
+    "Parameter"
+   ],
+   "meas": [
+    "Cellulosic Biofuel",
+    "Biomass-Baesd Diesel",
+    "Advanced Biofuel",
+    "Renewable Fuel"
+   ],
+   "size": {
+    "qcx": 6,
+    "qcy": 72
+   },
+   "cells": null
+  },
+  "6c34cb9f-c95e-4c38-87c1-e5de077e4937": {
+   "type": "masterobject",
+   "title": "ANEW RVO Table 1",
+   "dims": [
+    "Compliance Year"
+   ],
+   "meas": [
+    "Projected Gasoline and Diesel Use (gallons)",
+    "EPA Projected Exempted Volume",
+    "Reported Obligated Volume of Gasoline and Diesel\u200b",
+    "Reported Exempted Volume of Gasoline and Diesel\u200b",
+    "Total Reported Volume of Gasoline and Diesel"
+   ],
+   "size": {
+    "qcx": 6,
+    "qcy": 18
+   },
+   "cells": null
+  },
+  "a6a6f92b-844f-4ad1-b647-08cf341085c2": {
+   "type": "masterobject",
+   "title": "ANEW RVO Table 2 Filter",
+   "dims": [],
+   "meas": [],
+   "size": null,
+   "cells": null
+  },
+  "c1e7bcd5-9a2f-4ef0-8b9c-1613db4abf39": {
+   "type": "masterobject",
+   "title": "RIN Transaction Volumes",
+   "dims": [
+    "Transfer Date by Week",
+    "Transfer Year",
+    "RIN Year",
+    "Fuel (D Code)",
+    "Assignment",
+    "QAP Type"
+   ],
+   "meas": [
+    "Total RINs Traded"
+   ],
+   "size": {
+    "qcx": 7,
+    "qcy": 16003
+   },
+   "cells": null
+  },
+  "ffa1a87f-374e-4457-81e4-5ec280c27e35": {
+   "type": "masterobject",
+   "title": "Total Retirements by Fuel (D Code)",
+   "dims": [
+    "RIN Year",
+    "Fuel (D Code)",
+    "Retire Reason",
+    "Compliance Level*"
+   ],
+   "meas": [
+    "RINs"
+   ],
+   "size": {
+    "qcx": 5,
+    "qcy": 663
+   },
+   "cells": null
+  },
+  "22f1f3c5-5728-4d74-a738-c57d7ec87cde": {
+   "type": "sheet",
+   "title": "RIN Use",
+   "dims": [],
+   "meas": [],
+   "size": null,
+   "cells": [
+    "ec9621e6-d179-4cb6-a7af-7650bd08a92d",
+    "e79780e7-65c6-4aa7-974f-b531ca543afe",
+    "vXkYRP",
+    "sNCNnpF"
+   ]
+  },
+  "cf371a09-8987-4eff-ae89-48a0d6a434ba": {
+   "type": "sheet",
+   "title": "RIN Price Trend",
+   "dims": [],
+   "meas": [],
+   "size": null,
+   "cells": [
+    "7c8498d9-0ecb-4580-9d5c-9ede039ea654",
+    "c6ccbac6-6e00-4e91-b74f-0e9d0cb7d683",
+    "9a166218-34f6-4f9b-90c5-5fdae2b1338b",
+    "d723b8f3-22dd-41b3-80cf-c59a74d85cd4",
+    "d4a9c8df-034a-4f51-9b60-1ac485d46573"
+   ]
+  },
+  "7c8498d9-0ecb-4580-9d5c-9ede039ea654": {
+   "type": "linechart",
+   "title": "Weekly D3, D4, D5 and D6 RINs Prices",
+   "dims": [
+    "Transfer Date by Week",
+    "FUEL (D Code)"
+   ],
+   "meas": [
+    "RIN Prices"
+   ],
+   "size": {
+    "qcx": 3,
+    "qcy": 3098
+   },
+   "cells": null,
+   "dim_defs": [
+    [
+     "=[Price_Transfer Date by week.autoCalendar.Date]"
+    ],
+    [
+     "=Price_FUEL_CD"
+    ]
+   ],
+   "meas_defs": [
+    "Sum({$<[Price_FUEL_CD]={\"3\",\"4\",\"5\",\"6\"}>}Price_INTERMEDIATE_PRICE)/Sum({$<[Price_FUEL_CD]={\"3\",\"4\",\"5\",\"6\"}>}Price_TOTAL_RINS)"
+   ]
+  },
+  "7f64db2b-616a-493e-b9ea-8c3d8fc2ab6e": {
+   "type": "sheet",
+   "title": "Small Refinery Exemptions",
+   "dims": [],
+   "meas": [],
+   "size": null,
+   "cells": [
+    "jRJbTNL",
+    "mBPBY",
+    "ebLRxA",
+    "Aprgu",
+    "DnmgfMs",
+    "xJdUcC",
+    "pQJQEM",
+    "tQxyUw",
+    "PxyEckz",
+    "TCE",
+    "wwcATGU"
+   ]
+  },
+  "mBPBY": {
+   "type": "table",
+   "title": "Table SRE-2: Small Refinery Exemption Petition Decisions ",
+   "dims": [
+    "Compliance Year",
+    "Petitions",
+    "Full (100%) Grant",
+    "Partial (50%) Grant",
+    "Denial",
+    "Ineligible",
+    "Withdrawn",
+    "Pending"
+   ],
+   "meas": [],
+   "size": {
+    "qcx": 8,
+    "qcy": 17
+   },
+   "cells": null,
+   "dim_defs": [
+    [
+     "=[SRE_V2_Compliance Year]"
+    ],
+    [
+     "=SRE_V2_Petitions"
+    ],
+    [
+     "=[SRE_V2_Full (100%) Grant]"
+    ],
+    [
+     "=[SRE_V2_Partial (50%) Grant]"
+    ],
+    [
+     "=SRE_V2_Denial"
+    ],
+    [
+     "=SRE_V2_Ineligible"
+    ],
+    [
+     "=SRE_V2_Withdrawn"
+    ],
+    [
+     "SRE_V2_Pending"
+    ]
+   ],
+   "meas_defs": []
+  },
+  "jRJbTNL": {
+   "type": "table",
+   "title": "Table SRE-1: Exempted Volume of Gasoline and Diesel Each Compliance Year*",
+   "dims": [
+    "Compliance Year",
+    "Estimated Volume of Exempted Gasoline and Diesel (million gallons)",
+    "Estimated Exempted Renewable Volume Obligation (RVO) (million RINs)"
+   ],
+   "meas": [],
+   "size": {
+    "qcx": 3,
+    "qcy": 17
+   },
+   "cells": null,
+   "dim_defs": [
+    [
+     "=[Sheet1-4.Compliance Year]"
+    ],
+    [
+     "=[Estimated Volumes of Gasoline and Diesel Exempted (million gallons)]"
+    ],
+    [
+     "=[Estimated Renewable Volume Obligations (RVO) Exempted (million RINs)]"
+    ]
+   ],
+   "meas_defs": []
+  },
+  "xJdUcC": {
+   "type": "table",
+   "title": "Table ARRS-1: Summary of Small Refinery Alternative RIN Retirement Schedule Compliance*",
+   "dims": [
+    "Compliance Year",
+    "Number of Small Refineries Opted-in",
+    "Total RVO Including Prior-Year Deficits (million RINs)",
+    "Total RINs Retired (million RINs)",
+    "Total RVO Outstanding (million RINs)"
+   ],
+   "meas": [],
+   "size": {
+    "qcx": 5,
+    "qcy": 1
+   },
+   "cells": null,
+   "dim_defs": [
+    [
+     "SRE_Alternative_Compliance Year"
+    ],
+    [
+     "SRE_Alternative_Number of Refineries Opted-in"
+    ],
+    [
+     "SRE_Alternative_Total RVO (Including Prior-Year Deficits) (million RINs)"
+    ],
+    [
+     "SRE_Alternative_Total RINs Retired (million RINs)"
+    ],
+    [
+     "SRE_Alternative_Total RVO Outstanding (million RINs)"
+    ]
+   ],
+   "meas_defs": []
+  },
+  "tQxyUw": {
+   "type": "table",
+   "title": "Table ARRS-2: Small Refineries Participating in Alternative RIN Retirement Schedule",
+   "dims": [
+    "Compliance Year",
+    "Submitter",
+    "Facility Location"
+   ],
+   "meas": [],
+   "size": {
+    "qcx": 3,
+    "qcy": 17
+   },
+   "cells": null,
+   "dim_defs": [
+    [
+     "ARRS-2_Compliance Year"
+    ],
+    [
+     "ARRS-2_Submitter"
+    ],
+    [
+     "ARRS-2_Facility Location"
+    ]
+   ],
+   "meas_defs": []
+  },
+  "724a8750-42eb-4cdf-8018-c3f1c3c53779": {
+   "type": "sheet",
+   "title": "RINs Generated",
+   "dims": [],
+   "meas": [],
+   "size": null,
+   "cells": [
+    "d0595912-3754-483e-8c46-2ffc0b788d13",
+    "58bb9c4f-bc2b-44e2-8ada-f785a726d366",
+    "YUPYxpa",
+    "QJSHx"
+   ]
+  },
+  "807da6b7-4d65-48bc-8615-013e01dd61c4": {
+   "type": "sheet",
+   "title": "RIN Price, Volume and Annual Sales Data",
+   "dims": [],
+   "meas": [],
+   "size": null,
+   "cells": [
+    "ZCxHm",
+    "KbPG",
+    "PzZau"
+   ]
+  },
+  "bf925808-916f-42df-915c-36f77a74a36f": {
+   "type": "sheet",
+   "title": "Available RINs",
+   "dims": [],
+   "meas": [],
+   "size": null,
+   "cells": [
+    "ec415994-62bc-4372-b3ee-8e867489c25f",
+    "c4fc256b-d8fa-4fa2-a14d-a42cd31d0b16",
+    "xtnuC",
+    "bJyFgx"
+   ]
+  },
+  "9fea8284-c3bc-45cb-8d99-8d91cff608e6": {
+   "type": "sheet",
+   "title": "RVO",
+   "dims": [],
+   "meas": [],
+   "size": null,
+   "cells": [
+    "TySbma"
+   ]
+  }
+ },
+ "measures": [],
+ "dimensions": []
+}
