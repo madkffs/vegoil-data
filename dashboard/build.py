@@ -711,3 +711,61 @@ for i, r_ in enumerate(corr_rows): r_["id"] = f"c{i:05d}"
 dump("corr_series.json", corr_rows)
 dump("corr_stats.json", corr_stats)
 print("correlations", [(s_["pair"], s_.get("corr_returns_6m"), s_.get("corr30_now"), s_.get("note")) for s_ in corr_stats])
+
+# ---------- D4 RIN generation vs the pace the RFS needs (EPA EMTS) ----------
+# EMTS generationbreakout files are year-to-date per RIN year; monthly = difference between consecutive months.
+# D4 needed = advanced standard incl. SRE reallocation - cellulosic - ~0.28bn D5 (what is left for biomass-based diesel).
+# Sources: EPA Set 2 final rule (Apr 2026) fact sheet; EPA SRE supplemental proposal (16 Oct 2026, 770M extra RINs).
+D5_BN = 0.28
+RFS = {  # year: {scenario: (advanced incl. reallocation, cellulosic)}, billion RINs
+    2025: {"final": (7.33 - 0.17, 1.21)},  # Set 1 advanced 7.33, cellulosic waived 1.38 -> 1.21 (advanced cut by the same)
+    2026: {"current": (11.10, 1.36), "fifty": (11.22, 1.36), "all2027": (11.10, 1.36)},
+    2027: {"current": (11.32, 1.43), "fifty": (11.45, 1.43), "all2027": (11.57, 1.43)},
+}
+SCN = {"final": "Final rule", "current": "Current rule (no extra reallocation)", "fifty": "Proposal: 50/50 to 2026 and 2027", "all2027": "Proposal: all to 2027"}
+emts_p = os.path.join(D, "rins", "emts_generation.csv")
+if os.path.exists(emts_p):
+    em = pd.read_csv(emts_p)
+    em = em[em["Fuel Code"].astype(str) == "4"].copy()
+    mm = em["file"].str.extract(r"_([a-z]{3})(\d{4})\.csv$")
+    em["fm"] = pd.to_datetime("1 " + mm[0] + " " + mm[1], format="%d %b %Y", errors="coerce")
+    em = em.dropna(subset=["fm"])
+    em = em[em["RIN_YEAR"] == em["fm"].dt.year]
+    em = em.sort_values("fm").drop_duplicates("fm", keep="last").set_index("fm")
+    tot = em["Total RINs"].astype(float)
+    imp = (em["IMPORTER"].astype(float) + em["Foreign Generation"].astype(float))
+    prev_t = tot.shift(1).where(tot.index.month != 1, 0.0)
+    prev_i = imp.shift(1).where(imp.index.month != 1, 0.0)
+    gap_ok = (tot.index.to_series().diff().dt.days.fillna(31) < 40) | (tot.index.month == 1)
+    mon = ((tot - prev_t) / 1e6).where(gap_ok)
+    imon = ((imp - prev_i) / 1e6).where(gap_ok)
+    need = {y: {k: a - c - D5_BN for k, (a, c) in v.items()} for y, v in RFS.items()}
+    rows_d4 = []
+    for fm_, v in mon.items():
+        if fm_.year < 2025: continue
+        y = fm_.year; nd = need.get(y, {})
+        rows_d4.append({"id": f"m-{fm_:%Y-%m}", "kind": "month", "month": f"{fm_:%Y-%m}",
+                        "actual_mn": None if pd.isna(v) else round(float(v), 1),
+                        "ytd_bn": round(float(tot[fm_]) / 1e9, 3),
+                        "import_share_pct": None if pd.isna(v) or not v else round(float(imon[fm_] / v * 100), 1),
+                        "req_current_mn": round(nd.get("current", nd.get("final", float("nan"))) * 1000 / 12, 1) if nd else None,
+                        "req_fifty_mn": round(nd.get("fifty", nd.get("final", float("nan"))) * 1000 / 12, 1) if nd else None,
+                        "req_all2027_mn": round(nd.get("all2027", nd.get("final", float("nan"))) * 1000 / 12, 1) if nd else None})
+    last_m = mon.dropna().index.max()
+    pace3 = float(mon.dropna().iloc[-3:].mean())  # million RINs a month, last 3 reported months
+    for y in sorted(RFS):
+        gen = float(tot[tot.index.year == y].iloc[-1]) / 1e9 if (tot.index.year == y).any() else 0.0
+        done_m = int(tot[tot.index.year == y].index.max().month) if (tot.index.year == y).any() else 0
+        left = 12 - done_m
+        proj = gen + pace3 * left / 1000
+        for k, nb in need[y].items():
+            rows_d4.append({"id": f"y-{y}-{k}", "kind": "year", "year": y, "scenario": SCN[k], "scenario_key": k,
+                            "need_bn": round(nb, 2), "need_mn_month": round(nb * 1000 / 12, 0),
+                            "generated_bn": round(gen, 3), "months_reported": done_m,
+                            "still_needed_mn_month": round((nb - gen) * 1000 / left, 0) if left else None,
+                            "pace3m_mn": round(pace3, 0) if left else None,
+                            "yearend_at_pace_bn": round(proj, 2),
+                            "surplus_bn": round(proj - nb, 2),
+                            "last_month": f"{last_m:%Y-%m}", "status": "Final" if left == 0 else ("Projected" if done_m == 0 else "Partial")})
+    dump("d4_pace.json", rows_d4)
+    print("d4", last_m, round(pace3, 1), [(r_["id"], r_.get("surplus_bn")) for r_ in rows_d4 if r_["kind"] == "year"])
