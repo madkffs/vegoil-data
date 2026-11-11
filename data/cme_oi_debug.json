@@ -1,0 +1,18 @@
+{
+ "ZL_dates": [
+  400,
+  "{\"type\":\"-\",\"title\":\"Bad Request\",\"status\":400,\"detail\":\"Required parameter 'exchange' is not present.\",\"instance\":\"/CmeWS/mvc/Volume/TradeDates\",\"properties\":\"-\"}"
+ ],
+ "ZM_dates": [
+  400,
+  "{\"type\":\"-\",\"title\":\"Bad Request\",\"status\":400,\"detail\":\"Required parameter 'exchange' is not present.\",\"instance\":\"/CmeWS/mvc/Volume/TradeDates\",\"properties\":\"-\"}"
+ ],
+ "ZS_dates": [
+  400,
+  "{\"type\":\"-\",\"title\":\"Bad Request\",\"status\":400,\"detail\":\"Required parameter 'exchange' is not present.\",\"instance\":\"/CmeWS/mvc/Volume/TradeDates\",\"properties\":\"-\"}"
+ ],
+ "ZC_dates": [
+  400,
+  "{\"type\":\"-\",\"title\":\"Bad Request\",\"status\":400,\"detail\":\"Required parameter 'exchange' is not present.\",\"instance\":\"/CmeWS/mvc/Volume/TradeDates\",\"properties\":\"-\"}"
+ ]
+}
