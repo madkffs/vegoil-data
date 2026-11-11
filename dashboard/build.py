@@ -798,3 +798,37 @@ if os.path.exists(det_p):
                 "rins_mn": round(r.rins / 1e6, 2), "gal_mn": round(r.gallons / 1e6, 2)} for r in a.itertuples()]
     dump("rin_fuel.json", rows_rf)
     lm = a["m"].max(); print("rin_fuel", len(rows_rf), lm)
+
+# ---------- Argentine oil exports 2026 by product: customs (INDEC) and NABSA sailed, for checking line-up records ----------
+OILG = {"sbo": ("Soybean oil (crude)", ("15071000",), ("SOYBEAN OIL",)),
+        "nsbo": ("Neutralised soybean oil", ("15079090",), ("NEUTRALIZED SOYBEAN OIL", "NEUTRAL OIL")),
+        "sfo": ("Sunflower oil (crude)", ("15121110", "15121120"), ("SUN FLOWER OIL", "SUNFLOWER OIL", "HIGH OLEIC SUNFLOWER OIL")),
+        "bio": ("Biodiesel", ("38260000",), ("BIODIESEL",))}
+ind_t, ind_s = collections.defaultdict(float), collections.defaultdict(int)
+for y in (2026, 2027):
+    p = os.path.join(LU, f"indec_exports_{y}.json")
+    if not os.path.exists(p): continue
+    for r in json.load(open(p))["rows"]:
+        if not r["_file"].startswith("exponm"): continue
+        for k, (_, ncms, _) in OILG.items():
+            if r["NCM"] in ncms:
+                key = (k, f"{r['Año']}-{r['Mes']}")
+                if r["Pnet(kg)"] in ("s", ""): ind_s[key] += 1
+                else: ind_t[key] += float(r["Pnet(kg)"].replace(",", ".")) / 1000
+nab_t, nab_basis = collections.defaultdict(float), {}
+if len(sailed):
+    last_sail = pd.to_datetime(sailed["date"]).max()
+    for k, (_, _, cargos) in OILG.items():
+        for m, t in sailed[sailed["cargo"].isin(cargos)].groupby("month")["tons"].sum().items():
+            nab_t[(k, m)] = float(t)
+            nab_basis[(k, m)] = "whole month" if m < f"{last_sail:%Y-%m}" else f"to {last_sail:%-d %b}"
+rows_ao = []
+for k, (lab, _, _) in OILG.items():
+    for mo in range(1, 13):
+        m = f"2026-{mo:02d}"
+        if (k, m) not in ind_t and (k, m) not in ind_s and (k, m) not in nab_t: continue
+        rows_ao.append({"id": f"{k}-{m}", "product_key": k, "product": lab, "month": m,
+                        "indec_t": round(ind_t[(k, m)]) if (k, m) in ind_t else None, "indec_confidential_rows": ind_s.get((k, m), 0),
+                        "nabsa_t": round(nab_t[(k, m)]) if (k, m) in nab_t else None, "nabsa_basis": nab_basis.get((k, m), "")})
+dump("ar_oils_public.json", rows_ao)
+print("ar_oils_public", len(rows_ao))
