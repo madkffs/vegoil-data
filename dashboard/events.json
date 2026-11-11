@@ -1,371 +1,362 @@
 [
-{
-"id": "e01",
-"date": "2026-10-23",
-"event": "CFTC Commitments of Traders",
-"category": "Positioning",
-"status": "Official",
-"note": "Positions as of the Tuesday before",
-"source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
-},
-{
-"id": "e02",
-"date": "2026-10-26",
-"event": "Malaysian export estimates (ITS, AmSpec)",
-"category": "Palm",
-"status": "Expected",
-"note": "1\u201325 Oct",
-"source": "Cargo surveyor release pattern"
-},
-{
-"date": "2026-10-28",
-"event": "Darling Ingredients Q3 results",
-"category": "Companies",
-"status": "Official",
-"note": "After the US close; call 29 Oct 9:00 ET",
-"source": "https://www.sec.gov/Archives/edgar/data/0000916540/000091654026000025/exh991-pressrelease102226.htm",
-"id": "e03"
-},
-{
-"id": "e04",
-"date": "2026-10-28",
-"event": "FOMC rate decision",
-"category": "USDA & US",
-"status": "Official",
-"note": "Meeting 27\u201328 Oct; Fed officials have pointed to a possible December hike",
-"source": "https://www.kitco.com/news/off-the-wire/2026-10-13/feds-collins-sees-another-rate-hike-table-end-2026"
-},
-{
-"date": "2026-10-29",
-"event": "Bunge Q3 results",
-"category": "Companies",
-"status": "Official",
-"note": "Before the US open; call 7:00 CT",
-"source": "https://earningswhispers.com/article/BG/2610011113",
-"id": "e05"
-},
-{
-"date": "2026-10-29",
-"event": "Neste Q3 interim report",
-"category": "Companies",
-"status": "Official",
-"note": "Renewables margin and turnarounds",
-"source": "https://www.inderes.fi/en/releases/nestes-financial-reporting-in-2026",
-"id": "e06"
-},
-{
-"id": "e07",
-"date": "2026-10-30",
-"event": "CFTC Commitments of Traders",
-"category": "Positioning",
-"status": "Official",
-"note": "Positions as of the Tuesday before",
-"source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
-},
-{
-"id": "e08",
-"date": "2026-10-30",
-"event": "Indonesia November CPO reference price and export levy",
-"category": "Palm",
-"status": "Expected",
-"note": "Set monthly near month-end",
-"source": "Indonesian trade ministry pattern"
-},
-{
-"id": "e09",
-"date": "2026-11-02",
-"event": "Malaysian export estimates (ITS, AmSpec)",
-"category": "Palm",
-"status": "Expected",
-"note": "Full October",
-"source": "Cargo surveyor release pattern"
-},
-{
-"date": "2026-11-03",
-"event": "ADM Q3 results",
-"category": "Companies",
-"status": "Official",
-"note": "",
-"source": "https://finviz.com/news/399205/adm-to-release-third-quarter-financial-results-on-november-3-2026",
-"id": "e10"
-},
-{
-"date": "2026-11-03",
-"event": "Marathon Petroleum Q3 results",
-"category": "Companies",
-"status": "Official",
-"note": "Renewable diesel segment and Martinez JV",
-"source": "https://finviz.com/news/393371/marathon-petroleum-corp-to-report-third-quarter-financial-results-on-november-3-2026",
-"id": "e11"
-},
-{
-"id": "e12",
-"date": "2026-11-06",
-"event": "CFTC Commitments of Traders",
-"category": "Positioning",
-"status": "Official",
-"note": "Positions as of the Tuesday before",
-"source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
-},
-{
-"id": "e13",
-"date": "2026-11-10",
-"event": "MPOB October supply and demand",
-"category": "Palm",
-"status": "Expected",
-"note": "Usually around the 10th; last one came out 12 Oct",
-"source": "MPOB release pattern"
-},
-{
-"id": "e14",
-"date": "2026-11-10",
-"event": "Malaysian export estimates (ITS, AmSpec)",
-"category": "Palm",
-"status": "Expected",
-"note": "1\u201310 Nov",
-"source": "Cargo surveyor release pattern"
-},
-{
-"id": "e15",
-"date": "2026-11-10",
-"event": "USDA WASDE",
-"category": "USDA & US",
-"status": "Official",
-"note": "12:00 ET",
-"source": "https://www.usda.gov/oce/commodity/wasde"
-},
-{
-"id": "e16",
-"date": "2026-11-16",
-"event": "CFTC Commitments of Traders",
-"category": "Positioning",
-"status": "Official",
-"note": "Delayed by a federal holiday",
-"source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
-},
-{
-"id": "e17",
-"date": "2026-11-16",
-"event": "Malaysia December CPO reference price and export duty",
-"category": "Palm",
-"status": "Expected",
-"note": "Mid-month; November's was set on 14 Oct",
-"source": "MPOB circular pattern"
-},
-{
-"id": "e18",
-"date": "2026-11-16",
-"event": "Malaysian export estimates (ITS, AmSpec)",
-"category": "Palm",
-"status": "Expected",
-"note": "1\u201315 Nov",
-"source": "Cargo surveyor release pattern"
-},
-{
-"id": "e19",
-"date": "2026-11-16",
-"event": "NOPA crush (October)",
-"category": "USDA & US",
-"status": "Official",
-"note": "12:00 ET; soyoil stocks and crush pace",
-"source": "https://www.nopa.org/resources/nopa-monthly-crush-report/"
-},
-{
-"id": "e20",
-"date": "2026-11-20",
-"event": "CFTC Commitments of Traders",
-"category": "Positioning",
-"status": "Official",
-"note": "Positions as of the Tuesday before",
-"source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
-},
-{
-"id": "e21",
-"date": "2026-11-20",
-"event": "Malaysian export estimates (ITS, AmSpec)",
-"category": "Palm",
-"status": "Expected",
-"note": "1\u201320 Nov",
-"source": "Cargo surveyor release pattern"
-},
-{
-"id": "e22",
-"date": "2026-11-20",
-"event": "Soyoil Dec options expire",
-"category": "Exchange",
-"status": "Official",
-"note": "Options on ZLZ26",
-"source": "CME Group contract rules"
-},
-{
-"id": "e23",
-"date": "2026-11-25",
-"event": "Malaysian export estimates (ITS, AmSpec)",
-"category": "Palm",
-"status": "Expected",
-"note": "1\u201325 Nov",
-"source": "Cargo surveyor release pattern"
-},
-{
-"id": "e24",
-"date": "2026-11-26",
-"event": "US Thanksgiving, CBOT closed",
-"category": "Exchange",
-"status": "Official",
-"note": "Early close Friday 27 Nov",
-"source": "CME Group contract rules"
-},
-{
-"id": "e25",
-"date": "2026-11-30",
-"event": "CFTC Commitments of Traders",
-"category": "Positioning",
-"status": "Official",
-"note": "Delayed by a federal holiday",
-"source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
-},
-{
-"id": "e26",
-"date": "2026-11-30",
-"event": "Indonesia December CPO reference price and export levy",
-"category": "Palm",
-"status": "Expected",
-"note": "Set monthly near month-end",
-"source": "Indonesian trade ministry pattern"
-},
-{
-"id": "e27",
-"date": "2026-11-30",
-"event": "Soyoil Dec first notice day",
-"category": "Exchange",
-"status": "Official",
-"note": "ZLZ26 deliveries start",
-"source": "CME Group contract rules"
-},
-{
-"id": "e28",
-"date": "2026-12-01",
-"event": "Malaysian export estimates (ITS, AmSpec)",
-"category": "Palm",
-"status": "Expected",
-"note": "Full November",
-"source": "Cargo surveyor release pattern"
-},
-{
-"id": "e29",
-"date": "2026-12-04",
-"event": "CFTC Commitments of Traders",
-"category": "Positioning",
-"status": "Official",
-"note": "Positions as of the Tuesday before",
-"source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
-},
-{
-"id": "e30",
-"date": "2026-12-10",
-"event": "MPOB November supply and demand",
-"category": "Palm",
-"status": "Expected",
-"note": "Usually around the 10th",
-"source": "MPOB release pattern"
-},
-{
-"id": "e31",
-"date": "2026-12-10",
-"event": "Malaysian export estimates (ITS, AmSpec)",
-"category": "Palm",
-"status": "Expected",
-"note": "1\u201310 Dec",
-"source": "Cargo surveyor release pattern"
-},
-{
-"id": "e32",
-"date": "2026-12-10",
-"event": "USDA WASDE",
-"category": "USDA & US",
-"status": "Official",
-"note": "12:00 ET",
-"source": "https://www.usda.gov/oce/commodity/wasde"
-},
-{
-"id": "e33",
-"date": "2026-12-11",
-"event": "CFTC Commitments of Traders",
-"category": "Positioning",
-"status": "Official",
-"note": "Positions as of the Tuesday before",
-"source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
-},
-{
-"id": "e34",
-"date": "2026-12-14",
-"event": "Soyoil Dec last trading day",
-"category": "Exchange",
-"status": "Official",
-"note": "ZLZ26 expires",
-"source": "CME Group contract rules"
-},
-{
-"id": "e35",
-"date": "2026-12-15",
-"event": "Malaysia January CPO reference price and export duty",
-"category": "Palm",
-"status": "Expected",
-"note": "Mid-month",
-"source": "MPOB circular pattern"
-},
-{
-"id": "e36",
-"date": "2026-12-15",
-"event": "Malaysian export estimates (ITS, AmSpec)",
-"category": "Palm",
-"status": "Expected",
-"note": "1\u201315 Dec",
-"source": "Cargo surveyor release pattern"
-},
-{
-"id": "e37",
-"date": "2026-12-15",
-"event": "NOPA crush (November)",
-"category": "USDA & US",
-"status": "Official",
-"note": "12:00 ET; soyoil stocks and crush pace",
-"source": "https://www.nopa.org/resources/nopa-monthly-crush-report/"
-},
-{
-"id": "e38",
-"date": "2026-12-18",
-"event": "CFTC Commitments of Traders",
-"category": "Positioning",
-"status": "Official",
-"note": "Positions as of the Tuesday before",
-"source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
-},
-{
-"id": "e39",
-"date": "2026-12-21",
-"event": "Malaysian export estimates (ITS, AmSpec)",
-"category": "Palm",
-"status": "Expected",
-"note": "1\u201320 Dec",
-"source": "Cargo surveyor release pattern"
-},
-{
-"id": "e40",
-"date": "2026-12-25",
-"event": "Christmas, CBOT closed",
-"category": "Exchange",
-"status": "Official",
-"note": "",
-"source": "CME Group contract rules"
-},
-{
-"id": "e41",
-"date": "2026-12-28",
-"event": "CFTC Commitments of Traders",
-"category": "Positioning",
-"status": "Official",
-"note": "Delayed by a federal holiday",
-"source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
-}
+ {
+  "id": "e01",
+  "date": "2026-11-12",
+  "event": "EIA Weekly Petroleum Status Report",
+  "category": "USDA & US",
+  "status": "Official",
+  "note": "Moved from Wed 11 Nov for Veterans Day; 12:00 ET (18:00 Zurich). Distillate stocks and demand, renewable diesel and biodiesel output.",
+  "source": "https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+ },
+ {
+  "id": "e02",
+  "date": "2026-11-16",
+  "event": "Malaysia December CPO reference price and export duty",
+  "category": "Palm",
+  "status": "Expected",
+  "note": "Mid-month; November's was set on 14 Oct",
+  "source": "MPOB circular pattern"
+ },
+ {
+  "id": "e03",
+  "date": "2026-11-16",
+  "event": "Malaysian export estimates (ITS, AmSpec)",
+  "category": "Palm",
+  "status": "Expected",
+  "note": "1–15 Nov",
+  "source": "Cargo surveyor release pattern"
+ },
+ {
+  "id": "e04",
+  "date": "2026-11-16",
+  "event": "CFTC Commitments of Traders",
+  "category": "Positioning",
+  "status": "Official",
+  "note": "Delayed by a federal holiday",
+  "source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
+ },
+ {
+  "id": "e05",
+  "date": "2026-11-16",
+  "event": "NOPA crush (October)",
+  "category": "USDA & US",
+  "status": "Official",
+  "note": "12:00 ET; soyoil stocks and crush pace",
+  "source": "https://www.nopa.org/resources/nopa-monthly-crush-report/"
+ },
+ {
+  "id": "e06",
+  "date": "2026-11-17",
+  "event": "EPA EMTS RIN generation data (October)",
+  "category": "USDA & US",
+  "status": "Expected",
+  "note": "Monthly D4/D5/D6 RIN generation and biomass-based diesel volumes; September data was posted 15 Oct, so October lands around mid-November. D4 pace needed for the RVO is about 916 million a month.",
+  "source": "https://www.epa.gov/fuels-registration-reporting-and-compliance-help/spreadsheet-rin-generation-data-renewable-fuel"
+ },
+ {
+  "id": "e07",
+  "date": "2026-11-18",
+  "event": "EIA Weekly Petroleum Status Report",
+  "category": "USDA & US",
+  "status": "Official",
+  "note": "10:30 ET (16:30 Zurich).",
+  "source": "https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+ },
+ {
+  "id": "e08",
+  "date": "2026-11-20",
+  "event": "Soyoil Dec options expire",
+  "category": "Exchange",
+  "status": "Official",
+  "note": "Options on ZLZ26",
+  "source": "CME Group contract rules"
+ },
+ {
+  "id": "e09",
+  "date": "2026-11-20",
+  "event": "Malaysian export estimates (ITS, AmSpec)",
+  "category": "Palm",
+  "status": "Expected",
+  "note": "1–20 Nov",
+  "source": "Cargo surveyor release pattern"
+ },
+ {
+  "id": "e10",
+  "date": "2026-11-20",
+  "event": "CFTC Commitments of Traders",
+  "category": "Positioning",
+  "status": "Official",
+  "note": "Positions as of the Tuesday before",
+  "source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
+ },
+ {
+  "id": "e11",
+  "date": "2026-11-25",
+  "event": "Malaysian export estimates (ITS, AmSpec)",
+  "category": "Palm",
+  "status": "Expected",
+  "note": "1–25 Nov",
+  "source": "Cargo surveyor release pattern"
+ },
+ {
+  "id": "e12",
+  "date": "2026-11-25",
+  "event": "EIA Weekly Petroleum Status Report",
+  "category": "USDA & US",
+  "status": "Official",
+  "note": "10:30 ET; Thanksgiving week.",
+  "source": "https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+ },
+ {
+  "id": "e13",
+  "date": "2026-11-26",
+  "event": "US Thanksgiving, CBOT closed",
+  "category": "Exchange",
+  "status": "Official",
+  "note": "Early close Friday 27 Nov",
+  "source": "CME Group contract rules"
+ },
+ {
+  "id": "e14",
+  "date": "2026-11-30",
+  "event": "Soyoil Dec first notice day",
+  "category": "Exchange",
+  "status": "Official",
+  "note": "ZLZ26 deliveries start",
+  "source": "CME Group contract rules"
+ },
+ {
+  "id": "e15",
+  "date": "2026-11-30",
+  "event": "Indonesia December CPO reference price and export levy",
+  "category": "Palm",
+  "status": "Expected",
+  "note": "Set monthly near month-end",
+  "source": "Indonesian trade ministry pattern"
+ },
+ {
+  "id": "e16",
+  "date": "2026-11-30",
+  "event": "CFTC Commitments of Traders",
+  "category": "Positioning",
+  "status": "Official",
+  "note": "Delayed by a federal holiday",
+  "source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
+ },
+ {
+  "id": "e17",
+  "date": "2026-11-30",
+  "event": "EIA biofuel feedstock consumption (September)",
+  "category": "USDA & US",
+  "status": "Expected",
+  "note": "Soybean oil, canola, corn oil, UCO and tallow used in US biofuels, in EIA's monthly petroleum data (about two months' lag; October 2025 data came out 31 Dec).",
+  "source": "https://www.eia.gov/dnav/pet/pet_pnp_feedbiofuel_dcu_nus_m.htm"
+ },
+ {
+  "id": "e18",
+  "date": "2026-12-01",
+  "event": "Malaysian export estimates (ITS, AmSpec)",
+  "category": "Palm",
+  "status": "Expected",
+  "note": "Full November",
+  "source": "Cargo surveyor release pattern"
+ },
+ {
+  "id": "e19",
+  "date": "2026-12-02",
+  "event": "EIA Weekly Petroleum Status Report",
+  "category": "USDA & US",
+  "status": "Expected",
+  "note": "10:30 ET; usual Wednesday release.",
+  "source": "https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+ },
+ {
+  "id": "e20",
+  "date": "2026-12-04",
+  "event": "CFTC Commitments of Traders",
+  "category": "Positioning",
+  "status": "Official",
+  "note": "Positions as of the Tuesday before",
+  "source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
+ },
+ {
+  "id": "e21",
+  "date": "2026-12-04",
+  "event": "EPA comment deadline: 2025 SRE reallocation proposal",
+  "category": "USDA & US",
+  "status": "Official",
+  "note": "770m RINs to spread over 2026-27",
+  "source": "https://dailycaller.com/2026/11/10/renewable-fuel-standard-diesel-cost-epa-afpm-chet-thompson-geoff-cooper-eprinc/"
+ },
+ {
+  "id": "e22",
+  "date": "2026-12-09",
+  "event": "EIA Weekly Petroleum Status Report",
+  "category": "USDA & US",
+  "status": "Expected",
+  "note": "10:30 ET; usual Wednesday release.",
+  "source": "https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+ },
+ {
+  "id": "e23",
+  "date": "2026-12-09",
+  "event": "FOMC rate decision",
+  "category": "USDA & US",
+  "status": "Official",
+  "note": "Markets price a possible hike after hot October CPI",
+  "source": "https://kiplinger.com/investing/economy/october-2026-cpi-report-what-to-expect"
+ },
+ {
+  "id": "e24",
+  "date": "2026-12-10",
+  "event": "MPOB November supply and demand",
+  "category": "Palm",
+  "status": "Expected",
+  "note": "Usually around the 10th",
+  "source": "MPOB release pattern"
+ },
+ {
+  "id": "e25",
+  "date": "2026-12-10",
+  "event": "Malaysian export estimates (ITS, AmSpec)",
+  "category": "Palm",
+  "status": "Expected",
+  "note": "1–10 Dec",
+  "source": "Cargo surveyor release pattern"
+ },
+ {
+  "id": "e26",
+  "date": "2026-12-10",
+  "event": "USDA WASDE",
+  "category": "USDA & US",
+  "status": "Official",
+  "note": "12:00 ET",
+  "source": "https://www.usda.gov/oce/commodity/wasde"
+ },
+ {
+  "id": "e27",
+  "date": "2026-12-11",
+  "event": "CFTC Commitments of Traders",
+  "category": "Positioning",
+  "status": "Official",
+  "note": "Positions as of the Tuesday before",
+  "source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
+ },
+ {
+  "id": "e28",
+  "date": "2026-12-14",
+  "event": "Soyoil Dec last trading day",
+  "category": "Exchange",
+  "status": "Official",
+  "note": "ZLZ26 expires",
+  "source": "CME Group contract rules"
+ },
+ {
+  "id": "e29",
+  "date": "2026-12-15",
+  "event": "Malaysia January CPO reference price and export duty",
+  "category": "Palm",
+  "status": "Expected",
+  "note": "Mid-month",
+  "source": "MPOB circular pattern"
+ },
+ {
+  "id": "e30",
+  "date": "2026-12-15",
+  "event": "Malaysian export estimates (ITS, AmSpec)",
+  "category": "Palm",
+  "status": "Expected",
+  "note": "1–15 Dec",
+  "source": "Cargo surveyor release pattern"
+ },
+ {
+  "id": "e31",
+  "date": "2026-12-15",
+  "event": "EPA EMTS RIN generation data (November)",
+  "category": "USDA & US",
+  "status": "Expected",
+  "note": "Monthly RIN generation; around the middle of the month.",
+  "source": "https://www.epa.gov/fuels-registration-reporting-and-compliance-help/spreadsheet-rin-generation-data-renewable-fuel"
+ },
+ {
+  "id": "e32",
+  "date": "2026-12-15",
+  "event": "NOPA crush (November)",
+  "category": "USDA & US",
+  "status": "Official",
+  "note": "12:00 ET; soyoil stocks and crush pace",
+  "source": "https://www.nopa.org/resources/nopa-monthly-crush-report/"
+ },
+ {
+  "id": "e33",
+  "date": "2026-12-16",
+  "event": "EIA Weekly Petroleum Status Report",
+  "category": "USDA & US",
+  "status": "Expected",
+  "note": "10:30 ET; usual Wednesday release.",
+  "source": "https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+ },
+ {
+  "id": "e34",
+  "date": "2026-12-18",
+  "event": "CFTC Commitments of Traders",
+  "category": "Positioning",
+  "status": "Official",
+  "note": "Positions as of the Tuesday before",
+  "source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
+ },
+ {
+  "id": "e35",
+  "date": "2026-12-21",
+  "event": "Malaysian export estimates (ITS, AmSpec)",
+  "category": "Palm",
+  "status": "Expected",
+  "note": "1–20 Dec",
+  "source": "Cargo surveyor release pattern"
+ },
+ {
+  "id": "e36",
+  "date": "2026-12-23",
+  "event": "EIA Weekly Petroleum Status Report",
+  "category": "USDA & US",
+  "status": "Expected",
+  "note": "10:30 ET; usual Wednesday release.",
+  "source": "https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+ },
+ {
+  "id": "e37",
+  "date": "2026-12-25",
+  "event": "Christmas, CBOT closed",
+  "category": "Exchange",
+  "status": "Official",
+  "note": "",
+  "source": "CME Group contract rules"
+ },
+ {
+  "id": "e38",
+  "date": "2026-12-28",
+  "event": "CFTC Commitments of Traders",
+  "category": "Positioning",
+  "status": "Official",
+  "note": "Delayed by a federal holiday",
+  "source": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm"
+ },
+ {
+  "id": "e39",
+  "date": "2026-12-30",
+  "event": "EIA Weekly Petroleum Status Report",
+  "category": "USDA & US",
+  "status": "Expected",
+  "note": "10:30 ET; usual Wednesday release.",
+  "source": "https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+ },
+ {
+  "id": "e40",
+  "date": "2026-12-31",
+  "event": "EIA biofuel feedstock consumption (October)",
+  "category": "USDA & US",
+  "status": "Expected",
+  "note": "Monthly feedstock use for US biofuels, about two months' lag.",
+  "source": "https://www.eia.gov/dnav/pet/pet_pnp_feedbiofuel_dcu_nus_m.htm"
+ }
 ]
