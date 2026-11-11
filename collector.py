@@ -233,7 +233,7 @@ def cme_volume_oi():
     old = pd.read_csv(p) if os.path.exists(p) else pd.DataFrame()
     rows, dbg = [], {}
     for sym, pid in CME_PRODUCTS.items():
-        u = f"https://www.cmegroup.com/CmeWS/mvc/Volume/TradeDates?productid={pid}"
+        u = f"https://www.cmegroup.com/CmeWS/mvc/Volume/TradeDates?productid={pid}&exchange=CBOT"
         r = cr.get(u, impersonate="chrome", timeout=30, headers={"Referer": "https://www.cmegroup.com/"})
         dbg[sym + "_dates"] = [r.status_code, r.text[:300]]
         if r.status_code != 200: continue
