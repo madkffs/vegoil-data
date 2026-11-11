@@ -1,11 +1,9 @@
 {
- "run_utc": "2026-11-11 06:00",
+ "run_utc": "2026-11-11 07:14",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
   "RS=F": "no data",
-  "santos_lineup": "500 Server Error: Internal Server Error for url: https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/navios-esperados-carga/",
-  "comexstat": "comexstat 429: {\"error\":{\"code\":429,\"message\":\"Voc\\u00ea excedeu o limite de solicita\\u00e7\\u00f5es. Por favor, tente novamente em 10 segundos.\"}}",
   "bunkers": "no prices parsed"
  },
  "euronext_cot_misses": [
