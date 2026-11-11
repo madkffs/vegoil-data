@@ -1024,6 +1024,38 @@ def comexstat_ports():
     if r.status_code != 200: raise ValueError(f"comexstat urf {r.status_code}: {r.text[:150]}")
     with open(os.path.join(DATA, "lineups", "comexstat_soyoil_ports.json"), "w") as fh: fh.write(r.text)
 
+EMTS_PAGE = "https://www.epa.gov/fuels-registration-reporting-and-compliance-help/spreadsheet-rin-generation-data-renewable-fuel"
+def emts_generation(since_year=2024):
+    """EPA EMTS monthly RIN generation (generationbreakout CSVs): every file linked on EPA's page from since_year on.
+    Saved raw under data/rins/ and combined into data/rins/emts_generation.csv."""
+    import pandas as pd
+    from curl_cffi import requests as cr
+    d = os.path.join(DATA, "rins"); os.makedirs(d, exist_ok=True)
+    page = cr.get(EMTS_PAGE, impersonate="chrome", timeout=60).text
+    links = sorted(set(re.findall(r'href="([^"]*generationbreakout[^"]*\.csv)"', page)))
+    got = []
+    for u in links:
+        u = u if u.startswith("http") else "https://www.epa.gov" + u
+        m = re.search(r"generationbreakout[-_]([A-Za-z]+)(\d{2,4})", u)
+        if not m: continue
+        y = int(m.group(2)) if len(m.group(2)) == 4 else 2000 + int(m.group(2))
+        if y < since_year: continue
+        fn_ = os.path.join(d, os.path.basename(u))
+        if not os.path.exists(fn_):
+            r = cr.get(u, impersonate="chrome", timeout=60)
+            if r.status_code != 200: continue
+            open(fn_, "wb").write(r.content); time.sleep(0.5)
+        got.append(fn_)
+    frames = []
+    for f in got:
+        try:
+            x = pd.read_csv(f, encoding="latin-1"); x["file"] = os.path.basename(f); frames.append(x)
+        except Exception:
+            pass
+    if frames:
+        pd.concat(frames, ignore_index=True).to_csv(os.path.join(d, "emts_generation.csv"), index=False)
+    return len(got)
+
 def probe_brazil():
     """Find public Brazilian port line-ups that list soyoil cargoes vessel by vessel."""
     d = os.path.join(DATA, "probe_br"); os.makedirs(d, exist_ok=True)
@@ -1064,6 +1096,10 @@ def main(mode):
         investing_history(); return
     if mode == "probe2":
         probe_second_month(); return
+    if mode == "emts":
+        n = emts_generation()
+        with open(os.path.join(DATA, "rins", "emts_status.json"), "w") as fh: json.dump({"files": n}, fh)
+        return
     if mode == "probe_oi":
         errs = {}
         try: append_csv(os.path.join(DATA, "cot_agri_fo.csv"), cot_agri("kh3c-gbw2"), key="key")
@@ -1172,7 +1208,7 @@ def main(mode):
             except Exception as e:
                 status["errors"][name] = str(e)[:200]
     if mode in ("backfill", "probe") or dt.datetime.utcnow().minute < 15 and dt.datetime.utcnow().hour == 6:
-        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("comexstat_ports", comexstat_ports), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
+        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("comexstat_ports", comexstat_ports), ("emts_generation", emts_generation), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
             try:
                 fn()
             except Exception as e:
