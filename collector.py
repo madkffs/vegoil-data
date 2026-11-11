@@ -229,6 +229,7 @@ def cme_volume_oi():
     Used to estimate fund flows since the last CFTC report (price + open-interest change)."""
     from curl_cffi import requests as cr
     p = os.path.join(DATA, "cme_oi.csv")
+    import pandas as pd
     old = pd.read_csv(p) if os.path.exists(p) else pd.DataFrame()
     rows, dbg = [], {}
     for sym, pid in CME_PRODUCTS.items():
