@@ -223,13 +223,45 @@ def cot():
         rows.append(row)
     return rows
 
-def cot_agri():
-    """CFTC disaggregated futures-only for every agricultural market (commodity group AGRICULTURE), weekly, from mid-2024."""
+CME_PRODUCTS = {"ZL": 312, "ZM": 310, "ZS": 320, "ZC": 300}
+def cme_volume_oi():
+    """CME daily volume and open interest (all months) for the soy complex and corn, last few trade dates.
+    Used to estimate fund flows since the last CFTC report (price + open-interest change)."""
+    from curl_cffi import requests as cr
+    p = os.path.join(DATA, "cme_oi.csv")
+    old = pd.read_csv(p) if os.path.exists(p) else pd.DataFrame()
+    rows, dbg = [], {}
+    for sym, pid in CME_PRODUCTS.items():
+        u = f"https://www.cmegroup.com/CmeWS/mvc/Volume/TradeDates?productid={pid}"
+        r = cr.get(u, impersonate="chrome", timeout=30, headers={"Referer": "https://www.cmegroup.com/"})
+        dbg[sym + "_dates"] = [r.status_code, r.text[:300]]
+        if r.status_code != 200: continue
+        dates = [x.get("tradeDate") for x in r.json()][:6]
+        for d in dates:
+            u2 = f"https://www.cmegroup.com/CmeWS/mvc/Volume/Details/F/{pid}/{d}/P"
+            r2 = cr.get(u2, impersonate="chrome", timeout=30, headers={"Referer": "https://www.cmegroup.com/"})
+            if r2.status_code != 200:
+                dbg[f"{sym}_{d}"] = [r2.status_code, r2.text[:200]]; continue
+            j = r2.json(); t = j.get("totals") or {}
+            num = lambda v: float(str(v).replace(",", "")) if v not in (None, "", "-") else None
+            rows.append({"key": f"{d}_{sym}", "date": f"{d[:4]}-{d[4:6]}-{d[6:8]}", "symbol": sym,
+                         "volume": num(t.get("totalVolume")), "open_interest": num(t.get("atClose")), "oi_change": num(t.get("change"))})
+            time.sleep(0.5)
+        time.sleep(1)
+    with open(os.path.join(DATA, "cme_oi_debug.json"), "w") as fh: json.dump(dbg, fh, indent=1)
+    if rows:
+        df = pd.concat([old, pd.DataFrame(rows)]).drop_duplicates("key", keep="last").sort_values(["symbol", "date"])
+        df.to_csv(p, index=False)
+    return len(rows)
+
+def cot_agri(dataset="72hh-3qpy"):
+    """CFTC disaggregated report for every agricultural market (commodity group AGRICULTURE), weekly, from mid-2024.
+    72hh-3qpy = futures only; kh3c-gbw2 = futures and options combined (the figure most market commentary quotes)."""
     params = {"$where": "commodity_group_name='AGRICULTURE' AND report_date_as_yyyy_mm_dd > '2024-06-01T00:00:00'",
               "$select": "report_date_as_yyyy_mm_dd,cftc_contract_market_code,market_and_exchange_names,commodity_subgroup_name,commodity_name,"
                          "open_interest_all,m_money_positions_long_all,m_money_positions_short_all",
               "$limit": "50000", "$order": "report_date_as_yyyy_mm_dd"}
-    r = requests.get("https://publicreporting.cftc.gov/resource/72hh-3qpy.json", params=params, headers=UA, timeout=90)
+    r = requests.get(f"https://publicreporting.cftc.gov/resource/{dataset}.json", params=params, headers=UA, timeout=90)
     r.raise_for_status()
     rows = []
     for a in r.json():
@@ -1026,6 +1058,14 @@ def main(mode):
         investing_history(); return
     if mode == "probe2":
         probe_second_month(); return
+    if mode == "probe_oi":
+        errs = {}
+        try: append_csv(os.path.join(DATA, "cot_agri_fo.csv"), cot_agri("kh3c-gbw2"), key="key")
+        except Exception as ex: errs["fo"] = str(ex)[:300]
+        try: cme_volume_oi()
+        except Exception as ex: errs["cme"] = str(ex)[:300]
+        with open(os.path.join(DATA, "probe_oi_errors.json"), "w") as fh: json.dump(errs, fh, indent=1)
+        return
     if mode == "probe_br":
         probe_brazil()
         errs = {}
@@ -1085,6 +1125,15 @@ def main(mode):
         append_csv(os.path.join(DATA, "cot_agri.csv"), rows, key="key")
     except Exception as e:
         status["errors"]["cot_agri"] = str(e)[:200]
+    try:
+        rows = cot_agri("kh3c-gbw2")
+        append_csv(os.path.join(DATA, "cot_agri_fo.csv"), rows, key="key")
+    except Exception as e:
+        status["errors"]["cot_agri_fo"] = str(e)[:200]
+    try:
+        cme_volume_oi()
+    except Exception as e:
+        status["errors"]["cme_volume_oi"] = str(e)[:200]
     try:
         rows, misses = euronext_cot(mode)
         append_csv(os.path.join(DATA, "euronext_cot.csv"), rows, key="key")
