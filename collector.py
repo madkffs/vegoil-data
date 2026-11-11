@@ -1039,6 +1039,9 @@ def probe_brazil():
         "santos_nav": "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/",
         "portosrs_home": "https://www.portosrs.com.br/site/",
         "portosrs_alt": "https://portosrs.com.br/site/public/index.php/line_up",
+        "balanca_main": "https://balanca.economia.gov.br/balanca/pg_principal_bc/principais_resultados.html",
+        "balanca_semanal": "https://balanca.economia.gov.br/balanca/pg_principal_bc/principais_resultados.html#semanal",
+        "mdic_semanal": "https://www.gov.br/mdic/pt-br/assuntos/comercio-exterior/estatisticas/balanca-comercial-brasileira-semanal",
         "portosrs_lineup": "https://www.portosrs.com.br/site/line_up",
     }
     out = {}
@@ -1049,7 +1052,7 @@ def probe_brazil():
             with open(os.path.join(d, k + ".html"), "w") as fh: fh.write(t)
             txt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", re.sub(r"<script.*?</script>|<style.*?</style>", " ", t, flags=re.S)))
             hits = [txt[max(0, m.start() - 200): m.start() + 200] for m in re.finditer(r"(?i)[óo]leo", txt)][:8]
-            links = sorted(set(re.findall(r'href="([^"]*(?i:line|navio|esperad|programa|atraca)[^"]*)"', t)))[:40]
+            links = sorted(set(re.findall(r'href="([^"]*(?i:line|navio|esperad|programa|atraca|semana|xls|csv|zip)[^"]*)"', t)))[:60]
             out[k] = {"status": r.status_code, "len": len(t), "oleo_hits": hits, "links": links}
         except Exception as ex:
             out[k] = {"error": str(ex)[:200]}
