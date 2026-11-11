@@ -503,6 +503,42 @@ for prod, (t, vs) in br_sched.items():
                   "issue": max(br_ports)[-20:-4] if br_ports else ""})
 for i, r in enumerate(sched): r["id"] = f"s{i:03d}"
 dump("lineup_scheduled.json", sched)
+# Brazil soybean oil exports by port, official customs (Comex Stat), monthly
+bp = os.path.join(LU, "comexstat_soyoil_ports.json")
+if os.path.exists(bp):
+    bl = json.load(open(bp))["data"]["list"]
+    bdf = pd.DataFrame([{"month": f"{r['year']}-{r['monthNumber']}", "port": str(r.get("urf") or r.get("noUrf") or "").split(" - ", 1)[-1].title()
+                         .replace("Porto De ", "").replace("Sao ", "São ").replace("Paranagua", "Paranaguá"), "tons": float(r["metricKG"]) / 1000} for r in bl])
+    piv = bdf.groupby(["port", "month"])["tons"].sum().unstack(fill_value=0)
+    months = sorted(piv.columns); last_m = months[-1]; prev_m = months[-2]
+    y, mth = int(last_m[:4]), int(last_m[5:])
+    ytd = [m for m in months if m.startswith(str(y)) and int(m[5:]) <= mth]; ytd_p = [f"{y-1}-{m[5:]}" for m in ytd if f"{y-1}-{m[5:]}" in months]
+    six = months[-6:]
+    tot_last = float(piv[last_m].sum())
+    rows_bp = []
+    for port in piv.index:
+        a, b = float(piv.loc[port, ytd].sum()), float(piv.loc[port, ytd_p].sum()) if ytd_p else 0.0
+        if a + b < 1000: continue
+        rows_bp.append({"id": "p-" + _re.sub(r"[^a-z]", "", port.lower())[:20], "port": port, "last_month": round(float(piv.loc[port, last_m])),
+                        "prev_month": round(float(piv.loc[port, prev_m])), "avg_6m": round(float(piv.loc[port, six].mean())),
+                        "share_last": round(float(piv.loc[port, last_m]) / tot_last * 100, 1) if tot_last else None,
+                        "ytd": round(a), "ytd_prev": round(b), "ytd_change_pct": round((a / b - 1) * 100, 1) if b > 1000 else None,
+                        "month": last_m, "prev": prev_m, "ytd_label": f"Jan-{pd.Timestamp(last_m + '-01'):%b} {y}"})
+    rows_bp.sort(key=lambda r: -r["ytd"])
+    big = [r for r in rows_bp if r["ytd"] >= 10000]; small = [r for r in rows_bp if r["ytd"] < 10000]
+    T = lambda k, rs=rows_bp: round(sum(r[k] for r in rs))
+    if small:
+        a0, b0 = T("ytd", small), T("ytd_prev", small)
+        big.append({"id": "other", "port": "Other ports and land borders", "last_month": T("last_month", small), "prev_month": T("prev_month", small),
+                    "avg_6m": T("avg_6m", small), "share_last": round(T("last_month", small) / tot_last * 100, 1) if tot_last else None,
+                    "ytd": a0, "ytd_prev": b0, "ytd_change_pct": round((a0 / b0 - 1) * 100, 1) if b0 > 1000 else None,
+                    "month": last_m, "prev": prev_m, "ytd_label": big[0]["ytd_label"] if big else ""})
+    a, b = T("ytd"), T("ytd_prev")
+    rows_bp_total = ({"id": "total", "port": "Brazil, all ports", "last_month": T("last_month"), "prev_month": T("prev_month"), "avg_6m": T("avg_6m"),
+                    "share_last": 100.0, "ytd": a, "ytd_prev": b, "ytd_change_pct": round((a / b - 1) * 100, 1) if b else None,
+                    "month": last_m, "prev": prev_m, "ytd_label": f"Jan-{pd.Timestamp(last_m + '-01'):%b} {y}"})
+    rows_bp = big + [rows_bp_total]
+    dump("br_ports.json", rows_bp)
 oil_rows = sorted(oil_rows, key=lambda r: (r["status"] != "Sailed", str(r["date"]), r["vessel"]))
 for i, r in enumerate(oil_rows): r["id"] = f"o{i:03d}"
 dump("oil_month.json", oil_rows)
