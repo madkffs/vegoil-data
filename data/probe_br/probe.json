@@ -71,26 +71,31 @@
   "links": []
  },
  "portosrs_home": {
-  "status": 200,
-  "len": 110483,
-  "oleo_hits": [],
-  "links": [
-   "http://www.portosrs.com.br/portoweb/zf/login/logar/_module/atracacao/_controller/cais-virtual/_action/index/cd_usuario/publico",
-   "http://www.portosrs.com.br/portoweb/zf/login/logar/_module/atracacao/_controller/rel-lineup/_action/index/cd_usuario/publico/",
-   "http://www.portosrs.com.br/portoweb/zf/login/logar/_module/porto-gerencial/_controller/navios-situacao/_action/relatorio/cd_usuario/publico/param_situacao/0/param__rel_metodo/pdf",
-   "http://www.portosrs.com.br/portoweb/zf/login/logar/_module/porto-gerencial/_controller/navios-situacao/_action/relatorio/cd_usuario/publico/param_situacao/2/param__rel_metodo/pdf",
-   "http://www.portosrs.com.br/portoweb/zf/login/logar/_module/porto-gerencial/_controller/navios-situacao/_action/relatorio/cd_usuario/publico/param_situacao/3/param__rel_metodo/pdf",
-   "http://www.portosrs.com.br/portoweb/zf/login/logar/_module/porto-gerencial/_controller/navios-situacao/_action/relatorio/cd_usuario/publico/param_situacao/4/param__rel_metodo/pdf",
-   "https://www.portosrs.com.br/site/transparencia/atas_programacao_navio"
-  ]
+  "error": "Failed to perform, curl: (28) Connection timed out after 40000 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
  },
  "portosrs_alt": {
-  "error": "Failed to perform, curl: (60) SSL: no alternative certificate subject name matches target hostname 'portosrs.com.br'. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
+  "error": "Failed to perform, curl: (28) Connection timed out after 40000 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
+ },
+ "balanca_main": {
+  "error": "Failed to perform, curl: (60) SSL certificate OpenSSL verify result: unable to get local issuer certificate (20). See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
+ },
+ "balanca_semanal": {
+  "error": "Failed to perform, curl: (60) SSL certificate OpenSSL verify result: unable to get local issuer certificate (20). See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
+ },
+ "mdic_semanal": {
+  "status": 404,
+  "len": 186179,
+  "oleo_hits": [],
+  "links": [
+   "https://www.gov.br/mdic/pt-br/acesso-a-informacao/acoes-e-programas",
+   "https://www.gov.br/mdic/pt-br/acesso-a-informacao/acoes-e-programas/carta-de-servicos",
+   "https://www.gov.br/mdic/pt-br/acesso-a-informacao/acoes-e-programas/concessoes-de-recursos-financeiros-ou-renuncias-de-receitas",
+   "https://www.gov.br/mdic/pt-br/acesso-a-informacao/acoes-e-programas/pgd",
+   "https://www.gov.br/mdic/pt-br/acesso-a-informacao/acoes-e-programas/programas-projetos-acoes-obras-e-atividades",
+   "https://www.gov.br/pt-br/temas/habilidades-online-para-jovens-e-adultos"
+  ]
  },
  "portosrs_lineup": {
-  "status": 404,
-  "len": 1190,
-  "oleo_hits": [],
-  "links": []
+  "error": "Failed to perform, curl: (28) Connection timed out after 40001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
  }
 }
