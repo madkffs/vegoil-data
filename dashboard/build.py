@@ -197,16 +197,34 @@ cnt = R[R.date == last_d].groupby("date").size().iloc[0]
 tot = tot[R.groupby("date").size().reindex(tot.index) >= cnt - 2]
 tot = tot.dropna()
 avg = float(tot.mean())
-# estimate for the four CBOT markets with daily prices
+# daily estimate since the report for every CFTC market with a daily price: soy complex and corn from the fund model above,
+# the rest from their own fitted contracts-per-1% move (2 years of weekly changes). MATIF and canola stay at the official figure.
+for code, (lab, grp, s_, mult, note) in AG.items():
+    if code in est_delta or s_ is None or not len(s_): continue
+    sp = s_[s_.index.dayofweek < 5]
+    x = c[c.code == code].set_index("date")["net"].sort_index(); x = x[x.index >= x.index.max() - pd.Timedelta(days=730)]
+    if len(x) < 30: continue
+    p_ = sp.reindex(sp.index.union(x.index)).ffill().reindex(x.index)
+    dn_, dp_ = x.diff(), np.log(p_).diff() * 100; ok_ = dn_.notna() & dp_.notna() & (dp_.abs() < 15)
+    if ok_.sum() < 20: continue
+    b_ = float(np.linalg.lstsq(np.c_[dp_[ok_]], dn_[ok_], rcond=None)[0][0])
+    p0_ = float(p_.iloc[-1]); ser_ = {}
+    for d, v in sp[sp.index > x.index[-1]].items(): ser_[d] = b_ * np.log(v / p0_) * 100
+    est_delta[code] = (ser_, sp)
 est_days = sorted(set().union(*[set(v[0].keys()) for v in est_delta.values()]))
 est_rows = []
 for d in est_days:
     add = 0.0
-    for code, (series, pe) in est_delta.items():
-        lab, grp, s, mult, note = AG[code]
-        base = float(R[(R.m == code) & (R.date == last_d)]["net"].iloc[0])
-        add += (base + series.get(d, 0)) * mult * pxat(pe, d) - base * mult * pxat(s, last_d)
+    for code, (ser_, pe) in est_delta.items():
+        if code not in AG: continue
+        lab, grp, s_, mult, note = AG[code]
+        hit = R[(R.m == code) & (R.date == last_d)]
+        if not len(hit): continue
+        base = float(hit["net"].iloc[0]); prior = [v for k_, v in ser_.items() if k_ <= d]
+        delta = prior[-1] if prior else 0.0
+        add += (base + delta) * mult * pxat(s_, d) - base * mult * pxat(s_, last_d)
     est_rows.append((d, float(tot.loc[last_d]) + add))
+est_net_now = {code: (v[0][max(v[0])] if v[0] else 0.0) for code, v in est_delta.items()}
 series = [{"id": f"{d:%Y%m%d}-o", "date": f"{d:%Y-%m-%d}", "kind": "official", "usd_bn": round(v / 1e9, 3)} for d, v in tot.items()]
 series += [{"id": f"{last_d:%Y%m%d}-e", "date": f"{last_d:%Y-%m-%d}", "kind": "estimate", "usd_bn": round(float(tot.loc[last_d]) / 1e9, 3)}]
 series += [{"id": f"{d:%Y%m%d}-e", "date": f"{d:%Y-%m-%d}", "kind": "estimate", "usd_bn": round(v / 1e9, 3)} for d, v in est_rows]
@@ -219,9 +237,10 @@ for _, r in L.sort_values("usd", key=abs, ascending=False).iterrows():
     mk.append({"market": r.m, "label": r.label, "group": r.group, "net": int(round(r.net)),
                "week_change": int(round(r.net - prev.net.iloc[0])) if len(prev) else None,
                "usd_bn": round(r.usd / 1e9, 2), "avg_2y_usd_bn": round(float(hist.mean()) / 1e9, 2),
-               "vs_avg_usd_bn": round((r.usd - float(hist.mean())) / 1e9, 2), "pct_2y": int(round((hist < r.usd).mean() * 100)), "note": r.note})
+               "vs_avg_usd_bn": round((r.usd - float(hist.mean())) / 1e9, 2), "pct_2y": int(round((hist < r.usd).mean() * 100)), "note": r.note,
+               "est_net": int(round(r.net + est_net_now[r.m])) if r.m in est_net_now else None})
 est_now = est_rows[-1][1] if est_rows else float(tot.loc[last_d])
-mk.append({"market": "total", "label": f"All {len(L)} agricultural markets", "group": "Total", "net": None, "week_change": None,
+mk.append({"market": "total", "label": f"All {len(L)} agricultural markets", "group": "Total", "net": None, "week_change": None, "est_net": None,
            "usd_bn": round(float(tot.loc[last_d]) / 1e9, 2), "avg_2y_usd_bn": round(avg / 1e9, 2), "vs_avg_usd_bn": round((float(tot.loc[last_d]) - avg) / 1e9, 2),
            "pct_2y": int(round((tot < float(tot.loc[last_d])).mean() * 100)), "note": ""})
 summary = {"market": "total", "official_date": f"{last_d:%Y-%m-%d}", "est_date": f"{(est_rows[-1][0] if est_rows else last_d):%Y-%m-%d}",
