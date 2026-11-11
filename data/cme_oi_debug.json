@@ -1,18 +1,18 @@
 {
  "ZL_dates": [
-  400,
-  "{\"type\":\"-\",\"title\":\"Bad Request\",\"status\":400,\"detail\":\"Required parameter 'exchange' is not present.\",\"instance\":\"/CmeWS/mvc/Volume/TradeDates\",\"properties\":\"-\"}"
+  200,
+  "[{\"tradeDate\":\"20261110\",\"formattedTradeDate\":\"Tuesday, November 10, 2026\",\"reportType\":\"PRELIMINARY\"},{\"tradeDate\":\"20261109\",\"formattedTradeDate\":\"Monday, November 09, 2026\",\"reportType\":\"FINAL\"},{\"tradeDate\":\"20261106\",\"formattedTradeDate\":\"Friday, November 06, 2026\",\"reportType\":\"FINAL\"},{\"trade"
  ],
  "ZM_dates": [
-  400,
-  "{\"type\":\"-\",\"title\":\"Bad Request\",\"status\":400,\"detail\":\"Required parameter 'exchange' is not present.\",\"instance\":\"/CmeWS/mvc/Volume/TradeDates\",\"properties\":\"-\"}"
+  200,
+  "[{\"tradeDate\":\"20261110\",\"formattedTradeDate\":\"Tuesday, November 10, 2026\",\"reportType\":\"PRELIMINARY\"},{\"tradeDate\":\"20261109\",\"formattedTradeDate\":\"Monday, November 09, 2026\",\"reportType\":\"FINAL\"},{\"tradeDate\":\"20261106\",\"formattedTradeDate\":\"Friday, November 06, 2026\",\"reportType\":\"FINAL\"},{\"trade"
  ],
  "ZS_dates": [
-  400,
-  "{\"type\":\"-\",\"title\":\"Bad Request\",\"status\":400,\"detail\":\"Required parameter 'exchange' is not present.\",\"instance\":\"/CmeWS/mvc/Volume/TradeDates\",\"properties\":\"-\"}"
+  200,
+  "[{\"tradeDate\":\"20261110\",\"formattedTradeDate\":\"Tuesday, November 10, 2026\",\"reportType\":\"PRELIMINARY\"},{\"tradeDate\":\"20261109\",\"formattedTradeDate\":\"Monday, November 09, 2026\",\"reportType\":\"FINAL\"},{\"tradeDate\":\"20261106\",\"formattedTradeDate\":\"Friday, November 06, 2026\",\"reportType\":\"FINAL\"},{\"trade"
  ],
  "ZC_dates": [
-  400,
-  "{\"type\":\"-\",\"title\":\"Bad Request\",\"status\":400,\"detail\":\"Required parameter 'exchange' is not present.\",\"instance\":\"/CmeWS/mvc/Volume/TradeDates\",\"properties\":\"-\"}"
+  200,
+  "[{\"tradeDate\":\"20261110\",\"formattedTradeDate\":\"Tuesday, November 10, 2026\",\"reportType\":\"PRELIMINARY\"},{\"tradeDate\":\"20261109\",\"formattedTradeDate\":\"Monday, November 09, 2026\",\"reportType\":\"FINAL\"},{\"tradeDate\":\"20261106\",\"formattedTradeDate\":\"Friday, November 06, 2026\",\"reportType\":\"FINAL\"},{\"trade"
  ]
 }
