@@ -426,17 +426,19 @@ def euronext_prices():
     return out
 
 def bunkers():
-    """Ship & Bunker public port prices ($/mt) for VLSFO, MGO and IFO380."""
+    """Ship & Bunker public port prices ($/mt) for VLSFO, IFO380 (HSFO) and MGO."""
     r = requests.get("https://shipandbunker.com/prices", headers=UA, timeout=30)
     t = re.sub(r"<script.*?</script>|<style.*?</style>", " ", r.text, flags=re.S)
-    t = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", t))
-    blocks = t.split("Port Price $/mt Change High Low Spread")[1:4]
+    t = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", t)).replace("&mdash;", "0").replace("&nbsp;", " ")
     out = {}
-    for fuel, b in zip(["VLSFO", "MGO", "IFO380"], blocks):
-        for port in ["Global 20 Ports Average", "Singapore", "Rotterdam", "Houston", "Fujairah", "Santos"]:
-            m = re.search(re.escape(port) + r" ([\d.]+) ([+-]?[\d.]+)", b)
-            if m:
-                out[f"{fuel}_{port.split(' Ports')[0].replace(' ', '')}"] = float(m.group(1))
+    px = r"\$([\d,]+\.\d+)\s+[+-]?[\d.]+"
+    for port in ["Global 20 Ports Average", "Singapore", "Rotterdam", "Houston", "Fujairah", "Santos"]:
+        m = re.search(re.escape(port) + r"\s+" + px + r"\s+" + px + r"\s+" + px, t)
+        if not m:
+            continue
+        key = port.split(" Ports")[0].replace(" ", "")
+        for fuel, v in zip(["VLSFO", "IFO380", "MGO"], m.groups()):
+            out[f"{fuel}_{key}"] = float(v.replace(",", ""))
     if not out:
         raise ValueError("no prices parsed")
     return out
@@ -1161,6 +1163,68 @@ def epa_generation_detail():
     with open(os.path.join(d, "epa_generation_meta.json"), "w") as fh: json.dump(meta, fh, indent=1)
     return meta
 
+def epa_rin_prices():
+    """Weekly volume-weighted RIN prices by D code from EPA's public EMTS dashboard (Qlik), all trade types combined."""
+    import pandas as pd
+    q = Qlik(); doc = q.open()
+    hc = {"qInfo": {"qType": "rinpx"}, "qHyperCubeDef": {
+        "qDimensions": [{"qDef": {"qFieldDefs": [f]}} for f in ["Price_Transfer Date by week", "Price_FUEL_CD"]],
+        "qMeasures": [{"qDef": {"qDef": "Sum([Price_VWA_PRICE]*[Price_TOTAL_RINS])/Sum([Price_TOTAL_RINS])"}}, {"qDef": {"qDef": "Sum([Price_TOTAL_RINS])"}}],
+        "qInitialDataFetch": []}}
+    h = q.call(doc, "CreateSessionObject", [hc])["qReturn"]["qHandle"]
+    n = q.call(h, "GetLayout")["qLayout"]["qHyperCube"]["qSize"]["qcy"]
+    rows, top = [], 0
+    while top < n:
+        pg = q.call(h, "GetHyperCubeData", ["/qHyperCubeDef", [{"qTop": top, "qLeft": 0, "qWidth": 4, "qHeight": 2000}]])
+        rows += [[c.get("qText") for c in r[:2]] + [r[2].get("qNum"), r[3].get("qNum")] for r in pg["qDataPages"][0]["qMatrix"]]
+        top += 2000
+    df = pd.DataFrame(rows, columns=["week", "d_code", "price", "rins"])
+    df["week"] = pd.to_datetime(df["week"], format="%m/%d/%Y", errors="coerce")
+    df = df.dropna(subset=["week"]).sort_values(["week", "d_code"])
+    df["d_code"] = "D" + df["d_code"].astype(str)
+    p = os.path.join(DATA, "rins", "epa_rin_prices.csv")
+    if len(df) > 500:
+        df.to_csv(p, index=False)
+    return {"rows": len(df), "latest": str(df["week"].max())[:10] if len(df) else None}
+
+def climate_indices():
+    """El Nino (NOAA weekly Nino 3.4 and monthly ONI) and Indian Ocean Dipole (Bureau of Meteorology weekly) indices."""
+    import pandas as pd
+    d = os.path.join(DATA, "climate"); os.makedirs(d, exist_ok=True)
+    t = requests.get("https://www.cpc.ncep.noaa.gov/data/indices/wksst9120.for", headers=UA, timeout=40).text
+    rows = []
+    for line in t.splitlines():
+        m = re.match(r"\s*(\d{2}[A-Z]{3}\d{4})\s+(.*)$", line)
+        if m:
+            nums = re.findall(r"-?\d+\.\d", m.group(2))
+            if len(nums) >= 8:
+                rows.append({"week": pd.to_datetime(m.group(1), format="%d%b%Y"), "nino34_sst": float(nums[4]), "nino34_anom": float(nums[5])})
+    nino = pd.DataFrame(rows)
+    t = requests.get("http://www.bom.gov.au/clim_data/IDCK000072/iod_1.txt", headers=UA, timeout=40).text
+    iod = pd.DataFrame([{"week": pd.to_datetime(a, format="%Y%m%d"), "iod": float(v)} for a, _, v in (l.split(",") for l in t.splitlines() if l.count(",") == 2)])
+    t = requests.get("https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt", headers=UA, timeout=40).text
+    oni = pd.DataFrame([{"season": a, "year": int(b), "oni": float(c)} for a, b, _, c in (l.split() for l in t.splitlines()[1:] if len(l.split()) == 4)])
+    if len(nino) > 100: nino.to_csv(os.path.join(d, "nino34_weekly.csv"), index=False)
+    if len(iod) > 100: iod.to_csv(os.path.join(d, "iod_weekly.csv"), index=False)
+    if len(oni) > 100: oni.to_csv(os.path.join(d, "oni.csv"), index=False)
+    return {"nino": len(nino), "iod": len(iod), "oni": len(oni)}
+
+def probe_cme_options():
+    """Check whether CME's public option settlement endpoints answer through curl_cffi (as the volume/OI feed does)."""
+    from curl_cffi import requests as cr
+    out = {}
+    for k, u in {"opt_dates_312": "https://www.cmegroup.com/CmeWS/mvc/Settlements/Options/TradeDateAndExpirations/312",
+                 "opt_dates_313": "https://www.cmegroup.com/CmeWS/mvc/Settlements/Options/TradeDateAndExpirations/313",
+                 "prod_cal_312": "https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/Options/312",
+                 "opt_list_312": "https://www.cmegroup.com/CmeWS/mvc/Options/Categories/List/312/G?optionTypeFilter="}.items():
+        try:
+            r = cr.get(u, impersonate="chrome", timeout=40, headers={"Referer": "https://www.cmegroup.com/markets/agriculture/oilseeds/soybean-oil.settlements.options.html"})
+            out[k] = {"status": r.status_code, "head": r.text[:1500]}
+        except Exception as ex:
+            out[k] = {"error": str(ex)[:300]}
+    os.makedirs(os.path.join(DATA, "probe3"), exist_ok=True)
+    with open(os.path.join(DATA, "probe3", "cme_options.json"), "w") as fh: json.dump(out, fh, indent=1)
+
 def probe3():
     """Probe sources for new dashboard cards: bunkers page, climate indices, CME option settlements, EPA RIN prices, grain feeds."""
     d = os.path.join(DATA, "probe3"); os.makedirs(d, exist_ok=True)
@@ -1262,6 +1326,16 @@ def main(mode):
         probe_epa_qlik(); return
     if mode == "probe3":
         probe3(); return
+    if mode == "build2":
+        for name, fn in (("bunkers", bunkers), ("epa_rin_prices", epa_rin_prices), ("climate", climate_indices), ("cme_opt_probe", probe_cme_options)):
+            try:
+                r = fn(); print(name, r)
+                if name == "bunkers":
+                    with open(os.path.join(DATA, "probe3", "bunkers_test.json"), "w") as fh: json.dump(r, fh)
+            except Exception as ex:
+                import traceback; os.makedirs(os.path.join(DATA, "probe3"), exist_ok=True)
+                with open(os.path.join(DATA, "probe3", f"{name}_error.txt"), "w") as fh: fh.write(traceback.format_exc()[-2000:])
+        return
     if mode == "epa_gen":
         try: epa_generation_detail()
         except Exception as ex:
@@ -1384,7 +1458,7 @@ def main(mode):
             except Exception as e:
                 status["errors"][name] = str(e)[:200]
     if mode in ("backfill", "probe") or dt.datetime.utcnow().minute < 15 and dt.datetime.utcnow().hour == 6:
-        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("comexstat_ports", comexstat_ports), ("emts_generation", emts_generation), ("epa_generation_detail", epa_generation_detail), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
+        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("comexstat_ports", comexstat_ports), ("emts_generation", emts_generation), ("epa_generation_detail", epa_generation_detail), ("epa_rin_prices", epa_rin_prices), ("climate", climate_indices), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
             try:
                 fn()
             except Exception as e:
