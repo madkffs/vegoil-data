@@ -1,10 +1,10 @@
 {
- "run_utc": "2026-11-12 01:10",
+ "run_utc": "2026-11-12 02:29",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
   "RS=F": "no data",
-  "santos_lineup": "500 Server Error: Internal Server Error for url: https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/navios-esperados-carga/",
+  "kline_FCPO": "HTTPSConnectionPool(host='stock2.finance.sina.com.cn', port=443): Read timed out. (read timeout=30)",
   "bunkers": "no prices parsed"
  },
  "nabsa_rows": {
