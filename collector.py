@@ -1247,6 +1247,49 @@ def probe_cme_opt2():
             out[k] = {"url": u, "error": str(ex)[:300]}
     with open(os.path.join(DATA, "probe3", "cme_opt2.json"), "w") as fh: json.dump(out, fh, indent=1)
 
+def cme_soyoil_options():
+    """CBOT soybean oil option settlements (public CME settlement pages) for the nearest four expiries,
+    with the matching futures settlements and expiry dates. One CSV per trade date in data/options/."""
+    from curl_cffi import requests as cr
+    import pandas as pd
+    H = {"Referer": "https://www.cmegroup.com/markets/agriculture/oilseeds/soybean-oil.settlements.options.html"}
+    get = lambda u: cr.get(u, impersonate="chrome", timeout=40, headers=H).json()
+    d = os.path.join(DATA, "options"); os.makedirs(d, exist_ok=True)
+    cal = get("https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/Options/313")
+    last_trade = {}
+    for grp in cal:
+        if grp.get("optionType") != "AME": continue
+        for e in grp.get("calendarEntries", []):
+            last_trade[e["productCode"]] = e.get("lastTrade")
+    j = get("https://www.cmegroup.com/CmeWS/mvc/Settlements/Options/TradeDateAndExpirations/313")
+    exps = [e for g in j if g.get("optionType") == "AME" for e in g["expirations"]][:4]
+    dates = sorted({t["formatedDate"] for e in exps for t in e.get("tradeDates", []) if t.get("reportType") == "Final"},
+                   key=lambda x: pd.to_datetime(x, format="%m/%d/%Y"))
+    num = lambda x: pd.to_numeric(str(x).replace(",", "").rstrip("AB"), errors="coerce")
+    saved = []
+    for td in dates[-5:]:
+        fn = os.path.join(d, f"zl_options_{pd.to_datetime(td, format='%m/%d/%Y'):%Y-%m-%d}.csv")
+        if os.path.exists(fn): continue
+        fut = get(f"https://www.cmegroup.com/CmeWS/mvc/Settlements/Futures/Settlements/312/FUT?strategy=DEFAULT&tradeDate={td}&pageSize=50")
+        fs = {r["month"]: r["settle"] for r in fut.get("settlements", []) if r.get("month")}
+        rows = []
+        for e in exps:
+            code, cid = e["expiration"]["code"], e.get("contractId")
+            und = pd.Timestamp(year=e["expiration"]["year"], month=e["expiration"]["month"], day=1)
+            while und.month not in (1, 3, 5, 7, 8, 9, 10, 12): und = und + pd.offsets.MonthBegin(1)   # serial options settle into the next futures month
+            ukey = f"{und:%b %y}".upper()
+            st = get(f"https://www.cmegroup.com/CmeWS/mvc/Settlements/Options/Settlements/313/OOF?strategy=DEFAULT&optionProductId=313&monthYear={cid}&optionExpiration=313-{code}&tradeDate={td}&pageSize=500")
+            for r in st.get("settlements", []):
+                if not r.get("strike") or r.get("type") not in ("Call", "Put"): continue
+                rows.append({"trade_date": f"{pd.to_datetime(td, format='%m/%d/%Y'):%Y-%m-%d}", "expiry_label": e["label"], "contract": cid,
+                             "last_trade": last_trade.get(cid), "underlying": ukey, "underlying_settle": num(fs.get(ukey)),
+                             "strike": num(r["strike"]), "type": r["type"][0], "settle": num(r["settle"]),
+                             "volume": num(r.get("volume")), "open_interest": num(r.get("openInterest"))})
+            time.sleep(0.5)
+        if rows:
+            pd.DataFrame(rows).to_csv(fn, index=False); saved.append(fn)
+    return {"saved": len(saved), "dates": dates[-5:]}
+
 def probe3():
     """Probe sources for new dashboard cards: bunkers page, climate indices, CME option settlements, EPA RIN prices, grain feeds."""
     d = os.path.join(DATA, "probe3"); os.makedirs(d, exist_ok=True)
@@ -1348,6 +1391,8 @@ def main(mode):
         probe_epa_qlik(); return
     if mode == "probe3":
         probe3(); return
+    if mode == "options":
+        print(cme_soyoil_options()); return
     if mode == "cme_opt2":
         probe_cme_opt2(); return
     if mode == "build2":
@@ -1482,7 +1527,7 @@ def main(mode):
             except Exception as e:
                 status["errors"][name] = str(e)[:200]
     if mode in ("backfill", "probe") or dt.datetime.utcnow().minute < 15 and dt.datetime.utcnow().hour == 6:
-        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("comexstat_ports", comexstat_ports), ("emts_generation", emts_generation), ("epa_generation_detail", epa_generation_detail), ("epa_rin_prices", epa_rin_prices), ("climate", climate_indices), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
+        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("comexstat_ports", comexstat_ports), ("emts_generation", emts_generation), ("epa_generation_detail", epa_generation_detail), ("epa_rin_prices", epa_rin_prices), ("climate", climate_indices), ("cme_options", cme_soyoil_options), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
             try:
                 fn()
             except Exception as e:
