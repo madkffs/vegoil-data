@@ -1161,6 +1161,58 @@ def epa_generation_detail():
     with open(os.path.join(d, "epa_generation_meta.json"), "w") as fh: json.dump(meta, fh, indent=1)
     return meta
 
+def probe3():
+    """Probe sources for new dashboard cards: bunkers page, climate indices, CME option settlements, EPA RIN prices, grain feeds."""
+    d = os.path.join(DATA, "probe3"); os.makedirs(d, exist_ok=True)
+    out = {}
+    urls = {
+        "shipbunker": "https://shipandbunker.com/prices",
+        "oni": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
+        "nino_weekly": "https://www.cpc.ncep.noaa.gov/data/indices/wksst9120.for",
+        "dmi_psl": "https://psl.noaa.gov/gcos_wgsp/Timeseries/Data/dmi.had.long.data",
+        "bom_iod": "https://www.bom.gov.au/climate/enso/indices/iod-latest.txt",
+        "bom_iod2": "http://www.bom.gov.au/clim_data/IDCK000072/iod_1.txt",
+        "cme_opt_dates": "https://www.cmegroup.com/CmeWS/mvc/Settlements/Options/TradeDateAndExpirations/312",
+        "cme_opt_dates2": "https://www.cmegroup.com/CmeWS/mvc/Settlements/Options/TradeDateAndExpirations/313",
+        "cme_vol_dates": "https://www.cmegroup.com/CmeWS/mvc/Volume/Options/Details/313",
+        "yahoo_mwe": "https://query1.finance.yahoo.com/v8/finance/chart/MWE%3DF?range=5d&interval=1d",
+        "yahoo_rs": "https://query1.finance.yahoo.com/v8/finance/chart/RS%3DF?range=5d&interval=1d",
+        "nopa": "https://www.nopa.org/resources/datapoints/",
+        "eia_feed": "https://www.eia.gov/biofuels/update/",
+        "mpob": "https://bepi.mpob.gov.my/index.php/en/production/production-2026/production-of-crude-oil-palm-2026",
+    }
+    for k, u in urls.items():
+        try:
+            r = requests.get(u, headers=UA, timeout=40)
+            out[k] = {"status": r.status_code, "len": len(r.text), "head": r.text[:1500], "ctype": r.headers.get("content-type")}
+        except Exception as ex:
+            out[k] = {"error": str(ex)[:300]}
+    # bunkers: show where the price tables sit in the text
+    try:
+        t = re.sub(r"<script.*?</script>|<style.*?</style>", " ", requests.get(urls["shipbunker"], headers=UA, timeout=40).text, flags=re.S)
+        t = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", t))
+        i = t.find("Singapore"); out["shipbunker_text"] = t[max(0, i - 1500):i + 1500]
+    except Exception as ex:
+        out["shipbunker_text"] = str(ex)[:300]
+    # EPA RIN prices (weekly volume-weighted average) through the public Qlik app
+    try:
+        q = Qlik(); doc = q.open()
+        hc = {"qInfo": {"qType": "px"}, "qHyperCubeDef": {
+            "qDimensions": [{"qDef": {"qFieldDefs": [f]}} for f in ["Price_Transfer Date by week", "Price_FUEL_CD", "Price_QAP_SERVICE_TYPE_CD"]],
+            "qMeasures": [{"qDef": {"qDef": "Sum([Price_VWA_PRICE]*[Price_TOTAL_RINS])/Sum([Price_TOTAL_RINS])"}}, {"qDef": {"qDef": "Sum([Price_TOTAL_RINS])"}},
+                          {"qDef": {"qDef": "Avg([Price_VWA_PRICE])"}}],
+            "qInitialDataFetch": []}}
+        h = q.call(doc, "CreateSessionObject", [hc])["qReturn"]["qHandle"]
+        L = q.call(h, "GetLayout")["qLayout"]["qHyperCube"]; n = L["qSize"]["qcy"]
+        pg = q.call(h, "GetHyperCubeData", ["/qHyperCubeDef", [{"qTop": max(0, n - 60), "qLeft": 0, "qWidth": 6, "qHeight": 60}]])
+        out["rin_px_rows"] = n
+        out["rin_px_tail"] = [[c.get("qText") for c in r] for r in pg["qDataPages"][0]["qMatrix"]]
+        pg0 = q.call(h, "GetHyperCubeData", ["/qHyperCubeDef", [{"qTop": 0, "qLeft": 0, "qWidth": 6, "qHeight": 10}]])
+        out["rin_px_head"] = [[c.get("qText") for c in r] for r in pg0["qDataPages"][0]["qMatrix"]]
+    except Exception as ex:
+        import traceback; out["rin_px_error"] = traceback.format_exc()[-1500:]
+    with open(os.path.join(d, "probe3.json"), "w") as fh: json.dump(out, fh, indent=1, default=str)
+
 def probe_epa_qlik():
     d = os.path.join(DATA, "probe_epa"); os.makedirs(d, exist_ok=True)
     out = {}
@@ -1208,6 +1260,8 @@ def probe_epa_qlik():
 def main(mode):
     if mode == "probe_epa":
         probe_epa_qlik(); return
+    if mode == "probe3":
+        probe3(); return
     if mode == "epa_gen":
         try: epa_generation_detail()
         except Exception as ex:
