@@ -1,18 +1,18 @@
 {
  "ZL_dates": [
   200,
-  "[{\"tradeDate\":\"20261111\",\"formattedTradeDate\":\"Wednesday, November 11, 2026\",\"reportType\":\"PRELIMINARY\"},{\"tradeDate\":\"20261110\",\"formattedTradeDate\":\"Tuesday, November 10, 2026\",\"reportType\":\"FINAL\"},{\"tradeDate\":\"20261109\",\"formattedTradeDate\":\"Monday, November 09, 2026\",\"reportType\":\"FINAL\"},{\"tr"
+  "[{\"tradeDate\":\"20261111\",\"formattedTradeDate\":\"Wednesday, November 11, 2026\",\"reportType\":\"FINAL\"},{\"tradeDate\":\"20261110\",\"formattedTradeDate\":\"Tuesday, November 10, 2026\",\"reportType\":\"FINAL\"},{\"tradeDate\":\"20261109\",\"formattedTradeDate\":\"Monday, November 09, 2026\",\"reportType\":\"FINAL\"},{\"tradeDat"
  ],
  "ZM_dates": [
   200,
-  "[{\"tradeDate\":\"20261111\",\"formattedTradeDate\":\"Wednesday, November 11, 2026\",\"reportType\":\"PRELIMINARY\"},{\"tradeDate\":\"20261110\",\"formattedTradeDate\":\"Tuesday, November 10, 2026\",\"reportType\":\"FINAL\"},{\"tradeDate\":\"20261109\",\"formattedTradeDate\":\"Monday, November 09, 2026\",\"reportType\":\"FINAL\"},{\"tr"
+  "[{\"tradeDate\":\"20261111\",\"formattedTradeDate\":\"Wednesday, November 11, 2026\",\"reportType\":\"FINAL\"},{\"tradeDate\":\"20261110\",\"formattedTradeDate\":\"Tuesday, November 10, 2026\",\"reportType\":\"FINAL\"},{\"tradeDate\":\"20261109\",\"formattedTradeDate\":\"Monday, November 09, 2026\",\"reportType\":\"FINAL\"},{\"tradeDat"
  ],
  "ZS_dates": [
   200,
-  "[{\"tradeDate\":\"20261111\",\"formattedTradeDate\":\"Wednesday, November 11, 2026\",\"reportType\":\"PRELIMINARY\"},{\"tradeDate\":\"20261110\",\"formattedTradeDate\":\"Tuesday, November 10, 2026\",\"reportType\":\"FINAL\"},{\"tradeDate\":\"20261109\",\"formattedTradeDate\":\"Monday, November 09, 2026\",\"reportType\":\"FINAL\"},{\"tr"
+  "[{\"tradeDate\":\"20261111\",\"formattedTradeDate\":\"Wednesday, November 11, 2026\",\"reportType\":\"FINAL\"},{\"tradeDate\":\"20261110\",\"formattedTradeDate\":\"Tuesday, November 10, 2026\",\"reportType\":\"FINAL\"},{\"tradeDate\":\"20261109\",\"formattedTradeDate\":\"Monday, November 09, 2026\",\"reportType\":\"FINAL\"},{\"tradeDat"
  ],
  "ZC_dates": [
   200,
-  "[{\"tradeDate\":\"20261111\",\"formattedTradeDate\":\"Wednesday, November 11, 2026\",\"reportType\":\"PRELIMINARY\"},{\"tradeDate\":\"20261110\",\"formattedTradeDate\":\"Tuesday, November 10, 2026\",\"reportType\":\"FINAL\"},{\"tradeDate\":\"20261109\",\"formattedTradeDate\":\"Monday, November 09, 2026\",\"reportType\":\"FINAL\"},{\"tr"
+  "[{\"tradeDate\":\"20261111\",\"formattedTradeDate\":\"Wednesday, November 11, 2026\",\"reportType\":\"FINAL\"},{\"tradeDate\":\"20261110\",\"formattedTradeDate\":\"Tuesday, November 10, 2026\",\"reportType\":\"FINAL\"},{\"tradeDate\":\"20261109\",\"formattedTradeDate\":\"Monday, November 09, 2026\",\"reportType\":\"FINAL\"},{\"tradeDat"
  ]
 }
