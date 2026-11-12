@@ -911,3 +911,26 @@ if os.path.exists(os.path.join(CL, "nino34_weekly.csv")) and os.path.exists(os.p
         rows_cl += [{"id": f"o-{r.year}-{r.season}", "kind": "oni", "season": f"{r.season} {r.year}", "value": float(r.oni)} for r in on.itertuples()]
     dump("climate.json", rows_cl)
     print("climate", len(rows_cl), ni["week"].max(), io["week"].max())
+
+# ---------- biofuel economics: EPA weekly RIN prices and an indicative soyoil biodiesel margin ----------
+rp_p = os.path.join(D, "rins", "epa_rin_prices.csv")
+if os.path.exists(rp_p):
+    rp = pd.read_csv(rp_p, parse_dates=["week"])
+    rp = rp[rp["week"] >= pd.Timestamp("2023-01-01")]
+    wk = rp.pivot_table(index="week", columns="d_code", values="price")
+    rows_bf = [{"id": f"w-{w:%Y-%m-%d}", "kind": "week", "date": f"{w:%Y-%m-%d}", **{k.lower(): (None if pd.isna(v) else round(float(v), 3)) for k, v in r.items()}}
+               for w, r in wk.iterrows()]
+    # daily margin: heating oil + 1.5 D4 RINs - 7.6 lb soyoil per gallon - $0.70/gal other costs (no tax credit), D4 = latest EPA week on or before the day
+    hz = pd.concat([load("HO_F.csv").rename("ho"), load("ZL_F.csv").rename("zl")], axis=1).dropna()
+    hz = hz[(hz.index.dayofweek < 5) & (hz.index >= pd.Timestamp("2023-01-01"))]
+    d4 = wk["D4"].dropna() if "D4" in wk else pd.Series(dtype=float)
+    hz["d4"] = d4.reindex(hz.index.union(d4.index)).ffill().reindex(hz.index)
+    hz["d4_week"] = pd.Series(d4.index, index=d4.index).reindex(hz.index.union(d4.index)).ffill().reindex(hz.index)
+    hz = hz.dropna(subset=["d4"])
+    hz["margin"] = hz["ho"] + 1.5 * hz["d4"] - 7.6 * hz["zl"] / 100 - 0.70
+    hz["boho"] = hz["ho"] - hz["zl"] / 100 * 7.37
+    rows_bf += [{"id": f"d-{t:%Y-%m-%d}", "kind": "day", "date": f"{t:%Y-%m-%d}", "ho": round(float(r.ho), 4), "zl": round(float(r.zl), 2),
+                 "d4_used": round(float(r.d4), 3), "d4_week": f"{r.d4_week:%Y-%m-%d}", "margin": round(float(r.margin), 3), "boho": round(float(r.boho), 3)}
+                for t, r in hz.iterrows()]
+    dump("biofuel.json", rows_bf)
+    print("biofuel", len(rows_bf), wk.index.max(), hz.index.max(), round(float(hz["margin"].iloc[-1]), 3))
