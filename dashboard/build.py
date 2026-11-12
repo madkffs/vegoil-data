@@ -866,3 +866,48 @@ for i, (pid, name, contract, exch, unit, fn, dp) in enumerate(PX):
                     "vol20": round(float(r.iloc[-20:].std() * np.sqrt(252) * 100), 1)})
 dump("prices.json", rows_px)
 print("prices", [(r_["id"], r_["date"], r_["last"], r_["trend"]) for r_ in rows_px])
+
+# ---------- key levels for soyoil (Jan) and palm: averages, Bollinger, ranges, realised vol, move to option expiry ----------
+LV = [("zl", "Soyoil Jan (CBOT)", "c/lb", "ZLF27_CBT.csv", 2, [("Jan options", "2026-12-24")]),
+      ("fcpo", "Palm 3rd month (Bursa)", "MYR/t", "FCPO.csv", 0, [])]
+rows_lv = []
+for lid, lab, unit, fn, dp, expiries in LV:
+    d = pd.read_csv(os.path.join(D, "daily", fn)); d["date"] = pd.to_datetime(d["time_utc"]).dt.normalize()
+    d = d[d["date"].dt.dayofweek < 5]
+    c = d.groupby("date")["close"].last().dropna()
+    if len(c) < 120: continue
+    last = float(c.iloc[-1]); r = np.log(c).diff()
+    m20, s20 = float(c.iloc[-20:].mean()), float(c.iloc[-20:].std())
+    lv = [("100-day average", float(c.iloc[-100:].mean())), ("50-day average", float(c.iloc[-50:].mean())),
+          ("20-day average", m20), ("9-day average", float(c.iloc[-9:].mean())),
+          ("Upper Bollinger (20, 2)", m20 + 2 * s20), ("Lower Bollinger (20, 2)", m20 - 2 * s20),
+          ("20-day high", float(c.iloc[-20:].max())), ("20-day low", float(c.iloc[-20:].min())),
+          ("60-day high", float(c.iloc[-60:].max())), ("60-day low", float(c.iloc[-60:].min()))]
+    for name, v in lv:
+        rows_lv.append({"id": f"{lid}-{name}", "market_key": lid, "market": lab, "unit": unit, "dp": dp, "kind": "level", "name": name,
+                        "value": round(v, dp + 1), "last": round(last, dp + 1), "dist": round(v - last, dp + 1), "dist_pct": round((v / last - 1) * 100, 2),
+                        "date": f"{c.index[-1]:%Y-%m-%d}"})
+    vols = {n: float(r.iloc[-n:].std() * np.sqrt(252)) for n in (10, 20, 60)}
+    rows_lv.append({"id": f"{lid}-vol", "market_key": lid, "market": lab, "unit": unit, "dp": dp, "kind": "vol", "last": round(last, dp + 1),
+                    "vol10": round(vols[10] * 100, 1), "vol20": round(vols[20] * 100, 1), "vol60": round(vols[60] * 100, 1), "date": f"{c.index[-1]:%Y-%m-%d}"})
+    for ename, edate in expiries:
+        days = (pd.Timestamp(edate) - c.index[-1]).days
+        if days <= 0: continue
+        mv = last * vols[20] * np.sqrt(days / 365)
+        rows_lv.append({"id": f"{lid}-{ename}", "market_key": lid, "market": lab, "unit": unit, "dp": dp, "kind": "expiry", "name": ename, "expiry": edate,
+                        "days": int(days), "move": round(mv, dp + 1), "low": round(last - mv, dp + 1), "high": round(last + mv, dp + 1), "last": round(last, dp + 1)})
+dump("levels.json", rows_lv)
+print("levels", len(rows_lv))
+
+# ---------- climate: El Nino (Nino 3.4 weekly, ONI) and Indian Ocean Dipole (BoM weekly) ----------
+CL = os.path.join(D, "climate")
+if os.path.exists(os.path.join(CL, "nino34_weekly.csv")) and os.path.exists(os.path.join(CL, "iod_weekly.csv")):
+    ni = pd.read_csv(os.path.join(CL, "nino34_weekly.csv"), parse_dates=["week"])
+    io = pd.read_csv(os.path.join(CL, "iod_weekly.csv"), parse_dates=["week"])
+    rows_cl = [{"id": f"n-{w:%Y-%m-%d}", "kind": "nino34", "week": f"{w:%Y-%m-%d}", "value": float(v)} for w, v in zip(ni["week"], ni["nino34_anom"]) if w >= pd.Timestamp("2014-01-01")]
+    rows_cl += [{"id": f"i-{w:%Y-%m-%d}", "kind": "iod", "week": f"{w:%Y-%m-%d}", "value": float(v)} for w, v in zip(io["week"], io["iod"]) if w >= pd.Timestamp("2014-01-01")]
+    if os.path.exists(os.path.join(CL, "oni.csv")):
+        on = pd.read_csv(os.path.join(CL, "oni.csv")).tail(12)
+        rows_cl += [{"id": f"o-{r.year}-{r.season}", "kind": "oni", "season": f"{r.season} {r.year}", "value": float(r.oni)} for r in on.itertuples()]
+    dump("climate.json", rows_cl)
+    print("climate", len(rows_cl), ni["week"].max(), io["week"].max())

@@ -1225,6 +1225,28 @@ def probe_cme_options():
     os.makedirs(os.path.join(DATA, "probe3"), exist_ok=True)
     with open(os.path.join(DATA, "probe3", "cme_options.json"), "w") as fh: json.dump(out, fh, indent=1)
 
+def probe_cme_opt2():
+    from curl_cffi import requests as cr
+    H = {"Referer": "https://www.cmegroup.com/markets/agriculture/oilseeds/soybean-oil.settlements.options.html"}
+    j = cr.get("https://www.cmegroup.com/CmeWS/mvc/Settlements/Options/TradeDateAndExpirations/313", impersonate="chrome", timeout=40, headers=H).json()
+    out = {"expirations": [{"label": e["label"], "code": e["expiration"]["code"], "cid": e.get("contractId"), "pid": e.get("productId"),
+                            "dates": [t["date"]["default24"] for t in e.get("tradeDates", [])][:3]} for e in j[0]["expirations"][:4]]}
+    e = j[0]["expirations"][1]; td = e["tradeDates"][0]["date"]["default24"][:10]
+    code, cid = e["expiration"]["code"], e.get("contractId")
+    cands = {
+        "a": f"https://www.cmegroup.com/CmeWS/mvc/Settlements/Options/Settlements/313/OOF?strategy=DEFAULT&optionProductId=313&monthYear={cid}&optionExpiration=313-{code}&tradeDate={td}&pageSize=500",
+        "b": f"https://www.cmegroup.com/CmeWS/mvc/Settlements/Options/Settlements/313/OOF?monthYear={cid}&strategy=DEFAULT&tradeDate={td}",
+        "c": f"https://www.cmegroup.com/CmeWS/mvc/Settlements/Options/Settlements/313/OOF?strategy=DEFAULT&optionProductId=313&monthYear={cid}&tradeDate={td}&pageSize=500",
+        "fut": f"https://www.cmegroup.com/CmeWS/mvc/Settlements/Futures/Settlements/312/FUT?strategy=DEFAULT&tradeDate={td}&pageSize=50",
+    }
+    for k, u in cands.items():
+        try:
+            r = cr.get(u, impersonate="chrome", timeout=40, headers=H)
+            out[k] = {"url": u, "status": r.status_code, "head": r.text[:2500]}
+        except Exception as ex:
+            out[k] = {"url": u, "error": str(ex)[:300]}
+    with open(os.path.join(DATA, "probe3", "cme_opt2.json"), "w") as fh: json.dump(out, fh, indent=1)
+
 def probe3():
     """Probe sources for new dashboard cards: bunkers page, climate indices, CME option settlements, EPA RIN prices, grain feeds."""
     d = os.path.join(DATA, "probe3"); os.makedirs(d, exist_ok=True)
@@ -1326,6 +1348,8 @@ def main(mode):
         probe_epa_qlik(); return
     if mode == "probe3":
         probe3(); return
+    if mode == "cme_opt2":
+        probe_cme_opt2(); return
     if mode == "build2":
         for name, fn in (("bunkers", bunkers), ("epa_rin_prices", epa_rin_prices), ("climate", climate_indices), ("cme_opt_probe", probe_cme_options)):
             try:
