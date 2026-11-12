@@ -1,9 +1,10 @@
 {
- "run_utc": "2026-11-12 17:56",
+ "run_utc": "2026-11-12 18:56",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
-  "RS=F": "no data"
+  "RS=F": "no data",
+  "bdi": "no BDI headline"
  },
  "nabsa_rows": {
   "sailed": 487,
