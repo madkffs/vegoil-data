@@ -1,0 +1,444 @@
+
+Fats and Oils: Oilseed Crushings, Production, Consumption 
+and Stocks
+
+ISSN: 2379-9862
+
+Released November 2, 2026, by the National Agricultural Statistics Service 
+(NASS), Agricultural Statistics Board, United States Department of 
+Agriculture (USDA).
+
+Highlights
+
+August 2026 contained 31 days.
+September 2026 contained 30 days.
+
+Soybeans crushed for crude oil was 5.96 million tons (199 million bushels) in 
+September 2026, compared with 
+6.29 million tons (210 million bushels) in August 2026 and 6.15 million tons 
+(205 million bushels) in September 2025. Crude oil produced was 2.31 billion 
+pounds, down 6 percent from August 2026 and down 4 percent from September 
+2025. Soybean once refined oil production at 1.91 billion pounds during 
+September 2026 decreased 5 percent from August 2026 and decreased 2 percent 
+from September 2025.
+
+Canola seeds crushed for crude oil was 238,790 tons in September 2026, 
+compared with 229,809 tons in 
+August 2026 and 230,362 tons in September 2025. Canola crude oil produced was 
+182 million pounds, up less than 1 percent from August 2026 but down 4 percent from 
+September 2025. Canola once refined oil production, at 172 million pounds 
+during September 2026, was down 2 percent from August 2026 and down 1 percent 
+from September 2025. 
+
+Cottonseed once refined oil production, at 10.4 million pounds during 
+September 2026, was down 53 percent from August 2026 and down 34 percent from 
+September 2025.
+
+Edible tallow production was 86.7 million pounds during September 2026, up 
+8 percent from August 2026 and up 1 percent from September 2025. Inedible 
+tallow production was 290 million pounds during September 2026, 
+up 1 percent from August 2026 but down 5 percent from September 2025. 
+Technical tallow production was 89.0 million pounds during September 2026, 
+down 12 percent from August 2026 and down 10 percent from September 2025. 
+Choice white grease production, at 110 million pounds during September 2026, 
+increased 6 percent from August 2026 and increased 11 percent from September 
+2025.
+
+Soybean Crushing, Production, Consumption and Stocks - United States: September 2026 with Comparisons
+------------------------------------------------------------------------------------------------------------
+                            Item                            :September 2025 :  August 2026  :September 2026 
+------------------------------------------------------------------------------------------------------------
+Crush                                                       :                                               
+Soybeans crushed........................................tons:   6,148,544       6,289,327       5,964,861   
+Crude oil produced..............................1,000 pounds:   2,406,039       2,447,917       2,309,806   
+Cake and meal produced..................................tons:   4,528,163       4,663,933       4,187,161   
+  For animal feed.......................................tons:   4,478,807       4,601,525       4,136,836   
+  For edible protein products...........................tons:      49,356          62,408          50,325   
+Millfeed produced.......................................tons:     311,811         315,657         304,579   
+                                                            :                                               
+Refine                                                      :                                               
+Crude oil processed in refining.................1,000 pounds:   1,994,659       2,053,411       1,956,789   
+Once refined oil produced.......................1,000 pounds:   1,944,785       2,001,002       1,909,737   
+                                                            :                                               
+Consumption                                                 :                                               
+Crude oil removed for inedible use in processing1,000 pounds:         (D)         228,679         237,497   
+Once refined oil removed for use in processing..1,000 pounds:   1,955,715       2,049,070       1,928,736   
+  Removed for edible use in processing..........1,000 pounds:   1,340,708       1,295,867       1,223,425   
+  Removed for inedible use in processing........1,000 pounds:     615,007         753,203         705,311   
+                                                            :                                               
+Stocks                                                      :                                               
+Cake and meal on hand end of month......................tons:     341,070         452,530         293,358   
+Millfeed on hand end of month...........................tons:      57,003          53,319          39,147   
+Crude oil on hand end of month..................1,000 pounds:   1,310,116       1,279,139       1,068,795   
+  Crusher.......................................1,000 pounds:     743,708         769,244         565,130   
+  Refiner.......................................1,000 pounds:     328,710         286,681         269,335   
+  Offsite.......................................1,000 pounds:     237,698             (D)         234,330   
+Once refined oil on hand end of month...........1,000 pounds:     436,885         417,267         388,773   
+------------------------------------------------------------------------------------------------------------
+(D) Withheld to avoid disclosing data for individual operations.                                            
+
+Soybean Crushing - Regional: September 2026 with Comparisons
+-------------------------------------------------------------------------------------------------
+                            :                          Soybeans crushed                          
+                            :--------------------------------------------------------------------
+           Region           :    September 2025    :     August 2026      :    September 2026    
+-------------------------------------------------------------------------------------------------
+                            :                                tons                                
+                            :                                                                    
+Illinois....................:        646,627                832,063                671,066       
+Iowa........................:      1,363,526              1,378,150              1,169,517       
+North and East 1/ ..........:      1,283,828              1,139,673              1,364,844       
+North Central 2/ ...........:      1,116,744              1,109,191              1,041,010       
+South, West and Pacific 3/ .:        627,136                670,493                652,931       
+West Central 4/ ............:      1,110,683              1,159,757              1,065,493       
+-------------------------------------------------------------------------------------------------
+                            :                         Crude oil produced                         
+                            :--------------------------------------------------------------------
+           Region           :    September 2025    :     August 2026      :    September 2026    
+-------------------------------------------------------------------------------------------------
+                            :                            1,000 pounds                            
+                            :                                                                    
+Illinois....................:        257,505                331,190                263,641       
+Iowa........................:        534,285                533,636                450,794       
+North and East 1/ ..........:        508,741                443,550                529,802       
+North Central 2/ ...........:        428,395                420,346                397,712       
+South, West and Pacific 3/ .:        244,416                261,711                255,423       
+West Central 4/ ............:        432,697                457,484                412,434       
+-------------------------------------------------------------------------------------------------
+                            :                    Crude oil stocks at crusher                     
+                            :--------------------------------------------------------------------
+           Region           :    September 2025    :     August 2026      :    September 2026    
+-------------------------------------------------------------------------------------------------
+                            :                            1,000 pounds                            
+                            :                                                                    
+Illinois....................:         99,306                119,862                 60,985       
+Iowa........................:         80,620                 52,623                 43,327       
+North and East 1/ ..........:        169,724                224,377                167,152       
+North Central 2/ ...........:        216,753                199,089                136,628       
+South, West and Pacific 3/ .:         54,207                 41,557                 43,808       
+West Central 4/ ............:        123,098                131,736                113,230       
+-------------------------------------------------------------------------------------------------
+                            :                       Cake and meal produced                       
+                            :--------------------------------------------------------------------
+           Region           :    September 2025    :     August 2026      :    September 2026    
+-------------------------------------------------------------------------------------------------
+                            :                                tons                                
+                            :                                                                    
+Illinois....................:        467,996                602,561                472,063       
+Iowa........................:      1,016,067              1,036,448                707,333       
+North and East 1/ ..........:        922,799                851,484                990,275       
+North Central 2/ ...........:        833,289                825,437                758,754       
+South, West and Pacific 3/ .:        457,117                497,802                477,018       
+West Central 4/ ............:        830,895                850,201                781,718       
+-------------------------------------------------------------------------------------------------
+                            :                        Cake and meal stocks                        
+                            :--------------------------------------------------------------------
+           Region           :    September 2025    :     August 2026      :    September 2026    
+-------------------------------------------------------------------------------------------------
+                            :                                tons                                
+                            :                                                                    
+Illinois....................:         55,460                 56,937                 58,844       
+Iowa........................:         69,282                 68,733                 39,464       
+North and East 1/ ..........:         66,588                107,823                 60,289       
+North Central 2/ ...........:         47,745                 81,908                 62,697       
+South, West and Pacific 3/ .:         28,668                 51,072                 40,596       
+West Central 4/ ............:         73,327                 86,057                 31,468       
+-------------------------------------------------------------------------------------------------
+1/ North and East includes Indiana, Kentucky, Maryland, Ohio, Pennsylvania and Virginia.         
+2/ North Central includes Michigan, Minnesota, North Dakota and South Dakota.                    
+3/ South, West, and Pacific includes Alabama, Arkansas, California, Georgia, Louisiana,          
+   Mississippi, North Carolina and South Carolina.                                               
+4/ West Central includes Kansas, Missouri and Nebraska.                                          
+
+Selected Oilseed Crushing, Production, Consumption and Stocks - United States: September 2026 with Comparisons
+----------------------------------------------------------------------------------------------------------------
+                              Item                              :September 2025 :  August 2026  :September 2026 
+----------------------------------------------------------------------------------------------------------------
+Canola                                                          :                                               
+Crush                                                           :                                               
+  Seeds crushed.............................................tons:    230,362         229,809         238,790    
+  Crude oil produced................................1,000 pounds:    190,866         181,913         182,279    
+  Cake and meal produced....................................tons:    110,147         135,220         143,261    
+Refine                                                          :                                               
+  Crude oil processed in refining...................1,000 pounds:    178,368         178,793         177,178    
+  Once refined oil produced.........................1,000 pounds:    173,563         175,487         172,325    
+Consumption                                                     :                                               
+  Crude oil removed for inedible use in processing..1,000 pounds:        (D)             (D)             (D)    
+  Once refined oil removed for use in processing....1,000 pounds:    162,388         163,491         166,582    
+    Removed for edible use in processing............1,000 pounds:        (D)             (D)             (D)    
+    Removed for inedible use in processing..........1,000 pounds:        (D)             (D)             (D)    
+Stocks                                                          :                                               
+  Cake and meal on hand end of month........................tons:     46,281          44,706          31,874    
+  Crude oil on hand end of month....................1,000 pounds:     47,986          55,939          65,450    
+  Once refined oil on hand end of month.............1,000 pounds:     96,063         115,959         113,051    
+                                                                :                                               
+Cottonseed                                                      :                                               
+Crush                                                           :                                               
+  Seeds crushed.............................................tons:     44,402          82,845          80,897    
+  Crude oil produced................................1,000 pounds:     11,869          22,590          23,258    
+  Cake and meal produced....................................tons:     22,814          34,875          37,323    
+Refine                                                          :                                               
+  Crude oil processed in refining...................1,000 pounds:     16,205          22,152          10,508    
+  Once refined oil produced.........................1,000 pounds:     15,710          21,965          10,383    
+Consumption                                                     :                                               
+  Crude oil removed for inedible use in processing..1,000 pounds:        (D)             (D)             (D)    
+  Once refined oil removed for use in processing....1,000 pounds:     26,548          20,986          35,929    
+    Removed for edible use in processing............1,000 pounds:        (D)             (D)             (D)    
+    Removed for inedible use in processing..........1,000 pounds:        (D)             (D)             (D)    
+Stocks                                                          :                                               
+  Cake and meal on hand end of month........................tons:     33,710          10,475          11,236    
+  Crude oil on hand end of month....................1,000 pounds:        (D)             (D)             (D)    
+  Once refined oil on hand end of month.............1,000 pounds:     14,826          27,343          11,669    
+                                                                :                                               
+Coconut                                                         :                                               
+Refine                                                          :                                               
+  Crude oil processed in refining...................1,000 pounds:     19,457          38,976          44,669    
+  Once refined oil produced.........................1,000 pounds:     19,253          38,746          44,459    
+Consumption                                                     :                                               
+  Crude oil removed for inedible use in processing..1,000 pounds:        (D)             (D)             (D)    
+  Once refined oil removed for use in processing....1,000 pounds:     74,101          54,654          57,869    
+    Removed for edible use in processing............1,000 pounds:        (D)             (D)             (D)    
+    Removed for inedible use in processing..........1,000 pounds:        (D)             (D)             (D)    
+Stocks                                                          :                                               
+  Crude oil on hand end of month....................1,000 pounds:     34,424             (D)             (D)    
+  Once refined oil on hand end of month.............1,000 pounds:     38,366          52,321          59,854    
+                                                                :                                               
+Corn                                                            :                                               
+Crush                                                           :                                               
+  Crude oil produced................................1,000 pounds:    135,770         158,740         130,185    
+Refine                                                          :                                               
+  Crude oil processed in refining...................1,000 pounds:    121,421         154,303         131,755    
+  Once refined oil produced.........................1,000 pounds:    117,587         149,081         127,002    
+Consumption                                                     :                                               
+  Crude oil removed for inedible use in processing..1,000 pounds:        (D)             (D)             (D)    
+  Once refined oil removed for use in processing....1,000 pounds:    126,826         143,326         118,684    
+    Removed for edible use in processing............1,000 pounds:        (D)             (D)             (D)    
+    Removed for inedible use in processing..........1,000 pounds:        (D)             (D)             (D)    
+Stocks                                                          :                                               
+  Crude oil on hand end of month....................1,000 pounds:     93,834          76,934          83,001    
+  Once refined oil on hand end of month.............1,000 pounds:     60,425          54,166          53,716    
+----------------------------------------------------------------------------------------------------------------
+See footnote(s) at end of table.                                                                     --continued
+
+Selected Oilseed Crushing, Production, Consumption and Stocks - United States: September 2026 with
+Comparisons (continued)
+----------------------------------------------------------------------------------------------------------------
+                              Item                              :September 2025 :  August 2026  :September 2026 
+----------------------------------------------------------------------------------------------------------------
+Palm kernel                                                     :                                               
+Consumption                                                     :                                               
+  Once refined oil removed for use in processing....1,000 pounds:     50,469          21,486          20,489    
+    Removed for edible use in processing............1,000 pounds:        (D)             (D)             (D)    
+    Removed for inedible use in processing..........1,000 pounds:        (D)             (D)             (D)    
+Stocks                                                          :                                               
+  Once refined oil on hand end of month.............1,000 pounds:    104,193          33,265          46,255    
+                                                                :                                               
+Palm                                                            :                                               
+Consumption                                                     :                                               
+  Once refined oil removed for use in processing....1,000 pounds:    174,662         160,342         164,135    
+    Removed for edible use in processing............1,000 pounds:        (D)             (D)             (D)    
+    Removed for inedible use in processing..........1,000 pounds:        (D)             (D)             (D)    
+Stocks                                                          :                                               
+  Once refined oil on hand end of month.............1,000 pounds:    264,867         222,904         217,735    
+                                                                :                                               
+Peanut                                                          :                                               
+Refine                                                          :                                               
+  Crude oil processed in refining...................1,000 pounds:     36,778             (D)             (D)    
+  Once refined oil produced.........................1,000 pounds:     35,972             (D)             (D)    
+Consumption                                                     :                                               
+  Crude oil removed for inedible use in processing..1,000 pounds:        (D)               -               -    
+  Once refined oil removed for use in processing....1,000 pounds:     42,467             (D)             (D)    
+    Removed for edible use in processing............1,000 pounds:        (D)             (D)             (D)    
+    Removed for inedible use in processing..........1,000 pounds:        (D)             (D)             (D)    
+Stocks                                                          :                                               
+  Crude oil on hand end of month....................1,000 pounds:     18,265          16,962          12,540    
+  Once refined oil on hand end of month.............1,000 pounds:        (D)             (D)             (D)    
+                                                                :                                               
+Safflower                                                       :                                               
+Refine                                                          :                                               
+  Crude oil processed in refining...................1,000 pounds:        (D)             (D)             (D)    
+  Once refined oil produced.........................1,000 pounds:        (D)             (D)             (D)    
+Consumption                                                     :                                               
+  Crude oil removed for inedible use in processing..1,000 pounds:          -               -             (D)    
+  Once refined oil removed for use in processing....1,000 pounds:        (D)             (D)             (D)    
+    Removed for edible use in processing............1,000 pounds:        (D)             (D)             (D)    
+    Removed for inedible use in processing..........1,000 pounds:        (D)             (D)             (D)    
+Stocks                                                          :                                               
+  Crude oil on hand end of month....................1,000 pounds:     13,345          33,298          24,256    
+  Once refined oil on hand end of month.............1,000 pounds:        (D)             (D)             (D)    
+                                                                :                                               
+Sunflower                                                       :                                               
+Refine                                                          :                                               
+  Crude oil processed in refining...................1,000 pounds:     33,472          36,837          32,256    
+  Once refined oil produced.........................1,000 pounds:     32,691          35,978          31,526    
+Consumption                                                     :                                               
+  Crude oil removed for inedible use in processing..1,000 pounds:        (D)             (D)             (D)    
+  Once refined oil removed for use in processing....1,000 pounds:     31,572          32,957          38,817    
+    Removed for edible use in processing............1,000 pounds:        (D)             (D)             (D)    
+    Removed for inedible use in processing..........1,000 pounds:        (D)             (D)             (D)    
+Stocks                                                          :                                               
+  Crude oil on hand end of month....................1,000 pounds:     15,959          22,104          20,741    
+  Once refined oil on hand end of month.............1,000 pounds:     19,817          25,674          17,905    
+----------------------------------------------------------------------------------------------------------------
+-   Represents zero.                                                                                            
+(D) Withheld to avoid disclosing data for individual operations.                                                
+
+Animal Fats and Oils Production, Consumption and Stocks - United States: September 2026 with Comparisons
+------------------------------------------------------------------------------------------------------------
+                            Item                            :September 2025 :  August 2026  :September 2026 
+------------------------------------------------------------------------------------------------------------
+                                                            :                 1,000 pounds                  
+                                                            :                                               
+Choice white grease                                         :                                               
+  Production................................................:     99,707         104,425         110,244    
+  Removed for inedible use..................................:    100,887         102,640         105,518    
+  Stocks on hand end of month...............................:      5,899           7,707          12,433    
+Feather meal                                                :                                               
+  Production................................................:     90,916          98,900         101,974    
+  Stocks on hand end of month...............................:     26,395          35,858          30,064    
+Lard                                                        :                                               
+  Production................................................:     31,462          22,897          36,141    
+  Removed for use in processing.............................:     45,818             (D)          49,412    
+    Removed for edible use in processing....................:        (D)             (D)             (D)    
+    Removed for inedible use in processing..................:        (D)             (D)             (D)    
+  Stocks on hand end of month...............................:        (D)             (D)          19,384    
+Meat meal, meat and bone meal, and dry rendered tankage     :                                               
+  Production................................................:    429,953         336,657         415,994    
+  Stocks on hand end of month...............................:     53,108          40,616          51,295    
+Other grease                                                :                                               
+  Production................................................:     20,677          19,694          22,347    
+  Removed for inedible use in processing....................:     15,208          21,905          19,937    
+  Stocks on hand end of month...............................:        (D)           4,924           7,334    
+Poultry fats                                                :                                               
+  Production................................................:    196,835         205,362         211,162    
+  Removed for inedible use in processing....................:    195,021         167,162         227,706    
+  Stocks on hand end of month...............................:     47,812         114,919          98,375    
+Poultry by-product meals                                    :                                               
+  Production................................................:    383,765         379,112         412,025    
+  Stocks on hand end of month...............................:    146,956         221,927         228,968    
+Tallow, edible                                              :                                               
+  Production................................................:     85,430          80,430          86,683    
+  Removed for use in processing.............................:     89,978          80,180          80,776    
+    Removed for edible use in processing....................:        (D)             (D)             (D)    
+    Removed for inedible use in processing..................:        (D)             (D)             (D)    
+  Stocks on hand end of month...............................:     17,256          18,483          24,465    
+Tallow, inedible                                            :                                               
+  Production................................................:    303,542         287,833         289,797    
+  Removed for inedible use in processing....................:    308,094         289,081         287,500    
+  Stocks on hand end of month...............................:        (D)             (D)             (D)    
+Tallow, technical                                           :                                               
+  Production................................................:     98,434         101,481          88,950    
+  Removed for inedible use in processing....................:     98,191         103,646          88,044    
+  Stocks on hand end of month...............................:        (D)             (D)             (D)    
+Yellow grease                                               :                                               
+  Production................................................:        (D)             (D)             (D)    
+  Removed for inedible use in processing....................:        (D)             (D)             (D)    
+  Stocks on hand end of month...............................:        (D)             (D)             (D)    
+------------------------------------------------------------------------------------------------------------
+(D) Withheld to avoid disclosing data for individual operations.                                            
+
+Statistical Methodology 
+
+Survey Procedures: Fats and Oils: Oilseed Crushings, Production, Consumption 
+and Stocks is part of the Current Agricultural Industrial Reports (CAIR) 
+program. CAIR reports are administered under NASS's Census of Agriculture 
+program. Response to CAIR surveys are required by law (Title 7, U.S. Code). 
+Animal and vegetable fats and oils data are collected from all known 
+facilities that crush, refine or render. Crushing facilities include 
+processors that use either solvent extraction or continuous screw press.
+
+The census universe was determined during operation profile interviews which 
+were completed for each potential facility to identify the presence of 
+rendering, oilseeds crushing, and crude oil refining in 2014. 
+
+In the Animal and Vegetable Fats and Oils survey questionnaire, facilities 
+are asked for previous calendar month data on oilseed crushing, crude oil 
+production, once refined oil production, rendering production, and end of 
+month stocks. Facilities are mailed questionnaires with the options of 
+completing the survey by mail or by Electronic Data Reporting (EDR). For 
+surveys not received in a reasonable amount of time, telephone follow-up is 
+conducted.
+
+Estimating Procedures: Imputation is done for operations with non-response by 
+using historical data and current data relationships. Data for reporting 
+firms are added to estimates for non-reporting firms to obtain National 
+totals.
+
+Revision Policy: Data are revised the following month based on late reports 
+or corrected data. Final figures are published in the annual summary of the 
+following year. 
+
+Reliability: Survey data are based on a census of all known facilities and 
+therefore, have no sampling variability. Monthly data can vary due to 
+different firms reporting month to month. Survey data are also subject to 
+non-sampling errors such as omissions and mistakes in reporting and in 
+processing the data. While these errors cannot be measured directly, they are 
+minimized by carefully reviewing all reported data for consistency and 
+reasonableness.
+
+USDA National Agricultural Statistics Service - Estimation Branch Contacts
+
+For more information about specific data items, please contact the Estimation 
+Branch staff members below. You can also email inquiries to nass@usda.gov.
+
+Anthony Prillaman, Associate Deputy 
+Administrator................................................................
+.............................................................................
+.............................................................................
+................................... (202) 720-2127
+
+Darin Jantzi, Section Chief   (701) 412-5953
+
+Crops: Apricots, Bell Peppers, Broccoli, Canola, Cauliflower, Chile Peppers, 
+Cucumbers, Hemp, Macadamias, Mustard Seed, Nectarines, Peaches, Plums, 
+Pumpkins, Prunes, Rapeseed, Rye, Safflower, Soybeans, Squash, Sunflower
+
+Jeff Lemmons, Section Chief   (202) 973-3272
+
+Crops: Artichokes, Avocados, Cabbage, Crop Progress, Dates, Dry Edible Beans, 
+Grapes, Green Peas, Hops, Olives, Pistachios, Potatoes, Rice, Snap Beans, 
+Sugarbeets, Sugarcane, Sweet Potatoes, Tomatoes, Walnuts, Wheat
+
+Fleming Gibson, Section Chief (Acting)   (202) 236-2428
+
+Crops: Almonds, Asparagus, Barley, Beets, Blueberries, Carrots, Chickpeas, 
+Coffee, Corn, Cranberries, Dry Edible Peas, Garlic, Grapefruit, Lemons, 
+Lentils, Mandarins/Tangerines, Maple, Mushrooms, Onions, Oranges, Papayas, 
+Pears, Pecans, Raspberries, Sweet Corn, Tobacco
+
+Julie Weber, Section Chief   (202) 317-0165
+
+Crops: Apples, Cantaloupe, Cotton, Cotton System Consumption and Stocks, Fats 
+and Oils, Flaxseed, Flour Milling Products, Grain Crushings, Hay, Hazelnuts, 
+Honeydew, Kale, Kiwifruit, Lettuce, Mint, Oats, Peanuts, Proso Millet, 
+Sorghum, Spinach, Strawberries, Sweet Cherries, Tart Cherries, Watermelon
+
+Access to NASS Reports
+
+For your convenience, you may access NASS reports and products the following 
+ways:
+
+ 	All reports are available electronically, at no cost, on the NASS web 
+site: www.nass.usda.gov.
+
+ 	The national specific reports are available via a free e-mail 
+subscription. To set-up this free subscription, visit www.nass.usda.gov 
+and click on "National" in upper right corner above "search" box to 
+create an account and select the reports you would like to receive.
+
+ 	Economics, Statistics, and Market Information (ESMIS) - National 
+Agricultural Library (NAL) website houses NASS's and other agency 
+archived reports at https://esmis.nal.usda.gov. All email subscriptions 
+containing reports will be sent from https://esmis.nal.usda.gov. To 
+receive the reports via e-mail, you will have to go to the website, 
+create a new account and subscribe to the reports. You should whitelist 
+notifications@esmis.nal.usda.gov in your email client to avoid the 
+emails going into spam/junk folders. 
+
+For more information on NASS surveys and reports, call the NASS Agricultural 
+Statistics Hotline at (800) 727-9540, 7:30 a.m. to 4:00 p.m. ET, or e-mail: 
+nass@usda.gov. 
+
+
+USDA is an equal opportunity provider, employer, and lender.
+
