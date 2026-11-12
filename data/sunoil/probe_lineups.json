@@ -1,0 +1,274 @@
+{
+ "https://www.ampnovo.ru/": {
+  "status": "error",
+  "err": "HTTPSConnectionPool(host='www.ampnovo.ru', port=443): Max retries exceeded with url: / (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.ampnovo.ru', port=443) at 0x7fd7dce8f8c0>, 'Connection "
+ },
+ "http://www.ampnovo.ru/": {
+  "status": "error",
+  "err": "HTTPConnectionPool(host='www.ampnovo.ru', port=80): Max retries exceeded with url: / (Caused by ConnectTimeoutError(<HTTPConnection(host='www.ampnovo.ru', port=80) at 0x7fd7dce8fd70>, 'Connection to w"
+ },
+ "https://ampnovo.ru/ships": {
+  "status": "error",
+  "err": "HTTPSConnectionPool(host='ampnovo.ru', port=443): Max retries exceeded with url: /ships (Caused by ConnectTimeoutError(<HTTPSConnection(host='ampnovo.ru', port=443) at 0x7fd7dd79d340>, 'Connection to "
+ },
+ "https://www.pasp.ru/": {
+  "status": "error",
+  "err": "HTTPSConnectionPool(host='www.pasp.ru', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable "
+ },
+ "https://pasp.ru/": {
+  "status": "error",
+  "err": "HTTPSConnectionPool(host='pasp.ru', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to g"
+ },
+ "https://www.azovseaports.ru/": {
+  "status": "error",
+  "err": "HTTPSConnectionPool(host='www.azovseaports.ru', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='www.azovseaports.ru', port=443): Failed to resolve 'ww"
+ },
+ "https://ampazov.ru/": {
+  "status": "error",
+  "err": "HTTPSConnectionPool(host='ampazov.ru', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='ampazov.ru', port=443): Failed to resolve 'ampazov.ru' ([Errno "
+ },
+ "https://www.mapm.ru/": {
+  "status": "error",
+  "err": "HTTPSConnectionPool(host='www.mapm.ru', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable "
+ },
+ "https://www.portofconstantza.com/": {
+  "status": 200,
+  "len": 8405,
+  "title": "Portul Constanta",
+  "links": []
+ },
+ "https://www.uspa.gov.ua/": {
+  "status": 200,
+  "len": 164064,
+  "title": "АМПУ | Адміністрація морських портів України",
+  "links": [
+   [
+    "https://www.uspa.gov.ua/agent-dogovir",
+    "Агентування суден"
+   ],
+   [
+    "https://www.uspa.gov.ua/announcements/do-uvagy-morskyh-agentiv-shhodo-agentuvannya-suden",
+    "До уваги Морських агентів, щодо агентування суден"
+   ],
+   [
+    "https://www.uspa.gov.ua/news/uspa-new-ships",
+    ""
+   ],
+   [
+    "https://www.uspa.gov.ua/news/uspa-new-ships",
+    "ДП «АМПУ» за результатами міжнародної конкурсної закупівлі уклало контракт на по"
+   ]
+  ]
+ },
+ "https://izmail.uspa.gov.ua/": {
+  "status": "error",
+  "err": "HTTPSConnectionPool(host='izmail.uspa.gov.ua', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='izmail.uspa.gov.ua', port=443): Failed to resolve 'izma"
+ },
+ "https://reni.uspa.gov.ua/": {
+  "status": "error",
+  "err": "HTTPSConnectionPool(host='reni.uspa.gov.ua', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='reni.uspa.gov.ua', port=443): Failed to resolve 'reni.usp"
+ },
+ "https://www.izmailport.com.ua/": {
+  "status": "error",
+  "err": "HTTPSConnectionPool(host='www.izmailport.com.ua', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='www.izmailport.com.ua', port=443): Failed to resolve"
+ },
+ "https://mcx.gov.ru/press-service/news/": {
+  "status": "error",
+  "err": "HTTPSConnectionPool(host='mcx.gov.ru', port=443): Max retries exceeded with url: /press-service/news/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='mcx.gov.ru', port=443) at 0x7fd7dcee22d0>, '"
+ },
+ "https://aemcx.ru/": {
+  "status": 200,
+  "len": 270265,
+  "title": "Федеральный центр развития экспорта продукции АПК Минсельхоза России - Агроэкспорт",
+  "links": [
+   [
+    "https://aemcx.ru/export/attache/",
+    ""
+   ],
+   [
+    "https://aemcx.ru/exporter-library/exportguide/",
+    ""
+   ],
+   [
+    "https://aemcx.ru/exporter-library/analiticheskie-review-po-eksportu-semyan/",
+    ""
+   ],
+   [
+    "https://exporter-library.aemcx.ru/",
+    ""
+   ],
+   [
+    "https://aemcx.ru/exporter-library/concept/",
+    ""
+   ],
+   [
+    "https://aemcx.ru/exporter-library/analyticsreview/",
+    ""
+   ],
+   [
+    "https://aemcx.ru/exporter-library/regions-review/",
+    ""
+   ],
+   [
+    "https://aemcx.ru/exporter-library/vto/",
+    ""
+   ],
+   [
+    "https://aemcx.ru/exporter-library/vestniki-gospodderzhki-apk/",
+    ""
+   ],
+   [
+    "https://aemcx.ru/exporter-library/obzory-eksportnogo-regulirovaniya/",
+    ""
+   ],
+   [
+    "https://myexport.exportcenter.ru/events/",
+    ""
+   ],
+   [
+    "https://aemcx.ru/2026/11/12/v-eek-obsudili-rol-fao-shos-i-eaes-v-formirovanii-ustojchivyh-agroprodovolstvennyh-sistem/",
+    "В ЕЭК обсудили роль ФАО, ШОС и ЕАЭС в формировании устойчивых агропродовольствен"
+   ],
+   [
+    "https://aemcx.ru/2026/10/30/na-rossijsko-tailandskom-investiczionnom-forume-obsudili-potenczial-razvitiya-torgovli-agrarnoj-produkcziej/",
+    "На Российско-Таиландском инвестиционном форуме обсудили потенциал развития торго"
+   ],
+   [
+    "https://aemcx.ru/2026/07/29/s-4-avgusta-turcziya-ne-budet-prinimat-suda-i-gruzy-s-produkcziej-rastenievodstva-bez-obrabotki-ot-korichnevo-mramornogo-klopa/",
+    "С 4 августа Турция не будет принимать суда и грузы с продукцией растениеводства"
+   ],
+   [
+    "https://aemcx.ru/export/",
+    "Экспорт АПК"
+   ],
+   [
+    "https://aemcx.ru/export/attache/",
+    "Атташе по АПК"
+   ],
+   [
+    "https://aemcx.ru/exporter-library/",
+    "Библиотека экспортера"
+   ],
+   [
+    "https://aemcx.ru/services-and-statistics/",
+    "Сервисы и статистика"
+   ]
+  ]
+ },
+ "https://spikebrokers.com/": {
+  "status": "error",
+  "err": "HTTPSConnectionPool(host='spikebrokers.com', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='spikebrokers.com', port=443): Failed to resolve 'spikebro"
+ },
+ "https://www.apk-inform.com/en": {
+  "status": 403,
+  "len": 8256,
+  "title": "Access denied | www.apk-inform.com used Cloudflare to restrict access | www.apk-inform.com | Cloudflare",
+  "links": []
+ },
+ "https://seaofindia.com/": {
+  "status": 200,
+  "len": 61925,
+  "title": "Solvent Extractor&#039;s Association of India &#8211; The Premier Association of Vegetable Oil Industry &amp; Trade Of I",
+  "links": [
+   [
+    "https://seaofindia.com/imported-vegetable-oil-processors-council-2022-23/",
+    "SEA Imported Vegetable Oil Processors Council 2025-26"
+   ],
+   [
+    "https://seaofindia.com/category/statistical-update/import-of-vegetable-oil/",
+    "Import of Vegetable Oil"
+   ],
+   [
+    "https://seaofindia.com/category/statistical-update/export-of-oilmeals/",
+    "Export of Oilmeals"
+   ],
+   [
+    "https://seaofindia.com/category/statistical-update/export-of-castor-oil-castor-seed-area-production-and-yield/",
+    "Castor Seed Area Production and Yield"
+   ],
+   [
+    "https://seaofindia.com/category/statistical-update/export-of-castor-oil/",
+    "Export of Castor Oil"
+   ],
+   [
+    "https://seaofindia.com/category/statistical-update/import-duty-on-edible-oils/",
+    "Import duty on Edible Oils"
+   ],
+   [
+    "https://seaofindia.com/category/statistical-update/import-duty-on-non-edible-oil/",
+    "Import Duty On Non-Edible Oil"
+   ],
+   [
+    "https://seaofindia.com/all-members/castor-oil-its-derivatives-manufacturer-exporters/",
+    "Castor Oil &#038; Its Derivatives – Manufacturer &#038; Exporters"
+   ],
+   [
+    "https://seaofindia.com/all-members/cattle-feed-manufacturers-exporters/",
+    "Cattle Feed Manufacturers &#038; Exporters"
+   ],
+   [
+    "https://seaofindia.com/all-members/merchant-manufacturer-exporters/",
+    "Merchant &#038; Manufacturer Exporters"
+   ],
+   [
+    "https://seaofindia.com/export-of-oilmeals-april-2025/",
+    "Export of Oilmeals – April-August 2026"
+   ],
+   [
+    "https://seaofindia.com/export-of-castor-oil-2019-to-2021-jan-dec-and-2022-jan/",
+    "EXPORT OF CASTOR OIL 2023 to 2025 (JAN-DEC) AND JAN-SEPT 2026"
+   ],
+   [
+    "https://seaofindia.com/export-of-castor-oil-2022-23-to-2024-25-april-march-and-april-2025/",
+    "EXPORT OF CASTOR OIL 2023-24 to 2025-26 (APRIL-MARCH) AND APRIL &#8211; SEPT 20"
+   ]
+  ]
+ },
+ "https://www.seaofindia.com/import-export-data/": {
+  "status": 404,
+  "len": 50700,
+  "title": "Page not found &#8211; Solvent Extractor&#039;s Association of India",
+  "links": [
+   [
+    "https://seaofindia.com/imported-vegetable-oil-processors-council-2022-23/",
+    "SEA Imported Vegetable Oil Processors Council 2025-26"
+   ],
+   [
+    "https://seaofindia.com/category/statistical-update/import-of-vegetable-oil/",
+    "Import of Vegetable Oil"
+   ],
+   [
+    "https://seaofindia.com/category/statistical-update/export-of-oilmeals/",
+    "Export of Oilmeals"
+   ],
+   [
+    "https://seaofindia.com/category/statistical-update/export-of-castor-oil-castor-seed-area-production-and-yield/",
+    "Castor Seed Area Production and Yield"
+   ],
+   [
+    "https://seaofindia.com/category/statistical-update/export-of-castor-oil/",
+    "Export of Castor Oil"
+   ],
+   [
+    "https://seaofindia.com/category/statistical-update/import-duty-on-edible-oils/",
+    "Import duty on Edible Oils"
+   ],
+   [
+    "https://seaofindia.com/category/statistical-update/import-duty-on-non-edible-oil/",
+    "Import Duty On Non-Edible Oil"
+   ],
+   [
+    "https://seaofindia.com/all-members/castor-oil-its-derivatives-manufacturer-exporters/",
+    "Castor Oil &#038; Its Derivatives – Manufacturer &#038; Exporters"
+   ],
+   [
+    "https://seaofindia.com/all-members/cattle-feed-manufacturers-exporters/",
+    "Cattle Feed Manufacturers &#038; Exporters"
+   ],
+   [
+    "https://seaofindia.com/all-members/merchant-manufacturer-exporters/",
+    "Merchant &#038; Manufacturer Exporters"
+   ]
+  ]
+ }
+}
