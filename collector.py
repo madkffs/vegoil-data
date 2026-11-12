@@ -451,6 +451,84 @@ def baltic_headline():
         raise ValueError("no BDI headline")
     return float(m.group(1).replace(",", ""))
 
+def sunoil_eurostat():
+    """EU-27 imports of sunflower oil (CN 1512 11 crude, 1512 19 refined) by origin and month, from Eurostat Comext. Raw JSON-stat saved; parsed by the build."""
+    d = os.path.join(DATA, "sunoil"); os.makedirs(d, exist_ok=True)
+    base = "https://ec.europa.eu/eurostat/api/comext/dissemination/statistics/1.0/data/DS-045409"
+    out = {}
+    for prod in ("151211", "151219"):
+        url = (f"{base}?format=JSON&lang=en&freq=M&reporter=EU27_2020&flow=1&indicators=QUANTITY_IN_100KG&product={prod}"
+               "&partner=UA&partner=RU&partner=AR&partner=MD&partner=RS&partner=TR&partner=EXT_EU27_2020&sinceTimePeriod=2023-01")
+        try:
+            r = requests.get(url, headers=UA, timeout=120)
+            body = r.json() if r.headers.get("content-type", "").startswith("application/json") else r.text[:500]
+            out[prod] = {"status": r.status_code, "body": body}
+        except Exception as e:
+            out[prod] = {"status": "error", "body": str(e)[:300]}
+        time.sleep(2)
+    if not any(v["status"] == 200 for v in out.values()):
+        raise ValueError("eurostat sunoil: " + str({k: v["status"] for k, v in out.items()}))
+    with open(os.path.join(d, "eurostat_eu_imports_1512.json"), "w") as fh:
+        json.dump(out, fh)
+
+def sunoil_comtrade():
+    """Mirror data for Black Sea sunflower oil: monthly imports of HS 151211 + 151219 reported by India, China, Turkey and Egypt,
+    from Russia, Ukraine and Argentina (and world), via the UN Comtrade public preview API (no key). Keeps earlier months."""
+    d = os.path.join(DATA, "sunoil"); os.makedirs(d, exist_ok=True)
+    path = os.path.join(d, "comtrade_sunoil_imports.json")
+    old = json.load(open(path)) if os.path.exists(path) else {"rows": [], "log": {}}
+    now = dt.date.today()
+    have = {(r["reporter_code"], r["period"]) for r in old["rows"]}
+    periods = [f"{y}{m:02d}" for y in range(now.year - 2, now.year + 1) for m in range(1, 13) if dt.date(y, m, 1) <= now]
+    recent = set(periods[-8:])
+    rows = [r for r in old["rows"] if r["period"] not in recent]
+    log = dict(old.get("log", {}))
+    for rep in (699, 156, 792, 818):
+        for per in periods:
+            if (rep, per) in have and per not in recent:
+                continue
+            url = (f"https://comtradeapi.un.org/public/v1/preview/C/M/HS?reporterCode={rep}&flowCode=M&cmdCode=151211,151219"
+                   f"&partnerCode=0,643,804,32&period={per}")
+            for attempt in range(3):
+                try:
+                    r = requests.get(url, headers=UA, timeout=90)
+                    if r.status_code == 429:
+                        time.sleep(20 * (attempt + 1)); continue
+                    data = (r.json().get("data") or []) if r.status_code == 200 else []
+                    log[f"{rep}-{per}"] = [r.status_code, len(data)]
+                    for x in data:
+                        if x.get("partner2Code") not in (0, None) or x.get("motCode") not in (0, None) or x.get("customsCode") not in ("C00", None):
+                            continue
+                        rows.append({"reporter_code": rep, "period": str(x.get("period")), "cmd": str(x.get("cmdCode")), "partner_code": x.get("partnerCode"),
+                                     "net_kg": x.get("netWgt"), "value_usd": x.get("primaryValue")})
+                    break
+                except Exception as e:
+                    log[f"{rep}-{per}"] = ["error", str(e)[:200]]; break
+            time.sleep(3)
+    with open(path, "w") as fh:
+        json.dump({"fetched": now.isoformat(), "log": log, "rows": rows}, fh)
+
+def probe_sun_lineups():
+    """One-off: which Black Sea / Baltic / Danube port pages are reachable and show vessel lists."""
+    d = os.path.join(DATA, "sunoil"); os.makedirs(d, exist_ok=True)
+    urls = ["https://www.ampnovo.ru/", "http://www.ampnovo.ru/", "https://ampnovo.ru/ships", "https://www.pasp.ru/", "https://pasp.ru/",
+            "https://www.azovseaports.ru/", "https://ampazov.ru/", "https://www.mapm.ru/", "https://www.portofconstantza.com/",
+            "https://www.uspa.gov.ua/", "https://izmail.uspa.gov.ua/", "https://reni.uspa.gov.ua/", "https://www.izmailport.com.ua/",
+            "https://mcx.gov.ru/press-service/news/", "https://aemcx.ru/", "https://spikebrokers.com/", "https://www.apk-inform.com/en",
+            "https://seaofindia.com/", "https://www.seaofindia.com/import-export-data/"]
+    out = {}
+    for u in urls:
+        try:
+            r = requests.get(u, headers=UA, timeout=25)
+            t = r.text
+            links = re.findall(r'href="([^"]+)"[^>]*>([^<]{0,80})', t)
+            keep = [(h, x.strip()) for h, x in links if re.search(r"(?i)суд|vessel|ship|nave|line|судн|розстанов|расстанов|import|export|пошлин|duty|статист", h + " " + x)]
+            out[u] = {"status": r.status_code, "len": len(t), "title": (re.search(r"<title>(.*?)</title>", t, re.S) or [None, ""])[1][:120], "links": keep[:40]}
+        except Exception as e:
+            out[u] = {"status": "error", "err": str(e)[:200]}
+    with open(os.path.join(d, "probe_lineups.json"), "w") as fh:
+        json.dump(out, fh, ensure_ascii=False, indent=1)
+
 NABSA = "https://www.nabsa.com.ar/assets/"
 
 def _num_es(x):
@@ -1387,6 +1465,13 @@ def probe_epa_qlik():
     with open(os.path.join(d, "qlik.json"), "w") as fh: json.dump(out, fh, indent=1, default=str)
 
 def main(mode):
+    if mode == "sunoil":
+        for name, fn in (("probe_sun_lineups", probe_sun_lineups), ("sunoil_eurostat", sunoil_eurostat), ("sunoil_comtrade", sunoil_comtrade)):
+            try:
+                fn()
+            except Exception as e:
+                print(name, "failed", e)
+        return
     if mode == "probe_epa":
         probe_epa_qlik(); return
     if mode == "probe3":
@@ -1527,7 +1612,7 @@ def main(mode):
             except Exception as e:
                 status["errors"][name] = str(e)[:200]
     if mode in ("backfill", "probe") or dt.datetime.utcnow().minute < 15 and dt.datetime.utcnow().hour == 6:
-        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("comexstat_ports", comexstat_ports), ("emts_generation", emts_generation), ("epa_generation_detail", epa_generation_detail), ("epa_rin_prices", epa_rin_prices), ("climate", climate_indices), ("cme_options", cme_soyoil_options), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
+        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("comexstat_ports", comexstat_ports), ("emts_generation", emts_generation), ("epa_generation_detail", epa_generation_detail), ("epa_rin_prices", epa_rin_prices), ("climate", climate_indices), ("cme_options", cme_soyoil_options), ("sunoil_eurostat", sunoil_eurostat), ("sunoil_comtrade", sunoil_comtrade), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
             try:
                 fn()
             except Exception as e:
