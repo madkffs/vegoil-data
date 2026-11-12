@@ -999,3 +999,39 @@ if opt_files:
                              "call": q.c, "put": q.p} for q in P.itertuples()]
     dump("options.json", rows_op)
     print("options", len(rows_op), [(r_["trade_date"], r_["expiry"], r_["atm_iv"], r_["rr25"], r_["move"], r_["rv20"]) for r_ in rows_op if r_["kind"] == "summary"][-4:])
+
+# ---------- Sunflower oil flows: EU imports by origin (Eurostat) and mirror imports of India, China, Turkey, Egypt (UN Comtrade) ----------
+SUN_ORIG = {"UA": "Ukraine", "RU": "Russia", "AR": "Argentina", "MD": "Moldova", "RS": "Serbia", "TR": "Turkey", "EXT_EU27_2020": "All origins"}
+sun_rows = []
+p_eu = os.path.join(D, "sunoil", "eurostat_eu_imports_1512.json")
+if os.path.exists(p_eu):
+    agg = collections.defaultdict(lambda: [0.0, 0.0])
+    for k_i, prod in enumerate(("151211", "151219")):
+        body = json.load(open(p_eu)).get(prod, {}).get("body", {})
+        if not (isinstance(body, dict) and "value" in body):
+            continue
+        ids, size = body["id"], body["size"]
+        idx = {dn: {i: c for c, i in body["dimension"][dn]["category"]["index"].items()} for dn in ids}
+        for flat, val in body["value"].items():
+            f, coords = int(flat), []
+            for s_ in reversed(size):
+                coords.append(f % s_); f //= s_
+            rec = {dn: idx[dn][c] for dn, c in zip(ids, reversed(coords))}
+            if rec.get("partner") in SUN_ORIG and val:
+                agg[(rec["time"], rec["partner"])][k_i] += val / 10
+    for (m_, pc), (cr, rf) in sorted(agg.items()):
+        sun_rows.append({"kind": "eu", "month": m_[:4] + "-" + m_[-2:], "reporter": "EU-27", "origin": SUN_ORIG[pc], "tons": round(cr + rf), "crude_t": round(cr), "refined_t": round(rf)})
+p_ct = os.path.join(D, "sunoil", "comtrade_sunoil_imports.json")
+REP = {699: "India", 156: "China", 792: "Turkey", 818: "Egypt"}
+PART = {0: "All origins", 643: "Russia", 804: "Ukraine", 32: "Argentina"}
+if os.path.exists(p_ct):
+    agg = collections.defaultdict(float)
+    for r in json.load(open(p_ct)).get("rows", []):
+        if r.get("net_kg") in (None, 0) or r["partner_code"] not in PART or r["reporter_code"] not in REP:
+            continue
+        agg[(f"{r['period'][:4]}-{r['period'][4:6]}", REP[r["reporter_code"]], PART[r["partner_code"]])] += float(r["net_kg"]) / 1000
+    for (m_, rep, org), t in sorted(agg.items()):
+        sun_rows.append({"kind": "mirror", "month": m_, "reporter": rep, "origin": org, "tons": round(t)})
+for i, r in enumerate(sun_rows): r["id"] = f"s{i:05d}"
+dump("sun_oil.json", sun_rows)
+print("sun_oil", len(sun_rows), max((r["month"] for r in sun_rows if r["kind"] == "eu"), default=None), sorted({(r["reporter"], max(x["month"] for x in sun_rows if x["reporter"] == r["reporter"])) for r in sun_rows}))
