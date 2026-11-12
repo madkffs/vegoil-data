@@ -529,6 +529,104 @@ def probe_sun_lineups():
     with open(os.path.join(d, "probe_lineups.json"), "w") as fh:
         json.dump(out, fh, ensure_ascii=False, indent=1)
 
+EC_API = "https://api.tech.ec.europa.eu/agrifood/api"
+VEGOIL_CN8 = {"15121191": "sun_crude", "15121199": "sun_crude_other", "15121910": "sun_refined_ind", "15121990": "sun_refined",
+              "15111090": "palm_crude", "15119019": "palm_refined_solid", "15119099": "palm_refined_liquid",
+              "15071090": "soy_crude", "15079090": "soy_refined", "15141190": "rape_crude", "15141990": "rape_refined"}
+
+def ec_taxud_vegoil():
+    """EU weekly customs surveillance (TAXUD) imports of vegetable oils by CN8 code, member state and origin, from the
+    European Commission agri-food data portal API (official, about one week behind). Raw rows saved; parsed by the build."""
+    d = os.path.join(DATA, "official"); os.makedirs(d, exist_ok=True)
+    out = {"fetched": dt.datetime.utcnow().isoformat(), "log": {}, "rows": []}
+    now = dt.date.today()
+    for yr in (now.year - 2, now.year - 1, now.year):
+        params = [("cn8ProductCodes", c) for c in VEGOIL_CN8] + [("marketingYears", str(yr))]
+        try:
+            r = requests.get(EC_API + "/taxud/weeklyData/import", params=params, headers=UA, timeout=180)
+            out["log"][str(yr)] = [r.status_code, r.text[:300] if r.status_code != 200 else ""]
+            if r.status_code == 200:
+                js = r.json()
+                out["rows"] += js if isinstance(js, list) else js.get("data", [])
+        except Exception as e:
+            out["log"][str(yr)] = ["error", str(e)[:200]]
+        time.sleep(2)
+    if not out["rows"]:
+        for path in ("/taxud/weeklyData/import/cn8ProductCodes", "/taxud/weeklyData/import/products", "/taxud/weeklyData/sectors"):
+            try:
+                r = requests.get(EC_API + path, headers=UA, timeout=60)
+                out["log"][path] = [r.status_code, r.text[:3000]]
+            except Exception as e:
+                out["log"][path] = ["error", str(e)[:200]]
+    with open(os.path.join(d, "ec_taxud_vegoil_imports.json"), "w") as fh:
+        json.dump(out, fh)
+    if not out["rows"]:
+        raise ValueError("taxud: no rows " + json.dumps(out["log"])[:300])
+
+def ec_oilseed_prices():
+    """EU weekly oilseed, meal and vegetable oil prices reported by member states (European Commission agri-food data portal)."""
+    d = os.path.join(DATA, "official"); os.makedirs(d, exist_ok=True)
+    out = {"fetched": dt.datetime.utcnow().isoformat(), "log": {}}
+    for path in ("/oilseeds/products", "/oilseeds/productTypes", "/oilseeds/markets", "/oilseeds/marketStages"):
+        try:
+            r = requests.get(EC_API + path, headers=UA, timeout=60); out[path] = r.json() if r.status_code == 200 else r.text[:500]
+        except Exception as e:
+            out[path] = str(e)[:200]
+    begin = (dt.date.today() - dt.timedelta(days=800)).strftime("%d/%m/%Y")
+    try:
+        r = requests.get(EC_API + "/oilseeds/prices", params={"beginDate": begin}, headers=UA, timeout=180)
+        out["log"]["prices"] = r.status_code
+        out["prices"] = r.json() if r.status_code == 200 else r.text[:500]
+    except Exception as e:
+        out["log"]["prices"] = str(e)[:200]
+    with open(os.path.join(d, "ec_oilseed_prices.json"), "w") as fh:
+        json.dump(out, fh)
+
+def usda_psd_oils():
+    """USDA FAS PSD (official supply and demand, updated on WASDE day): vegetable oils and oilseeds for key countries, from the public CSV download."""
+    import zipfile, io, csv
+    d = os.path.join(DATA, "official"); os.makedirs(d, exist_ok=True)
+    r = requests.get("https://apps.fas.usda.gov/psdonline/downloads/psd_oilseeds_csv.zip", headers=UA, timeout=180)
+    r.raise_for_status()
+    z = zipfile.ZipFile(io.BytesIO(r.content))
+    name = [n for n in z.namelist() if n.lower().endswith(".csv")][0]
+    rows = list(csv.DictReader(io.TextIOWrapper(z.open(name), encoding="utf-8-sig")))
+    keep_c = ("Oil, Sunflowerseed", "Oil, Palm", "Oil, Soybean", "Oil, Rapeseed", "Oilseed, Sunflowerseed", "Oilseed, Soybean", "Meal, Sunflowerseed")
+    keep_k = ("Ukraine", "Russia", "European Union", "India", "Turkey", "China", "World", "Argentina", "Indonesia", "Malaysia", "United States", "Brazil", "Kazakhstan")
+    now = dt.date.today().year
+    out = [r_ for r_ in rows if r_.get("Commodity_Description") in keep_c and r_.get("Country_Name") in keep_k and int(r_.get("Market_Year") or 0) >= now - 6]
+    with open(os.path.join(d, "usda_psd_oils.csv"), "w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=list(out[0].keys())); w.writeheader(); w.writerows(out)
+
+def nass_fats_oils():
+    """USDA NASS Fats & Oils monthly (official US crush, oil production, stocks, incl. canola and sunflower): latest releases as text."""
+    d = os.path.join(DATA, "official", "nass"); os.makedirs(d, exist_ok=True)
+    today = dt.date.today(); got = 0
+    for k in range(0, 4):
+        y, m = today.year, today.month - k
+        while m < 1: m += 12; y -= 1
+        fn = f"cafo{m:02d}{y % 100:02d}.txt"
+        if os.path.exists(os.path.join(d, fn)):
+            got += 1; continue
+        try:
+            r = requests.get("https://release.nass.usda.gov/reports/" + fn, headers=UA, timeout=60)
+            if r.status_code == 200 and "Crushings" in r.text:
+                open(os.path.join(d, fn), "w").write(r.text); got += 1
+        except Exception:
+            pass
+    if not got:
+        raise ValueError("NASS fats & oils: nothing fetched")
+
+def eia_biofuel_feedstock():
+    """EIA monthly biofuel feedstock consumption (soybean oil, canola, corn oil, yellow grease/UCO, tallow ...), official, from the dnav XLS."""
+    d = os.path.join(DATA, "official"); os.makedirs(d, exist_ok=True)
+    for u in ("https://www.eia.gov/dnav/pet/xls/PET_PNP_FEEDBIOFUEL_DCU_NUS_M.xls", "https://www.eia.gov/biofuels/update/table2.xlsx"):
+        r = requests.get(u, headers=UA, timeout=90)
+        if r.status_code == 200 and len(r.content) > 5000:
+            open(os.path.join(d, os.path.basename(u)), "wb").write(r.content)
+            return
+    raise ValueError("EIA feedstock: no file")
+
 NABSA = "https://www.nabsa.com.ar/assets/"
 
 def _num_es(x):
@@ -1465,6 +1563,13 @@ def probe_epa_qlik():
     with open(os.path.join(d, "qlik.json"), "w") as fh: json.dump(out, fh, indent=1, default=str)
 
 def main(mode):
+    if mode == "official":
+        for name, fn in (("ec_taxud_vegoil", ec_taxud_vegoil), ("ec_oilseed_prices", ec_oilseed_prices), ("usda_psd_oils", usda_psd_oils), ("nass_fats_oils", nass_fats_oils), ("eia_biofuel_feedstock", eia_biofuel_feedstock)):
+            try:
+                fn(); print(name, "ok")
+            except Exception as e:
+                print(name, "failed", e)
+        return
     if mode == "sunoil":
         for name, fn in (("probe_sun_lineups", probe_sun_lineups), ("sunoil_eurostat", sunoil_eurostat), ("sunoil_comtrade", sunoil_comtrade)):
             try:
