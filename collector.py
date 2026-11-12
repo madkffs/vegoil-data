@@ -529,7 +529,8 @@ def probe_sun_lineups():
     with open(os.path.join(d, "probe_lineups.json"), "w") as fh:
         json.dump(out, fh, ensure_ascii=False, indent=1)
 
-EC_API = "https://api.tech.ec.europa.eu/agrifood/api"
+EC_APIS = ("https://api.tech.ec.europa.eu/agrifood/api", "https://ec.europa.eu/agrifood/api")
+EC_API = EC_APIS[0]
 VEGOIL_CN8 = {"15121191": "sun_crude", "15121199": "sun_crude_other", "15121910": "sun_refined_ind", "15121990": "sun_refined",
               "15111090": "palm_crude", "15119019": "palm_refined_solid", "15119099": "palm_refined_liquid",
               "15071090": "soy_crude", "15079090": "soy_refined", "15141190": "rape_crude", "15141990": "rape_refined"}
@@ -543,7 +544,10 @@ def ec_taxud_vegoil():
     for yr in (now.year - 2, now.year - 1, now.year):
         params = [("cn8ProductCodes", c) for c in VEGOIL_CN8] + [("marketingYears", str(yr))]
         try:
-            r = requests.get(EC_API + "/taxud/weeklyData/import", params=params, headers=UA, timeout=180)
+            for base in EC_APIS:
+                r = requests.get(base + "/taxud/weeklyData/import", params=params, headers=UA, timeout=180)
+                if r.status_code == 200:
+                    break
             out["log"][str(yr)] = [r.status_code, r.text[:300] if r.status_code != 200 else ""]
             if r.status_code == 200:
                 js = r.json()
@@ -574,7 +578,10 @@ def ec_oilseed_prices():
             out[path] = str(e)[:200]
     begin = (dt.date.today() - dt.timedelta(days=800)).strftime("%d/%m/%Y")
     try:
-        r = requests.get(EC_API + "/oilseeds/prices", params={"beginDate": begin}, headers=UA, timeout=180)
+        for base in EC_APIS:
+            r = requests.get(base + "/oilseeds/prices", params={"beginDate": begin}, headers=UA, timeout=180)
+            if r.status_code == 200:
+                break
         out["log"]["prices"] = r.status_code
         out["prices"] = r.json() if r.status_code == 200 else r.text[:500]
     except Exception as e:
@@ -1717,7 +1724,7 @@ def main(mode):
             except Exception as e:
                 status["errors"][name] = str(e)[:200]
     if mode in ("backfill", "probe") or dt.datetime.utcnow().minute < 15 and dt.datetime.utcnow().hour == 6:
-        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("comexstat_ports", comexstat_ports), ("emts_generation", emts_generation), ("epa_generation_detail", epa_generation_detail), ("epa_rin_prices", epa_rin_prices), ("climate", climate_indices), ("cme_options", cme_soyoil_options), ("sunoil_eurostat", sunoil_eurostat), ("sunoil_comtrade", sunoil_comtrade), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
+        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("comexstat_ports", comexstat_ports), ("emts_generation", emts_generation), ("epa_generation_detail", epa_generation_detail), ("epa_rin_prices", epa_rin_prices), ("climate", climate_indices), ("cme_options", cme_soyoil_options), ("sunoil_eurostat", sunoil_eurostat), ("sunoil_comtrade", sunoil_comtrade), ("usda_psd_oils", usda_psd_oils), ("nass_fats_oils", nass_fats_oils), ("eia_biofuel_feedstock", eia_biofuel_feedstock), ("ec_taxud_vegoil", ec_taxud_vegoil), ("ec_oilseed_prices", ec_oilseed_prices), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
             try:
                 fn()
             except Exception as e:
