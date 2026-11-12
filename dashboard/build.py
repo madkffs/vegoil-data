@@ -934,3 +934,68 @@ if os.path.exists(rp_p):
                 for t, r in hz.iterrows()]
     dump("biofuel.json", rows_bf)
     print("biofuel", len(rows_bf), wk.index.max(), hz.index.max(), round(float(hz["margin"].iloc[-1]), 3))
+
+# ---------- soyoil options: implied vol, skew, expected move and open interest from CME settlements ----------
+import glob
+from math import erf, sqrt, log, exp
+def _ncdf(x): return 0.5 * (1 + erf(x / sqrt(2)))
+def _b76(F, K, T, v, call):
+    if v <= 0 or T <= 0: return max(0.0, (F - K) if call else (K - F))
+    s = v * sqrt(T); d1 = (log(F / K) + 0.5 * s * s) / s; d2 = d1 - s
+    return F * _ncdf(d1) - K * _ncdf(d2) if call else K * _ncdf(-d2) - F * _ncdf(-d1)
+def _iv(F, K, T, p, call):
+    intr = max(0.0, (F - K) if call else (K - F))
+    if p is None or not np.isfinite(p) or p <= intr + 1e-6 or T <= 0: return None
+    lo, hi = 0.01, 3.0
+    for _ in range(80):
+        m = (lo + hi) / 2
+        if _b76(F, K, T, m, call) > p: hi = m
+        else: lo = m
+    return (lo + hi) / 2
+opt_files = sorted(glob.glob(os.path.join(D, "options", "zl_options_*.csv")))
+if opt_files:
+    rows_op = []
+    ufile = {"DEC 26": "ZLZ26_CBT.csv", "JAN 27": "ZLF27_CBT.csv", "MAR 27": "ZLH27_CBT.csv", "MAY 27": "ZLK27_CBT.csv", "JUL 27": "ZLN27_CBT.csv"}
+    rv20 = {}
+    for k_, f_ in ufile.items():
+        if os.path.exists(os.path.join(D, "daily", f_)):
+            cc = load(f_); cc = cc[cc.index.dayofweek < 5]
+            rv20[k_] = float(np.log(cc).diff().iloc[-20:].std() * np.sqrt(252) * 100)
+    latest_file = opt_files[-1]
+    for fpath in opt_files[-30:]:
+        od = pd.read_csv(fpath)
+        for (lab, cid), g in od.groupby(["expiry_label", "contract"], sort=False):
+            F = float(g["underlying_settle"].iloc[0]); td = pd.Timestamp(g["trade_date"].iloc[0])
+            lt = pd.to_datetime(g["last_trade"].iloc[0], format="%d %b %Y", errors="coerce")
+            if not np.isfinite(F) or pd.isna(lt): continue
+            T = max((lt - td).days, 0) / 365
+            if T <= 0: continue
+            pts = []
+            for K, gg in g.groupby("strike"):
+                c = gg[gg["type"] == "C"]["settle"]; p = gg[gg["type"] == "P"]["settle"]
+                c = float(c.iloc[0]) if len(c) else None; p = float(p.iloc[0]) if len(p) else None
+                use_call = K >= F
+                iv = _iv(F, K, T, c if use_call else p, use_call)
+                if iv is None: continue
+                s_ = iv * sqrt(T); d1 = (log(F / K) + 0.5 * s_ * s_) / s_
+                pts.append({"K": float(K), "iv": iv, "dc": _ncdf(d1), "oi_c": float(gg[gg["type"] == "C"]["open_interest"].sum()),
+                            "oi_p": float(gg[gg["type"] == "P"]["open_interest"].sum()), "c": c, "p": p})
+            pts = [q for q in pts if abs(log(q["K"] / F)) < 0.25]
+            if len(pts) < 5: continue
+            P = pd.DataFrame(pts).sort_values("K")
+            atm = float(np.interp(F, P["K"], P["iv"]))
+            byd = P.sort_values("dc")
+            c25 = float(np.interp(0.25, byd["dc"], byd["iv"])); p25 = float(np.interp(0.75, byd["dc"], byd["iv"]))   # 25-delta put = 75-delta call
+            und = g["underlying"].iloc[0]
+            rows_op.append({"id": f"s-{td:%Y-%m-%d}-{cid}", "kind": "summary", "trade_date": f"{td:%Y-%m-%d}", "expiry": lab, "contract": cid,
+                            "last_trade": f"{lt:%Y-%m-%d}", "days": int((lt - td).days), "underlying": und, "F": F,
+                            "atm_iv": round(atm * 100, 2), "c25_iv": round(c25 * 100, 2), "p25_iv": round(p25 * 100, 2),
+                            "rr25": round((c25 - p25) * 100, 2), "bf25": round(((c25 + p25) / 2 - atm) * 100, 2),
+                            "move": round(F * atm * sqrt(T), 2), "rv20": round(rv20[und], 1) if und in rv20 else None,
+                            "oi_calls": int(P["oi_c"].sum()), "oi_puts": int(P["oi_p"].sum())})
+            if fpath == latest_file:
+                rows_op += [{"id": f"k-{cid}-{q.K}", "kind": "smile", "trade_date": f"{td:%Y-%m-%d}", "expiry": lab, "contract": cid, "F": F,
+                             "strike": q.K, "iv": round(q.iv * 100, 2), "delta_call": round(q.dc, 3), "oi_call": int(q.oi_c), "oi_put": int(q.oi_p),
+                             "call": q.c, "put": q.p} for q in P.itertuples()]
+    dump("options.json", rows_op)
+    print("options", len(rows_op), [(r_["trade_date"], r_["expiry"], r_["atm_iv"], r_["rr25"], r_["move"], r_["rv20"]) for r_ in rows_op if r_["kind"] == "summary"][-4:])
