@@ -62,23 +62,25 @@
   "terminal": "CATTALINI",
   "product": "OLEO DE SOJA",
   "tons": 15000.0,
-  "last_seen": "2026-11-12 01:13",
+  "last_seen": "2026-11-12 16:04",
   "eta": "17/11/2026 08:00"
  },
  "81047_HAFNIA AVENTURINE_OLEO DE MILHO": {
   "first_seen": "2026-10-27 14:47",
-  "section": "ESPERADOS",
+  "section": "ATRACADOS",
   "prog": "81047",
   "vessel": "HAFNIA AVENTURINE",
   "imo": "9711547",
-  "berth": "143",
+  "berth": "144",
   "direction": "Exp",
   "agency": "ORION",
   "terminal": "CATTALINI",
   "product": "OLEO DE MILHO",
-  "tons": 13182.0,
-  "last_seen": "2026-11-11 09:50",
-  "eta": "11/11/2026 23:30"
+  "tons": 13230.0,
+  "last_seen": "2026-11-12 16:04",
+  "eta": "11/11/2026 23:30",
+  "arrival": "11/11/2026 18:00",
+  "berthed": "11/11/2026 22:50"
  },
  "80822_INSPIRE_OLEO DE SOJA": {
   "first_seen": "2026-10-27 14:47",
@@ -127,7 +129,7 @@
   "product": "OLEO DE SOJA",
   "eta": "07/11/2026 22:00",
   "tons": 11000.0,
-  "last_seen": "2026-11-12 01:13",
+  "last_seen": "2026-11-12 16:04",
   "berthed": "08/11/2026 16:10",
   "arrival": "08/11/2026 12:30",
   "sailed": "10/11/2026 08:15"

@@ -1,6 +1,23 @@
 {
- "fetched_utc": "2026-11-12 01:13",
+ "fetched_utc": "2026-11-12 16:04",
  "rows": [
+  {
+   "section": "ATRACADOS",
+   "prog": "81047",
+   "vessel": "HAFNIA AVENTURINE",
+   "imo": "9711547",
+   "berth": "144",
+   "direction": "Exp",
+   "agency": "ORION",
+   "terminal": "CATTALINI",
+   "product": "OLEO DE MILHO",
+   "arrival": "11/11/2026 18:00",
+   "berthed": "11/11/2026 22:50",
+   "etb": null,
+   "eta": null,
+   "sailed": null,
+   "tons": 13230.0
+  },
   {
    "section": "ESPERADOS",
    "prog": "81044",

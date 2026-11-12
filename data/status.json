@@ -1,9 +1,10 @@
 {
- "run_utc": "2026-11-12 14:40",
+ "run_utc": "2026-11-12 16:01",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
-  "RS=F": "no data"
+  "RS=F": "no data",
+  "santos_lineup": "500 Server Error: Internal Server Error for url: https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/navios-esperados-carga/"
  },
  "nabsa_rows": {
   "sailed": 487,
