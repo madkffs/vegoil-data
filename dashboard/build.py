@@ -832,3 +832,37 @@ for k, (lab, _, _) in OILG.items():
                         "nabsa_t": round(nab_t[(k, m)]) if (k, m) in nab_t else None, "nabsa_basis": nab_basis.get((k, m), "")})
 dump("ar_oils_public.json", rows_ao)
 print("ar_oils_public", len(rows_ao))
+
+# ---------- price strip: outright prices with trend and range context ----------
+PX = [("zl1", "Soyoil", "Jan", "CBOT", "c/lb", "ZLF27_CBT.csv", 2), ("zl2", "Soyoil", "Mar", "CBOT", "c/lb", "ZLH27_CBT.csv", 2),
+      ("fcpo", "Palm", "3rd month", "Bursa", "MYR/t", "FCPO.csv", 0), ("dy", "Dalian soyoil", "most active", "DCE", "CNY/t", "DCE_Y0.csv", 0),
+      ("dp", "Dalian palm olein", "most active", "DCE", "CNY/t", "DCE_P0.csv", 0), ("zm", "Soymeal", "Jan", "CBOT", "$/st", "ZMF27_CBT.csv", 1),
+      ("zs", "Soybeans", "Jan", "CBOT", "c/bu", "ZSF27_CBT.csv", 2), ("bz", "Brent", "front", "ICE", "$/bbl", "BZ_F.csv", 2),
+      ("ho", "Heating oil", "front", "NYMEX", "$/gal", "HO_F.csv", 4), ("go", "Gasoil", "front", "ICE", "$/t", "ICE_GO.csv", 2),
+      ("rs", "Rapeseed", "front", "Euronext", "EUR/t", "MATIF_RS.csv", 2)]
+rows_px = []
+for i, (pid, name, contract, exch, unit, fn, dp) in enumerate(PX):
+    p = os.path.join(D, "daily", fn)
+    if not os.path.exists(p): continue
+    d = pd.read_csv(p); d["date"] = pd.to_datetime(d["time_utc"]).dt.normalize()
+    d = d[d["date"].dt.dayofweek < 5]
+    flat = (d["high"] == d["low"]) & (d["volume"].fillna(0) == 0)          # placeholder rows with no trading
+    if (d["volume"].fillna(0) > 0).mean() > 0.5: d = d[~flat]
+    c = d.groupby("date")["close"].last().dropna()
+    if len(c) < 30: continue
+    r = np.log(c).diff()
+    delta = c.diff(); up = delta.clip(lower=0).ewm(alpha=1 / 14, adjust=False).mean(); dn = (-delta.clip(upper=0)).ewm(alpha=1 / 14, adjust=False).mean()
+    rsi = float(100 - 100 / (1 + up.iloc[-1] / dn.iloc[-1])) if dn.iloc[-1] > 0 else 100.0
+    last, prev = float(c.iloc[-1]), float(c.iloc[-2])
+    hi20, lo20 = float(c.iloc[-20:].max()), float(c.iloc[-20:].min())
+    ma = {n: float(c.iloc[-n:].mean()) for n in (9, 20, 50, 100) if len(c) >= n}
+    rows_px.append({"id": pid, "order": i, "market": name, "contract": contract, "exchange": exch, "unit": unit, "dp": dp, "date": f"{c.index[-1]:%Y-%m-%d}",
+                    "last": round(last, dp + 1), "chg": round(last - prev, dp + 1), "chg_pct": round((last / prev - 1) * 100, 2),
+                    "chg_5d_pct": round((last / float(c.iloc[-6]) - 1) * 100, 2) if len(c) > 6 else None,
+                    **{f"ma{n}": round(v, dp + 1) for n, v in ma.items()},
+                    "trend": "".join("+" if last > ma[n] else "-" for n in (9, 20, 50, 100) if n in ma),
+                    "rsi": round(rsi, 0), "hi20": round(hi20, dp + 1), "lo20": round(lo20, dp + 1),
+                    "pos20": round((last - lo20) / (hi20 - lo20) * 100, 0) if hi20 > lo20 else 50,
+                    "vol20": round(float(r.iloc[-20:].std() * np.sqrt(252) * 100), 1)})
+dump("prices.json", rows_px)
+print("prices", [(r_["id"], r_["date"], r_["last"], r_["trend"]) for r_ in rows_px])
