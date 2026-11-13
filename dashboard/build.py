@@ -12,6 +12,11 @@ os.makedirs(OUT, exist_ok=True)
 def load(n):
     p = os.path.join(D, "daily", n)
     d = pd.read_csv(p); d["date"] = pd.to_datetime(d["time_utc"]).dt.normalize()
+    if {"high", "low"} <= set(d.columns):
+        # drop bad prints: a close outside its own day's high-low range (e.g. USD/IDR 17,489 on 12 Nov 2026 with a low of 18,140)
+        hi, lo = pd.to_numeric(d["high"], errors="coerce"), pd.to_numeric(d["low"], errors="coerce")
+        bad = (hi > 0) & (lo > 0) & ((d["close"] > hi * 1.002) | (d["close"] < lo * 0.998))
+        d = d[~bad]
     return d.groupby("date")["close"].last().dropna()
 
 def _clean(o):
@@ -599,7 +604,7 @@ for i, r in enumerate(us_rows): r["id"] = f"us{i:04d}"
 dump("uco_us.json", us_rows)
 print("uco_us", len(us_rows), max((r["month"] for r in us_rows), default=None))
 
-# ---------- correlations: seven cross-market pairs, last 6 months of daily closes ----------
+# ---------- correlations: eight cross-market pairs, last 6 months of daily closes ----------
 def daily_close(name):
     p = os.path.join(D, "daily", name + ".csv")
     if not os.path.exists(p): return None
@@ -660,7 +665,7 @@ SER = {
     "rapeseed": ("MATIF rapeseed (nearest, expiry weeks left out)", "EUR/t", RS_SER),
     "heatoil": ("NYMEX heating oil (2nd month)", "USD/gal", first("HO_2", "HO_F")),
 }
-PAIRS = [("gasoil", "palm"), ("gasoil", "brent"), ("meal", "soyoil"), ("rapeseed", "gasoil"), ("soyoil", "heatoil"), ("soyoil", "brent"), ("heatoil", "brent")]
+PAIRS = [("soyoil", "palm"), ("soyoil", "brent"), ("soyoil", "heatoil"), ("meal", "soyoil"), ("gasoil", "palm"), ("gasoil", "brent"), ("rapeseed", "gasoil"), ("heatoil", "brent")]
 corr_rows, corr_stats = [], []
 end = max((v[2].index.max() for v in SER.values() if v[2] is not None and len(v[2])), default=None)
 for a, b in PAIRS:
@@ -1035,3 +1040,73 @@ if os.path.exists(p_ct):
 for i, r in enumerate(sun_rows): r["id"] = f"s{i:05d}"
 dump("sun_oil.json", sun_rows)
 print("sun_oil", len(sun_rows), max((r["month"] for r in sun_rows if r["kind"] == "eu"), default=None), sorted({(r["reporter"], max(x["month"] for x in sun_rows if x["reporter"] == r["reporter"])) for r in sun_rows}))
+
+import re, datetime as dt
+# ---------- official US data: USDA NASS Fats & Oils (crush, soyoil stocks) and EIA biofuel feedstock use; USDA PSD balances ----------
+off_rows = []
+nass_dir = os.path.join(D, "official", "nass")
+if os.path.isdir(nass_dir):
+    nass = {}
+    for fn in sorted(os.listdir(nass_dir)):
+        txt = open(os.path.join(nass_dir, fn), errors="ignore").read()
+        i0 = txt.find("Soybean Crushing, Production, Consumption and Stocks - United States")
+        if i0 < 0: continue
+        blk = txt[i0:i0 + 6000]
+        hdr = re.search(r"Item\s*:\s*([A-Za-z]+ \d{4})\s*:\s*([A-Za-z]+ \d{4})\s*:\s*([A-Za-z]+ \d{4})", blk)
+        if not hdr: continue
+        months = [pd.Timestamp(dt.datetime.strptime(m_, "%B %Y")).strftime("%Y-%m") for m_ in hdr.groups()]
+        def grab(label):
+            m_ = re.search(re.escape(label) + r"[ .]*[a-z ,0-9]*:\s*([\d,()D]+)\s+([\d,()D]+)\s+([\d,()D]+)", blk)
+            if not m_: return [None] * 3
+            return [None if "D" in v_ else float(v_.replace(",", "")) for v_ in m_.groups()]
+        fields = {"crush_t": grab("Soybeans crushed"), "oil_prod_klb": grab("Crude oil produced"),
+                  "crude_stocks_klb": grab("Crude oil on hand end of month"), "refined_stocks_klb": grab("Once refined oil on hand end of month"),
+                  "inedible_use_klb": grab("Removed for inedible use in processing")}
+        for j, m_ in enumerate(months):
+            rec = nass.setdefault(m_, {})
+            for k_, vals in fields.items():
+                if vals[j] is not None: rec[k_] = vals[j]
+    for m_, rec in sorted(nass.items()):
+        if "crude_stocks_klb" in rec and "refined_stocks_klb" in rec:
+            rec["total_stocks_mlb"] = round((rec["crude_stocks_klb"] + rec["refined_stocks_klb"]) / 1000, 1)
+        off_rows.append({"kind": "nass", "month": m_, **{k_: (round(v_ / 1000, 1) if k_.endswith("_klb") else v_) for k_, v_ in rec.items()}})
+    for r_ in off_rows:
+        for k_ in list(r_):
+            if k_.endswith("_klb"): r_[k_[:-4] + "_mlb"] = r_.pop(k_)
+        r_["crush_mbu"] = round(r_["crush_t"] * 2000 / 60 / 1e6, 1) if r_.get("crush_t") else None
+eia_p = os.path.join(D, "official", "PET_PNP_FEEDBIOFUEL_DCU_NUS_M.xls")
+if os.path.exists(eia_p):
+    try:
+        x = pd.read_excel(eia_p, sheet_name=None, header=2)
+        frames = []
+        for sh, dfx in x.items():
+            if not sh.startswith("Data") or "Date" not in dfx.columns: continue
+            dfx = dfx.set_index("Date"); frames.append(dfx)
+        allf = pd.concat(frames, axis=1)
+        allf.index = pd.to_datetime(allf.index)
+        def col(sub):
+            c_ = [c for c in allf.columns if sub.lower() in c.lower()]
+            return allf[c_[0]] if c_ else None
+        FEED = {"Soybean oil": "Total Soybean Oil", "Canola oil": "Total Canola Oil", "Corn oil": "Total Corn Oil", "Tallow": "Tallow Inputs",
+                "Yellow grease / UCO": "Yellow Grease Inputs", "White grease": "White Grease Inputs", "Poultry fat": "Poultry Inputs",
+                "Soybean oil, renewable diesel plants": "Soybean Oill for Renewable Diesel", "Soybean oil, biodiesel plants": "Soybean Oill for Biodiesel Plants"}
+        for name_, sub in FEED.items():
+            s_ = col(sub)
+            if s_ is None: continue
+            for d_, v_ in s_.dropna().items():
+                if d_ >= pd.Timestamp("2023-01-01"):
+                    off_rows.append({"kind": "eia", "month": f"{d_:%Y-%m}", "feedstock": name_, "mlb": float(v_)})
+    except Exception as e:
+        print("eia feedstock parse failed", e)
+psd_p = os.path.join(D, "official", "usda_psd_oils.csv")
+if os.path.exists(psd_p):
+    psd = pd.read_csv(psd_p)
+    psd = psd[psd["Attribute_Description"].isin(["Production", "Exports", "Imports", "Ending Stocks", "Domestic Consumption", "Crush"])]
+    yrs = sorted(psd["Market_Year"].unique())[-3:]
+    psd = psd[psd["Market_Year"].isin(yrs)]
+    for r_ in psd.itertuples():
+        off_rows.append({"kind": "psd", "commodity": r_.Commodity_Description, "country": r_.Country_Name, "market_year": int(r_.Market_Year),
+                         "attribute": r_.Attribute_Description, "kt": float(r_.Value), "as_of": f"{int(r_.Calendar_Year)}-{int(r_.Month):02d}"})
+for i, r_ in enumerate(off_rows): r_["id"] = f"o{i:05d}"
+dump("official.json", off_rows)
+print("official", len(off_rows), [r_ for r_ in off_rows if r_["kind"] == "nass"][-1:] if off_rows else None)
