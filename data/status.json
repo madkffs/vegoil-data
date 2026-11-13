@@ -1,10 +1,9 @@
 {
- "run_utc": "2026-11-13 08:17",
- "mode": "daily",
+ "run_utc": "2026-11-13 09:07",
+ "mode": "update",
  "errors": {
   "MWE=F": "no data",
-  "RS=F": "no data",
-  "ec_taxud_vegoil": "taxud: no rows {\"2024\": [500, \"{\\n  \\\"error\\\" : \\\"Internal Server Error\\\",\\n  \\\"status\\\" : \\\"500\\\",\\n  \\\"message\\\" : \\\"An internal error occurred on the server.\\\",\\n  \\\"technicalErrorMessage\\\" : \\\"The"
+  "RS=F": "no data"
  },
  "nabsa_rows": {
   "sailed": 628,
