@@ -599,7 +599,7 @@ for i, r in enumerate(us_rows): r["id"] = f"us{i:04d}"
 dump("uco_us.json", us_rows)
 print("uco_us", len(us_rows), max((r["month"] for r in us_rows), default=None))
 
-# ---------- correlations: six cross-market pairs, last 6 months of daily closes ----------
+# ---------- correlations: seven cross-market pairs, last 6 months of daily closes ----------
 def daily_close(name):
     p = os.path.join(D, "daily", name + ".csv")
     if not os.path.exists(p): return None
@@ -660,7 +660,7 @@ SER = {
     "rapeseed": ("MATIF rapeseed (nearest, expiry weeks left out)", "EUR/t", RS_SER),
     "heatoil": ("NYMEX heating oil (2nd month)", "USD/gal", first("HO_2", "HO_F")),
 }
-PAIRS = [("gasoil", "palm"), ("gasoil", "brent"), ("meal", "soyoil"), ("rapeseed", "gasoil"), ("soyoil", "heatoil"), ("heatoil", "brent")]
+PAIRS = [("gasoil", "palm"), ("gasoil", "brent"), ("meal", "soyoil"), ("rapeseed", "gasoil"), ("soyoil", "heatoil"), ("soyoil", "brent"), ("heatoil", "brent")]
 corr_rows, corr_stats = [], []
 end = max((v[2].index.max() for v in SER.values() if v[2] is not None and len(v[2])), default=None)
 for a, b in PAIRS:
