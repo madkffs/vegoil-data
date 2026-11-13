@@ -676,6 +676,104 @@ def probe_pfl_bursa():
                 out[lib + " " + u] = {"err": str(e)[:150]}
     json.dump(out, open(os.path.join(d, "probe_pfl_bursa.json"), "w"), indent=1)
 
+MONTHS_EN = {m: i for i, m in enumerate(["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], 1)}
+
+def pfl_rin_recap():
+    """PFL Petroleum's public weekly RIN recap (Mondays): daily D4 and D6 RIN closes, LCFS credits and Argo ethanol for the prior week.
+    Appends to data/rins/pfl_daily.csv (date, d4, d6, lcfs, ethanol, source)."""
+    import pdfplumber, io, csv
+    d = os.path.join(DATA, "rins"); os.makedirs(d, exist_ok=True)
+    path = os.path.join(d, "pfl_daily.csv")
+    have = {}
+    if os.path.exists(path):
+        for r in csv.DictReader(open(path)): have[r["date"]] = r
+    today = dt.date.today(); got = 0
+    for k in range(0, 22):
+        day = today - dt.timedelta(days=k)
+        u = f"https://pflpetroleum.com/reports/wp-content/uploads/{day:%Y}/{day:%m}/PFL_RIN_RECAP_V6_{day.year}_{day.month}_{day.day}.pdf"
+        try:
+            r = requests.get(u, headers=UA, timeout=30)
+        except Exception:
+            continue
+        if r.status_code != 200 or r.content[:4] != b"%PDF":
+            continue
+        with pdfplumber.open(io.BytesIO(r.content)) as pdf:
+            txt = " ".join((p.extract_text() or "") for p in pdf.pages[:2])
+        txt = re.sub(r"\s+", " ", txt)
+        m = re.search(r"(January|February|March|April|May|June|July|August|September|October|November|December) (\d{1,2}) to (?:(January|February|March|April|May|June|July|August|September|October|November|December) )?(\d{1,2}), (\d{4})", txt)
+        if not m: continue
+        y = int(m.group(5)); start = dt.date(y, MONTHS_EN[m.group(1)], int(m.group(2)))
+        if start > day: start = start.replace(year=y - 1)
+        days = {"Monday": 0, "Tuesday": 1, "Wednesday": 2, "Thursday": 3, "Friday": 4}
+        # split the narrative into sentences/paragraph chunks per weekday
+        parts = re.split(r"(?=\b(?:on|On) (?:a |an )?[^.]{0,40}?(?:Monday|Tuesday|Wednesday|Thursday|Friday) of last week)", txt)
+        cur = None
+        vals = {}
+        for p in re.split(r"(?<=[.])\s+", txt):
+            wd = re.search(r"\b(Monday|Tuesday|Wednesday|Thursday|Friday) of last week", p)
+            if wd: cur = wd.group(1)
+            if cur is None: continue
+            rec = vals.setdefault(cur, {})
+            for key, pat in (("d4", r"D4 RINs? closed(?: out the day(?: \(and the week\))?)? at \$([\d.]+)"), ("d6", r"D6 RINs? closed(?: out the day(?: \(and the week\))?)? at \$([\d.]+)"),
+                             ("lcfs", r"LCFS credits in California closed(?: out the day(?: \(and the week\))?)?,? at \$([\d.]+)"), ("ethanol", r"Ethanol at Argo closed(?: out the day(?: \(and the week\))?)?(?: on \w+ of last week)? at \$([\d.]+)")):
+                mm = re.search(pat, p, re.I)
+                if mm and key not in rec: rec[key] = float(mm.group(1))
+        for wd, rec in vals.items():
+            date = start + dt.timedelta(days=days[wd])
+            if rec.get("d4") or rec.get("d6"):
+                have[date.isoformat()] = {"date": date.isoformat(), "d4": rec.get("d4", ""), "d6": rec.get("d6", ""), "lcfs": rec.get("lcfs", ""), "ethanol": rec.get("ethanol", ""), "source": u}
+                got += 1
+    if have:
+        with open(path, "w", newline="") as fh:
+            w = csv.DictWriter(fh, fieldnames=["date", "d4", "d6", "lcfs", "ethanol", "source"]); w.writeheader()
+            for k_ in sorted(have): w.writerow(have[k_])
+    if not got:
+        raise ValueError("PFL: no recap parsed")
+
+def bernama_cpo_curve():
+    """Bursa Malaysia CPO futures settlements by contract month, parsed from Bernama's daily 'CPO Futures End ...' close articles.
+    Appends to data/palm/fcpo_curve.csv (date, contract YYYY-MM, settle, change, url)."""
+    import csv
+    d = os.path.join(DATA, "palm"); os.makedirs(d, exist_ok=True)
+    path = os.path.join(d, "fcpo_curve.csv")
+    rows = {}
+    if os.path.exists(path):
+        for r in csv.DictReader(open(path)): rows[(r["date"], r["contract"])] = r
+    seen_urls = {r["url"] for r in rows.values()}
+    r = requests.get("https://www.bernama.com/en/search.php?terms=CPO%20futures", headers=UA, timeout=40)
+    links = re.findall(r'href="(https://www\.bernama\.com/en/market/news\.php\?id=\d+)"[^>]*>([^<]{0,120})', r.text)
+    links = [(u, t) for u, t in links if re.search(r"(?i)^CPO Futures (End|Close|Finish|Settle)", t.strip())]
+    for u, t in links[:15]:
+        if u in seen_urls: continue
+        try:
+            a = requests.get(u, headers=UA, timeout=40).text
+        except Exception:
+            continue
+        txt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", a))
+        dm = re.search(r"(\d{2})/(\d{2})/(\d{4}) \d{2}:\d{2}", txt)
+        if not dm: continue
+        date = f"{dm.group(3)}-{dm.group(2)}-{dm.group(1)}"
+        i0 = txt.find("At the close"); seg = txt[i0:i0 + 1500] if i0 >= 0 else txt
+        for clause in re.split(r",|;| and | while ", seg):
+            mm = re.search(r"(January|February|March|April|May|June|July|August|September|October|November|December) (20\d{2})", clause)
+            prices = re.findall(r"RM([\d,]+)", clause)
+            if not mm or not prices: continue
+            settle = float(prices[-1].replace(",", ""))
+            if settle < 1000: continue
+            chg = None
+            cm = re.search(r"(up|rose|increased|added|gained|climbed|higher|went up|down|fell|decreased|declined|lost|dropped|eased|slipped|lower|shed)\D{0,12}RM([\d,]+)", clause)
+            if cm and len(prices) >= 2:
+                chg = float(cm.group(2).replace(",", "")) * (-1 if cm.group(1) in ("down", "fell", "decreased", "declined", "lost", "dropped", "eased", "slipped", "lower", "shed") else 1)
+            if re.search(r"unchanged", clause): chg = 0.0
+            con = f"{mm.group(2)}-{MONTHS_EN[mm.group(1)]:02d}"
+            rows[(date, con)] = {"date": date, "contract": con, "settle": settle, "change": "" if chg is None else chg, "url": u}
+        time.sleep(1)
+    with open(path, "w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=["date", "contract", "settle", "change", "url"]); w.writeheader()
+        for k_ in sorted(rows): w.writerow(rows[k_])
+    if not rows:
+        raise ValueError("bernama: no curve parsed")
+
 NABSA = "https://www.nabsa.com.ar/assets/"
 
 def _num_es(x):
@@ -1612,6 +1710,13 @@ def probe_epa_qlik():
     with open(os.path.join(d, "qlik.json"), "w") as fh: json.dump(out, fh, indent=1, default=str)
 
 def main(mode):
+    if mode == "pfl_palm":
+        for name, fn in (("pfl_rin_recap", pfl_rin_recap), ("bernama_cpo_curve", bernama_cpo_curve)):
+            try:
+                fn(); print(name, "ok")
+            except Exception as e:
+                print(name, "failed", e)
+        return
     if mode == "probe_pfl":
         probe_pfl_bursa(); return
     if mode == "official":
@@ -1762,7 +1867,7 @@ def main(mode):
             investing_history()
         except Exception as e:
             status["errors"]["investing_history"] = str(e)[:200]
-        for name, fn in (("paranagua_lineup", paranagua_lineup), ("santos_lineup", santos_lineup)):
+        for name, fn in (("paranagua_lineup", paranagua_lineup), ("santos_lineup", santos_lineup), ("bernama_cpo_curve", bernama_cpo_curve)):
             try:
                 fn()
             except Exception as e:
@@ -1773,7 +1878,7 @@ def main(mode):
     if mode in ("backfill", "probe", "daily") or (dt.datetime.utcnow().hour >= 6 and last_daily != today_s):
         with open(marker, "w") as fh:
             fh.write(today_s)
-        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("comexstat_ports", comexstat_ports), ("emts_generation", emts_generation), ("epa_generation_detail", epa_generation_detail), ("epa_rin_prices", epa_rin_prices), ("climate", climate_indices), ("cme_options", cme_soyoil_options), ("sunoil_eurostat", sunoil_eurostat), ("sunoil_comtrade", sunoil_comtrade), ("usda_psd_oils", usda_psd_oils), ("nass_fats_oils", nass_fats_oils), ("eia_biofuel_feedstock", eia_biofuel_feedstock), ("ec_taxud_vegoil", ec_taxud_vegoil), ("ec_oilseed_prices", ec_oilseed_prices), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
+        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("comexstat_ports", comexstat_ports), ("emts_generation", emts_generation), ("epa_generation_detail", epa_generation_detail), ("epa_rin_prices", epa_rin_prices), ("climate", climate_indices), ("cme_options", cme_soyoil_options), ("sunoil_eurostat", sunoil_eurostat), ("sunoil_comtrade", sunoil_comtrade), ("usda_psd_oils", usda_psd_oils), ("nass_fats_oils", nass_fats_oils), ("eia_biofuel_feedstock", eia_biofuel_feedstock), ("ec_taxud_vegoil", ec_taxud_vegoil), ("ec_oilseed_prices", ec_oilseed_prices), ("pfl_rin_recap", pfl_rin_recap), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
             try:
                 fn()
             except Exception as e:
