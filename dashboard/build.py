@@ -1130,10 +1130,12 @@ if os.path.exists(pc_p):
     pc = pc[pc["settle"] > 1000]
     MN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     out_pc = []
-    for (dte, con), r_ in pc.groupby(["date", "contract"]).last().iterrows():
-        y_, m_ = int(con[:4]), int(con[5:7])
-        out_pc.append({"kind": "curve", "date": dte, "contract": con, "label": f"{MN[m_ - 1]} {str(y_)[2:]}", "settle": float(r_["settle"]),
-                       "change": None if pd.isna(r_["change"]) or r_["change"] == "" else float(r_["change"])})
+    pc = pc.groupby(["date", "contract"], as_index=False).last().sort_values(["contract", "date"])
+    pc["chg"] = pc.groupby("contract")["settle"].diff()
+    for r_ in pc.itertuples():
+        y_, m_ = int(r_.contract[:4]), int(r_.contract[5:7])
+        out_pc.append({"kind": "curve", "date": r_.date, "contract": r_.contract, "label": f"{MN[m_ - 1]} {str(y_)[2:]}", "settle": float(r_.settle),
+                       "change": None if pd.isna(r_.chg) else float(r_.chg)})
     # benchmark = third listed month; spread benchmark minus the month two after it (e.g. Jan-Mar)
     for dte, g in pc.groupby("date"):
         g = g.sort_values("contract")
