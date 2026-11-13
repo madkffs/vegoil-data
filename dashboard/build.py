@@ -932,10 +932,22 @@ if os.path.exists(rp_p):
     hz["d4"] = d4.reindex(hz.index.union(d4.index)).ffill().reindex(hz.index)
     hz["d4_week"] = pd.Series(d4.index, index=d4.index).reindex(hz.index.union(d4.index)).ffill().reindex(hz.index)
     hz = hz.dropna(subset=["d4"])
+    hz["d4_src"] = "EPA weekly average"
+    pfl_p = os.path.join(D, "rins", "pfl_daily.csv")
+    if os.path.exists(pfl_p):
+        pfl = pd.read_csv(pfl_p, parse_dates=["date"]).set_index("date").sort_index()
+        pd4 = pd.to_numeric(pfl["d4"], errors="coerce").dropna()
+        if len(pd4):
+            mk = pd4.reindex(hz.index.union(pd4.index)).ffill().reindex(hz.index)
+            mk_date = pd.Series(pd4.index, index=pd4.index).reindex(hz.index.union(pd4.index)).ffill().reindex(hz.index)
+            use = mk.notna() & (hz.index >= pd4.index.min())
+            hz.loc[use, "d4"] = mk[use]; hz.loc[use, "d4_week"] = mk_date[use]; hz.loc[use, "d4_src"] = "PFL market close"
+            for dd, rr in pfl.iterrows():
+                rows_bf.append({"id": f"m-{dd:%Y-%m-%d}", "kind": "mkt", "date": f"{dd:%Y-%m-%d}", **{k: (None if pd.isna(pd.to_numeric(rr.get(k), errors="coerce")) else float(rr.get(k))) for k in ("d4", "d6", "lcfs", "ethanol")}})
     hz["margin"] = hz["ho"] + 1.5 * hz["d4"] - 7.6 * hz["zl"] / 100 - 0.70
     hz["boho"] = hz["ho"] - hz["zl"] / 100 * 7.37
     rows_bf += [{"id": f"d-{t:%Y-%m-%d}", "kind": "day", "date": f"{t:%Y-%m-%d}", "ho": round(float(r.ho), 4), "zl": round(float(r.zl), 2),
-                 "d4_used": round(float(r.d4), 3), "d4_week": f"{r.d4_week:%Y-%m-%d}", "margin": round(float(r.margin), 3), "boho": round(float(r.boho), 3)}
+                 "d4_used": round(float(r.d4), 3), "d4_week": f"{r.d4_week:%Y-%m-%d}", "d4_src": r.d4_src, "margin": round(float(r.margin), 3), "boho": round(float(r.boho), 3)}
                 for t, r in hz.iterrows()]
     dump("biofuel.json", rows_bf)
     print("biofuel", len(rows_bf), wk.index.max(), hz.index.max(), round(float(hz["margin"].iloc[-1]), 3))
@@ -1110,3 +1122,25 @@ if os.path.exists(psd_p):
 for i, r_ in enumerate(off_rows): r_["id"] = f"o{i:05d}"
 dump("official.json", off_rows)
 print("official", len(off_rows), [r_ for r_ in off_rows if r_["kind"] == "nass"][-1:] if off_rows else None)
+
+# ---------- Bursa CPO futures curve by contract month (Bernama daily close articles) ----------
+pc_p = os.path.join(D, "palm", "fcpo_curve.csv")
+if os.path.exists(pc_p):
+    pc = pd.read_csv(pc_p)
+    pc = pc[pc["settle"] > 1000]
+    MN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    out_pc = []
+    for (dte, con), r_ in pc.groupby(["date", "contract"]).last().iterrows():
+        y_, m_ = int(con[:4]), int(con[5:7])
+        out_pc.append({"kind": "curve", "date": dte, "contract": con, "label": f"{MN[m_ - 1]} {str(y_)[2:]}", "settle": float(r_["settle"]),
+                       "change": None if pd.isna(r_["change"]) or r_["change"] == "" else float(r_["change"])})
+    # benchmark = third listed month; spread benchmark minus the month two after it (e.g. Jan-Mar)
+    for dte, g in pc.groupby("date"):
+        g = g.sort_values("contract")
+        if len(g) >= 5:
+            b, f2 = g.iloc[2], g.iloc[4]
+            out_pc.append({"kind": "spread", "date": dte, "name": f"{MN[int(b.contract[5:7]) - 1]}/{MN[int(f2.contract[5:7]) - 1]}", "value": float(b.settle - f2.settle),
+                           "carry_per_month": float((f2.settle - b.settle) / 2)})
+    for i, r_ in enumerate(out_pc): r_["id"] = f"p{i:05d}"
+    dump("palm_curve.json", out_pc)
+    print("palm_curve", len(out_pc), [r_ for r_ in out_pc if r_["kind"] == "spread"][-2:])
