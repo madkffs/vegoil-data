@@ -1,0 +1,185 @@
+{
+ "https://pflpetroleum.com/reports/wp-content/uploads/2026/11/PFL_RIN_RECAP_V6_2026_11_13.pdf": [
+  404,
+  50085,
+  "text/html; charset=UTF-8"
+ ],
+ "https://pflpetroleum.com/reports/wp-content/uploads/2026/11/PFL_RIN_RECAP_V6_2026_11_12.pdf": [
+  404,
+  50114,
+  "text/html; charset=UTF-8"
+ ],
+ "https://pflpetroleum.com/reports/wp-content/uploads/2026/11/PFL_RIN_RECAP_V6_2026_11_11.pdf": [
+  404,
+  50104,
+  "text/html; charset=UTF-8"
+ ],
+ "https://pflpetroleum.com/reports/wp-content/uploads/2026/11/PFL_RIN_RECAP_V6_2026_11_10.pdf": [
+  404,
+  50095,
+  "text/html; charset=UTF-8"
+ ],
+ "https://pflpetroleum.com/reports/wp-content/uploads/2026/11/PFL_RIN_RECAP_V6_2026_11_9.pdf": [
+  200,
+  784091,
+  "application/pdf"
+ ],
+ "requests https://www.bursamalaysia.com/market_information/market_data/derivatives": {
+  "status": 403,
+  "len": 5769,
+  "links": [],
+  "snip": " Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'g',cH: 'LNLrp7AZiA0crRRaYzoS4FtQtc9SzmH7Ks9iA"
+ },
+ "curl_cffi https://www.bursamalaysia.com/market_information/market_data/derivatives": {
+  "status": 403,
+  "len": 6111,
+  "links": [],
+  "snip": " Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'g',cH: 'IFBhdaNl3MmyK51gaQ8ab2xrtrg8zbfwWw7Vy"
+ },
+ "requests https://www.bursamalaysia.com/trade/our_products_services/derivatives/commodity_derivatives/crude_palm_oil_futures": {
+  "status": 403,
+  "len": 5973,
+  "links": [],
+  "snip": " Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'g',cH: 'yCONcbECYGQGL7nb8WZ8zWMNZhbugzhgiQOrQ"
+ },
+ "curl_cffi https://www.bursamalaysia.com/trade/our_products_services/derivatives/commodity_derivatives/crude_palm_oil_futures": {
+  "status": 403,
+  "len": 6293,
+  "links": [],
+  "snip": " Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'g',cH: 'WhHLrimtywNOx3IFO0qO_iFN9zWmBS13p02jx"
+ },
+ "requests https://www.bursamalaysia.com/market_information/equities_prices?": {
+  "status": 403,
+  "len": 5724,
+  "links": [],
+  "snip": " Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'g',cH: '.iS3k.qTh8t.1EDZlAc5r5Cht_Yp6rdnUn.vN"
+ },
+ "curl_cffi https://www.bursamalaysia.com/market_information/equities_prices?": {
+  "status": 403,
+  "len": 6065,
+  "links": [],
+  "snip": " Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'g',cH: 'By5DiBrp5kUh.kUWmYrSeshhSOJNvEDkFYB2W"
+ },
+ "requests https://www.bernama.com/en/business/": {
+  "status": 200,
+  "len": 64746,
+  "links": [],
+  "snip": " BERNAMA - Malaysian National News Agency --> @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,600;0,700;0,900;1,400;1,700;1,900&display=swap'); .embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; } --> --> function jump(h){ var top = document.getElementById(h).offsetTop; window.scrollTo(0, top); } $(document).ready(function(){ $(\"#myModal\").modal('show'); /*$(\"."
+ },
+ "curl_cffi https://www.bernama.com/en/business/": {
+  "status": 200,
+  "len": 64746,
+  "links": [],
+  "snip": " BERNAMA - Malaysian National News Agency --> @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,600;0,700;0,900;1,400;1,700;1,900&display=swap'); .embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; } --> --> function jump(h){ var top = document.getElementById(h).offsetTop; window.scrollTo(0, top); } $(document).ready(function(){ $(\"#myModal\").modal('show'); /*$(\"."
+ },
+ "requests https://www.bernama.com/en/market/": {
+  "status": 200,
+  "len": 63996,
+  "links": [],
+  "snip": " BERNAMA - Malaysian National News Agency --> @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,600;0,700;0,900;1,400;1,700;1,900&display=swap'); .embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; } --> --> function jump(h){ var top = document.getElementById(h).offsetTop; window.scrollTo(0, top); } $(document).ready(function(){ $(\"#myModal\").modal('show'); /*$(\"."
+ },
+ "curl_cffi https://www.bernama.com/en/market/": {
+  "status": 200,
+  "len": 63996,
+  "links": [],
+  "snip": " BERNAMA - Malaysian National News Agency --> @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,600;0,700;0,900;1,400;1,700;1,900&display=swap'); .embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; } --> --> function jump(h){ var top = document.getElementById(h).offsetTop; window.scrollTo(0, top); } $(document).ready(function(){ $(\"#myModal\").modal('show'); /*$(\"."
+ },
+ "requests https://www.bernama.com/en/search.php?terms=CPO%20futures": {
+  "status": 200,
+  "len": 60998,
+  "links": [
+   [
+    "https://www.bernama.com/en/search.php?terms=CPO%20futures",
+    ""
+   ],
+   [
+    "https://www.bernama.com/en/market/news.php?id=2633510",
+    "CPO Futures End Higher On Bargain-hunting, Gains In Related Vegetable Oils"
+   ],
+   [
+    "https://www.bernama.com/en/market/news.php?id=2632996",
+    "CPO Futures End Sharply Higher On Stronger Soybean Oil, Crude Oil Prices"
+   ],
+   [
+    "https://www.bernama.com/en/market/news.php?id=2632532",
+    "CPO Futures End Mixed As Market Consolidates After MPOB Data Release"
+   ],
+   [
+    "https://www.bernama.com/en/market/news.php?id=2631217",
+    "CPO Futures Expected To Trade Cautiously Next Week Ahead Of MPOB Report"
+   ],
+   [
+    "https://www.bernama.com/en/market/news.php?id=2631133",
+    "CPO Futures End Lower, Benchmark Contract Breaks Below RM4,300 A Tonne"
+   ],
+   [
+    "https://www.bernama.com/en/market/news.php?id=2630655",
+    "CPO Futures End Lower On Weaker CBOT Soybean Oil, High Stock Concerns"
+   ],
+   [
+    "https://www.bernama.com/en/market/news.php?id=2630174",
+    "CPO Futures Extend Losses As Inventory Concerns Weigh On Market Sentiment"
+   ],
+   [
+    "https://www.bernama.com/en/market/news.php?id=2629681",
+    "CPO Futures End Lower On Record-High Stock Estimates, Oversupply Concerns"
+   ]
+  ],
+  "snip": " BERNAMA - Malaysian National News Agency --> @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,600;0,700;0,900;1,400;1,700;1,900&display=swap'); .embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; } --> --> function jump(h){ var top = document.getElementById(h).offsetTop; window.scrollTo(0, top); } $(document).ready(function(){ $(\"#myModal\").modal('show'); /*$(\"."
+ },
+ "curl_cffi https://www.bernama.com/en/search.php?terms=CPO%20futures": {
+  "status": 200,
+  "len": 60998,
+  "links": [
+   [
+    "https://www.bernama.com/en/search.php?terms=CPO%20futures",
+    ""
+   ],
+   [
+    "https://www.bernama.com/en/market/news.php?id=2633510",
+    "CPO Futures End Higher On Bargain-hunting, Gains In Related Vegetable Oils"
+   ],
+   [
+    "https://www.bernama.com/en/market/news.php?id=2632996",
+    "CPO Futures End Sharply Higher On Stronger Soybean Oil, Crude Oil Prices"
+   ],
+   [
+    "https://www.bernama.com/en/market/news.php?id=2632532",
+    "CPO Futures End Mixed As Market Consolidates After MPOB Data Release"
+   ],
+   [
+    "https://www.bernama.com/en/market/news.php?id=2631217",
+    "CPO Futures Expected To Trade Cautiously Next Week Ahead Of MPOB Report"
+   ],
+   [
+    "https://www.bernama.com/en/market/news.php?id=2631133",
+    "CPO Futures End Lower, Benchmark Contract Breaks Below RM4,300 A Tonne"
+   ],
+   [
+    "https://www.bernama.com/en/market/news.php?id=2630655",
+    "CPO Futures End Lower On Weaker CBOT Soybean Oil, High Stock Concerns"
+   ],
+   [
+    "https://www.bernama.com/en/market/news.php?id=2630174",
+    "CPO Futures Extend Losses As Inventory Concerns Weigh On Market Sentiment"
+   ],
+   [
+    "https://www.bernama.com/en/market/news.php?id=2629681",
+    "CPO Futures End Lower On Record-High Stock Estimates, Oversupply Concerns"
+   ]
+  ],
+  "snip": " BERNAMA - Malaysian National News Agency --> @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,600;0,700;0,900;1,400;1,700;1,900&display=swap'); .embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; } --> --> function jump(h){ var top = document.getElementById(h).offsetTop; window.scrollTo(0, top); } $(document).ready(function(){ $(\"#myModal\").modal('show'); /*$(\"."
+ },
+ "requests https://www.theedgemalaysia.com/categories/commodities": {
+  "status": 404,
+  "len": 94561,
+  "links": [],
+  "snip": " Sunday 25 Oct 2026 404 ERROR We apologise for the inconvenience, but the page you are looking for cannot be found. It might have been removed, renamed, or temporarily unavailable. Back to Homepage The Edge --> Copyright \u00a9 1999- 2026 The Edge Communications Sdn. Bhd. 199301012242 (266980-X). All rights reserved {\"props\":{\"pageProps\":{}},\"page\":\"/404\",\"query\":{},\"buildId\":\"2KMA8a-W1k--CTT7P1-_r\",\"runtimeConfig\":{\"AD_ENVIRONMENT\":\"production\",\"RE_CAPTCHA_SITE_KEY\":\"6LcHa-ckAAAAAOqvDgrhaT-bVwMo3mmiGsebYLnn\",\"NEXT_PUBLIC_WEB_URL\":\"https://theedgemalaysia.com\",\"THE_EDGE_MALAYSIA_WEB_API_URL\":\"https"
+ },
+ "curl_cffi https://www.theedgemalaysia.com/categories/commodities": {
+  "status": 404,
+  "len": 94922,
+  "links": [],
+  "snip": " Sunday 25 Oct 2026 404 ERROR We apologise for the inconvenience, but the page you are looking for cannot be found. It might have been removed, renamed, or temporarily unavailable. Back to Homepage The Edge --> Copyright \u00a9 1999- 2026 The Edge Communications Sdn. Bhd. 199301012242 (266980-X). All rights reserved {\"props\":{\"pageProps\":{}},\"page\":\"/404\",\"query\":{},\"buildId\":\"2KMA8a-W1k--CTT7P1-_r\",\"runtimeConfig\":{\"AD_ENVIRONMENT\":\"production\",\"RE_CAPTCHA_SITE_KEY\":\"6LcHa-ckAAAAAOqvDgrhaT-bVwMo3mmiGsebYLnn\",\"NEXT_PUBLIC_WEB_URL\":\"https://theedgemalaysia.com\",\"THE_EDGE_MALAYSIA_WEB_API_URL\":\"https"
+ }
+}
