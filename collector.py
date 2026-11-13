@@ -1723,7 +1723,12 @@ def main(mode):
                 fn()
             except Exception as e:
                 status["errors"][name] = str(e)[:200]
-    if mode in ("backfill", "probe") or dt.datetime.utcnow().minute < 15 and dt.datetime.utcnow().hour == 6:
+    marker = os.path.join(DATA, "daily_last_run.txt")
+    today_s = dt.datetime.utcnow().strftime("%Y-%m-%d")
+    last_daily = open(marker).read().strip() if os.path.exists(marker) else ""
+    if mode in ("backfill", "probe", "daily") or (dt.datetime.utcnow().hour >= 6 and last_daily != today_s):
+        with open(marker, "w") as fh:
+            fh.write(today_s)
         for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("comexstat_ports", comexstat_ports), ("emts_generation", emts_generation), ("epa_generation_detail", epa_generation_detail), ("epa_rin_prices", epa_rin_prices), ("climate", climate_indices), ("cme_options", cme_soyoil_options), ("sunoil_eurostat", sunoil_eurostat), ("sunoil_comtrade", sunoil_comtrade), ("usda_psd_oils", usda_psd_oils), ("nass_fats_oils", nass_fats_oils), ("eia_biofuel_feedstock", eia_biofuel_feedstock), ("ec_taxud_vegoil", ec_taxud_vegoil), ("ec_oilseed_prices", ec_oilseed_prices), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
             try:
                 fn()
