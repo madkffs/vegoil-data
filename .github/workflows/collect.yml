@@ -13,9 +13,11 @@ concurrency: collect
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -29,4 +31,5 @@ jobs:
           git config user.email "data-bot@users.noreply.github.com"
           git add data
           git diff --cached --quiet || git commit -m "data $(date -u +%Y-%m-%dT%H:%MZ)"
+          git pull --rebase -X ours origin main || (git rebase --abort; git pull --no-rebase -X ours origin main)
           git push

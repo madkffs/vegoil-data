@@ -480,10 +480,10 @@ def sunoil_comtrade():
     now = dt.date.today()
     have = {(r["reporter_code"], r["period"]) for r in old["rows"]}
     periods = [f"{y}{m:02d}" for y in range(now.year - 2, now.year + 1) for m in range(1, 13) if dt.date(y, m, 1) <= now]
-    recent = set(periods[-8:])
+    recent = set(periods[-5:])
     rows = [r for r in old["rows"] if r["period"] not in recent]
     log = dict(old.get("log", {}))
-    for rep in (699, 156, 792, 818):
+    for rep in (699, 792, 818):  # China (156) stopped monthly reporting after 2024
         for per in periods:
             if (rep, per) in have and per not in recent:
                 continue
