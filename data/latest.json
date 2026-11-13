@@ -29,35 +29,35 @@
  },
  "HO=F": {
   "symbol": "HO=F",
-  "last": 4.3058,
+  "last": 4.3067,
   "prev_close": 4.2865,
   "time_utc": "2026-11-13 05:00",
   "source": "yahoo (delayed)"
  },
  "BZ=F": {
   "symbol": "BZ=F",
-  "last": 96.28,
+  "last": 96.08,
   "prev_close": 95.82,
   "time_utc": "2026-11-13 05:00",
   "source": "yahoo (delayed)"
  },
  "CL=F": {
   "symbol": "CL=F",
-  "last": 89.05,
+  "last": 88.92,
   "prev_close": 88.74,
   "time_utc": "2026-11-13 05:00",
   "source": "yahoo (delayed)"
  },
  "RB=F": {
   "symbol": "RB=F",
-  "last": 2.6031,
+  "last": 2.5998,
   "prev_close": 2.6708,
   "time_utc": "2026-11-13 05:00",
   "source": "yahoo (delayed)"
  },
  "CAD=X": {
   "symbol": "CAD=X",
-  "last": 1.4268,
+  "last": 1.4267,
   "prev_close": 1.4248,
   "time_utc": "2026-11-13 00:00",
   "source": "yahoo (delayed)"
@@ -71,7 +71,7 @@
  },
  "BRL=X": {
   "symbol": "BRL=X",
-  "last": 5.6684,
+  "last": 5.6666,
   "prev_close": 5.5821,
   "time_utc": "2026-11-13 00:00",
   "source": "yahoo (delayed)"
@@ -113,14 +113,14 @@
  },
  "EURUSD=X": {
   "symbol": "EURUSD=X",
-  "last": 1.1027,
+  "last": 1.1028,
   "prev_close": 1.1095,
   "time_utc": "2026-11-13 00:00",
   "source": "yahoo (delayed)"
  },
  "DX-Y.NYB": {
   "symbol": "DX-Y.NYB",
-  "last": 103.406,
+  "last": 103.411,
   "prev_close": 103.17,
   "time_utc": "2026-11-13 05:00",
   "source": "yahoo (delayed)"
@@ -184,7 +184,7 @@
  "OJ=F": {
   "symbol": "OJ=F",
   "last": 136.85,
-  "prev_close": null,
+  "prev_close": 140.95,
   "time_utc": "2026-11-13 05:00",
   "source": "yahoo (delayed)"
  },
@@ -422,30 +422,30 @@
    "date": "2026-11-14"
   },
   "hf_HO": {
-   "last": 4.213,
+   "last": 4.214,
    "high": 4.243,
    "low": 4.15,
    "prev_settle": 4.189,
    "open": 4.191,
-   "time_beijing": "05:24:41",
+   "time_beijing": "05:59:59",
    "date": "2026-11-14"
   },
   "hf_OIL": {
-   "last": 96.393,
+   "last": 96.458,
    "high": 97.13,
    "low": 95.06,
    "prev_settle": 95.82,
    "open": 95.84,
-   "time_beijing": "05:26:33",
+   "time_beijing": "06:20:35",
    "date": "2026-11-14"
   },
   "hf_CL": {
-   "last": 89.118,
+   "last": 88.985,
    "high": 89.64,
    "low": 87.8,
    "prev_settle": 88.74,
    "open": 88.79,
-   "time_beijing": "05:26:39",
+   "time_beijing": "05:59:59",
    "date": "2026-11-14"
   },
   "hf_FCPO": {
@@ -465,12 +465,12 @@
    "date": "2026-11-13"
   },
   "fx_susdbrl": {
-   "last": 5.6666,
-   "time": "05:26:34",
+   "last": 5.668,
+   "time": "05:30:03",
    "date": "2026-11-14"
   },
   "fx_susdinr": {
-   "last": 94.26,
+   "last": 94.27,
    "time": "03:26:18",
    "date": "2026-11-14"
   },
@@ -480,8 +480,8 @@
    "date": "2026-11-14"
   },
   "fx_seurusd": {
-   "last": 1.1022,
-   "time": "05:26:36",
+   "last": 1.1021,
+   "time": "05:59:46",
    "date": "2026-11-14"
   },
   "fx_susdidr": {
@@ -541,24 +541,24 @@
   }
  },
  "_bunkers": {
-  "VLSFO_Global20": 846.0,
-  "IFO380_Global20": 684.0,
-  "MGO_Global20": 1409.5,
-  "VLSFO_Singapore": 822.0,
-  "IFO380_Singapore": 668.5,
-  "MGO_Singapore": 1170.0,
-  "VLSFO_Rotterdam": 717.5,
-  "IFO380_Rotterdam": 549.5,
-  "MGO_Rotterdam": 1240.5,
-  "VLSFO_Houston": 739.0,
-  "IFO380_Houston": 502.5,
-  "MGO_Houston": 1267.5,
-  "VLSFO_Fujairah": 822.5,
-  "IFO380_Fujairah": 540.5,
-  "MGO_Fujairah": 1529.0,
-  "VLSFO_Santos": 778.0,
+  "VLSFO_Global20": 863.5,
+  "IFO380_Global20": 695.0,
+  "MGO_Global20": 1426.5,
+  "VLSFO_Singapore": 882.5,
+  "IFO380_Singapore": 675.0,
+  "MGO_Singapore": 1204.0,
+  "VLSFO_Rotterdam": 743.5,
+  "IFO380_Rotterdam": 575.0,
+  "MGO_Rotterdam": 1281.0,
+  "VLSFO_Houston": 737.0,
+  "IFO380_Houston": 499.5,
+  "MGO_Houston": 1265.0,
+  "VLSFO_Fujairah": 856.5,
+  "IFO380_Fujairah": 562.5,
+  "MGO_Fujairah": 1554.0,
+  "VLSFO_Santos": 775.5,
   "IFO380_Santos": 511.0,
-  "MGO_Santos": 1615.5
+  "MGO_Santos": 1617.0
  },
  "_palm_fob": {
   "Malaysian Crude Palm Oil (CPO)": 1029.0,
@@ -567,7 +567,7 @@
  "_spreads": {
   "oilshare_pct": 49.23,
   "board_crush_usd_bu": 1.979,
-  "boho_usd_gal": -0.508,
+  "boho_usd_gal": -0.507,
   "soy_minus_palm_fob_usd_t": 383.2,
   "usdmyr": 4.085,
   "soy_minus_fcpo_usd_t": 319.7,
@@ -575,13 +575,13 @@
    "zl": 64.056,
    "zm": 330.35,
    "zs": 1233.47,
-   "ho": 4.213,
+   "ho": 4.214,
    "fcpo": 4462.66
   }
  },
  "_percentiles": {
   "boho_usd_gal": {
-   "last": -0.391,
+   "last": -0.39,
    "date": "2026-11-13",
    "pct_2y": 90.9,
    "pct_1y": 82.0,
