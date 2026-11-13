@@ -29,35 +29,35 @@
  },
  "HO=F": {
   "symbol": "HO=F",
-  "last": 4.2525,
+  "last": 4.2748,
   "prev_close": 4.2865,
   "time_utc": "2026-11-13 05:00",
   "source": "yahoo (delayed)"
  },
  "BZ=F": {
   "symbol": "BZ=F",
-  "last": 95.77,
+  "last": 95.91,
   "prev_close": 95.82,
   "time_utc": "2026-11-13 05:00",
   "source": "yahoo (delayed)"
  },
  "CL=F": {
   "symbol": "CL=F",
-  "last": 88.52,
+  "last": 88.73,
   "prev_close": 88.74,
   "time_utc": "2026-11-13 05:00",
   "source": "yahoo (delayed)"
  },
  "RB=F": {
   "symbol": "RB=F",
-  "last": 2.5896,
+  "last": 2.597,
   "prev_close": 2.6708,
   "time_utc": "2026-11-13 05:00",
   "source": "yahoo (delayed)"
  },
  "CAD=X": {
   "symbol": "CAD=X",
-  "last": 1.4268,
+  "last": 1.4263,
   "prev_close": 1.4248,
   "time_utc": "2026-11-13 00:00",
   "source": "yahoo (delayed)"
@@ -71,7 +71,7 @@
  },
  "BRL=X": {
   "symbol": "BRL=X",
-  "last": 5.6514,
+  "last": 5.6568,
   "prev_close": 5.5821,
   "time_utc": "2026-11-13 00:00",
   "source": "yahoo (delayed)"
@@ -113,14 +113,14 @@
  },
  "EURUSD=X": {
   "symbol": "EURUSD=X",
-  "last": 1.1029,
+  "last": 1.1025,
   "prev_close": 1.1095,
   "time_utc": "2026-11-13 00:00",
   "source": "yahoo (delayed)"
  },
  "DX-Y.NYB": {
   "symbol": "DX-Y.NYB",
-  "last": 103.393,
+  "last": 103.418,
   "prev_close": 103.17,
   "time_utc": "2026-11-13 05:00",
   "source": "yahoo (delayed)"
@@ -211,7 +211,7 @@
  },
  "BDRY": {
   "symbol": "BDRY",
-  "last": 12.97,
+  "last": 12.971,
   "prev_close": 13.21,
   "time_utc": "2026-11-13 05:00",
   "source": "yahoo (delayed)"
@@ -422,30 +422,30 @@
    "date": "2026-11-14"
   },
   "hf_HO": {
-   "last": 4.164,
+   "last": 4.188,
    "high": 4.243,
    "low": 4.15,
    "prev_settle": 4.189,
    "open": 4.191,
-   "time_beijing": "03:34:00",
+   "time_beijing": "04:30:16",
    "date": "2026-11-14"
   },
   "hf_OIL": {
-   "last": 95.788,
+   "last": 95.98,
    "high": 97.13,
    "low": 95.06,
    "prev_settle": 95.82,
    "open": 95.84,
-   "time_beijing": "03:34:09",
+   "time_beijing": "04:30:09",
    "date": "2026-11-14"
   },
   "hf_CL": {
-   "last": 88.519,
+   "last": 88.939,
    "high": 89.64,
    "low": 87.8,
    "prev_settle": 88.74,
    "open": 88.79,
-   "time_beijing": "03:34:09",
+   "time_beijing": "04:30:20",
    "date": "2026-11-14"
   },
   "hf_FCPO": {
@@ -465,8 +465,8 @@
    "date": "2026-11-13"
   },
   "fx_susdbrl": {
-   "last": 5.6533,
-   "time": "03:34:04",
+   "last": 5.6608,
+   "time": "04:30:14",
    "date": "2026-11-14"
   },
   "fx_susdinr": {
@@ -480,8 +480,8 @@
    "date": "2026-11-14"
   },
   "fx_seurusd": {
-   "last": 1.1026,
-   "time": "03:34:04",
+   "last": 1.1022,
+   "time": "04:30:15",
    "date": "2026-11-14"
   },
   "fx_susdidr": {
@@ -567,7 +567,7 @@
  "_spreads": {
   "oilshare_pct": 49.23,
   "board_crush_usd_bu": 1.979,
-  "boho_usd_gal": -0.557,
+  "boho_usd_gal": -0.533,
   "soy_minus_palm_fob_usd_t": 383.2,
   "usdmyr": 4.085,
   "soy_minus_fcpo_usd_t": 319.7,
@@ -575,13 +575,13 @@
    "zl": 64.056,
    "zm": 330.35,
    "zs": 1233.47,
-   "ho": 4.164,
+   "ho": 4.188,
    "fcpo": 4462.66
   }
  },
  "_percentiles": {
   "boho_usd_gal": {
-   "last": -0.444,
+   "last": -0.422,
    "date": "2026-11-13",
    "pct_2y": 90.9,
    "pct_1y": 82.0,
