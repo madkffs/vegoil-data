@@ -634,6 +634,48 @@ def eia_biofuel_feedstock():
             return
     raise ValueError("EIA feedstock: no file")
 
+def probe_pfl_bursa():
+    """One-off: find the latest public PFL RIN recap PDF and Bursa/Bernama palm settlement pages."""
+    d = os.path.join(DATA, "probe"); os.makedirs(d, exist_ok=True)
+    out = {}
+    today = dt.date.today()
+    for k in range(0, 21):
+        day = today - dt.timedelta(days=k)
+        u = f"https://pflpetroleum.com/reports/wp-content/uploads/{day:%Y}/{day:%m}/PFL_RIN_RECAP_V6_{day.year}_{day.month}_{day.day}.pdf"
+        try:
+            r = requests.get(u, headers=UA, timeout=30)
+            out[u] = [r.status_code, len(r.content), r.headers.get("content-type", "")]
+            if r.status_code == 200 and r.content[:4] == b"%PDF":
+                open(os.path.join(d, "pfl_latest.pdf"), "wb").write(r.content)
+                import pdfplumber, io
+                with pdfplumber.open(io.BytesIO(r.content)) as pdf:
+                    txt = "\n".join((p.extract_text() or "") for p in pdf.pages[:3])
+                open(os.path.join(d, "pfl_latest.txt"), "w").write(u + "\n" + txt)
+                break
+        except Exception as e:
+            out[u] = ["error", str(e)[:150]]
+    try:
+        from curl_cffi import requests as creq
+    except Exception:
+        creq = None
+    for u in ["https://www.bursamalaysia.com/market_information/market_data/derivatives",
+              "https://www.bursamalaysia.com/trade/our_products_services/derivatives/commodity_derivatives/crude_palm_oil_futures",
+              "https://www.bursamalaysia.com/market_information/equities_prices?",
+              "https://www.bernama.com/en/business/", "https://www.bernama.com/en/market/",
+              "https://www.bernama.com/en/search.php?terms=CPO%20futures",
+              "https://www.theedgemalaysia.com/categories/commodities"]:
+        for lib, getter in (("requests", requests.get), ("curl_cffi", (lambda url, **kw: creq.get(url, impersonate="chrome", **kw)) if creq else None)):
+            if getter is None: continue
+            try:
+                r = getter(u, headers=UA if lib == "requests" else None, timeout=30)
+                t = r.text
+                links = re.findall(r'href="([^"]+)"[^>]*>([^<]{0,90})', t)
+                keep = [(h, x.strip()) for h, x in links if re.search(r"(?i)cpo|palm|settle|fcpo|derivativ", h + " " + x)]
+                out[lib + " " + u] = {"status": r.status_code, "len": len(t), "links": keep[:40], "snip": re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", t))[:600]}
+            except Exception as e:
+                out[lib + " " + u] = {"err": str(e)[:150]}
+    json.dump(out, open(os.path.join(d, "probe_pfl_bursa.json"), "w"), indent=1)
+
 NABSA = "https://www.nabsa.com.ar/assets/"
 
 def _num_es(x):
@@ -1570,6 +1612,8 @@ def probe_epa_qlik():
     with open(os.path.join(d, "qlik.json"), "w") as fh: json.dump(out, fh, indent=1, default=str)
 
 def main(mode):
+    if mode == "probe_pfl":
+        probe_pfl_bursa(); return
     if mode == "official":
         for name, fn in (("ec_taxud_vegoil", ec_taxud_vegoil), ("ec_oilseed_prices", ec_oilseed_prices), ("usda_psd_oils", usda_psd_oils), ("nass_fats_oils", nass_fats_oils), ("eia_biofuel_feedstock", eia_biofuel_feedstock)):
             try:
