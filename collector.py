@@ -1710,6 +1710,19 @@ def probe_epa_qlik():
     with open(os.path.join(d, "qlik.json"), "w") as fh: json.dump(out, fh, indent=1, default=str)
 
 def main(mode):
+    if mode == "bernama_debug":
+        d = os.path.join(DATA, "probe"); os.makedirs(d, exist_ok=True)
+        r = requests.get("https://www.bernama.com/en/search.php?terms=CPO%20futures", headers=UA, timeout=40)
+        links = re.findall(r'href="([^"]*news\.php\?id=\d+)"[^>]*>([^<]{0,120})', r.text)
+        out = {"links": links[:12]}
+        if links:
+            u = links[0][0] if links[0][0].startswith("http") else "https://www.bernama.com/en/market/" + links[0][0]
+            a_ = requests.get(u, headers=UA, timeout=40)
+            out["status"] = a_.status_code; out["len"] = len(a_.text)
+            t = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", a_.text))
+            i0 = t.find("RM4"); out["excerpt"] = t[max(0, i0 - 1500): i0 + 2500]
+        json.dump(out, open(os.path.join(d, "bernama_debug.json"), "w"), indent=1)
+        return
     if mode == "pfl_palm":
         for name, fn in (("pfl_rin_recap", pfl_rin_recap), ("bernama_cpo_curve", bernama_cpo_curve)):
             try:
