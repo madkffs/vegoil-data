@@ -754,19 +754,16 @@ def bernama_cpo_curve():
         if not dm: continue
         date = f"{dm.group(3)}-{dm.group(2)}-{dm.group(1)}"
         i0 = txt.find("At the close"); seg = txt[i0:i0 + 1500] if i0 >= 0 else txt
-        for clause in re.split(r",|;| and | while ", seg):
-            mm = re.search(r"(January|February|March|April|May|June|July|August|September|October|November|December) (20\d{2})", clause)
-            prices = re.findall(r"RM([\d,]+)", clause)
-            if not mm or not prices: continue
-            settle = float(prices[-1].replace(",", ""))
-            if settle < 1000: continue
-            chg = None
-            cm = re.search(r"(up|rose|increased|added|gained|climbed|higher|went up|down|fell|decreased|declined|lost|dropped|eased|slipped|lower|shed)\D{0,12}RM([\d,]+)", clause)
-            if cm and len(prices) >= 2:
-                chg = float(cm.group(2).replace(",", "")) * (-1 if cm.group(1) in ("down", "fell", "decreased", "declined", "lost", "dropped", "eased", "slipped", "lower", "shed") else 1)
-            if re.search(r"unchanged", clause): chg = 0.0
-            con = f"{mm.group(2)}-{MONTHS_EN[mm.group(1)]:02d}"
-            rows[(date, con)] = {"date": date, "contract": con, "settle": settle, "change": "" if chg is None else chg, "url": u}
+        seg = seg.split("Trading volume")[0]
+        for part in re.split(r"\.\s|;\s|,\s(?:and|while)\s|\swhile\s", seg):
+            ms = re.findall(r"(January|February|March|April|May|June|July|August|September|October|November|December) (20\d{2})", part)
+            ps = [float(p_.replace(",", "")) for p_ in re.findall(r"RM([\d,]{5,})\s*(?:per tonne|a tonne)?", part)]
+            ps = [p_ for p_ in ps if p_ > 1000]
+            if not ms or not ps: continue
+            pairs = list(zip(ms, ps)) if len(ms) == len(ps) else ([(ms[-1], ps[-1])] if len(ms) == 1 else [])
+            for (mon, yr), settle in pairs:
+                con = f"{yr}-{MONTHS_EN[mon]:02d}"
+                rows[(date, con)] = {"date": date, "contract": con, "settle": settle, "change": "", "url": u}
         time.sleep(1)
     with open(path, "w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=["date", "contract", "settle", "change", "url"]); w.writeheader()
