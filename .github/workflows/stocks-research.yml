@@ -1,0 +1,17 @@
+name: stocks research (one-off)
+on:
+  push:
+    branches: [research-stocks]
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: pip install yfinance pandas numpy requests lxml openpyxl html5lib
+      - run: cd research && python stocks_pull.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: stocks-data, path: research/out, retention-days: 3}
