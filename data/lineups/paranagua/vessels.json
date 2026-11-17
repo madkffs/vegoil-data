@@ -52,7 +52,7 @@
  },
  "81044_MURMURE_OLEO DE SOJA": {
   "first_seen": "2026-10-27 14:47",
-  "section": "ESPERADOS",
+  "section": "PROGRAMADOS",
   "prog": "81044",
   "vessel": "MURMURE",
   "imo": "9939618",
@@ -62,7 +62,7 @@
   "terminal": "CATTALINI",
   "product": "OLEO DE SOJA",
   "tons": 12743.0,
-  "last_seen": "2026-11-17 13:10",
+  "last_seen": "2026-11-17 18:05",
   "eta": "17/11/2026 08:00"
  },
  "81047_HAFNIA AVENTURINE_OLEO DE MILHO": {
@@ -147,6 +147,6 @@
   "product": "OLEO DE SOJA",
   "eta": "20/11/2026 07:00",
   "tons": 18500.0,
-  "last_seen": "2026-11-17 13:10"
+  "last_seen": "2026-11-17 18:05"
  }
 }

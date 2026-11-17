@@ -1,6 +1,23 @@
 {
- "fetched_utc": "2026-11-17 13:10",
+ "fetched_utc": "2026-11-17 18:05",
  "rows": [
+  {
+   "section": "PROGRAMADOS",
+   "prog": "81044",
+   "vessel": "MURMURE",
+   "imo": "9939618",
+   "berth": "143",
+   "direction": "Exp",
+   "agency": "BPA",
+   "terminal": "CATTALINI",
+   "product": "OLEO DE SOJA",
+   "arrival": "",
+   "berthed": null,
+   "etb": "",
+   "eta": null,
+   "sailed": null,
+   "tons": 12743.0
+  },
   {
    "section": "ESPERADOS",
    "prog": "81222",
@@ -17,23 +34,6 @@
    "eta": "20/11/2026 07:00",
    "sailed": null,
    "tons": 18500.0
-  },
-  {
-   "section": "ESPERADOS",
-   "prog": "81044",
-   "vessel": "MURMURE",
-   "imo": "9939618",
-   "berth": "143",
-   "direction": "Exp",
-   "agency": "BPA",
-   "terminal": "CATTALINI",
-   "product": "OLEO DE SOJA",
-   "arrival": null,
-   "berthed": null,
-   "etb": null,
-   "eta": "17/11/2026 08:00",
-   "sailed": null,
-   "tons": 12743.0
   }
  ]
 }
