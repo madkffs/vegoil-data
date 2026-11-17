@@ -62,7 +62,7 @@
   "terminal": "CATTALINI",
   "product": "OLEO DE SOJA",
   "tons": 15000.0,
-  "last_seen": "2026-11-13 13:10",
+  "last_seen": "2026-11-17 01:11",
   "eta": "17/11/2026 08:00"
  },
  "81047_HAFNIA AVENTURINE_OLEO DE MILHO": {
@@ -133,5 +133,20 @@
   "berthed": "08/11/2026 16:10",
   "arrival": "08/11/2026 12:30",
   "sailed": "10/11/2026 08:15"
+ },
+ "81222_JBU OPAL_OLEO DE SOJA": {
+  "first_seen": "2026-11-17 01:11",
+  "section": "ESPERADOS",
+  "prog": "81222",
+  "vessel": "JBU OPAL",
+  "imo": "9400409",
+  "berth": "143",
+  "direction": "Exp",
+  "agency": "FERTIMPORT",
+  "terminal": "CATTALINI",
+  "product": "OLEO DE SOJA",
+  "eta": "20/11/2026 07:00",
+  "tons": 18500.0,
+  "last_seen": "2026-11-17 01:11"
  }
 }

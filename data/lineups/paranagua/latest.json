@@ -1,22 +1,22 @@
 {
- "fetched_utc": "2026-11-13 13:10",
+ "fetched_utc": "2026-11-17 01:11",
  "rows": [
   {
-   "section": "ATRACADOS",
-   "prog": "81047",
-   "vessel": "HAFNIA AVENTURINE",
-   "imo": "9711547",
-   "berth": "144",
+   "section": "ESPERADOS",
+   "prog": "81222",
+   "vessel": "JBU OPAL",
+   "imo": "9400409",
+   "berth": "143",
    "direction": "Exp",
-   "agency": "ORION",
+   "agency": "FERTIMPORT",
    "terminal": "CATTALINI",
-   "product": "OLEO DE MILHO",
-   "arrival": "11/11/2026 18:00",
-   "berthed": "11/11/2026 22:50",
+   "product": "OLEO DE SOJA",
+   "arrival": null,
+   "berthed": null,
    "etb": null,
-   "eta": null,
+   "eta": "20/11/2026 07:00",
    "sailed": null,
-   "tons": 13230.0
+   "tons": 18500.0
   },
   {
    "section": "ESPERADOS",
