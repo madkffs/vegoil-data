@@ -1,9 +1,11 @@
 {
- "run_utc": "2026-11-17 05:36",
+ "run_utc": "2026-11-17 06:41",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
-  "RS=F": "no data"
+  "RS=F": "no data",
+  "kline_DCE_P0": "HTTPSConnectionPool(host='stock2.finance.sina.com.cn', port=443): Read timed out. (read timeout=30)",
+  "ec_taxud_vegoil": "taxud: no rows {\"2024\": [500, \"{\\\"code\\\":\\\"303001\\\",\\\"type\\\":\\\"Status report\\\",\\\"message\\\":\\\"Runtime Error\\\",\\\"description\\\":\\\"Currently , Address endpoint : [ Name : AgrifoodPublicData--vprod_APIprod"
  },
  "nabsa_rows": {
   "sailed": 929,
