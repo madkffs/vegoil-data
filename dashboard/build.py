@@ -128,6 +128,9 @@ try:
         mb = pd.read_csv(mp) if os.path.exists(mp) else pd.DataFrame(columns=["date", "VLSFO"])
         mb["date"] = pd.to_datetime(mb.date); mbv = mb.dropna(subset=["VLSFO"]).set_index("date").VLSFO
         gv = g.set_index("date")
+        def near(d0):
+            c = gv[(gv.index <= d0) & (gv.index >= d0 - pd.Timedelta(days=3))]
+            return None if c.empty or pd.isna(c.VLSFO.iloc[-1]) else float(c.VLSFO.iloc[-1])
         for d0, r in gv.iterrows():
             mv = float(mbv[d0]) if d0 in mbv.index else None
             tk.append({"kind": "bunker", "date": f"{d0:%Y-%m-%d}", "vlsfo_g20": None if pd.isna(r.VLSFO) else float(r.VLSFO),
@@ -135,7 +138,8 @@ try:
                        "diff": round(mv - float(r.VLSFO), 1) if (mv is not None and pd.notna(r.VLSFO)) else None})
         for d0, v in mbv.items():
             if d0 not in gv.index and d0 >= g.date.min():
-                tk.append({"kind": "bunker", "date": f"{d0:%Y-%m-%d}", "vlsfo_g20": None, "vlsfo_mabux": float(v), "diff": None})
+                n0 = near(d0)
+                tk.append({"kind": "bunker", "date": f"{d0:%Y-%m-%d}", "vlsfo_g20": None, "vlsfo_mabux": float(v), "diff": round(float(v) - n0, 1) if n0 is not None else None})
     dump("tanker_freight.json", tk)
 except Exception as e:
     print("tanker_freight failed", e)

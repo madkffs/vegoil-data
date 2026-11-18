@@ -564,6 +564,8 @@ def mabux_global(backfill=False):
                 a = _plain(requests.get(u, headers=UA, timeout=40).text)
             except Exception:
                 continue
+            if "week" not in u and "week-on-week" not in a and "last week" not in a:
+                continue  # monthly outlooks quote averages, not a dated level
             dm = re.search(r"in International Shipping News (\d{2})/(\d{2})/(\d{4})", a)
             vm = re.search(r"VLSFO index(?:[^.]|\.(?=\d)){0,220}?(?:to|at|reached|stood at) USD\s?([\d,]+\.\d+)\s*/\s*MT", a)
             if not (dm and vm):
@@ -574,7 +576,7 @@ def mabux_global(backfill=False):
             hm = re.search(r"380 HSFO index(?:[^.]|\.(?=\d)){0,220}?(?:to|at|reached|stood at) USD\s?([\d,]+\.\d+)\s*/\s*MT", a)
             gm = re.search(r"MGO(?: LS)? index(?:[^.]|\.(?=\d)){0,220}?(?:to|at|reached|stood at) USD\s?([\d,]+\.\d+)\s*/\s*MT", a)
             g = lambda mm: float(mm.group(1).replace(",", "")) if mm else None
-            rows.append({"date": d, "HSFO380": g(hm), "VLSFO": g(vm), "MGO": g(gm), "source": "MABUX weekly (Hellenic Shipping News)"}); have.add(d)
+            rows.append({"date": d, "HSFO380": g(hm), "VLSFO": g(vm), "MGO": g(gm), "source": "MABUX weekly (Hellenic Shipping News)", "url": u}); have.add(d)
             time.sleep(0.3)
     if not rows:
         raise ValueError("no MABUX values parsed")
