@@ -443,6 +443,144 @@ def bunkers():
         raise ValueError("no prices parsed")
     return out
 
+def _plain(h):
+    return " ".join(re.sub(r"<[^>]+>", " ", re.sub(r"<script.*?</script>|<style.*?</style>", " ", h, flags=re.S)).split()).replace("&nbsp;", " ")
+
+def _ws_current(s):
+    """Worldscale level a Baltic sentence ends the week at."""
+    for p in (r"currently (?:assessed|marked|publishing|at)\s*(?:at\s*)?WS\s?([\d.]+)", r"current WS\s?([\d.]+)", r"is currently at WS\s?([\d.]+)"):
+        m = re.search(p, s)
+        if m:
+            return float(m.group(1))
+    m = re.search(r"between WS\s?([\d.]+) and WS\s?([\d.]+)", s)
+    if m:
+        return round((float(m.group(1)) + float(m.group(2))) / 2, 2)
+    ws = re.findall(r"WS\s?(\d+(?:\.\d+)?)", s)
+    return float(ws[-1]) if ws else None
+
+def _tanker_from_text(t):
+    out = {}
+    for s in re.split(r"(?<=[.!?])\s+", t):
+        tce = re.findall(r"\$(\d{1,3}(?:,\d{3})+|\d{4,6})\s*(?:/|per)\s*day", s)
+        if "TC14" in s and "WS" in s and "tc14_ws" not in out:
+            out["tc14_ws"] = _ws_current(s); out["tc14_tce"] = float(tce[-1].replace(",", "")) if tce else None
+        elif re.search(r"TC2\b", s) and "WS" in s and "tc2_ws" not in out:
+            out["tc2_ws"] = _ws_current(s); out["tc2_tce"] = float(tce[-1].replace(",", "")) if tce else None
+        if "Triangulation" in s and tce and "mr_basket" not in out:
+            out["mr_basket"] = float(tce[-1].replace(",", ""))
+    return out
+
+def tc14_weekly(backfill=False):
+    """Baltic TC14 (38kt US Gulf/UK-Continent) and TC2 weekly closes from two public republications of the Baltic Exchange weekly round-up: DCN (Australia) and The Edge (Malaysia)."""
+    path = os.path.join(DATA, "freight", "tc14_weekly.csv"); os.makedirs(os.path.dirname(path), exist_ok=True)
+    have = set()
+    if os.path.exists(path):
+        with open(path, newline="") as fh:
+            have = {r["key"] for r in csv.DictReader(fh)}
+    rows = []; today = dt.date.today()
+    start = dt.date(2025, 11, 7) if (backfill or not have) else today - dt.timedelta(days=21)
+    fri = start + dt.timedelta(days=(4 - start.weekday()) % 7)
+    while fri <= today:
+        if f"{fri}|dcn" not in have:
+            for d in (fri, fri - dt.timedelta(days=1), fri + dt.timedelta(days=3)):
+                u = f"https://www.thedcn.com.au/news/baltic-exchange-weekly-report-{d.day}-{d.strftime('%B').lower()}-{d.year}"
+                try:
+                    r = requests.get(u, headers=UA, timeout=40)
+                except Exception:
+                    continue
+                if r.status_code == 200 and "TC14" in r.text:
+                    v = _tanker_from_text(_plain(r.text))
+                    if v.get("tc14_ws"):
+                        rows.append({"key": f"{fri}|dcn", "week": str(fri), "source": "DCN", "url": u, **v}); break
+                time.sleep(0.4)
+        fri += dt.timedelta(days=7)
+    for page in ((1, 2, 3, 4, 5) if (backfill or not have) else (1,)):
+        try:
+            h = requests.get("https://theedgemalaysia.com/news-search-results?keywords=Baltic%20Exchange%20shipping%20updates" + (f"&page={page}" if page > 1 else ""), headers=UA, timeout=40).text
+        except Exception:
+            continue
+        for node, dtxt in dict.fromkeys(re.findall(r'href="/node/(\d+)".{0,900}?Baltic Exchange shipping updates: (\w{3} \d{1,2}, \d{4})', h, flags=re.S)):
+            try:
+                d = dt.datetime.strptime(dtxt, "%b %d, %Y").date()
+            except ValueError:
+                continue
+            wk = d + dt.timedelta(days=(4 - d.weekday()) % 7) if d.weekday() <= 4 else d - dt.timedelta(days=d.weekday() - 4)
+            if f"{wk}|edge" in have or d < dt.date(2025, 11, 1):
+                continue
+            try:
+                a = requests.get(f"https://theedgemalaysia.com/node/{node}", headers=UA, timeout=40)
+                v = _tanker_from_text(_plain(a.text))
+                if v.get("tc14_ws"):
+                    rows.append({"key": f"{wk}|edge", "week": str(wk), "source": "The Edge", "url": f"https://theedgemalaysia.com/node/{node}", **v}); have.add(f"{wk}|edge")
+            except Exception:
+                pass
+            time.sleep(0.4)
+    if rows:
+        append_csv(path, rows, key="key")
+    return len(rows)
+
+def bunker_g20_history():
+    """Ship & Bunker Global 20 Ports Average daily history (VLSFO, MGO, IFO380, $/mt), from the chart data on its public page."""
+    r = requests.get("https://shipandbunker.com/prices/av/global/av-g20-global-20-ports-average", headers=UA, timeout=40)
+    m = re.search(r"const PORT_CHART\s*=\s*(\{.*?\});", r.text, flags=re.S)
+    if not m:
+        raise ValueError("no chart data")
+    j = json.loads(m.group(1)); by = {}
+    for fuel in ("VLSFO", "MGO", "IFO380"):
+        for ts, v in j.get(fuel, []):
+            d = dt.datetime.utcfromtimestamp(ts / 1000).strftime("%Y-%m-%d"); by.setdefault(d, {"date": d})[fuel] = v
+    path = os.path.join(DATA, "freight", "bunker_g20_daily.csv"); os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=["date", "VLSFO", "MGO", "IFO380"], restval=""); w.writeheader()
+        for d in sorted(by):
+            w.writerow(by[d])
+    return len(by)
+
+def mabux_global(backfill=False):
+    """MABUX Global Bunker Index (380 HSFO, VLSFO, MGO LS, $/mt): today's value from mabux.com, weekly history from MABUX reports on Hellenic Shipping News."""
+    path = os.path.join(DATA, "freight", "mabux_global.csv"); os.makedirs(os.path.dirname(path), exist_ok=True)
+    rows = []
+    t = _plain(requests.get("https://www.mabux.com/", headers=UA, timeout=40).text)
+    num = r"(\d{1,2}\s?\d{3}\.\d+|\d{3}\.\d+)"
+    m = re.search(r"MABUX Global Bunker Index 380HSFO \$/mton VLS FO \$/mton MGO LS \$/mton Date " + num + r" [+-]?[\d.]+ " + num + r" [+-]?[\d.]+ " + num + r" [+-]?[\d.]+ (\w{3} \d{1,2})", t)
+    if m:
+        f = lambda x: float(x.replace(" ", ""))
+        d = dt.datetime.strptime(m.group(4) + " " + str(dt.date.today().year), "%b %d %Y").date()
+        if d > dt.date.today() + dt.timedelta(days=2):
+            d = d.replace(year=d.year - 1)
+        rows.append({"date": str(d), "HSFO380": f(m.group(1)), "VLSFO": f(m.group(2)), "MGO": f(m.group(3)), "source": "mabux.com daily"})
+    have = set()
+    if os.path.exists(path):
+        with open(path, newline="") as fh:
+            have = {r["date"] for r in csv.DictReader(fh)}
+    pages = range(1, 9) if (backfill or len(have) < 20) else range(1, 2)
+    for p in pages:
+        try:
+            h = requests.get("https://www.hellenicshippingnews.com/" + (f"page/{p}/" if p > 1 else "") + "?s=MABUX+bunker+next+week", headers=UA, timeout=40).text
+        except Exception:
+            continue
+        for u in dict.fromkeys(re.findall(r'href="(https://www\.hellenicshippingnews\.com/mabux-[a-z0-9\-]+/)"', h)):
+            try:
+                a = _plain(requests.get(u, headers=UA, timeout=40).text)
+            except Exception:
+                continue
+            dm = re.search(r"in International Shipping News (\d{2})/(\d{2})/(\d{4})", a)
+            vm = re.search(r"VLSFO index[^.]{0,160}?(?:to|at|reached|stood at) USD\s?([\d,]+\.\d+)\s*/\s*MT", a)
+            if not (dm and vm):
+                continue
+            d = f"{dm.group(3)}-{dm.group(2)}-{dm.group(1)}"
+            if d in have:
+                continue
+            hm = re.search(r"380 HSFO index[^.]{0,160}?(?:to|at|reached|stood at) USD\s?([\d,]+\.\d+)\s*/\s*MT", a)
+            gm = re.search(r"MGO(?: LS)? index[^.]{0,160}?(?:to|at|reached|stood at) USD\s?([\d,]+\.\d+)\s*/\s*MT", a)
+            g = lambda mm: float(mm.group(1).replace(",", "")) if mm else None
+            rows.append({"date": d, "HSFO380": g(hm), "VLSFO": g(vm), "MGO": g(gm), "source": "MABUX weekly (Hellenic Shipping News)"}); have.add(d)
+            time.sleep(0.3)
+    if not rows:
+        raise ValueError("no MABUX values parsed")
+    append_csv(path, rows, key="date")
+    return len(rows)
+
 def baltic_headline():
     """Baltic Dry Index level from public news headlines (the exchange's own indices are licensed)."""
     r = requests.get("https://www.hellenicshippingnews.com/category/shipping-news/dry-bulk-market/", headers=UA, timeout=30)
@@ -1720,6 +1858,13 @@ def main(mode):
             i0 = t.find("RM4"); out["excerpt"] = t[max(0, i0 - 1500): i0 + 2500]
         json.dump(out, open(os.path.join(d, "bernama_debug.json"), "w"), indent=1)
         return
+    if mode == "tanker":
+        for name, fn in (("tc14_weekly", lambda: tc14_weekly(backfill=True)), ("bunker_g20_history", bunker_g20_history), ("mabux_global", lambda: mabux_global(backfill=True))):
+            try:
+                print(name, fn())
+            except Exception as e:
+                print(name, "failed", e)
+        return
     if mode == "pfl_palm":
         for name, fn in (("pfl_rin_recap", pfl_rin_recap), ("bernama_cpo_curve", bernama_cpo_curve)):
             try:
@@ -1888,7 +2033,7 @@ def main(mode):
     if mode in ("backfill", "probe", "daily") or (dt.datetime.utcnow().hour >= 6 and last_daily != today_s):
         with open(marker, "w") as fh:
             fh.write(today_s)
-        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("comexstat_ports", comexstat_ports), ("emts_generation", emts_generation), ("epa_generation_detail", epa_generation_detail), ("epa_rin_prices", epa_rin_prices), ("climate", climate_indices), ("cme_options", cme_soyoil_options), ("sunoil_eurostat", sunoil_eurostat), ("sunoil_comtrade", sunoil_comtrade), ("usda_psd_oils", usda_psd_oils), ("nass_fats_oils", nass_fats_oils), ("eia_biofuel_feedstock", eia_biofuel_feedstock), ("ec_taxud_vegoil", ec_taxud_vegoil), ("ec_oilseed_prices", ec_oilseed_prices), ("pfl_rin_recap", pfl_rin_recap), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco)):
+        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("comexstat_ports", comexstat_ports), ("emts_generation", emts_generation), ("epa_generation_detail", epa_generation_detail), ("epa_rin_prices", epa_rin_prices), ("climate", climate_indices), ("cme_options", cme_soyoil_options), ("sunoil_eurostat", sunoil_eurostat), ("sunoil_comtrade", sunoil_comtrade), ("usda_psd_oils", usda_psd_oils), ("nass_fats_oils", nass_fats_oils), ("eia_biofuel_feedstock", eia_biofuel_feedstock), ("ec_taxud_vegoil", ec_taxud_vegoil), ("ec_oilseed_prices", ec_oilseed_prices), ("pfl_rin_recap", pfl_rin_recap), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco), ("tc14_weekly", tc14_weekly), ("bunker_g20_history", bunker_g20_history), ("mabux_global", mabux_global)):
             try:
                 fn()
             except Exception as e:
