@@ -1,9 +1,10 @@
 {
- "run_utc": "2026-11-18 01:14",
+ "run_utc": "2026-11-18 02:34",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
-  "RS=F": "no data"
+  "RS=F": "no data",
+  "kline_DCE_M0": "HTTPSConnectionPool(host='stock2.finance.sina.com.cn', port=443): Read timed out. (read timeout=30)"
  },
  "euronext_cot_misses": [
   "EBM week of 2026-11-18",
