@@ -519,14 +519,15 @@ def tc14_weekly(backfill=False):
     # Primary: the Baltic Exchange's own public weekly tanker report (same text DCN and The Edge republish), back to 2022.
     # URL: /tanker/news/{year}/tanker-report-week-{iso week}.html, published Fridays; crawl-delay 1s per robots.txt.
     have |= {r["key"] for r in rows}
-    bstart = dt.date(2022, 1, 7) if (backfill or not any(k.endswith("|baltic") for k in have)) else today - dt.timedelta(days=28)
-    fri = bstart + dt.timedelta(days=(4 - bstart.weekday()) % 7); misses = 0
-    while fri <= today:
+    # Newest week first, so a slow or partial run still gets the latest weeks; older weeks fill in over later runs (budget ~4 min / 80 pages a run).
+    fri = today - dt.timedelta(days=(today.weekday() - 4) % 7); misses = 0; t0 = time.time(); tries = 0
+    while fri >= dt.date(2022, 1, 7) and time.time() - t0 < 240 and tries < 80:
         if f"{fri}|baltic" not in have:
+            tries += 1
             yr, wk, _ = fri.isocalendar()
             u = f"https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/{yr}/tanker-report-week-{wk}.html"
             try:
-                r = requests.get(u, headers=UA, timeout=40)
+                r = requests.get(u, headers=UA, timeout=15)
                 if r.status_code == 200 and "TC14" in r.text:
                     v = _tanker_from_text(_plain(r.text))
                     if v.get("tc14_ws"):
@@ -536,9 +537,9 @@ def tc14_weekly(backfill=False):
             except Exception:
                 misses += 1
             time.sleep(1.1)
-            if misses >= 12 and bstart > dt.date(2022, 1, 7):
-                break
-        fri += dt.timedelta(days=7)
+            if misses >= 8:
+                break                                            # site unreachable, or reached weeks it does not publish
+        fri -= dt.timedelta(days=7)
     if rows:
         append_csv(path, rows, key="key")
     return len(rows)
@@ -580,14 +581,14 @@ def optima_clean_daily(backfill=False):
         with open(path, newline="") as fh:
             have = {r["key"] for r in csv.DictReader(fh)}
     rows = []; today = dt.date.today(); d = dt.date(2026, 9, 25) if (backfill or not have) else today - dt.timedelta(days=10)
-    dbg = []
-    while d <= today:
+    dbg = []; t0 = time.time()
+    while d <= today and time.time() - t0 < 180:
         if d.weekday() < 5 and f"{d}|optima" not in have:
             mon = d.strftime("%B").lower()
             for day in dict.fromkeys((str(d.day), f"{d.day:02d}")):
                 u = f"https://www.optimashipbroking.com/market-report/clean-tanker-index-summary-{day}-{mon}-{d.year}/"
                 try:
-                    r = requests.get(u, headers=UA, timeout=40)
+                    r = requests.get(u, headers=UA, timeout=15)
                 except Exception as e:
                     dbg.append(f"{u} {e}"[:200]); continue
                 if r.status_code == 200 and "TC14" in r.text:
@@ -631,7 +632,7 @@ def fis_tc14_ffa():
         if os.path.exists(os.path.join(raw_dir, f"{d}.txt")):
             continue
         try:
-            r = requests.get(u, headers=UA, timeout=40)
+            r = requests.get(u, headers=UA, timeout=20)
         except Exception:
             continue
         if r.status_code != 200 or not r.content.startswith(b"%PDF"):
