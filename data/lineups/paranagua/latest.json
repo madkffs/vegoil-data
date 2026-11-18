@@ -1,8 +1,8 @@
 {
- "fetched_utc": "2026-11-18 16:04",
+ "fetched_utc": "2026-11-18 17:11",
  "rows": [
   {
-   "section": "PROGRAMADOS",
+   "section": "ATRACADOS",
    "prog": "81044",
    "vessel": "MURMURE",
    "imo": "9939618",
@@ -12,8 +12,8 @@
    "terminal": "CATTALINI",
    "product": "OLEO DE SOJA",
    "arrival": "18/11/2026 09:12",
-   "berthed": null,
-   "etb": "",
+   "berthed": "18/11/2026 12:40",
+   "etb": null,
    "eta": null,
    "sailed": null,
    "tons": 12743.0
