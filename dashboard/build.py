@@ -106,6 +106,40 @@ if os.path.exists(fp):
         frt.append({"id": "BDI", "name": "Baltic Dry Index (from public headlines)", "value": float(f2.iloc[-1]["bdi_headline"]), "unit": "index points",
                     "chg_1w_pct": None, "date": str(f2.iloc[-1]["time_utc"])[:10]})
 dump("freight.json", frt)
+# ---------- MR tanker freight (TC14/TC2) vs bunkers ----------
+try:
+    tk = []
+    tp = os.path.join(D, "freight", "tc14_weekly.csv"); gp = os.path.join(D, "freight", "bunker_g20_daily.csv"); mp = os.path.join(D, "freight", "mabux_global.csv")
+    if os.path.exists(tp):
+        t = pd.read_csv(tp); t["week"] = pd.to_datetime(t.week)
+        t = t[t.week >= pd.Timestamp.utcnow().tz_localize(None) - pd.Timedelta(days=380)]
+        for wk, g in t.groupby("week"):
+            dcn = g[g.source == "DCN"]; edg = g[g.source == "The Edge"]
+            a = dcn.iloc[0] if len(dcn) else None; b = edg.iloc[0] if len(edg) else None
+            p = a if a is not None else b
+            val = lambda r, c: (None if r is None or pd.isna(r.get(c)) else float(r.get(c)))
+            ws_a, ws_b = val(a, "tc14_ws"), val(b, "tc14_ws")
+            chk = "Agrees" if (ws_a is not None and ws_b is not None and abs(ws_a - ws_b) <= 2) else ("Differs" if (ws_a is not None and ws_b is not None) else "One source")
+            tce = val(p, "tc14_tce") if val(p, "tc14_tce") is not None else (val(b, "tc14_tce") if b is not None else None)
+            tk.append({"kind": "tc14", "date": f"{wk:%Y-%m-%d}", "tc14_ws": val(p, "tc14_ws"), "tc14_tce": tce, "tc2_ws": val(p, "tc2_ws") if val(p, "tc2_ws") is not None else val(b, "tc2_ws"),
+                       "ws_dcn": ws_a, "ws_edge": ws_b, "check": chk, "source": p["source"], "url": p["url"]})
+    if os.path.exists(gp):
+        g = pd.read_csv(gp); g["date"] = pd.to_datetime(g.date); g = g[g.date >= g.date.max() - pd.Timedelta(days=380)]
+        mb = pd.read_csv(mp) if os.path.exists(mp) else pd.DataFrame(columns=["date", "VLSFO"])
+        mb["date"] = pd.to_datetime(mb.date); mbv = mb.dropna(subset=["VLSFO"]).set_index("date").VLSFO
+        gv = g.set_index("date")
+        for d0, r in gv.iterrows():
+            mv = float(mbv[d0]) if d0 in mbv.index else None
+            tk.append({"kind": "bunker", "date": f"{d0:%Y-%m-%d}", "vlsfo_g20": None if pd.isna(r.VLSFO) else float(r.VLSFO),
+                       "mgo_g20": None if pd.isna(r.MGO) else float(r.MGO), "hsfo_g20": None if pd.isna(r.IFO380) else float(r.IFO380), "vlsfo_mabux": mv,
+                       "diff": round(mv - float(r.VLSFO), 1) if (mv is not None and pd.notna(r.VLSFO)) else None})
+        for d0, v in mbv.items():
+            if d0 not in gv.index and d0 >= g.date.min():
+                tk.append({"kind": "bunker", "date": f"{d0:%Y-%m-%d}", "vlsfo_g20": None, "vlsfo_mabux": float(v), "diff": None})
+    dump("tanker_freight.json", tk)
+except Exception as e:
+    print("tanker_freight failed", e)
+
 dump("bdry_daily.json", [{"date": f"{d:%Y-%m-%d}", "close": float(v)} for d, v in bd[bd.index >= bd.index.max() - pd.Timedelta(days=730)].items()])
 
 # ---------- fund positions: CBOT soy complex and corn, with estimate ----------

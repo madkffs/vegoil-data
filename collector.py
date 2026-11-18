@@ -553,10 +553,10 @@ def mabux_global(backfill=False):
     if os.path.exists(path):
         with open(path, newline="") as fh:
             have = {r["date"] for r in csv.DictReader(fh)}
-    pages = range(1, 9) if (backfill or len(have) < 20) else range(1, 2)
+    pages = range(1, 13) if (backfill or len(have) < 20) else range(1, 2)
     for p in pages:
         try:
-            h = requests.get("https://www.hellenicshippingnews.com/" + (f"page/{p}/" if p > 1 else "") + "?s=MABUX+bunker+next+week", headers=UA, timeout=40).text
+            h = requests.get("https://www.hellenicshippingnews.com/" + (f"page/{p}/" if p > 1 else "") + "?s=MABUX", headers=UA, timeout=40).text
         except Exception:
             continue
         for u in dict.fromkeys(re.findall(r'href="(https://www\.hellenicshippingnews\.com/mabux-[a-z0-9\-]+/)"', h)):
@@ -565,14 +565,14 @@ def mabux_global(backfill=False):
             except Exception:
                 continue
             dm = re.search(r"in International Shipping News (\d{2})/(\d{2})/(\d{4})", a)
-            vm = re.search(r"VLSFO index[^.]{0,160}?(?:to|at|reached|stood at) USD\s?([\d,]+\.\d+)\s*/\s*MT", a)
+            vm = re.search(r"VLSFO index(?:[^.]|\.(?=\d)){0,220}?(?:to|at|reached|stood at) USD\s?([\d,]+\.\d+)\s*/\s*MT", a)
             if not (dm and vm):
                 continue
             d = f"{dm.group(3)}-{dm.group(2)}-{dm.group(1)}"
             if d in have:
                 continue
-            hm = re.search(r"380 HSFO index[^.]{0,160}?(?:to|at|reached|stood at) USD\s?([\d,]+\.\d+)\s*/\s*MT", a)
-            gm = re.search(r"MGO(?: LS)? index[^.]{0,160}?(?:to|at|reached|stood at) USD\s?([\d,]+\.\d+)\s*/\s*MT", a)
+            hm = re.search(r"380 HSFO index(?:[^.]|\.(?=\d)){0,220}?(?:to|at|reached|stood at) USD\s?([\d,]+\.\d+)\s*/\s*MT", a)
+            gm = re.search(r"MGO(?: LS)? index(?:[^.]|\.(?=\d)){0,220}?(?:to|at|reached|stood at) USD\s?([\d,]+\.\d+)\s*/\s*MT", a)
             g = lambda mm: float(mm.group(1).replace(",", "")) if mm else None
             rows.append({"date": d, "HSFO380": g(hm), "VLSFO": g(vm), "MGO": g(gm), "source": "MABUX weekly (Hellenic Shipping News)"}); have.add(d)
             time.sleep(0.3)
