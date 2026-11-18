@@ -1,0 +1,53 @@
+key,week,source,url,tc2_ws,tc2_tce,tc14_ws,tc14_tce,mr_basket
+2025-11-07|dcn,2025-11-07,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-7-november-2025,105.0,,147.0,6700.0,22996.0
+2025-11-14|dcn,2025-11-14,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-14-november-2025,130.0,,193.0,26300.0,35021.0
+2025-11-21|dcn,2025-11-21,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-21-november-2025,165.0,,180.0,,37435.0
+2025-11-28|dcn,2025-11-28,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-28-november-2025,171.0,,182.0,22100.0,38900.0
+2025-12-05|dcn,2025-12-05,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-5-december-2025,150.63,16674.0,180.0,24228.0,35823.0
+2025-12-12|dcn,2025-12-12,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-12-december-2025,136.0,,166.0,21600.0,31800.0
+2026-01-16|dcn,2026-01-16,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-16-january-2026,121.0,,204.0,24400.0,32000.0
+2026-01-30|dcn,2026-01-30,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-2-february-2026,145.0,,198.0,23000.0,31900.0
+2026-02-06|dcn,2026-02-06,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-9-february-2026,153.0,,298.0,42297.0,51700.0
+2026-02-13|dcn,2026-02-13,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-13-february-2026,147.0,11000.0,235.0,29600.0,39600.0
+2026-02-27|dcn,2026-02-27,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-27-february-2026,127.0,6500.0,270.0,,42907.0
+2026-03-06|dcn,2026-03-06,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-6-march-2026,236.0,24800.0,397.0,,75400.0
+2026-03-13|dcn,2026-03-13,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-13-march-2026,220.0,19300.0,385.0,,68900.0
+2026-03-20|dcn,2026-03-20,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-20-march-2026,230.0,19700.0,413.0,,673400.0
+2026-03-27|dcn,2026-03-27,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-26-march-2026,300.0,33900.0,518.0,,101200.0
+2026-04-10|dcn,2026-04-10,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-10-april-2026,315.0,36400.0,540.0,,106486.0
+2026-04-17|dcn,2026-04-17,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-17-april-2026,279.0,30000.0,555.0,,106000.0
+2026-04-24|dcn,2026-04-24,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-24-april-2026,260.0,26900.0,394.0,,75000.0
+2026-05-01|dcn,2026-05-01,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-1-may-2026,230.0,19300.0,426.0,,75300.0
+2026-05-08|dcn,2026-05-08,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-8-may-2026,213.0,15600.0,243.57,21400.0,40185.0
+2026-05-15|dcn,2026-05-15,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-15-may-2026,210.0,15400.0,155.0,6200.0,24500.0
+2026-05-22|dcn,2026-05-22,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-22-may-2026,177.0,9000.0,155.0,6900.0,21048.0
+2026-05-29|dcn,2026-05-29,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-29-may-2026,159.0,7400.0,195.0,16000.0,27509.0
+2026-06-05|dcn,2026-06-05,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-5-june-2026,135.0,2400.0,259.0,28000.0,35832.0
+2026-06-12|dcn,2026-06-12,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-12-june-2026,143.0,4900.0,250.0,,36400.0
+2026-06-19|dcn,2026-06-19,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-19-june-2026,136.0,6000.0,152.0,,20300.0
+2026-06-26|dcn,2026-06-26,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-26-june-2026,125.31,4355.0,137.14,,16836.0
+2026-07-03|dcn,2026-07-03,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-3-july-2026,129.0,4279.0,237.0,,34496.0
+2026-07-10|dcn,2026-07-10,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-10-july-2026,142.0,6500.0,251.0,,38200.0
+2026-07-17|dcn,2026-07-17,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-17-july-2026,140.0,,212.0,19600.0,28100.0
+2026-07-24|dcn,2026-07-24,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-24-july-2026,140.0,,275.0,,38500.0
+2026-08-14|dcn,2026-08-14,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-14-august-2026,109.0,,192.0,,19800.0
+2026-08-21|dcn,2026-08-21,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-21-august-2026,105.63,,230.71,,25480.0
+2026-08-28|dcn,2026-08-28,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-28-august-2026,100.63,,213.57,,22939.0
+2026-09-04|dcn,2026-09-04,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-4-september-2026,100.0,6100.0,250.0,,27444.0
+2026-09-11|dcn,2026-09-11,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-11-september-2026,100.0,,220.0,,21500.0
+2026-09-18|dcn,2026-09-18,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-18-september-2026,141.0,,232.0,20400.0,27200.0
+2026-09-25|dcn,2026-09-25,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-25-september-2026,161.11,,254.29,,34800.0
+2026-10-02|dcn,2026-10-02,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-2-october-2026,206.94,14344.0,395.71,54995.0,66826.0
+2026-10-02|edge,2026-10-02,The Edge,https://theedgemalaysia.com/node/820392,206.94,14344.0,395.71,54995.0,66826.0
+2026-10-09|dcn,2026-10-09,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-9-october-2026,201.0,,285.0,32600.0,46300.0
+2026-10-09|edge,2026-10-09,The Edge,https://theedgemalaysia.com/node/821285,201.0,,285.0,32600.0,46300.0
+2026-10-16|dcn,2026-10-16,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-16-october-2026,198.0,11500.0,386.0,51700.0,62700.0
+2026-10-16|edge,2026-10-16,The Edge,https://theedgemalaysia.com/node/822176,198.0,11500.0,386.0,51700.0,62700.0
+2026-10-23|dcn,2026-10-23,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-23-october-2026,207.0,12900.0,399.0,53900.0,65800.0
+2026-10-23|edge,2026-10-23,The Edge,https://theedgemalaysia.com/node/823074,207.0,12900.0,399.0,53900.0,65800.0
+2026-10-30|dcn,2026-10-30,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-30-october-2026,226.0,16600.0,496.0,73500.0,85500.0
+2026-10-30|edge,2026-10-30,The Edge,https://theedgemalaysia.com/node/824026,226.0,16600.0,496.0,73500.0,85500.0
+2026-11-06|dcn,2026-11-06,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-6-november-2026,206.0,13600.0,429.0,60800.0,72000.0
+2026-11-06|edge,2026-11-06,The Edge,https://theedgemalaysia.com/node/824924,206.0,13600.0,429.0,60800.0,72000.0
+2026-11-13|dcn,2026-11-13,DCN,https://www.thedcn.com.au/news/baltic-exchange-weekly-report-13-november-2026,198.0,13800.0,397.0,55700.0,67100.0
+2026-11-13|edge,2026-11-13,The Edge,https://theedgemalaysia.com/node/825704,198.0,13800.0,397.0,55700.0,67100.0
