@@ -141,6 +141,20 @@ try:
             fl = FLAT.get(int(r["date"][:4]))
             row["tc14_usd_t"] = round(row["tc14_ws"] / 100 * fl, 2) if (fl and row.get("tc14_ws")) else None
             tk.append({"kind": "tc14_daily", "date": r["date"], **row, "source": r["source"], "url": r["url"]})
+    rp = os.path.join(D, "freight", "tc14_daily_reader.csv")   # the reader's own daily Baltic TC14 prints, used to fill days the public reprints miss
+    if os.path.exists(rp):
+        have_d = {x["date"]: x for x in tk if x["kind"] == "tc14_daily"}
+        for _, r in pd.read_csv(rp).iterrows():
+            d0 = str(r["date"])[:10]; ws = float(r["tc14_ws"])
+            if d0 in have_d:
+                have_d[d0]["ws_reader"] = ws
+            else:
+                tk.append({"kind": "tc14_daily", "date": d0, "tc14_ws": ws, "tc14_usd_t": round(ws / 100 * 22.54, 2) if d0.startswith("2026") else None, "source": "Reader"})
+    # weekly rows: use the Friday daily print where we have it (the weekly round-up text quotes Thursday's level)
+    dmap = {x["date"]: x["tc14_ws"] for x in tk if x["kind"] == "tc14_daily" and x.get("tc14_ws") is not None}
+    for x in tk:
+        if x["kind"] in ("tc14", "tc14_long") and x["date"] in dmap:
+            x["tc14_ws_report"] = x["tc14_ws"]; x["tc14_ws"] = dmap[x["date"]]
     fp = os.path.join(D, "freight", "fis_tc14_ffa.csv")
     if os.path.exists(fp):   # TC14 FFA curve from the FIS morning report: raw numbers per tenor, latest report only
         f = pd.read_csv(fp); f = f[f.date == f.date.max()]
