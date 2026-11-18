@@ -145,16 +145,23 @@ try:
     if os.path.exists(rp):
         have_d = {x["date"]: x for x in tk if x["kind"] == "tc14_daily"}
         for _, r in pd.read_csv(rp).iterrows():
-            d0 = str(r["date"])[:10]; ws = float(r["tc14_ws"])
+            d0 = str(r["date"])[:10]
+            ws = None if pd.isna(r.get("tc14_ws")) else float(r["tc14_ws"]); w2 = None if pd.isna(r.get("tc2_ws")) else float(r["tc2_ws"])
             if d0 in have_d:
-                have_d[d0]["ws_reader"] = ws
+                x = have_d[d0]
+                if ws is not None: x["ws_reader"] = ws
+                if w2 is not None: x["tc2_reader"] = w2
+                if x.get("tc2_37_ws") is None and w2 is not None: x["tc2_37_ws"] = w2
             else:
-                tk.append({"kind": "tc14_daily", "date": d0, "tc14_ws": ws, "tc14_usd_t": round(ws / 100 * 22.54, 2) if d0.startswith("2026") else None, "source": "Reader"})
+                tk.append({"kind": "tc14_daily", "date": d0, "tc14_ws": ws, "tc2_37_ws": w2, "tc14_usd_t": round(ws / 100 * 22.54, 2) if (ws is not None and d0.startswith("2026")) else None, "source": "Reader"})
     # weekly rows: use the Friday daily print where we have it (the weekly round-up text quotes Thursday's level)
     dmap = {x["date"]: x["tc14_ws"] for x in tk if x["kind"] == "tc14_daily" and x.get("tc14_ws") is not None}
+    dmap2 = {x["date"]: x["tc2_37_ws"] for x in tk if x["kind"] == "tc14_daily" and x.get("tc2_37_ws") is not None}
     for x in tk:
         if x["kind"] in ("tc14", "tc14_long") and x["date"] in dmap:
             x["tc14_ws_report"] = x["tc14_ws"]; x["tc14_ws"] = dmap[x["date"]]
+        if x["kind"] in ("tc14", "tc14_long") and x["date"] in dmap2:
+            x["tc2_ws_report"] = x.get("tc2_ws"); x["tc2_ws"] = dmap2[x["date"]]
     fp = os.path.join(D, "freight", "fis_tc14_ffa.csv")
     if os.path.exists(fp):   # TC14 FFA curve from the FIS morning report: raw numbers per tenor, latest report only
         f = pd.read_csv(fp); f = f[f.date == f.date.max()]
