@@ -1,7 +1,7 @@
 """Builds the JSON files behind the veg oil market dashboard from this repo's data/ folder.
 Usage: python dashboard/build.py   -> writes dashboard/out/*.json
 Everything here is public, delayed market data."""
-import json, os
+import json, os, re
 import numpy as np, pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -128,6 +128,18 @@ try:
             tk.append({"kind": "tc14_long", **row, "source": p["source"]})
             if wk >= recent:
                 tk.append({"kind": "tc14", **row, "ws_baltic": ws_z, "ws_dcn": ws_a, "ws_edge": ws_b, "check": chk, "source": p["source"], "url": p["url"]})
+    op = os.path.join(D, "freight", "clean_daily_optima.csv")
+    if os.path.exists(op):   # daily Baltic clean assessments reprinted by Optima (date = assessment date)
+        o = pd.read_csv(op).sort_values("report_date").drop_duplicates("date", keep="last")
+        cols = [c for c in o.columns if re.match(r"^(tc\d+(_37)?_(ws|tce|usd_t)|bcti|mr_atlantic_basket)$", c)]
+        for _, r in o.iterrows():
+            tk.append({"kind": "tc14_daily", "date": str(r["date"]), **{c: (None if pd.isna(r[c]) else float(r[c])) for c in cols}, "source": r["source"], "url": r["url"]})
+    fp = os.path.join(D, "freight", "fis_tc14_ffa.csv")
+    if os.path.exists(fp):   # TC14 FFA curve from the FIS morning report: raw numbers per tenor, latest report only
+        f = pd.read_csv(fp); f = f[f.date == f.date.max()]
+        for _, r in f.iterrows():
+            tk.append({"kind": "ffa", "date": str(r["date"]), "tenor": r["tenor"], "values": str(r["values"]), "flat_rate": None if pd.isna(r.get("flat_rate")) else float(r["flat_rate"]),
+                       "spot_ws": None if pd.isna(r.get("spot_ws")) else float(r["spot_ws"]), "url": r["url"]})
     if os.path.exists(gp):
         g = pd.read_csv(gp); g["date"] = pd.to_datetime(g.date); g = g[g.date >= g.date.max() - pd.Timedelta(days=380)]
         mb = pd.read_csv(mp) if os.path.exists(mp) else pd.DataFrame(columns=["date", "VLSFO"])

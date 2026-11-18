@@ -543,6 +543,119 @@ def tc14_weekly(backfill=False):
         append_csv(path, rows, key="key")
     return len(rows)
 
+_ROUTES = ("TC14", "TC18", "TC2_37", "TC21", "TC24", "TC6", "TC12", "TC17", "TC19", "TC23")
+
+def _optima_routes(text):
+    """Route rows from an Optima 'Clean Tanker Index Summary': route code followed by WS, change, TCE ($/day), $/mt."""
+    out = {}
+    num = r"(-?[\d,]+(?:\.\d+)?)"
+    for rc in _ROUTES:
+        m = re.search(r"\b" + rc + r"\b(.{0,160})", text)
+        if not m:
+            continue
+        seg = re.split(r"\bTC\d|\bBCTI\b|\bMR Atlantic", m.group(1))[0]          # stop at the next route
+        seg = re.sub(r"\b\d{1,3}(?:[.,]\d{3})?\s?(?:k|kt|mt|t)\b", " ", seg, flags=re.I)   # cargo sizes such as 38k / 37,000mt
+        vals = [float(v.replace(",", "")) for v in re.findall(num, seg)[:8]]
+        ws = next((v for v in vals if 30 <= v <= 1200), None)
+        rest = vals[vals.index(ws) + 1:] if ws is not None else vals
+        tce = next((v for v in rest if 3000 <= v <= 250000), None)
+        after = rest[rest.index(tce) + 1:] if tce is not None else []
+        mt = next((v for v in after if 5 <= v <= 400), None)
+        k = rc.lower()
+        if ws is not None: out[k + "_ws"] = ws
+        if tce is not None: out[k + "_tce"] = tce
+        if mt is not None: out[k + "_usd_t"] = mt
+    m = re.search(r"BCTI\D{0,40}([\d,]{3,6})", text)
+    if m: out["bcti"] = float(m.group(1).replace(",", ""))
+    m = re.search(r"MR Atlantic Basket\D{0,40}\$?([\d,]{4,7})", text)
+    if m: out["mr_atlantic_basket"] = float(m.group(1).replace(",", ""))
+    return out
+
+def optima_clean_daily(backfill=False):
+    """Daily Baltic clean tanker assessments (TC14 WS, TCE, $/mt and other US Gulf MR routes) as reprinted in Optima Shipbroking's public
+    'Clean Tanker Index Summary'. Each report carries the previous business day's 16:00 London assessment."""
+    path = os.path.join(DATA, "freight", "clean_daily_optima.csv")
+    have = set()
+    if os.path.exists(path):
+        with open(path, newline="") as fh:
+            have = {r["key"] for r in csv.DictReader(fh)}
+    rows = []; today = dt.date.today(); d = dt.date(2026, 9, 25) if (backfill or not have) else today - dt.timedelta(days=10)
+    dbg = []
+    while d <= today:
+        if d.weekday() < 5 and f"{d}|optima" not in have:
+            mon = d.strftime("%B").lower()
+            for day in dict.fromkeys((str(d.day), f"{d.day:02d}")):
+                u = f"https://www.optimashipbroking.com/market-report/clean-tanker-index-summary-{day}-{mon}-{d.year}/"
+                try:
+                    r = requests.get(u, headers=UA, timeout=40)
+                except Exception as e:
+                    dbg.append(f"{u} {e}"[:200]); continue
+                if r.status_code == 200 and "TC14" in r.text:
+                    txt = _plain(r.text); v = _optima_routes(txt)
+                    m = re.search(r"(\d{1,2})(?:st|nd|rd|th)?\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})", txt[txt.find("TC14") - 3000 if txt.find("TC14") > 3000 else 0: txt.find("TC14")])
+                    asof = None
+                    if m:
+                        try: asof = str(dt.datetime.strptime(" ".join(m.groups()), "%d %B %Y").date())
+                        except ValueError: pass
+                    if not asof:
+                        pb = d - dt.timedelta(days=1)
+                        while pb.weekday() >= 5: pb -= dt.timedelta(days=1)
+                        asof = str(pb)
+                    if v.get("tc14_ws"):
+                        rows.append({"key": f"{d}|optima", "report_date": str(d), "date": asof, "source": "Optima (Baltic daily)", "url": u, **v})
+                    else:
+                        dbg.append(f"{u} parsed nothing: " + txt[txt.find("TC14"): txt.find("TC14") + 300])
+                    break
+                time.sleep(0.6)
+        d += dt.timedelta(days=1)
+    if dbg:
+        with open(os.path.join(DATA, "freight", "optima_debug.txt"), "w") as fh: fh.write("\n".join(dbg[-40:]))
+    if rows:
+        append_csv(path, rows, key="key")
+    return len(rows)
+
+def fis_tc14_ffa():
+    """TC14 forward curve (FFA) from the public FIS 'Tanker FFA Morning Report' PDF: tenor, WS and $/mt bids/offers or values, flat rate, spot."""
+    import io
+    try:
+        import pdfplumber
+    except ImportError:
+        return 0
+    path = os.path.join(DATA, "freight", "fis_tc14_ffa.csv"); raw_dir = os.path.join(DATA, "freight", "fis_raw"); os.makedirs(raw_dir, exist_ok=True)
+    rows = []; today = dt.date.today()
+    for back in range(0, 6):
+        d = today - dt.timedelta(days=back)
+        if d.weekday() >= 5:
+            continue
+        u = f"https://fisapp.com/wp-content/uploads/{d.year}/{d.month:02d}/FIS-Tanker-FFA-Morning-Report-{d.day:02d}-{d.month:02d}-{d.year}.pdf"
+        if os.path.exists(os.path.join(raw_dir, f"{d}.txt")):
+            continue
+        try:
+            r = requests.get(u, headers=UA, timeout=40)
+        except Exception:
+            continue
+        if r.status_code != 200 or not r.content.startswith(b"%PDF"):
+            continue
+        with pdfplumber.open(io.BytesIO(r.content)) as pdf:
+            txt = "\n".join((pg.extract_text() or "") for pg in pdf.pages)
+        with open(os.path.join(raw_dir, f"{d}.txt"), "w") as fh: fh.write(txt)
+        i = txt.find("TC14")
+        block = txt[i: i + 2500] if i >= 0 else ""
+        fr = re.search(r"Flat\s*rate\D{0,20}([\d.]+)", block, flags=re.I); sp = re.search(r"Spot\D{0,20}([\d.]+)", block, flags=re.I)
+        for line in block.splitlines():
+            m = re.match(r"\s*((?:Bal\w*|BOM|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s*\d{2}|Q[1-4]\s*\(?\d{2}\)?|Cal\s*\d{2}|Bal\s*Month)\b(.*)", line, flags=re.I)
+            if not m:
+                continue
+            nums = [float(x) for x in re.findall(r"\d+(?:\.\d+)?", m.group(2))]
+            if not nums:
+                continue
+            rows.append({"key": f"{d}|{m.group(1).strip()}", "date": str(d), "tenor": m.group(1).strip(), "values": " ".join(str(x) for x in nums[:6]),
+                         "flat_rate": float(fr.group(1)) if fr else None, "spot_ws": float(sp.group(1)) if sp else None, "url": u})
+        time.sleep(1)
+    if rows:
+        append_csv(path, rows, key="key")
+    return len(rows)
+
 def bunker_g20_history():
     """Ship & Bunker Global 20 Ports Average daily history (VLSFO, MGO, IFO380, $/mt), from the chart data on its public page."""
     r = requests.get("https://shipandbunker.com/prices/av/global/av-g20-global-20-ports-average", headers=UA, timeout=40)
@@ -1885,7 +1998,7 @@ def main(mode):
         json.dump(out, open(os.path.join(d, "bernama_debug.json"), "w"), indent=1)
         return
     if mode == "tanker":
-        for name, fn in (("tc14_weekly", lambda: tc14_weekly(backfill=True)), ("bunker_g20_history", bunker_g20_history), ("mabux_global", lambda: mabux_global(backfill=True))):
+        for name, fn in (("tc14_weekly", lambda: tc14_weekly(backfill=True)), ("optima_clean_daily", lambda: optima_clean_daily(backfill=True)), ("bunker_g20_history", bunker_g20_history), ("mabux_global", lambda: mabux_global(backfill=True))):
             try:
                 print(name, fn())
             except Exception as e:
@@ -2059,7 +2172,7 @@ def main(mode):
     if mode in ("backfill", "probe", "daily") or (dt.datetime.utcnow().hour >= 6 and last_daily != today_s):
         with open(marker, "w") as fh:
             fh.write(today_s)
-        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("comexstat_ports", comexstat_ports), ("emts_generation", emts_generation), ("epa_generation_detail", epa_generation_detail), ("epa_rin_prices", epa_rin_prices), ("climate", climate_indices), ("cme_options", cme_soyoil_options), ("sunoil_eurostat", sunoil_eurostat), ("sunoil_comtrade", sunoil_comtrade), ("usda_psd_oils", usda_psd_oils), ("nass_fats_oils", nass_fats_oils), ("eia_biofuel_feedstock", eia_biofuel_feedstock), ("ec_taxud_vegoil", ec_taxud_vegoil), ("ec_oilseed_prices", ec_oilseed_prices), ("pfl_rin_recap", pfl_rin_recap), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco), ("tc14_weekly", tc14_weekly), ("bunker_g20_history", bunker_g20_history), ("mabux_global", mabux_global)):
+        for name, fn in (("indec", indec_exports), ("comexstat", comexstat_exports), ("comexstat_ports", comexstat_ports), ("emts_generation", emts_generation), ("epa_generation_detail", epa_generation_detail), ("epa_rin_prices", epa_rin_prices), ("climate", climate_indices), ("cme_options", cme_soyoil_options), ("sunoil_eurostat", sunoil_eurostat), ("sunoil_comtrade", sunoil_comtrade), ("usda_psd_oils", usda_psd_oils), ("nass_fats_oils", nass_fats_oils), ("eia_biofuel_feedstock", eia_biofuel_feedstock), ("ec_taxud_vegoil", ec_taxud_vegoil), ("ec_oilseed_prices", ec_oilseed_prices), ("pfl_rin_recap", pfl_rin_recap), ("indec_countries", indec_country_probe), ("eurostat_uco", eurostat_uco), ("census_uco", census_uco), ("comtrade_us_uco", comtrade_us_uco), ("tc14_weekly", tc14_weekly), ("optima_clean_daily", optima_clean_daily), ("fis_tc14_ffa", fis_tc14_ffa), ("bunker_g20_history", bunker_g20_history), ("mabux_global", mabux_global)):
             try:
                 fn()
             except Exception as e:
