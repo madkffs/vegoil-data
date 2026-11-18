@@ -1,20 +1,24 @@
-"""One-off: Baltic Exchange weekly tanker round-ups -> TC14 / TC2 Worldscale and TCE (public pages)."""
-import re, json, os, time, requests
+"""One-off: Baltic Exchange weekly report as republished by DCN (public) -> TC14/TC2 sentences."""
+import re, json, os, time, datetime as dt, requests
 from bs4 import BeautifulSoup
 UA={"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"}
-os.makedirs("out",exist_ok=True); rows=[]; raw={}
-pages=[(2025,w) for w in range(38,54)]+[(2026,w) for w in range(1,48)]
-for y,w in pages:
-    u=f"https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/{y}/tanker-report-week-{w}.html"
-    try:
-        r=requests.get(u,headers=UA,timeout=40)
-        if r.status_code!=200: rows.append({"year":y,"week":w,"status":r.status_code}); continue
-        s=BeautifulSoup(r.text,"html.parser"); txt=" ".join(s.get_text(" ").split())
-        raw[f"{y}-{w}"]=txt[:20000]
-        m=re.search(r"(\d{1,2}(?:st|nd|rd|th)?\s+[A-Z][a-z]+\s+20\d\d)",txt)
-        rows.append({"year":y,"week":w,"status":200,"date_text":m.group(1) if m else None,"url":u})
-    except Exception as e:
-        rows.append({"year":y,"week":w,"status":repr(e)[:100]})
-    time.sleep(0.5)
-json.dump(rows,open("out/tc14_index.json","w"),indent=1); json.dump(raw,open("out/tc14_raw.json","w"))
-print(sum(1 for r in rows if r.get("status")==200),"pages")
+os.makedirs("out",exist_ok=True); out=[]
+d=dt.date(2025,10,31)
+while d<=dt.date(2026,11,20):
+    got=False
+    for dd in [d, d-dt.timedelta(days=1), d+dt.timedelta(days=3)]:
+        slug=f"baltic-exchange-weekly-report-{dd.day}-{dd.strftime('%B').lower()}-{dd.year}"
+        u=f"https://www.thedcn.com.au/news/{slug}"
+        try:
+            r=requests.get(u,headers=UA,timeout=40)
+        except Exception as e:
+            continue
+        if r.status_code==200 and "TC14" in r.text:
+            s=BeautifulSoup(r.text,"html.parser"); txt=" ".join(s.get_text(" ").split())
+            sents=[x for x in re.split(r"(?<=[.!?])\s+",txt) if "TC14" in x or "TC2 " in x or "TC2," in x or "MR " in x and "Atlantic" in x]
+            out.append({"week_of":str(d),"page_date":str(dd),"url":u,"sentences":sents[:12]}); got=True; break
+        time.sleep(0.4)
+    if not got: out.append({"week_of":str(d),"missing":True})
+    d+=dt.timedelta(days=7)
+json.dump(out,open("out/tc14_dcn.json","w"),indent=1)
+print(sum(1 for x in out if not x.get("missing")),"of",len(out))
