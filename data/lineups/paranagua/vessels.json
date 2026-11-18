@@ -62,8 +62,9 @@
   "terminal": "CATTALINI",
   "product": "OLEO DE SOJA",
   "tons": 12743.0,
-  "last_seen": "2026-11-18 10:07",
-  "eta": "17/11/2026 08:00"
+  "last_seen": "2026-11-18 16:04",
+  "eta": "17/11/2026 08:00",
+  "arrival": "18/11/2026 09:12"
  },
  "81047_HAFNIA AVENTURINE_OLEO DE MILHO": {
   "first_seen": "2026-10-27 14:47",
@@ -145,8 +146,8 @@
   "agency": "FERTIMPORT",
   "terminal": "CATTALINI",
   "product": "OLEO DE SOJA",
-  "eta": "20/11/2026 07:00",
+  "eta": "19/11/2026 23:00",
   "tons": 18500.0,
-  "last_seen": "2026-11-18 10:07"
+  "last_seen": "2026-11-18 16:04"
  }
 }

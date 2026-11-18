@@ -1,5 +1,5 @@
 {
- "fetched_utc": "2026-11-18 10:07",
+ "fetched_utc": "2026-11-18 16:04",
  "rows": [
   {
    "section": "PROGRAMADOS",
@@ -11,7 +11,7 @@
    "agency": "BPA",
    "terminal": "CATTALINI",
    "product": "OLEO DE SOJA",
-   "arrival": "",
+   "arrival": "18/11/2026 09:12",
    "berthed": null,
    "etb": "",
    "eta": null,
@@ -31,7 +31,7 @@
    "arrival": null,
    "berthed": null,
    "etb": null,
-   "eta": "20/11/2026 07:00",
+   "eta": "19/11/2026 23:00",
    "sailed": null,
    "tons": 18500.0
   }

@@ -1,15 +1,10 @@
 {
- "run_utc": "2026-11-18 14:57",
+ "run_utc": "2026-11-18 16:01",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
   "RS=F": "no data"
  },
- "euronext_cot_misses": [
-  "EBM week of 2026-11-18",
-  "ECO week of 2026-11-18",
-  "EMA week of 2026-11-18"
- ],
  "nabsa_rows": {
   "sailed": 1093,
   "lineup": 1184,
