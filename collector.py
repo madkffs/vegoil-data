@@ -448,6 +448,7 @@ def _plain(h):
 
 def _ws_current(s):
     """Worldscale level a Baltic sentence ends the week at."""
+    s = re.sub(r"\(\s*[+\-\u2212]\s*(?:WS\s?)?[\d.,]+[^)]*\)", " ", s)   # drop week-on-week changes such as "(+WS21.07)" or "(-37)"
     for p in (r"currently (?:assessed|marked|publishing|at)\s*(?:at\s*)?WS\s?([\d.]+)", r"current WS\s?([\d.]+)", r"is currently at WS\s?([\d.]+)"):
         m = re.search(p, s)
         if m:
@@ -471,7 +472,7 @@ def _tanker_from_text(t):
     return out
 
 def tc14_weekly(backfill=False):
-    """Baltic TC14 (38kt US Gulf/UK-Continent) and TC2 weekly closes from two public republications of the Baltic Exchange weekly round-up: DCN (Australia) and The Edge (Malaysia)."""
+    """Baltic TC14 (38kt US Gulf/UK-Continent) and TC2 weekly closes: primarily the Baltic Exchange's public weekly tanker report (from 2022), cross-checked against two republications of it, DCN (Australia) and The Edge (Malaysia)."""
     path = os.path.join(DATA, "freight", "tc14_weekly.csv"); os.makedirs(os.path.dirname(path), exist_ok=True)
     have = set()
     if os.path.exists(path):
@@ -515,6 +516,29 @@ def tc14_weekly(backfill=False):
             except Exception:
                 pass
             time.sleep(0.4)
+    # Primary: the Baltic Exchange's own public weekly tanker report (same text DCN and The Edge republish), back to 2022.
+    # URL: /tanker/news/{year}/tanker-report-week-{iso week}.html, published Fridays; crawl-delay 1s per robots.txt.
+    have |= {r["key"] for r in rows}
+    bstart = dt.date(2022, 1, 7) if (backfill or not any(k.endswith("|baltic") for k in have)) else today - dt.timedelta(days=28)
+    fri = bstart + dt.timedelta(days=(4 - bstart.weekday()) % 7); misses = 0
+    while fri <= today:
+        if f"{fri}|baltic" not in have:
+            yr, wk, _ = fri.isocalendar()
+            u = f"https://www.balticexchange.com/en/data-services/WeeklyRoundup/tanker/news/{yr}/tanker-report-week-{wk}.html"
+            try:
+                r = requests.get(u, headers=UA, timeout=40)
+                if r.status_code == 200 and "TC14" in r.text:
+                    v = _tanker_from_text(_plain(r.text))
+                    if v.get("tc14_ws"):
+                        rows.append({"key": f"{fri}|baltic", "week": str(fri), "source": "Baltic Exchange", "url": u, **v}); misses = 0
+                else:
+                    misses += 1
+            except Exception:
+                misses += 1
+            time.sleep(1.1)
+            if misses >= 12 and bstart > dt.date(2022, 1, 7):
+                break
+        fri += dt.timedelta(days=7)
     if rows:
         append_csv(path, rows, key="key")
     return len(rows)

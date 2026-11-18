@@ -112,17 +112,22 @@ try:
     tp = os.path.join(D, "freight", "tc14_weekly.csv"); gp = os.path.join(D, "freight", "bunker_g20_daily.csv"); mp = os.path.join(D, "freight", "mabux_global.csv")
     if os.path.exists(tp):
         t = pd.read_csv(tp); t["week"] = pd.to_datetime(t.week)
-        t = t[t.week >= pd.Timestamp.utcnow().tz_localize(None) - pd.Timedelta(days=380)]
+        recent = pd.Timestamp.utcnow().tz_localize(None) - pd.Timedelta(days=380)
+        val = lambda r, c: (None if r is None or pd.isna(r.get(c)) else float(r.get(c)))
         for wk, g in t.groupby("week"):
-            dcn = g[g.source == "DCN"]; edg = g[g.source == "The Edge"]
-            a = dcn.iloc[0] if len(dcn) else None; b = edg.iloc[0] if len(edg) else None
-            p = a if a is not None else b
-            val = lambda r, c: (None if r is None or pd.isna(r.get(c)) else float(r.get(c)))
-            ws_a, ws_b = val(a, "tc14_ws"), val(b, "tc14_ws")
-            chk = "Agrees" if (ws_a is not None and ws_b is not None and abs(ws_a - ws_b) <= 2) else ("Differs" if (ws_a is not None and ws_b is not None) else "One source")
-            tce = val(p, "tc14_tce") if val(p, "tc14_tce") is not None else (val(b, "tc14_tce") if b is not None else None)
-            tk.append({"kind": "tc14", "date": f"{wk:%Y-%m-%d}", "tc14_ws": val(p, "tc14_ws"), "tc14_tce": tce, "tc2_ws": val(p, "tc2_ws") if val(p, "tc2_ws") is not None else val(b, "tc2_ws"),
-                       "ws_dcn": ws_a, "ws_edge": ws_b, "check": chk, "source": p["source"], "url": p["url"]})
+            bal = g[g.source == "Baltic Exchange"]; dcn = g[g.source == "DCN"]; edg = g[g.source == "The Edge"]
+            z = bal.iloc[0] if len(bal) else None; a = dcn.iloc[0] if len(dcn) else None; b = edg.iloc[0] if len(edg) else None
+            p = next(r for r in (z, a, b) if r is not None)   # Baltic Exchange's own report first, then the republications
+            first = lambda c: next((val(r, c) for r in (z, a, b) if val(r, c) is not None), None)
+            ws_z, ws_a, ws_b = val(z, "tc14_ws"), val(a, "tc14_ws"), val(b, "tc14_ws")
+            others = [v for v in (ws_a, ws_b) if v is not None]
+            ref = ws_z if ws_z is not None else (ws_a if ws_a is not None else ws_b)
+            cmp = [v for v in ((ws_a, ws_b) if ws_z is not None else (ws_b,)) if v is not None]
+            chk = ("Agrees" if all(abs(v - ref) <= 2 for v in cmp) else "Differs") if cmp else "One source"
+            row = {"date": f"{wk:%Y-%m-%d}", "tc14_ws": first("tc14_ws"), "tc14_tce": first("tc14_tce"), "tc2_ws": first("tc2_ws")}
+            tk.append({"kind": "tc14_long", **row, "source": p["source"]})
+            if wk >= recent:
+                tk.append({"kind": "tc14", **row, "ws_baltic": ws_z, "ws_dcn": ws_a, "ws_edge": ws_b, "check": chk, "source": p["source"], "url": p["url"]})
     if os.path.exists(gp):
         g = pd.read_csv(gp); g["date"] = pd.to_datetime(g.date); g = g[g.date >= g.date.max() - pd.Timedelta(days=380)]
         mb = pd.read_csv(mp) if os.path.exists(mp) else pd.DataFrame(columns=["date", "VLSFO"])
