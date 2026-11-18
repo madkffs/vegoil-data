@@ -130,10 +130,17 @@ try:
                 tk.append({"kind": "tc14", **row, "ws_baltic": ws_z, "ws_dcn": ws_a, "ws_edge": ws_b, "check": chk, "source": p["source"], "url": p["url"]})
     op = os.path.join(D, "freight", "clean_daily_optima.csv")
     if os.path.exists(op):   # daily Baltic clean assessments reprinted by Optima (date = assessment date)
-        o = pd.read_csv(op).sort_values("report_date").drop_duplicates("date", keep="last")
-        cols = [c for c in o.columns if re.match(r"^(tc\d+(_37)?_(ws|tce|usd_t)|bcti|mr_atlantic_basket)$", c)]
+        o = pd.read_csv(op)
+        # each report carries the previous business day's 16:00 London assessment
+        o["date"] = (pd.to_datetime(o.report_date) - pd.offsets.BDay(1)).dt.strftime("%Y-%m-%d")
+        o = o.sort_values("report_date").drop_duplicates("date", keep="last")
+        FLAT = {2026: 22.54}   # Worldscale flat rate for TC14, $/t (2026 schedule, as quoted by FIS and Optima)
+        cols = [c for c in o.columns if re.match(r"^(tc14_(ws|tce)|tc18_(ws|tce)|tc2_37_(ws|tce)|bcti|mr_atlantic_basket)$", c)]
         for _, r in o.iterrows():
-            tk.append({"kind": "tc14_daily", "date": str(r["date"]), **{c: (None if pd.isna(r[c]) else float(r[c])) for c in cols}, "source": r["source"], "url": r["url"]})
+            row = {c: (None if pd.isna(r[c]) else float(r[c])) for c in cols}
+            fl = FLAT.get(int(r["date"][:4]))
+            row["tc14_usd_t"] = round(row["tc14_ws"] / 100 * fl, 2) if (fl and row.get("tc14_ws")) else None
+            tk.append({"kind": "tc14_daily", "date": r["date"], **row, "source": r["source"], "url": r["url"]})
     fp = os.path.join(D, "freight", "fis_tc14_ffa.csv")
     if os.path.exists(fp):   # TC14 FFA curve from the FIS morning report: raw numbers per tenor, latest report only
         f = pd.read_csv(fp); f = f[f.date == f.date.max()]
