@@ -1,9 +1,10 @@
 {
- "run_utc": "2026-11-19 16:01",
+ "run_utc": "2026-11-19 17:09",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
-  "RS=F": "no data"
+  "RS=F": "no data",
+  "bernama_cpo_curve": "HTTPSConnectionPool(host='www.bernama.com', port=443): Max retries exceeded with url: /en/search.php?terms=CPO%20futures (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.bernama.com', port=44"
  },
  "nabsa_rows": {
   "sailed": 1269,

@@ -1,5 +1,5 @@
 {
- "fetched_utc": "2026-11-19 16:04",
+ "fetched_utc": "2026-11-19 17:11",
  "rows": [
   {
    "section": "ATRACADOS",
@@ -51,6 +51,23 @@
    "eta": "01/12/2026 00:00",
    "sailed": null,
    "tons": 3000.0
+  },
+  {
+   "section": "ESPERADOS",
+   "prog": "81279",
+   "vessel": "ATHINA M",
+   "imo": "9644237",
+   "berth": "143",
+   "direction": "Exp",
+   "agency": "BPA",
+   "terminal": "CATTALINI",
+   "product": "OLEO DE SOJA",
+   "arrival": null,
+   "berthed": null,
+   "etb": null,
+   "eta": "28/11/2026 08:00",
+   "sailed": null,
+   "tons": 15000.0
   },
   {
    "section": "ESPERADOS",

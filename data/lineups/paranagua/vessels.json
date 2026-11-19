@@ -62,7 +62,7 @@
   "terminal": "CATTALINI",
   "product": "OLEO DE SOJA",
   "tons": 12743.0,
-  "last_seen": "2026-11-19 16:04",
+  "last_seen": "2026-11-19 17:11",
   "eta": "17/11/2026 08:00",
   "arrival": "18/11/2026 09:12",
   "berthed": "18/11/2026 12:40"
@@ -149,7 +149,7 @@
   "product": "OLEO DE SOJA",
   "eta": "19/11/2026 23:00",
   "tons": 100.0,
-  "last_seen": "2026-11-19 16:04"
+  "last_seen": "2026-11-19 17:11"
  },
  "81268_STI QUEENS_OLEO DE SOJA": {
   "first_seen": "2026-11-19 01:15",
@@ -164,7 +164,7 @@
   "product": "OLEO DE SOJA",
   "eta": "01/12/2026 08:00",
   "tons": 25000.0,
-  "last_seen": "2026-11-19 16:04"
+  "last_seen": "2026-11-19 17:11"
  },
  "81256_BANGLAR AGRAJATRA_OLEO DE SOJA": {
   "first_seen": "2026-11-19 01:15",
@@ -179,7 +179,7 @@
   "product": "OLEO DE SOJA",
   "eta": "26/11/2026 12:00",
   "tons": 5668.0,
-  "last_seen": "2026-11-19 16:04"
+  "last_seen": "2026-11-19 17:11"
  },
  "81276_OPERA_OLEO DE SOJA": {
   "first_seen": "2026-11-19 15:00",
@@ -194,6 +194,21 @@
   "product": "OLEO DE SOJA",
   "eta": "01/12/2026 00:00",
   "tons": 3000.0,
-  "last_seen": "2026-11-19 16:04"
+  "last_seen": "2026-11-19 17:11"
+ },
+ "81279_ATHINA M_OLEO DE SOJA": {
+  "first_seen": "2026-11-19 17:11",
+  "section": "ESPERADOS",
+  "prog": "81279",
+  "vessel": "ATHINA M",
+  "imo": "9644237",
+  "berth": "143",
+  "direction": "Exp",
+  "agency": "BPA",
+  "terminal": "CATTALINI",
+  "product": "OLEO DE SOJA",
+  "eta": "28/11/2026 08:00",
+  "tons": 15000.0,
+  "last_seen": "2026-11-19 17:11"
  }
 }
