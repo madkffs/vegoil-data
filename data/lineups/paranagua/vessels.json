@@ -62,7 +62,7 @@
   "terminal": "CATTALINI",
   "product": "OLEO DE SOJA",
   "tons": 12743.0,
-  "last_seen": "2026-11-19 10:12",
+  "last_seen": "2026-11-19 15:00",
   "eta": "17/11/2026 08:00",
   "arrival": "18/11/2026 09:12",
   "berthed": "18/11/2026 12:40"
@@ -148,8 +148,8 @@
   "terminal": "CATTALINI",
   "product": "OLEO DE SOJA",
   "eta": "19/11/2026 23:00",
-  "tons": 18500.0,
-  "last_seen": "2026-11-19 10:12"
+  "tons": 100.0,
+  "last_seen": "2026-11-19 15:00"
  },
  "81268_STI QUEENS_OLEO DE SOJA": {
   "first_seen": "2026-11-19 01:15",
@@ -164,7 +164,7 @@
   "product": "OLEO DE SOJA",
   "eta": "01/12/2026 08:00",
   "tons": 25000.0,
-  "last_seen": "2026-11-19 10:12"
+  "last_seen": "2026-11-19 15:00"
  },
  "81256_BANGLAR AGRAJATRA_OLEO DE SOJA": {
   "first_seen": "2026-11-19 01:15",
@@ -179,6 +179,21 @@
   "product": "OLEO DE SOJA",
   "eta": "26/11/2026 12:00",
   "tons": 5668.0,
-  "last_seen": "2026-11-19 10:12"
+  "last_seen": "2026-11-19 15:00"
+ },
+ "81276_OPERA_OLEO DE SOJA": {
+  "first_seen": "2026-11-19 15:00",
+  "section": "ESPERADOS",
+  "prog": "81276",
+  "vessel": "OPERA",
+  "imo": "9804887",
+  "berth": "143",
+  "direction": "Exp",
+  "agency": "ROCHAMAR",
+  "terminal": "CATTALINI",
+  "product": "OLEO DE SOJA",
+  "eta": "01/12/2026 00:00",
+  "tons": 3000.0,
+  "last_seen": "2026-11-19 15:00"
  }
 }

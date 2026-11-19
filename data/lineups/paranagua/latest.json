@@ -1,5 +1,5 @@
 {
- "fetched_utc": "2026-11-19 10:12",
+ "fetched_utc": "2026-11-19 15:00",
  "rows": [
   {
    "section": "ATRACADOS",
@@ -37,6 +37,23 @@
   },
   {
    "section": "ESPERADOS",
+   "prog": "81276",
+   "vessel": "OPERA",
+   "imo": "9804887",
+   "berth": "143",
+   "direction": "Exp",
+   "agency": "ROCHAMAR",
+   "terminal": "CATTALINI",
+   "product": "OLEO DE SOJA",
+   "arrival": null,
+   "berthed": null,
+   "etb": null,
+   "eta": "01/12/2026 00:00",
+   "sailed": null,
+   "tons": 3000.0
+  },
+  {
+   "section": "ESPERADOS",
    "prog": "81256",
    "vessel": "BANGLAR AGRAJATRA",
    "imo": "9793856",
@@ -67,7 +84,7 @@
    "etb": null,
    "eta": "19/11/2026 23:00",
    "sailed": null,
-   "tons": 18500.0
+   "tons": 100.0
   }
  ]
 }
