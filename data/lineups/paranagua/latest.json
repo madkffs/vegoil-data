@@ -1,5 +1,5 @@
 {
- "fetched_utc": "2026-11-19 17:11",
+ "fetched_utc": "2026-11-20 01:08",
  "rows": [
   {
    "section": "ATRACADOS",
@@ -17,6 +17,23 @@
    "eta": null,
    "sailed": null,
    "tons": 12743.0
+  },
+  {
+   "section": "PROGRAMADOS",
+   "prog": "81222",
+   "vessel": "JBU OPAL",
+   "imo": "9400409",
+   "berth": "143",
+   "direction": "Exp",
+   "agency": "FERTIMPORT",
+   "terminal": "CATTALINI",
+   "product": "OLEO DE SOJA",
+   "arrival": "",
+   "berthed": null,
+   "etb": "",
+   "eta": null,
+   "sailed": null,
+   "tons": 18500.0
   },
   {
    "section": "ESPERADOS",
@@ -85,23 +102,6 @@
    "eta": "26/11/2026 12:00",
    "sailed": null,
    "tons": 5668.0
-  },
-  {
-   "section": "ESPERADOS",
-   "prog": "81222",
-   "vessel": "JBU OPAL",
-   "imo": "9400409",
-   "berth": "143",
-   "direction": "Exp",
-   "agency": "FERTIMPORT",
-   "terminal": "CATTALINI",
-   "product": "OLEO DE SOJA",
-   "arrival": null,
-   "berthed": null,
-   "etb": null,
-   "eta": "19/11/2026 23:00",
-   "sailed": null,
-   "tons": 100.0
   }
  ]
 }
