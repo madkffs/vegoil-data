@@ -52,7 +52,7 @@
  },
  "81044_MURMURE_OLEO DE SOJA": {
   "first_seen": "2026-10-27 14:47",
-  "section": "ATRACADOS",
+  "section": "DESPACHADOS",
   "prog": "81044",
   "vessel": "MURMURE",
   "imo": "9939618",
@@ -62,10 +62,11 @@
   "terminal": "CATTALINI",
   "product": "OLEO DE SOJA",
   "tons": 12743.0,
-  "last_seen": "2026-11-20 12:05",
+  "last_seen": "2026-11-21 00:14",
   "eta": "17/11/2026 08:00",
   "arrival": "18/11/2026 09:12",
-  "berthed": "18/11/2026 12:40"
+  "berthed": "18/11/2026 12:40",
+  "sailed": "20/11/2026 08:11"
  },
  "81047_HAFNIA AVENTURINE_OLEO DE MILHO": {
   "first_seen": "2026-10-27 14:47",
@@ -138,7 +139,7 @@
  },
  "81222_JBU OPAL_OLEO DE SOJA": {
   "first_seen": "2026-11-17 01:11",
-  "section": "PROGRAMADOS",
+  "section": "ATRACADOS",
   "prog": "81222",
   "vessel": "JBU OPAL",
   "imo": "9400409",
@@ -149,7 +150,8 @@
   "product": "OLEO DE SOJA",
   "eta": "19/11/2026 23:00",
   "tons": 18500.0,
-  "last_seen": "2026-11-20 12:05"
+  "last_seen": "2026-11-21 00:14",
+  "berthed": "20/11/2026 10:50"
  },
  "81268_STI QUEENS_OLEO DE SOJA": {
   "first_seen": "2026-11-19 01:15",
@@ -164,7 +166,7 @@
   "product": "OLEO DE SOJA",
   "eta": "01/12/2026 08:00",
   "tons": 25000.0,
-  "last_seen": "2026-11-20 12:05"
+  "last_seen": "2026-11-21 00:14"
  },
  "81256_BANGLAR AGRAJATRA_OLEO DE SOJA": {
   "first_seen": "2026-11-19 01:15",
@@ -179,7 +181,7 @@
   "product": "OLEO DE SOJA",
   "eta": "26/11/2026 12:00",
   "tons": 5668.0,
-  "last_seen": "2026-11-20 12:05"
+  "last_seen": "2026-11-21 00:14"
  },
  "81276_OPERA_OLEO DE SOJA": {
   "first_seen": "2026-11-19 15:00",
@@ -194,7 +196,7 @@
   "product": "OLEO DE SOJA",
   "eta": "01/12/2026 00:00",
   "tons": 3000.0,
-  "last_seen": "2026-11-20 12:05"
+  "last_seen": "2026-11-21 00:14"
  },
  "81279_ATHINA M_OLEO DE SOJA": {
   "first_seen": "2026-11-19 17:11",
@@ -209,6 +211,6 @@
   "product": "OLEO DE SOJA",
   "eta": "28/11/2026 08:00",
   "tons": 15000.0,
-  "last_seen": "2026-11-20 12:05"
+  "last_seen": "2026-11-21 00:14"
  }
 }
