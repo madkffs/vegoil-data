@@ -1,10 +1,9 @@
 {
- "run_utc": "2026-11-23 07:24",
+ "run_utc": "2026-11-23 19:27",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
-  "RS=F": "no data",
-  "ec_taxud_vegoil": "taxud: no rows {\"2024\": [500, \"{\\\"code\\\":\\\"303001\\\",\\\"type\\\":\\\"Status report\\\",\\\"message\\\":\\\"Runtime Error\\\",\\\"description\\\":\\\"Currently , Address endpoint : [ Name : AgrifoodPublicData--vprod_APIprod"
+  "RS=F": "no data"
  },
  "nabsa_rows": {
   "sailed": 1576,
