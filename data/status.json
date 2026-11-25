@@ -1,10 +1,10 @@
 {
- "run_utc": "2026-11-25 00:04",
+ "run_utc": "2026-11-25 08:21",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
   "RS=F": "no data",
-  "santos_lineup": "HTTPSConnectionPool(host='www.portodesantos.com.br', port=443): Read timed out. (read timeout=60)"
+  "ec_taxud_vegoil": "taxud: no rows {\"2024\": [500, \"{\\n  \\\"error\\\" : \\\"Internal Server Error\\\",\\n  \\\"status\\\" : \\\"500\\\",\\n  \\\"message\\\" : \\\"An internal error occurred on the server.\\\",\\n  \\\"technicalErrorMessage\\\" : \\\"Ple"
  },
  "euronext_cot_misses": [
   "EBM week of 2026-11-25",
