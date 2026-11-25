@@ -1,16 +1,10 @@
 {
- "run_utc": "2026-11-25 08:21",
+ "run_utc": "2026-11-25 18:49",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
-  "RS=F": "no data",
-  "ec_taxud_vegoil": "taxud: no rows {\"2024\": [500, \"{\\n  \\\"error\\\" : \\\"Internal Server Error\\\",\\n  \\\"status\\\" : \\\"500\\\",\\n  \\\"message\\\" : \\\"An internal error occurred on the server.\\\",\\n  \\\"technicalErrorMessage\\\" : \\\"Ple"
+  "RS=F": "no data"
  },
- "euronext_cot_misses": [
-  "EBM week of 2026-11-25",
-  "ECO week of 2026-11-25",
-  "EMA week of 2026-11-25"
- ],
  "nabsa_rows": {
   "sailed": 1712,
   "lineup": 1200,
