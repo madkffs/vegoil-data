@@ -139,7 +139,7 @@
  },
  "81222_JBU OPAL_OLEO DE SOJA": {
   "first_seen": "2026-11-17 01:11",
-  "section": "ATRACADOS",
+  "section": "DESPACHADOS",
   "prog": "81222",
   "vessel": "JBU OPAL",
   "imo": "9400409",
@@ -150,8 +150,10 @@
   "product": "OLEO DE SOJA",
   "eta": "19/11/2026 23:00",
   "tons": 18500.0,
-  "last_seen": "2026-11-21 00:14",
-  "berthed": "20/11/2026 10:50"
+  "last_seen": "2026-11-25 00:07",
+  "berthed": "20/11/2026 10:50",
+  "arrival": "19/11/2026 21:12",
+  "sailed": "22/11/2026 06:25"
  },
  "81268_STI QUEENS_OLEO DE SOJA": {
   "first_seen": "2026-11-19 01:15",
@@ -166,7 +168,7 @@
   "product": "OLEO DE SOJA",
   "eta": "01/12/2026 08:00",
   "tons": 25000.0,
-  "last_seen": "2026-11-21 00:14"
+  "last_seen": "2026-11-25 00:07"
  },
  "81256_BANGLAR AGRAJATRA_OLEO DE SOJA": {
   "first_seen": "2026-11-19 01:15",
@@ -181,7 +183,7 @@
   "product": "OLEO DE SOJA",
   "eta": "26/11/2026 12:00",
   "tons": 5668.0,
-  "last_seen": "2026-11-21 00:14"
+  "last_seen": "2026-11-25 00:07"
  },
  "81276_OPERA_OLEO DE SOJA": {
   "first_seen": "2026-11-19 15:00",
@@ -196,7 +198,7 @@
   "product": "OLEO DE SOJA",
   "eta": "01/12/2026 00:00",
   "tons": 3000.0,
-  "last_seen": "2026-11-21 00:14"
+  "last_seen": "2026-11-25 00:07"
  },
  "81279_ATHINA M_OLEO DE SOJA": {
   "first_seen": "2026-11-19 17:11",
@@ -211,6 +213,21 @@
   "product": "OLEO DE SOJA",
   "eta": "28/11/2026 08:00",
   "tons": 15000.0,
-  "last_seen": "2026-11-21 00:14"
+  "last_seen": "2026-11-25 00:07"
+ },
+ "81308_PS IMABARI_OLEO DE SOJA": {
+  "first_seen": "2026-11-25 00:07",
+  "section": "ESPERADOS",
+  "prog": "81308",
+  "vessel": "PS IMABARI",
+  "imo": "9908504",
+  "berth": "143",
+  "direction": "Exp",
+  "agency": "FERTIMPORT",
+  "terminal": "CATTALINI",
+  "product": "OLEO DE SOJA",
+  "eta": "01/12/2026 00:00",
+  "tons": 30000.0,
+  "last_seen": "2026-11-25 00:07"
  }
 }

@@ -1,23 +1,6 @@
 {
- "fetched_utc": "2026-11-21 00:14",
+ "fetched_utc": "2026-11-25 00:07",
  "rows": [
-  {
-   "section": "ATRACADOS",
-   "prog": "81222",
-   "vessel": "JBU OPAL",
-   "imo": "9400409",
-   "berth": "143",
-   "direction": "Exp",
-   "agency": "FERTIMPORT",
-   "terminal": "CATTALINI",
-   "product": "OLEO DE SOJA",
-   "arrival": "",
-   "berthed": "20/11/2026 10:50",
-   "etb": null,
-   "eta": null,
-   "sailed": null,
-   "tons": 18500.0
-  },
   {
    "section": "ESPERADOS",
    "prog": "81268",
@@ -51,6 +34,23 @@
    "eta": "01/12/2026 00:00",
    "sailed": null,
    "tons": 3000.0
+  },
+  {
+   "section": "ESPERADOS",
+   "prog": "81308",
+   "vessel": "PS IMABARI",
+   "imo": "9908504",
+   "berth": "143",
+   "direction": "Exp",
+   "agency": "FERTIMPORT",
+   "terminal": "CATTALINI",
+   "product": "OLEO DE SOJA",
+   "arrival": null,
+   "berthed": null,
+   "etb": null,
+   "eta": "01/12/2026 00:00",
+   "sailed": null,
+   "tons": 30000.0
   },
   {
    "section": "ESPERADOS",
@@ -88,20 +88,20 @@
   },
   {
    "section": "DESPACHADOS",
-   "prog": "81044",
-   "vessel": "MURMURE",
-   "imo": "9939618",
+   "prog": "81222",
+   "vessel": "JBU OPAL",
+   "imo": "9400409",
    "berth": "143",
    "direction": "Exp",
-   "agency": "BPA",
+   "agency": "FERTIMPORT",
    "terminal": "CATTALINI",
    "product": "OLEO DE SOJA",
-   "arrival": "18/11/2026 09:12",
+   "arrival": "19/11/2026 21:12",
    "berthed": null,
    "etb": null,
    "eta": null,
-   "sailed": "20/11/2026 08:11",
-   "tons": 12743.0
+   "sailed": "22/11/2026 06:25",
+   "tons": 18500.0
   }
  ]
 }
