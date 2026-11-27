@@ -1,9 +1,13 @@
 {
- "run_utc": "2026-11-27 03:14",
+ "run_utc": "2026-11-27 13:03",
  "mode": "update",
  "errors": {
   "MWE=F": "no data",
-  "RS=F": "no data"
+  "RS=F": "no data",
+  "bernama_cpo_curve": "HTTPSConnectionPool(host='www.bernama.com', port=443): Max retries exceeded with url: /en/search.php?terms=CPO%20futures (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.bernama.com', port=44",
+  "comexstat": "comexstat 500: {\"error\":{\"code\":500,\"message\":\"An exception occurred in driver: SQLSTATE[08006] [7] FATAL:  password authentication failed for user \\u0022usr_comexst",
+  "comexstat_ports": "comexstat urf 500: {\"error\":{\"code\":500,\"message\":\"An exception occurred in driver: SQLSTATE[08006] [7] FATAL:  password authentication failed for user \\u0022usr_comexst",
+  "ec_taxud_vegoil": "taxud: no rows {\"2024\": [500, \"{\\n  \\\"error\\\" : \\\"Internal Server Error\\\",\\n  \\\"status\\\" : \\\"500\\\",\\n  \\\"message\\\" : \\\"An internal error occurred on the server.\\\",\\n  \\\"technicalErrorMessage\\\" : \\\"Ple"
  },
  "nabsa_rows": {
   "sailed": 1995,

@@ -1,6 +1,23 @@
 {
- "fetched_utc": "2026-11-25 00:07",
+ "fetched_utc": "2026-11-27 13:06",
  "rows": [
+  {
+   "section": "ESPERADOS",
+   "prog": "81344",
+   "vessel": "JAG PRANESH",
+   "imo": "9637117",
+   "berth": "143",
+   "direction": "Exp",
+   "agency": "CARGILL AGRICOLA",
+   "terminal": "CATTALINI",
+   "product": "OLEO DE SOJA",
+   "arrival": null,
+   "berthed": null,
+   "etb": null,
+   "eta": "06/12/2026 16:00",
+   "sailed": null,
+   "tons": 15050.0
+  },
   {
    "section": "ESPERADOS",
    "prog": "81268",
@@ -14,7 +31,7 @@
    "arrival": null,
    "berthed": null,
    "etb": null,
-   "eta": "01/12/2026 08:00",
+   "eta": "05/12/2026 08:00",
    "sailed": null,
    "tons": 25000.0
   },
@@ -54,23 +71,6 @@
   },
   {
    "section": "ESPERADOS",
-   "prog": "81279",
-   "vessel": "ATHINA M",
-   "imo": "9644237",
-   "berth": "143",
-   "direction": "Exp",
-   "agency": "BPA",
-   "terminal": "CATTALINI",
-   "product": "OLEO DE SOJA",
-   "arrival": null,
-   "berthed": null,
-   "etb": null,
-   "eta": "28/11/2026 08:00",
-   "sailed": null,
-   "tons": 15000.0
-  },
-  {
-   "section": "ESPERADOS",
    "prog": "81256",
    "vessel": "BANGLAR AGRAJATRA",
    "imo": "9793856",
@@ -82,26 +82,26 @@
    "arrival": null,
    "berthed": null,
    "etb": null,
-   "eta": "26/11/2026 12:00",
+   "eta": "29/11/2026 12:00",
    "sailed": null,
    "tons": 5668.0
   },
   {
-   "section": "DESPACHADOS",
-   "prog": "81222",
-   "vessel": "JBU OPAL",
-   "imo": "9400409",
+   "section": "ESPERADOS",
+   "prog": "81279",
+   "vessel": "ATHINA M",
+   "imo": "9644237",
    "berth": "143",
    "direction": "Exp",
-   "agency": "FERTIMPORT",
+   "agency": "BPA",
    "terminal": "CATTALINI",
    "product": "OLEO DE SOJA",
-   "arrival": "19/11/2026 21:12",
+   "arrival": null,
    "berthed": null,
    "etb": null,
-   "eta": null,
-   "sailed": "22/11/2026 06:25",
-   "tons": 18500.0
+   "eta": "27/11/2026 19:00",
+   "sailed": null,
+   "tons": 30800.0
   }
  ]
 }

@@ -166,9 +166,9 @@
   "agency": "BPA",
   "terminal": "CATTALINI",
   "product": "OLEO DE SOJA",
-  "eta": "01/12/2026 08:00",
+  "eta": "05/12/2026 08:00",
   "tons": 25000.0,
-  "last_seen": "2026-11-25 00:07"
+  "last_seen": "2026-11-27 13:06"
  },
  "81256_BANGLAR AGRAJATRA_OLEO DE SOJA": {
   "first_seen": "2026-11-19 01:15",
@@ -181,9 +181,9 @@
   "agency": "WILSON SONS",
   "terminal": "CATTALINI",
   "product": "OLEO DE SOJA",
-  "eta": "26/11/2026 12:00",
+  "eta": "29/11/2026 12:00",
   "tons": 5668.0,
-  "last_seen": "2026-11-25 00:07"
+  "last_seen": "2026-11-27 13:06"
  },
  "81276_OPERA_OLEO DE SOJA": {
   "first_seen": "2026-11-19 15:00",
@@ -198,7 +198,7 @@
   "product": "OLEO DE SOJA",
   "eta": "01/12/2026 00:00",
   "tons": 3000.0,
-  "last_seen": "2026-11-25 00:07"
+  "last_seen": "2026-11-27 13:06"
  },
  "81279_ATHINA M_OLEO DE SOJA": {
   "first_seen": "2026-11-19 17:11",
@@ -211,9 +211,9 @@
   "agency": "BPA",
   "terminal": "CATTALINI",
   "product": "OLEO DE SOJA",
-  "eta": "28/11/2026 08:00",
-  "tons": 15000.0,
-  "last_seen": "2026-11-25 00:07"
+  "eta": "27/11/2026 19:00",
+  "tons": 30800.0,
+  "last_seen": "2026-11-27 13:06"
  },
  "81308_PS IMABARI_OLEO DE SOJA": {
   "first_seen": "2026-11-25 00:07",
@@ -228,6 +228,21 @@
   "product": "OLEO DE SOJA",
   "eta": "01/12/2026 00:00",
   "tons": 30000.0,
-  "last_seen": "2026-11-25 00:07"
+  "last_seen": "2026-11-27 13:06"
+ },
+ "81344_JAG PRANESH_OLEO DE SOJA": {
+  "first_seen": "2026-11-27 13:06",
+  "section": "ESPERADOS",
+  "prog": "81344",
+  "vessel": "JAG PRANESH",
+  "imo": "9637117",
+  "berth": "143",
+  "direction": "Exp",
+  "agency": "CARGILL AGRICOLA",
+  "terminal": "CATTALINI",
+  "product": "OLEO DE SOJA",
+  "eta": "06/12/2026 16:00",
+  "tons": 15050.0,
+  "last_seen": "2026-11-27 13:06"
  }
 }
